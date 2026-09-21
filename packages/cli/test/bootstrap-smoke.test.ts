@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { cp, copyFile, mkdir, mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { cp, copyFile, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import test from 'node:test';
@@ -12,6 +12,24 @@ const repositoryRootEnvironment = 'COURSERA_NOTES_REPOSITORY_ROOT';
 interface CommandResult {
   stdout: string;
   stderr: string;
+}
+
+interface SeedManifest {
+  courses: unknown[];
+  program: {
+    id: string | null;
+    license: {
+      holder: string | null;
+      initialYear: number | null;
+      spdx: string;
+    };
+    provider: string;
+    slug: string;
+    title: string;
+  };
+  repository: {
+    status: string;
+  };
 }
 
 async function seedTemplate(repositoryRoot: string): Promise<void> {
@@ -33,6 +51,30 @@ async function seedTemplate(repositoryRoot: string): Promise<void> {
       'pnpm-workspace.yaml',
     ].map((path) => copyFile(resolve(templateRoot, path), resolve(repositoryRoot, path))),
   );
+
+  const manifestPath = resolve(repositoryRoot, 'manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as SeedManifest;
+  const templateManifest: SeedManifest = {
+    ...manifest,
+    courses: [],
+    program: {
+      ...manifest.program,
+      id: null,
+      license: {
+        ...manifest.program.license,
+        holder: null,
+        initialYear: null,
+      },
+      provider: 'Provider',
+      slug: 'program-notes',
+      title: 'Coursera Program Notes',
+    },
+    repository: {
+      status: 'template',
+    },
+  };
+
+  await writeFile(manifestPath, `${JSON.stringify(templateManifest, null, 2)}\n`, 'utf8');
 }
 
 async function runTypeScript(
