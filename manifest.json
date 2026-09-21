@@ -7,30 +7,75 @@
     ],
     "generatedOnDemand": true
   },
-  "courses": [],
+  "courses": [
+    {
+      "id": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "modules": [],
+      "ordinal": 1,
+      "slug": "introduction-to-artificial-intelligence-ai",
+      "status": "planned",
+      "title": {
+        "en": "Introduction to Artificial Intelligence (AI)",
+        "fr": "Introduction à l’intelligence artificielle (IA)"
+      }
+    },
+    {
+      "id": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "modules": [],
+      "ordinal": 2,
+      "slug": "generative-ai-introduction-and-applications",
+      "status": "planned",
+      "title": {
+        "en": "Generative AI: Introduction and Applications",
+        "fr": "IA générative : introduction et applications"
+      }
+    },
+    {
+      "id": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "modules": [],
+      "ordinal": 3,
+      "slug": "generative-ai-prompt-engineering-basics",
+      "status": "planned",
+      "title": {
+        "en": "Generative AI: Prompt Engineering Basics",
+        "fr": "IA générative : principes de base de l’ingénierie des prompts"
+      }
+    },
+    {
+      "id": "course_87903369-55a7-485e-b999-6767bfb0e9ee",
+      "modules": [],
+      "ordinal": 4,
+      "slug": "building-ai-powered-chatbots-without-programming",
+      "status": "planned",
+      "title": {
+        "en": "Building AI Powered Chatbots Without Programming",
+        "fr": "Créer des chatbots alimentés par l’IA sans programmation"
+      }
+    }
+  ],
   "designSystem": {
     "layouts": "design-system/layouts.json",
     "tokens": "design-system/tokens.json",
     "typography": "design-system/typography.json"
   },
   "program": {
-    "id": null,
+    "id": "program_22014917-38e6-4fb2-9781-cdd4149c6d16",
     "languages": [
       "en",
       "fr"
     ],
     "license": {
-      "holder": null,
-      "initialYear": null,
+      "holder": "Ange Kouakou",
+      "initialYear": 2026,
       "spdx": "MIT"
     },
     "platform": "Coursera",
-    "provider": "Provider",
-    "slug": "program-notes",
-    "title": "Coursera Program Notes"
+    "provider": "IBM",
+    "slug": "ai-foundations-for-everyone",
+    "title": "AI Foundations for Everyone Specialization"
   },
   "repository": {
-    "status": "template"
+    "status": "configured"
   },
   "schemaVersion": 1,
   "templateVersion": "0.1.0",
