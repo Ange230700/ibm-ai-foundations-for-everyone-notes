@@ -1,0 +1,154 @@
+{
+  "recordVersion": 1,
+  "preparedOn": "2026-09-21",
+  "source": {
+    "repository": "Ange230700/ibm-generative-ai-engineering-notes",
+    "revision": "31acf050aac1d950279ee08e76e0f9489f5ab9fe"
+  },
+  "destination": {
+    "repository": "Ange230700/ibm-ai-foundations-for-everyone-notes",
+    "baseRevision": "5d6f36545a93f8978b908218e8c25f1f4393e168",
+    "programId": "program_22014917-38e6-4fb2-9781-cdd4149c6d16"
+  },
+  "englishImport": "byte-for-byte",
+  "frenchEdition": {
+    "kind": "new-adaptation",
+    "basis": "pinned-english-canonical-modules",
+    "reviewStatus": "pending-owner-review",
+    "literalPromptLanguage": "en"
+  },
+  "modules": [
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "destination": {
+        "en": "courses/01-introduction-to-artificial-intelligence-ai/en/01-introduction-and-applications-of-ai.md",
+        "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/01-introduction-and-applications-of-ai.md"
+      },
+      "moduleId": "module_07f9493e-2262-470c-8f15-2719eac81cdf",
+      "sourcePath": "courses/01-introduction-to-artificial-intelligence/01-introduction-and-applications-of-ai.md",
+      "sourceSha256": "d371074408ba11bbb95a3b65ecbe7f4840353a62e03e4cd76f1c3a152fff3ca6"
+    },
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "destination": {
+        "en": "courses/01-introduction-to-artificial-intelligence-ai/en/02-ai-concepts-terminology-and-application-domains.md",
+        "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/02-ai-concepts-terminology-and-application-domains.md"
+      },
+      "moduleId": "module_1f1ed8d9-6a58-4ccd-9846-93d3ce5a7a4d",
+      "sourcePath": "courses/01-introduction-to-artificial-intelligence/02-ai-concepts-terminology-and-application-domains.md",
+      "sourceSha256": "9b6183e855e7f36a032d0c076ae259fe8419b847a63da2499cc307c8cdbe02f0"
+    },
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "destination": {
+        "en": "courses/01-introduction-to-artificial-intelligence-ai/en/03-business-and-career-transformation-through-ai.md",
+        "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/03-business-and-career-transformation-through-ai.md"
+      },
+      "moduleId": "module_0b195bf4-4cc0-4149-9fe7-6b753f42a00c",
+      "sourcePath": "courses/01-introduction-to-artificial-intelligence/03-business-and-career-transformation-through-ai.md",
+      "sourceSha256": "4b683eb7e461eb8949b2e697d4f0730b30462e2cdda5da27aa025c365463536a"
+    },
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "destination": {
+        "en": "courses/01-introduction-to-artificial-intelligence-ai/en/04-issues-concerns-and-ethical-considerations.md",
+        "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/04-issues-concerns-and-ethical-considerations.md"
+      },
+      "moduleId": "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c",
+      "sourcePath": "courses/01-introduction-to-artificial-intelligence/04-issues-concerns-and-ethical-considerations.md",
+      "sourceSha256": "ce60fe41a339afceb4e48cf4cc93e1d3bd6c4fec1f98b58cb7336792d15cc59b"
+    },
+    {
+      "courseId": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "destination": {
+        "en": "courses/02-generative-ai-introduction-and-applications/en/01-introduction-and-capabilities-of-generative-ai.md",
+        "fr": "courses/02-generative-ai-introduction-and-applications/fr/01-introduction-and-capabilities-of-generative-ai.md"
+      },
+      "moduleId": "module_ea3527e6-fd2c-4d1d-8a13-d7ad8d9b657e",
+      "sourcePath": "courses/02-generative-ai-introduction-and-applications/01-introduction-and-capabilities-of-generative-ai.md",
+      "sourceSha256": "13310e876d3e39d0e0c43f0548072f7e0e6965eec9353cf27e268b4251a226c2"
+    },
+    {
+      "courseId": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "destination": {
+        "en": "courses/02-generative-ai-introduction-and-applications/en/02-applications-and-tools-of-generative-ai.md",
+        "fr": "courses/02-generative-ai-introduction-and-applications/fr/02-applications-and-tools-of-generative-ai.md"
+      },
+      "moduleId": "module_c9a9a7cf-4a4d-4dd5-b916-d4a9581492d5",
+      "sourcePath": "courses/02-generative-ai-introduction-and-applications/02-applications-and-tools-of-generative-ai.md",
+      "sourceSha256": "56720b48930742bb7ce6d042a9ce41acf025e0d3f5150cdc47548ea1922252fe"
+    },
+    {
+      "courseId": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "destination": {
+        "en": "courses/02-generative-ai-introduction-and-applications/en/03-course-quiz-project-and-wrap-up.md",
+        "fr": "courses/02-generative-ai-introduction-and-applications/fr/03-course-quiz-project-and-wrap-up.md"
+      },
+      "moduleId": "module_424a3366-d324-4bd7-bb48-d331fdb1f7fe",
+      "sourcePath": "courses/02-generative-ai-introduction-and-applications/03-course-quiz-project-and-wrap-up.md",
+      "sourceSha256": "ca3d7ad9d185d594946c34c32d6894b067c168dd3b0cca468720ef5965da71fb"
+    },
+    {
+      "courseId": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "destination": {
+        "en": "courses/03-generative-ai-prompt-engineering-basics/en/01-prompt-engineering-for-generative-ai.md",
+        "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/01-prompt-engineering-for-generative-ai.md"
+      },
+      "moduleId": "module_d573a37d-17bd-4bde-803f-79ada337cf8a",
+      "sourcePath": "courses/03-generative-ai-prompt-engineering-basics/01-prompt-engineering-for-generative-ai.md",
+      "sourceSha256": "246ffd586d096a1f0933a5309f71234ccfd2e5ae8d7d61ee9335eae161ef98e1"
+    },
+    {
+      "courseId": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "destination": {
+        "en": "courses/03-generative-ai-prompt-engineering-basics/en/02-prompt-engineering-techniques-and-approaches.md",
+        "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/02-prompt-engineering-techniques-and-approaches.md"
+      },
+      "moduleId": "module_37663745-fa25-44cc-a2aa-a5f91583fefc",
+      "sourcePath": "courses/03-generative-ai-prompt-engineering-basics/02-prompt-engineering-techniques-and-approaches.md",
+      "sourceSha256": "cd07a5c58daf810b5d672f3606e97e8ff076190a6ea74c930ba17b9666a202ad"
+    },
+    {
+      "courseId": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "destination": {
+        "en": "courses/03-generative-ai-prompt-engineering-basics/en/03-course-quiz-project-and-wrap-up.md",
+        "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/03-course-quiz-project-and-wrap-up.md"
+      },
+      "moduleId": "module_0ecd1b21-cf8c-48a7-935e-02d5edb67dad",
+      "sourcePath": "courses/03-generative-ai-prompt-engineering-basics/03-course-quiz-project-and-wrap-up.md",
+      "sourceSha256": "ab69bf4029da22f4edb2dbe625584f6fec519b4b450b5aad82437b2c9f3e1110"
+    }
+  ],
+  "certificates": [
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "certificateId": "37VX1C6W43TX",
+      "completedOn": "2026-09-02",
+      "path": "certificates/01-introduction-to-artificial-intelligence-ai/coursera-37VX1C6W43TX.pdf",
+      "sha256": "aad14abb19bb48c991dea249c5b33efa1767ae0fd53caf7cec28aabb1fc26cd6",
+      "source": "owner-supplied-pdf",
+      "verificationUrl": "https://coursera.org/verify/37VX1C6W43TX",
+      "onlineVerification": "not-performed"
+    },
+    {
+      "courseId": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "certificateId": "LJWKXH7TGFPV",
+      "completedOn": "2026-09-14",
+      "path": "certificates/02-generative-ai-introduction-and-applications/coursera-LJWKXH7TGFPV.pdf",
+      "sha256": "864a25cef841fa8f2980a96cc3f8a967cb815a4303efe2fbf269c2c5a353fba6",
+      "source": "owner-supplied-pdf",
+      "verificationUrl": "https://coursera.org/verify/LJWKXH7TGFPV",
+      "onlineVerification": "not-performed"
+    },
+    {
+      "courseId": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "certificateId": "MY0A0NAHZBRZ",
+      "completedOn": "2026-09-15",
+      "path": "certificates/03-generative-ai-prompt-engineering-basics/coursera-MY0A0NAHZBRZ.pdf",
+      "sha256": "f29a239b249d824a039ddc76b6f9c834a32befbdb2d451fb63042e087ecae442",
+      "source": "owner-supplied-pdf",
+      "verificationUrl": "https://coursera.org/verify/MY0A0NAHZBRZ",
+      "onlineVerification": "not-performed"
+    }
+  ]
+}

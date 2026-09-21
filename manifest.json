@@ -10,10 +10,63 @@
   "courses": [
     {
       "id": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
-      "modules": [],
+      "modules": [
+        {
+          "id": "module_07f9493e-2262-470c-8f15-2719eac81cdf",
+          "ordinal": 1,
+          "slug": "introduction-and-applications-of-ai",
+          "source": {
+            "en": "courses/01-introduction-to-artificial-intelligence-ai/en/01-introduction-and-applications-of-ai.md",
+            "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/01-introduction-and-applications-of-ai.md"
+          },
+          "title": {
+            "en": "Introduction and Applications of AI",
+            "fr": "Introduction et applications de l’IA"
+          }
+        },
+        {
+          "id": "module_1f1ed8d9-6a58-4ccd-9846-93d3ce5a7a4d",
+          "ordinal": 2,
+          "slug": "ai-concepts-terminology-and-application-domains",
+          "source": {
+            "en": "courses/01-introduction-to-artificial-intelligence-ai/en/02-ai-concepts-terminology-and-application-domains.md",
+            "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/02-ai-concepts-terminology-and-application-domains.md"
+          },
+          "title": {
+            "en": "AI Concepts, Terminology, and Application Domains",
+            "fr": "Concepts, terminologie et domaines d’application de l’IA"
+          }
+        },
+        {
+          "id": "module_0b195bf4-4cc0-4149-9fe7-6b753f42a00c",
+          "ordinal": 3,
+          "slug": "business-and-career-transformation-through-ai",
+          "source": {
+            "en": "courses/01-introduction-to-artificial-intelligence-ai/en/03-business-and-career-transformation-through-ai.md",
+            "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/03-business-and-career-transformation-through-ai.md"
+          },
+          "title": {
+            "en": "Business and Career Transformation Through AI",
+            "fr": "Transformation des entreprises et des carrières par l’IA"
+          }
+        },
+        {
+          "id": "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c",
+          "ordinal": 4,
+          "slug": "issues-concerns-and-ethical-considerations",
+          "source": {
+            "en": "courses/01-introduction-to-artificial-intelligence-ai/en/04-issues-concerns-and-ethical-considerations.md",
+            "fr": "courses/01-introduction-to-artificial-intelligence-ai/fr/04-issues-concerns-and-ethical-considerations.md"
+          },
+          "title": {
+            "en": "Issues, Concerns, and Ethical Considerations",
+            "fr": "Enjeux, préoccupations et considérations éthiques"
+          }
+        }
+      ],
       "ordinal": 1,
       "slug": "introduction-to-artificial-intelligence-ai",
-      "status": "planned",
+      "status": "notes-in-progress",
       "title": {
         "en": "Introduction to Artificial Intelligence (AI)",
         "fr": "Introduction à l’intelligence artificielle (IA)"
@@ -21,10 +74,50 @@
     },
     {
       "id": "course_d40c1003-b693-4680-a838-bcd4850e6040",
-      "modules": [],
+      "modules": [
+        {
+          "id": "module_ea3527e6-fd2c-4d1d-8a13-d7ad8d9b657e",
+          "ordinal": 1,
+          "slug": "introduction-and-capabilities-of-generative-ai",
+          "source": {
+            "en": "courses/02-generative-ai-introduction-and-applications/en/01-introduction-and-capabilities-of-generative-ai.md",
+            "fr": "courses/02-generative-ai-introduction-and-applications/fr/01-introduction-and-capabilities-of-generative-ai.md"
+          },
+          "title": {
+            "en": "Introduction and Capabilities of Generative AI",
+            "fr": "Introduction et capacités de l’IA générative"
+          }
+        },
+        {
+          "id": "module_c9a9a7cf-4a4d-4dd5-b916-d4a9581492d5",
+          "ordinal": 2,
+          "slug": "applications-and-tools-of-generative-ai",
+          "source": {
+            "en": "courses/02-generative-ai-introduction-and-applications/en/02-applications-and-tools-of-generative-ai.md",
+            "fr": "courses/02-generative-ai-introduction-and-applications/fr/02-applications-and-tools-of-generative-ai.md"
+          },
+          "title": {
+            "en": "Applications and Tools of Generative AI",
+            "fr": "Applications et outils de l’IA générative"
+          }
+        },
+        {
+          "id": "module_424a3366-d324-4bd7-bb48-d331fdb1f7fe",
+          "ordinal": 3,
+          "slug": "course-quiz-project-and-wrap-up",
+          "source": {
+            "en": "courses/02-generative-ai-introduction-and-applications/en/03-course-quiz-project-and-wrap-up.md",
+            "fr": "courses/02-generative-ai-introduction-and-applications/fr/03-course-quiz-project-and-wrap-up.md"
+          },
+          "title": {
+            "en": "Course Quiz, Project, and Wrap-up",
+            "fr": "Quiz, projet et bilan du cours"
+          }
+        }
+      ],
       "ordinal": 2,
       "slug": "generative-ai-introduction-and-applications",
-      "status": "planned",
+      "status": "notes-in-progress",
       "title": {
         "en": "Generative AI: Introduction and Applications",
         "fr": "IA générative : introduction et applications"
@@ -32,10 +125,50 @@
     },
     {
       "id": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
-      "modules": [],
+      "modules": [
+        {
+          "id": "module_d573a37d-17bd-4bde-803f-79ada337cf8a",
+          "ordinal": 1,
+          "slug": "prompt-engineering-for-generative-ai",
+          "source": {
+            "en": "courses/03-generative-ai-prompt-engineering-basics/en/01-prompt-engineering-for-generative-ai.md",
+            "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/01-prompt-engineering-for-generative-ai.md"
+          },
+          "title": {
+            "en": "Prompt Engineering for Generative AI",
+            "fr": "Ingénierie des prompts pour l’IA générative"
+          }
+        },
+        {
+          "id": "module_37663745-fa25-44cc-a2aa-a5f91583fefc",
+          "ordinal": 2,
+          "slug": "prompt-engineering-techniques-and-approaches",
+          "source": {
+            "en": "courses/03-generative-ai-prompt-engineering-basics/en/02-prompt-engineering-techniques-and-approaches.md",
+            "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/02-prompt-engineering-techniques-and-approaches.md"
+          },
+          "title": {
+            "en": "Prompt Engineering: Techniques and Approaches",
+            "fr": "Techniques et approches d’ingénierie des prompts"
+          }
+        },
+        {
+          "id": "module_0ecd1b21-cf8c-48a7-935e-02d5edb67dad",
+          "ordinal": 3,
+          "slug": "course-quiz-project-and-wrap-up",
+          "source": {
+            "en": "courses/03-generative-ai-prompt-engineering-basics/en/03-course-quiz-project-and-wrap-up.md",
+            "fr": "courses/03-generative-ai-prompt-engineering-basics/fr/03-course-quiz-project-and-wrap-up.md"
+          },
+          "title": {
+            "en": "Course Quiz, Project, and Wrap-Up",
+            "fr": "Quiz, projet et bilan du cours"
+          }
+        }
+      ],
       "ordinal": 3,
       "slug": "generative-ai-prompt-engineering-basics",
-      "status": "planned",
+      "status": "notes-in-progress",
       "title": {
         "en": "Generative AI: Prompt Engineering Basics",
         "fr": "IA générative : principes de base de l’ingénierie des prompts"
