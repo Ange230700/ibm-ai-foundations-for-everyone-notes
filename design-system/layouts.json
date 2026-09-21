@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "page": {
+    "size": "A4",
+    "marginMm": 18
+  },
+  "slides": {
+    "layout": "LAYOUT_WIDE",
+    "aspectRatio": "16:9"
+  }
+}

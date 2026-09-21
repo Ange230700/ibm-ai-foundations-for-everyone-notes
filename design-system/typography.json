@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "primaryFont": "Inter",
+  "fallbackStack": ["Arial", "Helvetica", "sans-serif"],
+  "monospaceFont": "JetBrains Mono",
+  "monospaceFallbackStack": ["Consolas", "Courier New", "monospace"],
+  "minimumBodyPt": 18,
+  "minimumCodePt": 16
+}

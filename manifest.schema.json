@@ -1,0 +1,352 @@
+{
+  "$id": "./manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "formats": {
+          "items": false,
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "txt",
+              "type": "string"
+            },
+            {
+              "const": "pdf",
+              "type": "string"
+            },
+            {
+              "const": "pptx",
+              "type": "string"
+            }
+          ],
+          "type": "array"
+        },
+        "generatedOnDemand": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "generatedOnDemand",
+        "formats"
+      ],
+      "type": "object"
+    },
+    "courses": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^course_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "modules": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                  "type": "string"
+                },
+                "ordinal": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "slug": {
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "type": "string"
+                },
+                "source": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "en": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "fr": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "en",
+                    "fr"
+                  ],
+                  "type": "object"
+                },
+                "title": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "en": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "fr": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "en",
+                    "fr"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "id",
+                "ordinal",
+                "slug",
+                "title",
+                "source"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "ordinal": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "slug": {
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "notes-in-progress",
+              "notes-complete",
+              "teaching-ready",
+              "artifacts-generated",
+              "visually-verified",
+              "released",
+              "archived"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "additionalProperties": false,
+            "properties": {
+              "en": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "fr": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "en",
+              "fr"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "ordinal",
+          "slug",
+          "title",
+          "status",
+          "modules"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "designSystem": {
+      "additionalProperties": false,
+      "properties": {
+        "layouts": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "tokens": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "typography": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "tokens",
+        "typography",
+        "layouts"
+      ],
+      "type": "object"
+    },
+    "program": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "pattern": "^program_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "languages": {
+          "items": false,
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "en",
+              "type": "string"
+            },
+            {
+              "const": "fr",
+              "type": "string"
+            }
+          ],
+          "type": "array"
+        },
+        "license": {
+          "additionalProperties": false,
+          "properties": {
+            "holder": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "initialYear": {
+              "anyOf": [
+                {
+                  "maximum": 2200,
+                  "minimum": 2000,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "spdx": {
+              "const": "MIT",
+              "type": "string"
+            }
+          },
+          "required": [
+            "spdx",
+            "holder",
+            "initialYear"
+          ],
+          "type": "object"
+        },
+        "platform": {
+          "const": "Coursera",
+          "type": "string"
+        },
+        "provider": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "slug": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "provider",
+        "platform",
+        "title",
+        "slug",
+        "languages",
+        "license"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "template",
+            "configured"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": 1,
+      "type": "number"
+    },
+    "templateVersion": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "type": "string"
+    },
+    "validation": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalLanguages": {
+          "items": false,
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "en",
+              "type": "string"
+            },
+            {
+              "const": "fr",
+              "type": "string"
+            }
+          ],
+          "type": "array"
+        },
+        "taskAware": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "taskAware",
+        "canonicalLanguages"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "templateVersion",
+    "repository",
+    "program",
+    "courses",
+    "artifacts",
+    "validation",
+    "designSystem"
+  ],
+  "title": "Coursera Program Notes Manifest",
+  "type": "object"
+}

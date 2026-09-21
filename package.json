@@ -1,0 +1,53 @@
+{
+  "name": "coursera-program-notes-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manifest-driven bilingual Coursera program notes template with local-first validation and artifact tooling.",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": "22.13.0",
+    "pnpm": "11.11.0"
+  },
+  "scripts": {
+    "setup": "tsx packages/cli/src/setup.ts",
+    "course:add": "tsx packages/cli/src/course-add.ts",
+    "module:add": "tsx packages/cli/src/module-add.ts",
+    "check": "tsx packages/cli/src/check-all.ts",
+    "check:full": "tsx packages/cli/src/check-all.ts --full",
+    "check:dry-run": "tsx packages/cli/src/check-all.ts --dry-run",
+    "manifest:schema": "tsx packages/manifest/src/generate-schema.ts",
+    "manifest:schema:check": "tsx packages/manifest/src/generate-schema.ts --check",
+    "artifacts:txt": "tsx packages/artifacts/src/export-txt.ts",
+    "typecheck": "tsc -b packages/core packages/manifest packages/validation packages/cli packages/artifacts packages/presentations",
+    "format": "prettier --write . --ignore-unknown",
+    "format:check": "prettier --check . --ignore-unknown",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "check:semantic": "tsx packages/cli/src/check.ts",
+    "test": "pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
+    "artifact": "tsx packages/cli/src/artifact.ts"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "20.5.3",
+    "@commitlint/config-conventional": "20.5.3",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.1.1",
+    "eslint": "10.8.0",
+    "globals": "17.8.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.4.0",
+    "markdownlint-cli2": "0.23.2",
+    "prettier": "3.9.5",
+    "tsx": "4.23.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.65.0",
+    "zod": "4.6.5"
+  },
+  "dependencies": {
+    "@types/mdast": "4.0.4",
+    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-gfm": "3.0.0",
+    "micromark-extension-gfm": "3.0.0"
+  }
+}

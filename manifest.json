@@ -1,0 +1,44 @@
+{
+  "artifacts": {
+    "formats": [
+      "txt",
+      "pdf",
+      "pptx"
+    ],
+    "generatedOnDemand": true
+  },
+  "courses": [],
+  "designSystem": {
+    "layouts": "design-system/layouts.json",
+    "tokens": "design-system/tokens.json",
+    "typography": "design-system/typography.json"
+  },
+  "program": {
+    "id": null,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "license": {
+      "holder": null,
+      "initialYear": null,
+      "spdx": "MIT"
+    },
+    "platform": "Coursera",
+    "provider": "Provider",
+    "slug": "program-notes",
+    "title": "Coursera Program Notes"
+  },
+  "repository": {
+    "status": "template"
+  },
+  "schemaVersion": 1,
+  "templateVersion": "0.1.0",
+  "validation": {
+    "canonicalLanguages": [
+      "en",
+      "fr"
+    ],
+    "taskAware": true
+  }
+}

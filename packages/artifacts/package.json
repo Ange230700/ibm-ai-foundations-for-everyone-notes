@@ -1,0 +1,15 @@
+{
+  "name": "@coursera-notes/artifacts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@coursera-notes/core": "workspace:*",
+    "@coursera-notes/manifest": "workspace:*",
+    "@types/mdast": "4.0.4",
+    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-gfm": "3.0.0",
+    "micromark-extension-gfm": "3.0.0"
+  }
+}

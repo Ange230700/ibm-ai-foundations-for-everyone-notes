@@ -1,0 +1,14 @@
+node_modules/
+.pnpm-store/
+.scannerwork/
+dist/
+coverage/
+.cache/
+.logs/
+.artifacts/
+.env
+.env.*
+.DS_Store
+.setup-state.json
+
+*.tsbuildinfo

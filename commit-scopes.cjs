@@ -1,0 +1,16 @@
+module.exports = [
+  'courses',
+  'artifacts',
+  'presentations',
+  'cli',
+  'core',
+  'manifest',
+  'validation',
+  'design-system',
+  'tooling',
+  'config',
+  'deps',
+  'ci',
+  'docs',
+  'repo',
+];

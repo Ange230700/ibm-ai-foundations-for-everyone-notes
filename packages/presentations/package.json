@@ -1,0 +1,27 @@
+{
+  "name": "@coursera-notes/presentations",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@coursera-notes/core": "workspace:*",
+    "@coursera-notes/manifest": "workspace:*",
+    "@types/mdast": "4.0.4",
+    "@xmldom/xmldom": "0.8.15",
+    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-gfm": "3.0.0",
+    "micromark-extension-gfm": "3.0.0"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "11.16.0",
+    "@napi-rs/canvas": "1.0.9",
+    "jszip": "3.10.1",
+    "pdfjs-dist": "6.3.289",
+    "pptxgenjs": "4.0.1",
+    "puppeteer": "25.9.0"
+  }
+}

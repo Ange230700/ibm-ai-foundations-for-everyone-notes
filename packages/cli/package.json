@@ -1,0 +1,15 @@
+{
+  "name": "@coursera-notes/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test --test-concurrency=1 test/*.test.ts"
+  },
+  "dependencies": {
+    "@coursera-notes/core": "workspace:*",
+    "@coursera-notes/manifest": "workspace:*",
+    "@coursera-notes/presentations": "workspace:*",
+    "@coursera-notes/validation": "workspace:*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@coursera-notes/validation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@coursera-notes/core": "workspace:*",
+    "@coursera-notes/manifest": "workspace:*"
+  }
+}
