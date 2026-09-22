@@ -29,7 +29,9 @@ type ResourceBlock = Extract<
 const labels = {
   en: {
     objectives: 'Learning objectives',
+    objectivesContinued: 'Learning objectives (continued)',
     summary: 'Final summary',
+    summaryContinued: 'Final summary (continued)',
     diagram: 'Diagram',
     code: 'Code example',
     table: 'Comparison',
@@ -39,7 +41,9 @@ const labels = {
   },
   fr: {
     objectives: 'Objectifs d’apprentissage',
+    objectivesContinued: 'Objectifs d’apprentissage (suite)',
     summary: 'Résumé final',
+    summaryContinued: 'Résumé final (suite)',
     diagram: 'Schéma',
     code: 'Exemple de code',
     table: 'Comparaison',
@@ -48,6 +52,8 @@ const labels = {
     review: 'Examiner le rôle de',
   },
 } as const;
+
+const MAX_OBJECTIVES_PER_SLIDE = 8;
 
 function normalizeText(value: string): string {
   return value.normalize('NFKC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase();
@@ -217,6 +223,27 @@ function grouped<T>(items: readonly T[], size: number): T[][] {
   return groups;
 }
 
+function balancedGroups<T>(items: readonly T[], maximumSize: number): T[][] {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const groupCount = Math.ceil(items.length / maximumSize);
+  const baseSize = Math.floor(items.length / groupCount);
+  const extraItems = items.length % groupCount;
+  const groups: T[][] = [];
+  let offset = 0;
+
+  for (let index = 0; index < groupCount; index += 1) {
+    const size = baseSize + (index < extraItems ? 1 : 0);
+
+    groups.push(items.slice(offset, offset + size));
+    offset += size;
+  }
+
+  return groups;
+}
+
 function headingFor(source: SourceRef, fallback: string): string {
   return source.headingPath.at(-1) ?? fallback;
 }
@@ -347,7 +374,26 @@ function emitResource(
 
   state.emittedResources.add(key);
   state.resourceOrdinal += 1;
-  state.slides.push(resourceSlide(content, resource, state.resourceOrdinal));
+
+  const slide = resourceSlide(content, resource, state.resourceOrdinal);
+
+  if (slide.kind !== 'table' || slide.rows.length <= 10) {
+    state.slides.push(slide);
+    return;
+  }
+
+  const continuation = content.language === 'fr' ? '(suite)' : '(continued)';
+  const rowGroups = balancedGroups(slide.rows, 10);
+
+  state.slides.push(
+    ...rowGroups.map((rows, index) => ({
+      ...slide,
+      slideId:
+        index === 0 ? slide.slideId : `${slide.slideId}-${String(index + 1).padStart(2, '0')}`,
+      title: index === 0 ? slide.title : `${slide.title} ${continuation}`,
+      rows,
+    })),
+  );
 }
 
 function appendSectionSlides(
@@ -413,12 +459,16 @@ export function synthesizeDeckSpec(
   ];
 
   if (content.objectives.length > 0 && objectivesSection) {
-    slides.push({
-      kind: 'objectives',
-      slideId: 'objectives',
-      title: text.objectives,
-      items: content.objectives,
-      sourceRefs: sectionSourceRefs(objectivesSection),
+    const objectiveGroups = balancedGroups(content.objectives, MAX_OBJECTIVES_PER_SLIDE);
+
+    objectiveGroups.forEach((items, index) => {
+      slides.push({
+        kind: 'objectives',
+        slideId: index === 0 ? 'objectives' : `objectives-${String(index + 1).padStart(2, '0')}`,
+        title: index === 0 ? text.objectives : text.objectivesContinued,
+        items,
+        sourceRefs: sectionSourceRefs(objectivesSection),
+      });
     });
   }
 
@@ -445,13 +495,17 @@ export function synthesizeDeckSpec(
   }
 
   if (content.summary.length > 0 && summarySection) {
-    slides.push({
-      kind: 'summary',
-      slideId: 'summary',
-      title: text.summary,
-      items: content.summary,
-      sourceRefs: sectionSourceRefs(summarySection),
-    });
+    const summaryGroups = balancedGroups(content.summary, 8);
+
+    slides.push(
+      ...summaryGroups.map((items, index) => ({
+        kind: 'summary' as const,
+        slideId: index === 0 ? 'summary' : `summary-${String(index + 1).padStart(2, '0')}`,
+        title: index === 0 ? text.summary : text.summaryContinued,
+        items,
+        sourceRefs: sectionSourceRefs(summarySection),
+      })),
+    );
   }
 
   const candidate: DeckSpec = {

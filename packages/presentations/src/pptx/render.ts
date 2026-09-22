@@ -51,10 +51,60 @@ function tableRowFillColor(rowIndex: number, theme: NativePptxTheme): string {
   return theme.colors.canvas;
 }
 
-function codeFontSize(lineCount: number): number {
-  if (lineCount <= 12) return 15;
-  if (lineCount <= 20) return 13;
-  return 11;
+const MAX_NATIVE_CODE_LINE_LENGTH = 96;
+
+function codeFontSize(lineCount: number, longestLine: number): number {
+  let verticalSize = 11;
+
+  if (lineCount <= 12) {
+    verticalSize = 15;
+  } else if (lineCount <= 20) {
+    verticalSize = 13;
+  }
+
+  let horizontalSize = 11;
+
+  if (longestLine <= 72) {
+    horizontalSize = 15;
+  } else if (longestLine <= 88) {
+    horizontalSize = 13;
+  }
+
+  return Math.min(verticalSize, horizontalSize);
+}
+
+function wrapCodeLine(line: string, maximumLength: number): string[] {
+  if (line.length <= maximumLength || !line.trim()) {
+    return [line];
+  }
+
+  const indentation = line.match(/^\s*/u)?.[0] ?? '';
+  const words = line.trim().split(/\s+/u);
+  const wrapped: string[] = [];
+  let current = indentation;
+
+  for (const word of words) {
+    const separator = current.trim() ? ' ' : '';
+    const candidate = `${current}${separator}${word}`;
+
+    if (candidate.length <= maximumLength || !current.trim()) {
+      current = candidate;
+      continue;
+    }
+
+    wrapped.push(current);
+    current = `${indentation}${word}`;
+  }
+
+  wrapped.push(current);
+  return wrapped;
+}
+
+export function wrapCodeForNativePptx(value: string): string {
+  return value
+    .split(/\r?\n/u)
+    .flatMap((line) => wrapCodeLine(line, MAX_NATIVE_CODE_LINE_LENGTH))
+    .join('\n');
 }
 
 export interface RenderNativePptxOptions {
@@ -719,11 +769,12 @@ function renderCode(
   pageNumber: number,
   theme: NativePptxTheme,
 ): void {
-  const lines = slideSpec.code.split(/\r?\n/u);
+  const displayCode = wrapCodeForNativePptx(slideSpec.code);
+  const lines = displayCode.split(/\r?\n/u);
 
   if (lines.length > 28) {
     throw new Error(
-      `${slideSpec.slideId} contains ${lines.length} code lines; the native code layout currently supports at most 28.`,
+      `${slideSpec.slideId} contains ${lines.length} visual code lines after wrapping; the native code layout currently supports at most 28.`,
     );
   }
 
@@ -731,7 +782,7 @@ function renderCode(
 
   if (longestLine > 110) {
     throw new Error(
-      `${slideSpec.slideId} contains a code line ${longestLine} characters long; split or simplify it before native rendering.`,
+      `${slideSpec.slideId} contains an unbreakable code segment ${longestLine} characters long; split or simplify it before native rendering.`,
     );
   }
 
@@ -794,9 +845,9 @@ function renderCode(
     color: theme.colors.accent,
   });
 
-  const fontSize = codeFontSize(lines.length);
+  const fontSize = codeFontSize(lines.length, longestLine);
 
-  slide.addText(slideSpec.code, {
+  slide.addText(displayCode, {
     x: 4.67,
     y: 2.25,
     w: 7.55,

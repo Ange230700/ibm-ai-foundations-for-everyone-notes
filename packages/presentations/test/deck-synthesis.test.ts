@@ -19,6 +19,14 @@ A module used to test automatic native-deck synthesis.
 
 - Explain native deck synthesis.
 - Preserve canonical resources.
+- Describe deterministic slide identities.
+- Keep language structures aligned.
+- Split long objective lists safely.
+- Preserve objective order.
+- Keep source references.
+- Respect native layout limits.
+- Validate every generated slide.
+- Produce native PowerPoint output.
 
 ## Core Concepts
 
@@ -126,6 +134,24 @@ test('native DeckSpec synthesis keeps EN and FR structural slide identity aligne
   assert.equal(englishObjectives?.title, 'Learning objectives');
 
   assert.equal(frenchObjectives?.title, 'Objectifs d’apprentissage');
+
+  const englishObjectiveSlides = english.slides.filter((slide) => slide.kind === 'objectives');
+  const frenchObjectiveSlides = french.slides.filter((slide) => slide.kind === 'objectives');
+
+  assert.deepEqual(
+    englishObjectiveSlides.map((slide) => slide.items.length),
+    [5, 5],
+  );
+  assert.deepEqual(
+    frenchObjectiveSlides.map((slide) => slide.items.length),
+    [5, 5],
+  );
+  assert.deepEqual(
+    englishObjectiveSlides.map((slide) => slide.slideId),
+    ['objectives', 'objectives-02'],
+  );
+  assert.equal(englishObjectiveSlides[1]?.title, 'Learning objectives (continued)');
+  assert.equal(frenchObjectiveSlides[1]?.title, 'Objectifs d’apprentissage (suite)');
 
   assert.notEqual(english.audience, french.audience);
 

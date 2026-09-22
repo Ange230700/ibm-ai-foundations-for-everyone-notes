@@ -246,10 +246,16 @@ function validateTableSlide(
     throw new TypeError(`${label} has invalid table fields.`);
   }
 
-  if (
-    JSON.stringify(value.headers) !== JSON.stringify(expectedHeaders) ||
-    JSON.stringify(value.rows) !== JSON.stringify(expectedRows)
-  ) {
+  const rows = value.rows as string[][];
+  const serializedRows = JSON.stringify(rows);
+  const matchesCanonicalSlice =
+    (rows.length === 0 && expectedRows.length === 0) ||
+    expectedRows.some(
+      (_, start) =>
+        JSON.stringify(expectedRows.slice(start, start + rows.length)) === serializedRows,
+    );
+
+  if (JSON.stringify(value.headers) !== JSON.stringify(expectedHeaders) || !matchesCanonicalSlice) {
     throw new Error(`${label} silently changes canonical table content.`);
   }
 }

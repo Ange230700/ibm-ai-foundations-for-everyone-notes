@@ -1,6 +1,6 @@
-import type { ModuleContent } from '../content/model.js';
+import type { ModuleContent, TableBlock } from '../content/model.js';
 import { descendantBlocks, descendantSections } from './content-tree.js';
-import type { DeckSpec } from './model.js';
+import type { DeckSpec, TableSlideSpec } from './model.js';
 
 export interface DeckResourceCoverage {
   diagrams: number;
@@ -38,6 +38,43 @@ function assertExactlyOnce(
   }
 }
 
+function sameRows(left: readonly string[][], right: readonly string[][]): boolean {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function assertTableCoverage(
+  expectedTables: readonly TableBlock[],
+  actualSlides: readonly TableSlideSpec[],
+): void {
+  const expectedIds = new Set(expectedTables.map((table) => table.id));
+
+  for (const slide of actualSlides) {
+    if (!expectedIds.has(slide.tableId)) {
+      throw new Error(`Deck contains unexpected table resource ${slide.tableId}.`);
+    }
+  }
+
+  for (const table of expectedTables) {
+    const segments = actualSlides.filter((slide) => slide.tableId === table.id);
+
+    if (segments.length === 0) {
+      throw new Error(`Deck resource coverage requires table slides for ${table.id}; found 0.`);
+    }
+
+    const [headers = [], ...rows] = table.rows;
+
+    if (segments.some((slide) => !sameRows([slide.headers], [headers]))) {
+      throw new Error(`Deck table segments for ${table.id} do not preserve canonical headers.`);
+    }
+
+    const actualRows = segments.flatMap((slide) => slide.rows);
+
+    if (!sameRows(actualRows, rows)) {
+      throw new Error(`Deck table segments for ${table.id} do not reproduce canonical rows.`);
+    }
+  }
+}
+
 export function validateDeckResourceCoverage(
   spec: DeckSpec,
   content: ModuleContent,
@@ -48,8 +85,7 @@ export function validateDeckResourceCoverage(
 
   const expectedTables = descendantSections(content.sections)
     .flatMap((section) => descendantBlocks(section.blocks))
-    .filter((block) => block.kind === 'table')
-    .map((table) => table.id);
+    .filter((block): block is TableBlock => block.kind === 'table');
 
   const actualDiagrams = spec.slides
     .filter((slide) => slide.kind === 'diagram')
@@ -59,15 +95,15 @@ export function validateDeckResourceCoverage(
     .filter((slide) => slide.kind === 'code')
     .map((slide) => slide.codeExampleId);
 
-  const actualTables = spec.slides
-    .filter((slide) => slide.kind === 'table')
-    .map((slide) => slide.tableId);
+  const actualTables = spec.slides.filter(
+    (slide): slide is TableSlideSpec => slide.kind === 'table',
+  );
 
   assertExactlyOnce('diagram', expectedDiagrams, actualDiagrams);
 
   assertExactlyOnce('code', expectedCode, actualCode);
 
-  assertExactlyOnce('table', expectedTables, actualTables);
+  assertTableCoverage(expectedTables, actualTables);
 
   return {
     diagrams: expectedDiagrams.length,
