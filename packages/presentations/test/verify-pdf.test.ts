@@ -26,6 +26,12 @@ This introductory paragraph must survive the PDF pipeline.
 | --- | --- |
 | Markdown | PDF |
 
+## Wrapped Comparison
+
+| Label | Discriminative AI | Generative AI |
+| --- | --- | --- |
+| Main question | Which category or prediction fits this input? | What content can be produced for this request? |
+
 ## Code Example
 
 \`\`\`ts

@@ -55,9 +55,11 @@ function repositoryRelativePath(repositoryRoot: string, absolutePath: string): s
 export function normalizePdfSemanticText(value: string): string {
   return value
     .normalize('NFKC')
+    .replace(/[\u2018\u2019\u201b\u02bc]/gu, "'")
     .replaceAll('\u00ad', '')
     .replace(/(\p{L})-\s+(?=\p{L})/gu, '$1-')
     .replace(/\s+/gu, ' ')
+    .replace(/(\p{L}')\s+(?=\p{L})/gu, '$1')
     .replace(/\/\s+/gu, '/')
     .replace(/\s([,.;:!?])/gu, '$1')
     .trim();
@@ -212,49 +214,7 @@ function pageTextInReadingOrder(items: unknown[]): string {
     }
   }
 
-  positioned.sort((left, right) => {
-    const vertical = right.y - left.y;
-
-    return Math.abs(vertical) > 2 ? vertical : left.x - right.x;
-  });
-
-  const lines: Array<{
-    y: number;
-    height: number;
-    items: PositionedText[];
-  }> = [];
-
-  for (const item of positioned) {
-    const tolerance = Math.max(2, item.height * 0.35);
-
-    const line = lines.find(
-      (candidate) => Math.abs(candidate.y - item.y) <= Math.max(tolerance, candidate.height * 0.35),
-    );
-
-    if (line) {
-      line.items.push(item);
-
-      line.height = Math.max(line.height, item.height);
-
-      continue;
-    }
-
-    lines.push({
-      y: item.y,
-      height: item.height,
-      items: [item],
-    });
-  }
-
-  lines.sort((left, right) => right.y - left.y);
-
-  return lines
-    .map((line) => {
-      line.items.sort((left, right) => left.x - right.x);
-
-      return line.items.map((item) => item.str).join(' ');
-    })
-    .join('\n');
+  return positioned.map((item) => item.str).join('\n');
 }
 
 async function extractPdfText(bytes: Uint8Array): Promise<{
@@ -342,11 +302,16 @@ export async function verifyModulePdf(
     const match = actual.indexOf(block, cursor);
 
     if (match < 0) {
+      const anchor = block.slice(0, Math.min(24, block.length));
+      const anchorMatch = actual.indexOf(anchor, cursor);
+      const excerptStart = anchorMatch >= 0 ? anchorMatch : cursor;
+      const actualExcerpt = actual.slice(excerptStart, excerptStart + block.length + 80);
       throw new Error(
         [
           `Semantic PDF mismatch: ${relativePdfPath}`,
           `block=${index + 1}/${expectedBlocks.length}`,
           `expected=${JSON.stringify(block)}`,
+          `actual=${JSON.stringify(actualExcerpt)}`,
         ].join(' | '),
       );
     }
