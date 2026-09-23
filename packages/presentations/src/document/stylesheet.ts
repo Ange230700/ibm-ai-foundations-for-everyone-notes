@@ -10,6 +10,7 @@ export interface DocumentThemeTokens {
   alternateSurface: string;
   border: string;
   accent: string;
+  rule: string;
   accentSurface: string;
   link: string;
 }
@@ -20,17 +21,18 @@ export interface DocumentStylesheetResult {
 }
 
 export const DEFAULT_DOCUMENT_THEME: DocumentThemeTokens = {
-  fontFamily: 'Inter, Arial, sans-serif',
+  fontFamily: '"Segoe UI", Arial, sans-serif',
   monoFontFamily: 'Consolas, "Courier New", monospace',
   background: '#FFFFFF',
-  foreground: '#111111',
-  muted: '#5F6368',
-  surface: '#F5F5F5',
-  alternateSurface: '#FAFAFA',
-  border: '#D4D4D4',
-  accent: '#333333',
-  accentSurface: '#EEEEEE',
-  link: '#333333',
+  foreground: '#122B4A',
+  muted: '#52677C',
+  surface: '#F3F3F3',
+  alternateSurface: '#FAFCFD',
+  border: '#C9D7DF',
+  accent: '#1673AE',
+  rule: '#4CC3D9',
+  accentSurface: '#EAF7FA',
+  link: '#1673AE',
 };
 
 export function createDocumentStylesheet(
@@ -134,7 +136,7 @@ h6 {
 h2 {
   margin: 11mm 0 4mm;
   padding-bottom: 2mm;
-  border-bottom: 1.5pt solid ${theme.accent};
+  border-bottom: 1.5pt solid ${theme.rule};
   font-size: 20pt;
   line-height: 1.18;
 }
@@ -199,7 +201,7 @@ li > ol {
 blockquote {
   margin: 5mm 0;
   padding: 3.5mm 5mm;
-  border-left: 3pt solid ${theme.accent};
+  border-left: 3pt solid ${theme.rule};
   background: ${theme.surface};
   color: ${theme.foreground};
   break-inside: avoid;

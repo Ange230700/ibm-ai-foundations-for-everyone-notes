@@ -16,13 +16,13 @@ export interface MermaidConfigurationResult {
 }
 
 export const DEFAULT_MERMAID_THEME: MermaidThemeTokens = {
-  fontFamily: 'Inter, Arial, sans-serif',
-  background: '#FFFFFF',
-  foreground: '#111111',
-  surface: '#F5F5F5',
-  border: '#666666',
-  accent: '#333333',
-  mutedBorder: '#D4D4D4',
+  fontFamily: 'Segoe UI, Arial, sans-serif',
+  background: '#F3F3F3',
+  foreground: '#122B4A',
+  surface: '#EAF7FA',
+  border: '#122B4A',
+  accent: '#4CC3D9',
+  mutedBorder: '#4CC3D9',
 };
 
 export function createMermaidConfiguration(

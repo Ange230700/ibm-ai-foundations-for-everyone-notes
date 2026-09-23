@@ -97,7 +97,7 @@ function fixture() {
     title: content.title,
     audience: 'Learners reviewing the module',
     purpose: 'Present canonical module content as native slides',
-    themeId: 'default-native-v1',
+    themeId: 'kraak-consulting-native-v1',
     sourcePath: content.sourcePath,
     sourceSha256: content.sourceSha256,
     moduleContentSha256: content.moduleContentSha256,

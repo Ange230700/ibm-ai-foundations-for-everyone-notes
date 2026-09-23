@@ -8,6 +8,12 @@ export interface NativePptxTheme {
     body: string;
     mono: string;
   };
+  brand: {
+    name: string;
+    footerText: string;
+    logoPath: string;
+    symbolPath: string;
+  };
   colors: {
     canvas: string;
     ink: string;
@@ -21,19 +27,25 @@ export interface NativePptxTheme {
 
 export const DEFAULT_NATIVE_PPTX_THEME: NativePptxTheme = {
   schemaVersion: 1,
-  id: 'default-native-v1',
+  id: 'kraak-consulting-native-v1',
   fonts: {
-    heading: 'Arial',
-    body: 'Arial',
+    heading: 'Segoe UI',
+    body: 'Segoe UI',
     mono: 'Consolas',
   },
+  brand: {
+    name: 'KRAAK Consulting',
+    footerText: 'KRAAK CONSULTING',
+    logoPath: 'packages/presentations/assets/brand/kraak/kraak-logo.png',
+    symbolPath: 'packages/presentations/assets/brand/kraak/kraak-symbol.png',
+  },
   colors: {
-    canvas: 'FFFFFF',
-    ink: '111111',
-    muted: '5F6368',
-    surface: 'F5F5F5',
-    border: 'D4D4D4',
-    accent: '333333',
+    canvas: 'F3F3F3',
+    ink: '122B4A',
+    muted: '122B4A',
+    surface: 'F4FBFD',
+    border: '4CC3D9',
+    accent: '1673AE',
     inverse: 'FFFFFF',
   },
 };

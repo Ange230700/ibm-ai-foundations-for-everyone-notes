@@ -1,5 +1,6 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import { dirname, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';
 
@@ -12,7 +13,7 @@ import {
   type ResolvedNativePptxDiagramAsset,
 } from './resources.js';
 
-export const PPTX_RENDERER_VERSION = 2;
+export const PPTX_RENDERER_VERSION = 4;
 
 const SLIDE = {
   width: (7.5 / 9) * 16,
@@ -33,16 +34,56 @@ const SUPPORTED_SLIDE_KINDS = new Set<SlideSpec['kind']>([
   'summary',
 ]);
 
-function listFontSize(itemCount: number): number {
-  if (itemCount <= 4) return 21;
-  if (itemCount <= 6) return 18;
+function estimatedWrappedLines(value: string, charactersPerLine: number): number {
+  return value.split(/\r?\n/u).reduce((total, line) => {
+    const normalized = line.replace(/\s+/gu, ' ').trim();
+
+    return total + Math.max(1, Math.ceil(normalized.length / charactersPerLine));
+  }, 0);
+}
+
+function proportionalHeights(
+  weights: readonly number[],
+  availableHeight: number,
+  minimumHeight: number,
+): number[] {
+  if (weights.length === 0) {
+    return [];
+  }
+
+  const minimumTotal = minimumHeight * weights.length;
+
+  if (minimumTotal >= availableHeight) {
+    return weights.map(() => availableHeight / weights.length);
+  }
+
+  const normalizedWeights = weights.map((weight) => Math.max(1, weight));
+  const totalWeight = normalizedWeights.reduce((total, weight) => total + weight, 0);
+  const flexibleHeight = availableHeight - minimumTotal;
+
+  return normalizedWeights.map((weight) => minimumHeight + flexibleHeight * (weight / totalWeight));
+}
+
+function listFontSize(itemCount: number, visualLines: number): number {
+  if (itemCount <= 4 && visualLines <= 6) return 21;
+  if (itemCount <= 6 && visualLines <= 9) return 18;
   return 16;
 }
 
-function tableBodyFontSize(rowCount: number, columnCount: number): number {
-  if (rowCount <= 6 && columnCount <= 4) return 15;
-  if (rowCount <= 8) return 13;
+function tableBodyFontSize(
+  rowCount: number,
+  columnCount: number,
+  maximumVisualLines: number,
+): number {
+  if (rowCount <= 6 && columnCount <= 4 && maximumVisualLines <= 2) return 15;
+  if (rowCount <= 8 && maximumVisualLines <= 3) return 13;
   return 11;
+}
+
+function tableRowVisualLines(row: readonly string[], columnCount: number): number {
+  const charactersPerLine = Math.max(16, Math.floor(105 / Math.max(1, columnCount)));
+
+  return Math.max(1, ...row.map((cell) => estimatedWrappedLines(cell, charactersPerLine)));
 }
 
 function tableRowFillColor(rowIndex: number, theme: NativePptxTheme): string {
@@ -128,6 +169,10 @@ export interface NativePptxArtifactRecord {
   deckSpecSha256: string;
   themeId: string;
   themeSha256: string;
+  brandAssets: {
+    logo: NativePptxBrandAssetRecord;
+    symbol: NativePptxBrandAssetRecord;
+  };
   renderInputSha256: string;
   renderer: {
     name: 'pptxgenjs';
@@ -147,6 +192,24 @@ type PptxGenJSInstance = InstanceType<PptxGenJSConstructor>;
 type PptxSlide = ReturnType<PptxGenJSInstance['addSlide']>;
 
 type PptxTableRows = Parameters<PptxSlide['addTable']>[0];
+
+const PRESENTATIONS_PACKAGE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
+
+const PRESENTATIONS_PACKAGE_PREFIX = 'packages/presentations/';
+
+interface NativePptxBrandAssetRecord {
+  path: string;
+  sha256: string;
+}
+
+interface ResolvedNativePptxBrandAsset extends NativePptxBrandAssetRecord {
+  absolutePath: string;
+}
+
+interface ResolvedNativePptxBrand {
+  logo: ResolvedNativePptxBrandAsset;
+  symbol: ResolvedNativePptxBrandAsset;
+}
 
 function unwrapDefaultExport(value: unknown): unknown {
   let current = value;
@@ -188,6 +251,84 @@ function repositoryRelativePath(repositoryRoot: string, absolutePath: string): s
   return value;
 }
 
+async function resolveBrandAsset(
+  repositoryRoot: string,
+  relativePath: string,
+  label: string,
+): Promise<ResolvedNativePptxBrandAsset> {
+  const path = toPosixPath(relativePath);
+  const repositoryPath = resolve(repositoryRoot, path);
+
+  repositoryRelativePath(repositoryRoot, repositoryPath);
+
+  const candidates = [repositoryPath];
+
+  if (path.startsWith(PRESENTATIONS_PACKAGE_PREFIX)) {
+    const packagePath = resolve(
+      PRESENTATIONS_PACKAGE_ROOT,
+      path.slice(PRESENTATIONS_PACKAGE_PREFIX.length),
+    );
+
+    repositoryRelativePath(PRESENTATIONS_PACKAGE_ROOT, packagePath);
+    candidates.push(packagePath);
+  }
+
+  let absolutePath: string | undefined;
+  let bytes: Buffer | undefined;
+
+  for (const candidate of candidates) {
+    try {
+      bytes = await readFile(candidate);
+      absolutePath = candidate;
+      break;
+    } catch (error) {
+      if (
+        error === null ||
+        typeof error !== 'object' ||
+        !('code' in error) ||
+        error.code !== 'ENOENT'
+      ) {
+        throw error;
+      }
+    }
+  }
+
+  if (!absolutePath || !bytes) {
+    throw new Error(`KRAAK ${label} asset was not found: ${path}`);
+  }
+
+  if (
+    bytes.byteLength < 8 ||
+    bytes[0] !== 0x89 ||
+    bytes[1] !== 0x50 ||
+    bytes[2] !== 0x4e ||
+    bytes[3] !== 0x47
+  ) {
+    throw new Error(`KRAAK ${label} must be a valid PNG asset: ${path}`);
+  }
+
+  return {
+    absolutePath,
+    path,
+    sha256: sha256(bytes),
+  };
+}
+
+async function resolveNativePptxBrand(
+  repositoryRoot: string,
+  theme: NativePptxTheme,
+): Promise<ResolvedNativePptxBrand> {
+  const [logo, symbol] = await Promise.all([
+    resolveBrandAsset(repositoryRoot, theme.brand.logoPath, 'logo'),
+    resolveBrandAsset(repositoryRoot, theme.brand.symbolPath, 'symbol'),
+  ]);
+
+  return {
+    logo,
+    symbol,
+  };
+}
+
 function sourceNotes(slide: SlideSpec): string {
   return [
     '[Sources]',
@@ -219,6 +360,7 @@ function addFooter(
   spec: DeckSpec,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   slide.addShape('line', {
     x: SLIDE.left,
@@ -231,12 +373,33 @@ function addFooter(
     },
   });
 
-  slide.addText(spec.deckId, {
+  slide.addImage({
+    path: brand.symbol.absolutePath,
     x: SLIDE.left,
+    y: 7.01,
+    w: 0.23,
+    h: 0.23,
+  });
+
+  slide.addText(theme.brand.footerText, {
+    x: SLIDE.left + 0.35,
     y: 7.02,
-    w: 9.5,
+    w: 3.2,
     h: 0.22,
     margin: 0,
+    fontFace: theme.fonts.body,
+    fontSize: 9,
+    bold: true,
+    color: theme.colors.muted,
+  });
+
+  slide.addText(spec.deckId, {
+    x: 4.2,
+    y: 7.02,
+    w: 5,
+    h: 0.22,
+    margin: 0,
+    align: 'center',
     fontFace: theme.fonts.body,
     fontSize: 9,
     color: theme.colors.muted,
@@ -278,8 +441,9 @@ function finishSlide(
   slideSpec: SlideSpec,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
-  addFooter(slide, spec, pageNumber, theme);
+  addFooter(slide, spec, pageNumber, theme, brand);
 
   slide.addNotes(sourceNotes(slideSpec));
 }
@@ -328,6 +492,7 @@ function renderTitle(
   slideSpec: Extract<SlideSpec, { kind: 'title' }>,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   const slide = pptx.addSlide();
 
@@ -336,7 +501,7 @@ function renderTitle(
   slide.addText(slideSpec.subtitle, {
     x: SLIDE.left,
     y: 0.75,
-    w: 8.8,
+    w: 8.45,
     h: 0.4,
     margin: 0,
     fontFace: theme.fonts.body,
@@ -344,6 +509,14 @@ function renderTitle(
     bold: true,
     color: theme.colors.accent,
     fit: 'shrink',
+  });
+
+  slide.addImage({
+    path: brand.logo.absolutePath,
+    x: 9.7,
+    y: 0.34,
+    w: 2.95,
+    h: 0.99,
   });
 
   slide.addShape('rect', {
@@ -374,7 +547,7 @@ function renderTitle(
     valign: 'middle',
   });
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 function renderListSlide(
@@ -388,6 +561,7 @@ function renderListSlide(
   >,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   if (slideSpec.items.length === 0) {
     throw new Error(`${slideSpec.slideId} has no list items.`);
@@ -421,16 +595,18 @@ function renderListSlide(
 
   const top = slideSpec.kind === 'objectives' && slideSpec.leadIn ? 1.86 : 1.55;
 
-  const availableHeight = 6.55 - top;
-
   const gap = 0.11;
-
-  const rowHeight = (availableHeight - gap * (slideSpec.items.length - 1)) / slideSpec.items.length;
-
-  const fontSize = listFontSize(slideSpec.items.length);
+  const availableHeight = 6.55 - top - gap * (slideSpec.items.length - 1);
+  const initialWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, 88));
+  const visualLines = initialWeights.reduce((total, weight) => total + weight, 0);
+  const fontSize = listFontSize(slideSpec.items.length, visualLines);
+  const charactersPerLine = fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
+  const rowWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, charactersPerLine));
+  const rowHeights = proportionalHeights(rowWeights, availableHeight, 0.46);
+  let y = top;
 
   slideSpec.items.forEach((item, index) => {
-    const y = top + index * (rowHeight + gap);
+    const rowHeight = rowHeights[index] ?? availableHeight / slideSpec.items.length;
 
     slide.addShape('rect', {
       x: SLIDE.left,
@@ -472,9 +648,11 @@ function renderListSlide(
       color: theme.colors.ink,
       fit: 'shrink',
     });
+
+    y += rowHeight + gap;
   });
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 function renderConcepts(
@@ -483,6 +661,7 @@ function renderConcepts(
   slideSpec: Extract<SlideSpec, { kind: 'concepts' }>,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   if (slideSpec.concepts.length === 0 || slideSpec.concepts.length > 3) {
     throw new Error(
@@ -505,6 +684,16 @@ function renderConcepts(
 
   slideSpec.concepts.forEach((concept, index) => {
     const x = SLIDE.left + index * (cardWidth + gap);
+    const contentWidth = cardWidth - 0.52;
+    const titleFontSize = slideSpec.concepts.length === 3 ? 18 : 20;
+    const bodyFontSize = slideSpec.concepts.length === 3 ? 15 : 16;
+    const titleCharactersPerLine = Math.max(22, Math.floor(contentWidth * 9));
+    const bodyCharactersPerLine = Math.max(28, Math.floor(contentWidth * 12));
+    const titleLines = estimatedWrappedLines(concept.title, titleCharactersPerLine);
+    const bodyLines = estimatedWrappedLines(concept.explanation, bodyCharactersPerLine);
+    const titleHeight = Math.min(1.5, Math.max(0.64, titleLines * 0.34));
+    const bodyTop = 2.32 + titleHeight + 0.13;
+    const bodyHeight = Math.max(0.8, 6.12 - bodyTop);
 
     slide.addShape('rect', {
       x,
@@ -535,11 +724,11 @@ function renderConcepts(
     slide.addText(concept.title, {
       x: x + 0.26,
       y: 2.32,
-      w: cardWidth - 0.52,
-      h: 1.08,
+      w: contentWidth,
+      h: titleHeight,
       margin: 0,
       fontFace: theme.fonts.heading,
-      fontSize: 20,
+      fontSize: titleFontSize,
       bold: true,
       color: theme.colors.ink,
       fit: 'shrink',
@@ -547,18 +736,18 @@ function renderConcepts(
 
     slide.addText(concept.explanation, {
       x: x + 0.26,
-      y: 3.55,
-      w: cardWidth - 0.52,
-      h: 2.48,
+      y: bodyTop,
+      w: contentWidth,
+      h: bodyHeight,
       margin: 0,
       fontFace: theme.fonts.body,
-      fontSize: 16,
+      fontSize: bodyLines > 8 ? 14 : bodyFontSize,
       color: theme.colors.muted,
       fit: 'shrink',
     });
   });
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 function renderDiagram(
@@ -567,6 +756,7 @@ function renderDiagram(
   slideSpec: Extract<SlideSpec, { kind: 'diagram' }>,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
   assets: Map<string, ResolvedNativePptxDiagramAsset>,
 ): void {
   const asset = assets.get(slideSpec.diagramId);
@@ -661,7 +851,7 @@ function renderDiagram(
     });
   }
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 function renderTable(
@@ -670,6 +860,7 @@ function renderTable(
   slideSpec: Extract<SlideSpec, { kind: 'table' }>,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   const columnCount = slideSpec.headers.length;
 
@@ -709,9 +900,14 @@ function renderTable(
     fit: 'shrink',
   });
 
-  const bodyFontSize = tableBodyFontSize(rowCount, columnCount);
-
   const values = [slideSpec.headers, ...slideSpec.rows];
+  const rowWeights = values.map((row, index) => {
+    const visualLines = tableRowVisualLines(row, columnCount);
+
+    return index === 0 ? Math.max(1.25, visualLines) : visualLines;
+  });
+  const maximumVisualLines = Math.max(...rowWeights);
+  const bodyFontSize = tableBodyFontSize(rowCount, columnCount, maximumVisualLines);
 
   const tableRows: PptxTableRows = values.map((row, rowIndex) =>
     row.map((cell) => ({
@@ -732,7 +928,7 @@ function renderTable(
 
   const usableWidth = SLIDE.width - SLIDE.left - SLIDE.right;
 
-  const rowHeight = Math.min(0.72, 4.45 / rowCount);
+  const rowHeights = proportionalHeights(rowWeights, 4.45, 0.34);
 
   slide.addTable(tableRows, {
     x: SLIDE.left,
@@ -744,12 +940,7 @@ function renderTable(
       },
       () => usableWidth / columnCount,
     ),
-    rowH: Array.from(
-      {
-        length: rowCount,
-      },
-      () => rowHeight,
-    ),
+    rowH: rowHeights,
     border: {
       type: 'solid',
       color: theme.colors.border,
@@ -759,7 +950,7 @@ function renderTable(
     autoPage: false,
   });
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 function renderCode(
@@ -768,6 +959,7 @@ function renderCode(
   slideSpec: Extract<SlideSpec, { kind: 'code' }>,
   pageNumber: number,
   theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
 ): void {
   const displayCode = wrapCodeForNativePptx(slideSpec.code);
   const lines = displayCode.split(/\r?\n/u);
@@ -861,7 +1053,7 @@ function renderCode(
     valign: 'top',
   });
 
-  finishSlide(slide, spec, slideSpec, pageNumber, theme);
+  finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
 export function validatePptxBytes(bytes: Uint8Array, label: string): void {
@@ -890,6 +1082,8 @@ export async function renderNativePptx(
     throw new Error(`Deck theme ${spec.themeId} does not match renderer theme ${theme.id}.`);
   }
 
+  const brand = await resolveNativePptxBrand(repositoryRoot, theme);
+
   const diagramAssets = await resolveNativePptxDiagramAssets(
     repositoryRoot,
     spec,
@@ -907,9 +1101,9 @@ export async function renderNativePptx(
     );
   }
 
-  const author = options.author ?? 'Coursera Program Notes';
+  const author = options.author ?? theme.brand.name;
 
-  const company = options.company ?? 'Coursera Program Notes';
+  const company = options.company ?? theme.brand.name;
 
   const PptxGenJS = await loadPptxGenJS();
 
@@ -922,6 +1116,7 @@ export async function renderNativePptx(
   pptx.subject = spec.purpose;
   pptx.title = spec.title;
   pptx.revision = '1';
+  (pptx as PptxGenJSInstance & { lang: string }).lang = spec.language === 'fr' ? 'fr-FR' : 'en-US';
 
   pptx.theme = {
     headFontFace: theme.fonts.heading,
@@ -939,29 +1134,29 @@ export async function renderNativePptx(
 
     switch (slideSpec.kind) {
       case 'title':
-        renderTitle(pptx, spec, slideSpec, pageNumber, theme);
+        renderTitle(pptx, spec, slideSpec, pageNumber, theme, brand);
         break;
 
       case 'objectives':
       case 'overview':
       case 'summary':
-        renderListSlide(pptx, spec, slideSpec, pageNumber, theme);
+        renderListSlide(pptx, spec, slideSpec, pageNumber, theme, brand);
         break;
 
       case 'concepts':
-        renderConcepts(pptx, spec, slideSpec, pageNumber, theme);
+        renderConcepts(pptx, spec, slideSpec, pageNumber, theme, brand);
         break;
 
       case 'diagram':
-        renderDiagram(pptx, spec, slideSpec, pageNumber, theme, diagramAssets);
+        renderDiagram(pptx, spec, slideSpec, pageNumber, theme, brand, diagramAssets);
         break;
 
       case 'table':
-        renderTable(pptx, spec, slideSpec, pageNumber, theme);
+        renderTable(pptx, spec, slideSpec, pageNumber, theme, brand);
         break;
 
       case 'code':
-        renderCode(pptx, spec, slideSpec, pageNumber, theme);
+        renderCode(pptx, spec, slideSpec, pageNumber, theme, brand);
         break;
     }
   }
@@ -995,6 +1190,16 @@ export async function renderNativePptx(
       pptxgenjsVersion: pptx.version,
       deckSpecSha256: specSha256,
       themeSha256,
+      brandAssets: {
+        logo: {
+          path: brand.logo.path,
+          sha256: brand.logo.sha256,
+        },
+        symbol: {
+          path: brand.symbol.path,
+          sha256: brand.symbol.sha256,
+        },
+      },
       diagramAssets: diagramIdentity,
       metadata: {
         author,
@@ -1023,6 +1228,16 @@ export async function renderNativePptx(
     deckSpecSha256: specSha256,
     themeId: theme.id,
     themeSha256,
+    brandAssets: {
+      logo: {
+        path: brand.logo.path,
+        sha256: brand.logo.sha256,
+      },
+      symbol: {
+        path: brand.symbol.path,
+        sha256: brand.symbol.sha256,
+      },
+    },
     renderInputSha256,
     renderer: {
       name: 'pptxgenjs',

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "primaryFont": "Inter",
-  "fallbackStack": ["Arial", "Helvetica", "sans-serif"],
-  "monospaceFont": "JetBrains Mono",
-  "monospaceFallbackStack": ["Consolas", "Courier New", "monospace"],
+  "primaryFont": "Segoe UI",
+  "fallbackStack": ["Arial", "sans-serif"],
+  "monospaceFont": "Consolas",
+  "monospaceFallbackStack": ["Courier New", "monospace"],
   "minimumBodyPt": 18,
   "minimumCodePt": 16
 }

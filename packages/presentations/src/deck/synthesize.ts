@@ -55,6 +55,12 @@ const labels = {
 
 const MAX_OBJECTIVES_PER_SLIDE = 8;
 
+const MAX_LIST_VISUAL_LINES_PER_SLIDE = 10;
+
+const MAX_TABLE_ROWS_PER_SLIDE = 10;
+
+const MAX_TABLE_VISUAL_LINES_PER_SLIDE = 20;
+
 function normalizeText(value: string): string {
   return value.normalize('NFKC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase();
 }
@@ -213,35 +219,127 @@ function nearbyExplanation(content: ModuleContent, blockId: string, fallback: st
   return firstText(section)?.text ?? fallback;
 }
 
-function grouped<T>(items: readonly T[], size: number): T[][] {
-  const groups: T[][] = [];
+interface WeightedGroupOptions<T> {
+  maximumItems: number;
+  maximumWeight: number;
+  weight: (item: T) => number;
+}
 
-  for (let index = 0; index < items.length; index += size) {
-    groups.push(items.slice(index, index + size));
+function estimatedWrappedLines(value: string, charactersPerLine: number): number {
+  return value.split(/\r?\n/u).reduce((total, line) => {
+    const normalized = line.replace(/\s+/gu, ' ').trim();
+
+    return total + Math.max(1, Math.ceil(normalized.length / charactersPerLine));
+  }, 0);
+}
+
+function balancedWeightedGroups<T>(items: readonly T[], options: WeightedGroupOptions<T>): T[][] {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const weights = items.map((item) => Math.max(1, options.weight(item)));
+  const groups: T[][] = [];
+  let current: T[] = [];
+  let currentWeight = 0;
+
+  items.forEach((item, index) => {
+    const weight = weights[index] ?? 1;
+
+    if (
+      current.length > 0 &&
+      (current.length >= options.maximumItems || currentWeight + weight > options.maximumWeight)
+    ) {
+      groups.push(current);
+      current = [];
+      currentWeight = 0;
+    }
+
+    current.push(item);
+    currentWeight += weight;
+  });
+
+  if (current.length > 0) {
+    groups.push(current);
+  }
+
+  const uniformWeight = weights.every((weight) => weight === weights[0]);
+
+  if (groups.length > 1 && uniformWeight) {
+    const baseSize = Math.floor(items.length / groups.length);
+    const extraItems = items.length % groups.length;
+    const balanced: T[][] = [];
+    let offset = 0;
+
+    for (let index = 0; index < groups.length; index += 1) {
+      const size = baseSize + (index < extraItems ? 1 : 0);
+
+      balanced.push(items.slice(offset, offset + size));
+      offset += size;
+    }
+
+    return balanced;
   }
 
   return groups;
 }
 
-function balancedGroups<T>(items: readonly T[], maximumSize: number): T[][] {
-  if (items.length === 0) {
-    return [];
+function listGroups(items: readonly string[], maximumItems = 8): string[][] {
+  return balancedWeightedGroups(items, {
+    maximumItems,
+    maximumWeight: MAX_LIST_VISUAL_LINES_PER_SLIDE,
+    weight: (item) => estimatedWrappedLines(item, 88),
+  });
+}
+
+function conceptDensity(section: Section): number {
+  const explanation = firstText(section)?.text ?? '';
+
+  return estimatedWrappedLines(section.title, 34) + estimatedWrappedLines(explanation, 48);
+}
+
+function maximumConceptsFor(section: Section): number {
+  const explanation = firstText(section)?.text ?? '';
+  const density = conceptDensity(section);
+
+  if (section.title.length > 110 || explanation.length > 430 || density > 16) {
+    return 1;
   }
 
-  const groupCount = Math.ceil(items.length / maximumSize);
-  const baseSize = Math.floor(items.length / groupCount);
-  const extraItems = items.length % groupCount;
-  const groups: T[][] = [];
-  let offset = 0;
+  if (section.title.length > 65 || explanation.length > 210 || density > 10) {
+    return 2;
+  }
 
-  for (let index = 0; index < groupCount; index += 1) {
-    const size = baseSize + (index < extraItems ? 1 : 0);
+  return 3;
+}
 
-    groups.push(items.slice(offset, offset + size));
-    offset += size;
+function conceptGroups(sections: readonly Section[]): Section[][] {
+  const groups: Section[][] = [];
+  let current: Section[] = [];
+
+  for (const section of sections) {
+    const proposed = [...current, section];
+    const groupLimit = Math.min(...proposed.map(maximumConceptsFor));
+
+    if (current.length > 0 && proposed.length > groupLimit) {
+      groups.push(current);
+      current = [];
+    }
+
+    current.push(section);
+  }
+
+  if (current.length > 0) {
+    groups.push(current);
   }
 
   return groups;
+}
+
+function tableRowDensity(row: readonly string[], columnCount: number): number {
+  const charactersPerLine = Math.max(16, Math.floor(105 / Math.max(1, columnCount)));
+
+  return Math.max(1, ...row.map((cell) => estimatedWrappedLines(cell, charactersPerLine)));
 }
 
 function headingFor(source: SourceRef, fallback: string): string {
@@ -377,13 +475,17 @@ function emitResource(
 
   const slide = resourceSlide(content, resource, state.resourceOrdinal);
 
-  if (slide.kind !== 'table' || slide.rows.length <= 10) {
+  if (slide.kind !== 'table') {
     state.slides.push(slide);
     return;
   }
 
   const continuation = content.language === 'fr' ? '(suite)' : '(continued)';
-  const rowGroups = balancedGroups(slide.rows, 10);
+  const rowGroups = balancedWeightedGroups(slide.rows, {
+    maximumItems: MAX_TABLE_ROWS_PER_SLIDE,
+    maximumWeight: MAX_TABLE_VISUAL_LINES_PER_SLIDE,
+    weight: (row) => tableRowDensity(row, slide.headers.length),
+  });
 
   state.slides.push(
     ...rowGroups.map((rows, index) => ({
@@ -407,16 +509,23 @@ function appendSectionSlides(
   const directItems = directTextItems(section, 5);
 
   if (directItems.length > 0) {
-    state.slides.push({
-      kind: 'overview',
-      slideId: `${sectionId}-overview`,
-      title: section.title,
-      items: directItems,
-      sourceRefs: sectionSourceRefs(section),
-    });
+    const continuation = content.language === 'fr' ? '(suite)' : '(continued)';
+
+    state.slides.push(
+      ...listGroups(directItems).map((items, index) => ({
+        kind: 'overview' as const,
+        slideId:
+          index === 0
+            ? `${sectionId}-overview`
+            : `${sectionId}-overview-${String(index + 1).padStart(2, '0')}`,
+        title: index === 0 ? section.title : `${section.title} ${continuation}`,
+        items,
+        sourceRefs: sectionSourceRefs(section),
+      })),
+    );
   }
 
-  const childGroups = grouped(section.children, 3);
+  const childGroups = conceptGroups(section.children);
 
   childGroups.forEach((group, groupIndex) => {
     if (group.length === 0) {
@@ -459,7 +568,7 @@ export function synthesizeDeckSpec(
   ];
 
   if (content.objectives.length > 0 && objectivesSection) {
-    const objectiveGroups = balancedGroups(content.objectives, MAX_OBJECTIVES_PER_SLIDE);
+    const objectiveGroups = listGroups(content.objectives, MAX_OBJECTIVES_PER_SLIDE);
 
     objectiveGroups.forEach((items, index) => {
       slides.push({
@@ -495,7 +604,7 @@ export function synthesizeDeckSpec(
   }
 
   if (content.summary.length > 0 && summarySection) {
-    const summaryGroups = balancedGroups(content.summary, 8);
+    const summaryGroups = listGroups(content.summary);
 
     slides.push(
       ...summaryGroups.map((items, index) => ({
@@ -518,7 +627,7 @@ export function synthesizeDeckSpec(
     title: content.title,
     audience: options.audience ?? text.audience,
     purpose: options.purpose ?? text.purpose,
-    themeId: options.themeId ?? 'default-native-v1',
+    themeId: options.themeId ?? 'kraak-consulting-native-v1',
     sourcePath: content.sourcePath,
     sourceSha256: content.sourceSha256,
     moduleContentSha256: content.moduleContentSha256,

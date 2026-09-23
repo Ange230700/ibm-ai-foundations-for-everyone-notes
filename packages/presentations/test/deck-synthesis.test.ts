@@ -85,6 +85,8 @@ test('native DeckSpec synthesis is deterministic', () => {
   assert.deepEqual(first, second);
 
   assert.equal(deckSpecSha256(first), deckSpecSha256(second));
+
+  assert.equal(first.themeId, 'kraak-consulting-native-v1');
 });
 
 test('native DeckSpec synthesis represents every resource exactly once', () => {

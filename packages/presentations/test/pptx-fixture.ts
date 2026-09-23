@@ -1,5 +1,6 @@
 import { mkdir, rm, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { sha256 } from '@coursera-notes/core';
 
@@ -128,7 +129,7 @@ export interface PptxFixture {
 }
 
 export async function createPptxFixture(options: PptxFixtureOptions): Promise<PptxFixture> {
-  const repositoryRoot = process.cwd();
+  const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
   const outputRoot = resolve(repositoryRoot, '.artifacts', options.name);
   const outputPath = resolve(outputRoot, options.outputFile);
   const svgPath = resolve(outputRoot, 'diagram.svg');

@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
+import JSZip from 'jszip';
+
 import {
   DEFAULT_NATIVE_PPTX_THEME,
   deckSpecSha256,
@@ -94,6 +96,16 @@ test('native PPTX theme identity is deterministic', () => {
 
   assert.match(first, /^[a-f0-9]{64}$/);
 
+  assert.equal(DEFAULT_NATIVE_PPTX_THEME.id, 'kraak-consulting-native-v1');
+
+  assert.equal(DEFAULT_NATIVE_PPTX_THEME.fonts.heading, 'Segoe UI');
+
+  assert.equal(DEFAULT_NATIVE_PPTX_THEME.colors.canvas, 'F3F3F3');
+
+  assert.equal(DEFAULT_NATIVE_PPTX_THEME.colors.ink, '122B4A');
+
+  assert.equal(DEFAULT_NATIVE_PPTX_THEME.colors.accent, '1673AE');
+
   const changed = {
     ...DEFAULT_NATIVE_PPTX_THEME,
     colors: {
@@ -149,7 +161,27 @@ test(
 
       assert.equal(artifact.renderer.version, '4.0.1');
 
-      assert.equal(artifact.renderer.rendererVersion, 2);
+      assert.equal(artifact.renderer.rendererVersion, 4);
+
+      assert.equal(
+        artifact.brandAssets.logo.path,
+        'packages/presentations/assets/brand/kraak/kraak-logo.png',
+      );
+
+      assert.equal(
+        artifact.brandAssets.symbol.path,
+        'packages/presentations/assets/brand/kraak/kraak-symbol.png',
+      );
+
+      assert.equal(
+        artifact.brandAssets.logo.sha256,
+        'ddb87db65ff51aad63b853cc6b8f5ea4a0ac129b34950e72ef50664edbde2855',
+      );
+
+      assert.equal(
+        artifact.brandAssets.symbol.sha256,
+        'c7229c9b02b72a6bdb11c0fa4c5829d0aa3212c74ce8a18c25239577dd563363',
+      );
 
       assert.match(artifact.renderInputSha256, /^[a-f0-9]{64}$/);
 
@@ -164,6 +196,15 @@ test(
       assert.equal(bytes[0], 0x50);
 
       assert.equal(bytes[1], 0x4b);
+
+      const archive = await JSZip.loadAsync(bytes);
+      const titleSlide = await archive.file('ppt/slides/slide1.xml')?.async('string');
+
+      assert.match(titleSlide ?? '', /KRAAK CONSULTING/);
+
+      assert.ok(
+        Object.keys(archive.files).filter((path) => path.startsWith('ppt/media/')).length >= 2,
+      );
     } finally {
       await fixture.cleanup();
     }

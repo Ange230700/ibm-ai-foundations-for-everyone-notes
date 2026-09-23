@@ -17,6 +17,16 @@ test('document stylesheet is deterministic and A4-ready', () => {
   assert.match(first.stylesheet, /document-cover/);
 
   assert.match(first.stylesheet, /document-section--terminal/);
+
+  assert.equal(DEFAULT_DOCUMENT_THEME.fontFamily, '"Segoe UI", Arial, sans-serif');
+
+  assert.equal(DEFAULT_DOCUMENT_THEME.foreground, '#122B4A');
+
+  assert.equal(DEFAULT_DOCUMENT_THEME.accent, '#1673AE');
+
+  assert.equal(DEFAULT_DOCUMENT_THEME.rule, '#4CC3D9');
+
+  assert.equal(DEFAULT_DOCUMENT_THEME.accentSurface, '#EAF7FA');
 });
 
 test('document theme changes stylesheet identity', () => {
