@@ -152,13 +152,24 @@ Le module cite le NIST AI Risk Management Framework et l’EU AI Act pour illust
 
 ## Application pratique
 
-### Service financier ivoirien utilisant l’IA
+### Coopérative Cacao Nawa : IA responsable pour la traçabilité et la qualité
 
-- **Situation envisagée :** analyser les informations clients, détecter des fraudes et soutenir des décisions de crédit.
-- **Action :** protéger les données, évaluer les biais, documenter les recommandations, attribuer les responsabilités, surveiller les performances et maintenir une révision humaine pour les décisions importantes.
-- **Résultat recherché :** augmenter les capacités d’analyse en réduisant décisions opaques, discriminatoires ou sans responsable identifié.
+Les données de la coopérative peuvent comprendre identités des membres, localisation des
+exploitations, observations de terrain, poids des lots, résultats qualité et paiements. Leur usage
+soulève des risques de vie privée, de sécurité, d’équité et de responsabilité.
 
-Ce scénario pédagogique montre une intégration de la responsabilité dès la conception ; il ne constitue pas une validation d’un produit financier.
+- Recueillir seulement les données nécessaires à un objectif défini et limiter l’accès selon les
+  rôles.
+- Vérifier la cohérence des alertes entre tailles d’exploitation, zones, saisons et niveaux de
+  qualité des données.
+- Présenter les documents sources qui justifient une recommandation dans un langage contestable par
+  le personnel et les membres.
+- Consigner les corrections, surveiller les erreurs récurrentes et prévoir une procédure manuelle.
+- Séparer les avis générés des certificats officiels et résultats d’inspection vérifiés.
+
+L’assistant peut organiser les éléments disponibles, mais les personnes autorisées acceptent les
+lots, attribuent les grades, approuvent les paiements et soumettent les documents officiels. Toute
+décision importante nécessite une validation humaine et un responsable clairement identifié.
 
 ## Travaux pratiques et activités
 

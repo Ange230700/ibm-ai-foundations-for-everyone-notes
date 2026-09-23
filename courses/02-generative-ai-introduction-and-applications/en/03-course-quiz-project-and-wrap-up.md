@@ -106,6 +106,19 @@ a generated product visual proves a product claim.
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: A Reviewed Training Project
+
+A small final project could explain one approved lot-intake procedure across three formats:
+
+1. Draft two French messages for field agents and member producers from a supplied procedure.
+2. Generate a neutral training visual without inventing a certification mark or inspection result.
+3. Generate an accessible static HTML guide that repeats the same verified steps.
+4. Compare every output with the source procedure, test the page, and correct inconsistencies.
+
+The project demonstrates text, image, and code generation as one controlled workflow. Generated
+artifacts remain drafts until authorized cooperative staff review facts, rights, accessibility, and
+presentation.
+
 ### Recorded Dialogue: Explain Generative AI to a Colleague
 
 The dialogue asks for a plain-language explanation, an analogy, workplace examples and tools a

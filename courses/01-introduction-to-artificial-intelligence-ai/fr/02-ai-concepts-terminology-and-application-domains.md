@@ -158,13 +158,22 @@ Combinées avec l’IA, ces technologies permettent de collecter, traiter, déci
 
 ## Application pratique
 
-### Gestion intelligente de la circulation à Abidjan
+### Coopérative Cacao Nawa : plusieurs techniques d’IA dans un même processus
 
-- **Situation :** caméras, capteurs, véhicules et infrastructures produisent un flux continu de données.
-- **Action :** l’IoT collecte ; le traitement en périphérie gère les informations urgentes aux intersections ; le cloud conserve et analyse à grande échelle ; l’IA repère les tendances et soutient l’adaptation des feux.
-- **Résultat envisagé :** réponse plus rapide aux changements et gestion plus efficace des déplacements.
+La coopérative permet d’appliquer plusieurs notions d’IA dans un seul contexte :
 
-Cet exemple décrit une possibilité, pas un déploiement réalisé. Une application d’IA dépend d’un écosystème technique complet.
+- **Apprentissage supervisé :** estimer les volumes de collecte à partir d’historiques étiquetés.
+- **Apprentissage non supervisé :** signaler poids inhabituels, identifiants en double ou mouvements
+  d’entrepôt inattendus à vérifier.
+- **Traitement du langage naturel :** extraire lieux, observations et actions demandées depuis les
+  rapports de terrain.
+- **Vision par ordinateur :** aider à examiner une image de fèves, feuille, étiquette ou document,
+  selon la qualité de l’image et après vérification par un spécialiste.
+- **Traitement en périphérie :** contrôler localement les champs obligatoires, tandis que le cloud
+  peut assurer les calculs plus lourds et la synchronisation lorsqu’une connexion est disponible.
+
+Les données d’entraînement, de validation et de test doivent rester séparées. Le personnel confronte
+chaque sortie aux mesures, documents sources, procédures approuvées et avis des spécialistes.
 
 ## Travaux pratiques et activités
 

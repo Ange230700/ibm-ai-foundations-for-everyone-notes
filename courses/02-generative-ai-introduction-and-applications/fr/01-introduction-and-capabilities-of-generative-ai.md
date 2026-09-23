@@ -136,6 +136,18 @@ Le principe pratique reste de vérifier les faits et les usages. Vie privée, d�
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : IA discriminative et IA générative
+
+Un même besoin de la coopérative peut mobiliser plusieurs formes d’IA. Un modèle discriminatif
+pourrait classer un rapport de terrain comme complet, incomplet, urgent ou prêt pour une vérification
+ordinaire. Un modèle prédictif pourrait estimer un volume de collecte à venir à partir de données
+opérationnelles fournies. L’IA générative pourrait ensuite rédiger un message de suivi en français,
+résumer les éléments disponibles ou expliquer les champs manquants à un employé.
+
+La classification et la prédiction choisissent ou estiment parmi des possibilités définies. La
+génération produit un nouveau contenu à partir de régularités apprises et d’un prompt. Le personnel
+vérifie les deux types de sortie avant usage.
+
 | Situation du dialogue                     | Sortie possible                                                 | Distinction à conserver                                                   |
 | ----------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Petite entreprise sur les réseaux sociaux | Textes, légendes, visuels et courtes vidéos                     | Associer chaque besoin à une capacité ; aucun résultat marketing mesuré   |

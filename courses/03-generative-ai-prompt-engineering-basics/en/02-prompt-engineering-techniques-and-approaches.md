@@ -411,6 +411,23 @@ Several recurring cautions apply across the module:
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: Choosing a Technique for Collection Planning
+
+“Help the cooperative plan collection” is too broad for a reliable answer. The prompting technique
+should address the missing information:
+
+- **Interview Pattern:** gather the planning period, participating collection points, confirmed
+  producer notices, warehouse capacity, vehicle availability, and known constraints.
+- **Few-shot prompting:** provide examples showing how field reports become structured status and
+  follow-up records.
+- **Step decomposition:** verify record completeness before calculating a provisional collection
+  plan for manager review.
+- **Multimodal prompting:** inspect a lot-label photo while marking unreadable values as unknown.
+- **Playoff comparison:** rank candidate producer notices using accuracy, clarity, tone, and length.
+
+The most elaborate technique is not automatically the best. The right choice depends on what
+information is missing and how cooperative staff will verify the result.
+
 ### Choosing a Technique for the Task
 
 A practical way to use this module is to diagnose what is missing from the initial request.

@@ -400,19 +400,23 @@ generative AI responsibly and productively within their professional domains.
 
 ## Practical Application
 
-### AI-Enhanced Operations for an Ivorian Business
+### Nawa Cocoa Cooperative: Adoption and Workforce Change
 
-- **Situation:** A growing business in Côte d'Ivoire manages customer inquiries, marketing content,
-  inventory decisions, and administrative work manually.
-- **Action:** Identify specific use cases before adopting AI. Generative AI can support marketing
-  and customer communication, predictive techniques can support demand forecasting, and automation
-  can reduce repetitive administrative work. Employees should be trained to use and supervise these
-  systems.
-- **Result:** The organization can potentially improve productivity and customer responsiveness
-  while keeping human judgment involved in important business decisions.
+The cooperative starts with two defined goals: improve traceability-record completeness and prepare
+collection plans with fewer manual reconciliations.
 
-This follows the module's adoption principle: start from business goals, prepare the organization
-and its data, deploy appropriate AI solutions, then monitor and optimize them.
+- A task assistant could assemble a daily brief from field visits, lot intake, warehouse movements,
+  and unresolved record checks.
+- Retrieval-augmented generation could ground answers in approved cooperative procedures, training
+  material, and current document requirements instead of relying only on model memory.
+- Predictive techniques could support collection planning, while generative AI could draft staff or
+  producer communication.
+- Field agents, quality staff, and managers would need training on evidence checks, privacy,
+  escalation, and the limits of generated output.
+
+The adoption cycle is goal, data readiness, small pilot, staff training, monitored use, and
+adjustment. Proposed measures include incomplete records, reconciliation time, forecast error, and
+the share of drafts accepted after review. No result is assumed before a measured pilot.
 
 ## Labs and Activities
 

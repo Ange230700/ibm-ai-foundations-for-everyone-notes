@@ -142,13 +142,24 @@ L’objectif est un usage productif et responsable dans le domaine professionnel
 
 ## Application pratique
 
-### Opérations assistées par IA dans une entreprise ivoirienne
+### Coopérative Cacao Nawa : adoption de l’IA et évolution du travail
 
-- **Situation :** une entreprise en croissance traite manuellement demandes clients, marketing, stocks et administration.
-- **Action envisagée :** sélectionner des usages ; employer la génération pour la communication, des techniques prédictives pour la demande et l’automatisation pour les tâches répétitives ; former les personnes chargées du contrôle.
-- **Résultat potentiel :** productivité et réactivité améliorées, avec supervision des décisions importantes.
+La coopérative commence par deux objectifs définis : améliorer la complétude des données de
+traçabilité et préparer les plans de collecte avec moins de rapprochements manuels.
 
-Ce scénario applique le cycle objectifs, préparation, déploiement et suivi ; il ne décrit pas un système effectivement déployé.
+- Un assistant de tâches pourrait préparer un point quotidien à partir des visites de terrain, des
+  réceptions de lots, des mouvements d’entrepôt et des contrôles non résolus.
+- La génération augmentée par récupération pourrait fonder les réponses sur les procédures
+  approuvées, les supports de formation et les exigences documentaires actuelles.
+- Des techniques prédictives pourraient soutenir la planification de la collecte, tandis que l’IA
+  générative rédigerait des communications pour le personnel ou les producteurs.
+- Agents de terrain, techniciens qualité et responsables devraient être formés à la vérification des
+  preuves, à la confidentialité, à l’escalade et aux limites des sorties générées.
+
+Le cycle d’adoption comprend objectif, préparation des données, petit pilote, formation, usage
+surveillé et ajustement. Les mesures proposées sont dossiers incomplets, temps de rapprochement,
+erreur de prévision et part des brouillons acceptés après examen. Aucun résultat n’est supposé avant
+un pilote mesuré.
 
 ## Travaux pratiques et activités
 

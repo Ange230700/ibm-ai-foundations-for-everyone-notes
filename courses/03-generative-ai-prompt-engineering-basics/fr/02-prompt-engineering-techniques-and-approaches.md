@@ -219,6 +219,24 @@ Expertise demandée, neutralité, explication longue, branches multiples ou auto
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : choisir une technique pour planifier la collecte
+
+« Aide la coopérative à planifier la collecte » reste trop large pour produire une réponse fiable.
+La technique doit traiter les informations manquantes :
+
+- **Motif d’entretien :** recueillir période, points de collecte participants, avis confirmés des
+  producteurs, capacité d’entrepôt, véhicules disponibles et contraintes connues.
+- **Few-shot :** fournir des exemples qui transforment des rapports de terrain en données
+  structurées de statut et de suivi.
+- **Décomposition en étapes :** vérifier la complétude avant de calculer un plan provisoire à valider
+  par le responsable.
+- **Prompt multimodal :** examiner la photo d’une étiquette de lot en marquant les valeurs illisibles
+  comme inconnues.
+- **Comparaison Playoff :** classer des avis aux producteurs selon exactitude, clarté, ton et longueur.
+
+La technique la plus complexe n’est pas automatiquement la meilleure. Le choix dépend de
+l’information manquante et de la méthode de vérification prévue par le personnel.
+
 ### Choisir selon le problème d’information
 
 Cette synthèse originale des notes sources n’est pas un scénario du cours :

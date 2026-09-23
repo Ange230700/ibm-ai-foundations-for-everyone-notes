@@ -397,6 +397,20 @@ may benefit from more open-ended direction.
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: Final Prompt Workflow for a Record Mismatch
+
+The vague request “Resolve this traceability problem” can be divided into verifiable deliverables:
+
+1. A checklist for comparing the field, intake, and warehouse records for one lot.
+2. A short French message requesting a missing fact from the responsible staff member.
+3. A text-to-image prompt for a training poster on recording lot identifiers clearly.
+4. A reconciliation summary that separates confirmed facts, conflicts, and unresolved questions.
+
+Each prompt supplies the known records, intended audience, output format, and prohibited
+assumptions. Authorized staff resolve the mismatch and approve communication. Proposed measures
+include incomplete records, duplicate identifiers, reconciliation time, and staff corrections. They
+define evaluation; they do not claim achieved performance.
+
 ### Refining an Ambiguous Career Prompt
 
 The final project begins with a broad request from a computer-science student:

@@ -147,6 +147,22 @@ Les LLM peuvent participer aux deux systèmes. Le terme « chain-of-thought » s
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : choisir l’outil selon la sortie attendue
+
+Supposons que la coopérative ait approuvé une campagne de formation sur la complétude des dossiers
+de réception des lots.
+
+- Un modèle textuel pourrait rédiger un avis concis en français à partir de la procédure approuvée.
+- Un modèle d’image pourrait proposer une affiche de formation, dont le personnel vérifierait les
+  libellés, symboles, étapes et détails trompeurs avant publication.
+- Un outil audio pourrait créer un briefing parlé si le service prend en charge la langue requise et
+  autorise cet usage.
+- Un assistant de code pourrait aider à produire un rapport de complétude, ensuite testé avec des
+  données connues.
+
+Le choix dépend de la sortie et des preuves nécessaires. Dossiers des membres, détails de paiement
+et inspections non publiées restent hors des modèles publics sans procédure approuvée de protection.
+
 ### Jeu de rôle enregistré : capacités et résultats
 
 Le scénario demande de jouer un responsable de l’innovation face au dirigeant Duncan Campbell, d’expliquer **trois capacités** et **deux cas mesurables**, en langage accessible. La réponse enregistrée organise le propos autour de création de contenu, synthèse/transformation de l’information, puis assistance aux tâches et aux processus.

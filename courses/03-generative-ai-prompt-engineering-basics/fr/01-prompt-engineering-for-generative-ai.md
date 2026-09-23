@@ -185,6 +185,27 @@ Les références à OpenAI, Microsoft Copilot, Llama2 et à la mémoire conversa
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : structurer un suivi de traçabilité
+
+Une demande comme « Demande l’information manquante » ne fournit ni les faits ni les contraintes
+nécessaires. Un prompt plus précis les sépare :
+
+```plaintext
+Rôle : tu aides l’équipe de traçabilité de la coopérative.
+Tâche : rédige un message en français à l’agent de terrain pour un dossier incomplet.
+Faits confirmés :
+- Le lot NC-014 possède un identifiant producteur et un poids enregistré.
+- L’heure de réception à l’entrepôt est absente.
+Exigences :
+- Demande à l’agent de vérifier et fournir l’heure de réception.
+- Limite la réponse à 70 mots et emploie un ton respectueux.
+Contraintes :
+- N’invente ni inspection, ni grade, ni certification, ni statut de paiement.
+```
+
+Le personnel autorisé évalue exactitude, ton, longueur et absence de détails inventés. Un affinage
+ultérieur peut améliorer la clarté sans affaiblir les contraintes de preuve.
+
 ### Réponse au client : concevoir, évaluer, affiner
 
 Le dialogue porte sur une livraison en retard de cinq jours :

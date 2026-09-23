@@ -399,6 +399,27 @@ term.
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: Engineering a Traceability Follow-Up
+
+An initial request such as “Ask for the missing information” lacks the facts and constraints needed
+for safe use. A more deliberate prompt separates them:
+
+```plaintext
+Role: You assist the cooperative traceability team.
+Task: Draft a French message to the field agent about an incomplete lot record.
+Confirmed facts:
+- Lot NC-014 has a producer ID and recorded weight.
+- The warehouse receipt time is missing.
+Requirements:
+- Ask the agent to verify and supply the receipt time.
+- Use no more than 70 words and a respectful tone.
+Constraints:
+- Do not invent an inspection, grade, certification, or payment status.
+```
+
+Authorized staff evaluate factual accuracy, tone, length, and the absence of invented details. A
+later refinement may improve clarity without weakening the evidence constraints.
+
 ### Customer-Service Response: Design, Evaluate, Refine
 
 A learner dialogue applies the module's principles to a small online business responding to a

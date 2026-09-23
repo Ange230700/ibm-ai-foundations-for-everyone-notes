@@ -254,6 +254,20 @@ vision of systems that both create and act remains a forecast.
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: Matching a Generative Tool to the Output
+
+Suppose the cooperative has approved a training campaign on complete lot-intake records.
+
+- A text model could draft a concise French notice using only the approved procedure.
+- An image model could propose a training poster, with staff checking labels, symbols, sequence, and
+  misleading details before publication.
+- An audio tool could create a spoken briefing when the chosen service supports the required
+  language and permits the intended use.
+- A code assistant could help build a record-completeness report, followed by tests with known data.
+
+The tool follows the required output and evidence, not novelty. Member records, payment details, and
+unpublished inspection data stay outside public models unless an approved process protects them.
+
 ### Recorded Role Play: Capabilities That Drive Results
 
 **Scenario:** act as an innovation lead in a text-chat meeting with senior executive Duncan

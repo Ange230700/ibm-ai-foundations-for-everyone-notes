@@ -84,6 +84,21 @@ Le projet relie contexte et prompt à un texte d’annonce, à des images de bou
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : projet de formation avec validation
+
+Un petit projet final pourrait expliquer une procédure approuvée de réception des lots dans trois
+formats :
+
+1. Rédiger deux messages en français pour agents de terrain et producteurs membres à partir de la
+   procédure fournie.
+2. Générer un visuel neutre sans inventer marque de certification ou résultat d’inspection.
+3. Générer un guide HTML statique et accessible qui reprend les mêmes étapes vérifiées.
+4. Comparer chaque sortie à la procédure source, tester la page et corriger les incohérences.
+
+Le projet réunit génération de texte, d’image et de code dans un processus contrôlé. Les artefacts
+restent des brouillons jusqu’à la vérification des faits, droits, critères d’accessibilité et choix
+de présentation par le personnel autorisé.
+
 ### Dialogue : expliquer l’IA générative à un collègue
 
 La réponse enregistrée présente la création de contenus à partir de régularités, puis l’analogie culinaire : étudier des recettes permet d’identifier des combinaisons pour en proposer une nouvelle. Cette analogie ne suppose pas une compréhension humaine du modèle.

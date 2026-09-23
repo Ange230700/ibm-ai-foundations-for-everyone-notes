@@ -256,13 +256,25 @@ Multimodal signifie travailler avec plusieurs modalités de données, pas simple
 
 ## Application pratique
 
-### Assistant IA pour les petites entreprises en Côte d’Ivoire
+### Coopérative Cacao Nawa : intelligence augmentée dans le travail coopératif
 
-- **Situation :** de petites entreprises gèrent leurs échanges clients, commandes, paiements et demandes avec WhatsApp, des appels, des feuilles de calcul et des documents manuscrits.
-- **Action :** utiliser le traitement du langage naturel et l’IA générative pour comprendre les messages, résumer les conversations, extraire les informations importantes, rédiger des réponses et organiser les dossiers.
-- **Résultat :** réduire le temps consacré aux tâches administratives répétitives tout en conservant un contrôle humain sur les décisions importantes.
+La Coopérative Cacao Nawa est une organisation fictive située près de Soubré. Les producteurs
+membres livrent des lots de cacao, tandis que les agents de terrain, techniciens qualité,
+magasiniers et responsables des opérations tiennent les données de terrain, de réception, de
+qualité et de traçabilité.
 
-C’est un exemple d’intelligence augmentée : l’IA soutient les employés tout en maintenant leur jugement dans le processus.
+- **IA étroite :** classer les rapports de terrain et signaler les dossiers de lot incomplets.
+- **IA générative :** rédiger un avis destiné aux producteurs ou résumer les informations de
+  collecte et d’entrepôt.
+- **IA multimodale :** aider à interpréter une étiquette de lot, une photo de fèves ou un document
+  pour validation humaine.
+- **Intelligence augmentée :** présenter éléments et recommandations tout en laissant la décision
+  au personnel de la coopérative.
+- **Continuité :** enregistrer les événements essentiels localement puis synchroniser les mises à
+  jour en attente au retour de la connexion.
+
+L’assistant ne diagnostique pas une maladie, ne rejette pas un lot, n’attribue pas de grade qualité,
+ne détermine pas le paiement d’un producteur et ne soumet pas de certificat officiel.
 
 ## Travaux pratiques et activités
 

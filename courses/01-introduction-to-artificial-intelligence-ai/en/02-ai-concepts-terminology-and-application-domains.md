@@ -501,18 +501,22 @@ Applications introduced in the course include:
 
 ## Practical Application
 
-### Intelligent Traffic Management in Abidjan
+### Nawa Cocoa Cooperative: One Workflow, Several AI Techniques
 
-- **Situation:** Urban traffic systems generate continuous information from cameras, connected
-  sensors, vehicles, and traffic infrastructure.
-- **Action:** IoT devices can collect data, edge computing can process time-sensitive information
-  close to intersections, cloud infrastructure can support larger-scale storage and analysis, and AI
-  can identify traffic patterns and support adaptive traffic-control decisions.
-- **Result:** A system built on these technologies could potentially respond more quickly to
-  changing traffic conditions and support more efficient transportation management.
+The cooperative provides one setting for several AI concepts:
 
-This example illustrates that a real-world AI application often depends on an entire technical
-ecosystem rather than an AI model alone.
+- **Supervised learning** could estimate collection volumes from labeled historical records.
+- **Unsupervised learning** could flag unusual weights, duplicate identifiers, or unexpected
+  warehouse movements for review.
+- **Natural language processing** could extract locations, observations, and requested actions from
+  field reports.
+- **Computer vision** could help screen a bean, leaf, label, or document image, subject to image
+  quality and expert verification.
+- **Edge processing** could check required fields locally, while cloud services could handle heavier
+  inference and synchronization when connectivity is available.
+
+Training, validation, and test data must remain separate when evaluating a predictive model. Staff
+compare every output with measurements, source records, approved procedures, and expert judgment.
 
 ## Labs and Activities
 

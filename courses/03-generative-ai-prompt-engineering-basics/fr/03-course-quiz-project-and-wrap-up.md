@@ -226,6 +226,21 @@ La communication claire reste utile ; une tâche précise peut demander des cont
 
 ## Application pratique
 
+### Coopérative Cacao Nawa : processus final pour un écart de traçabilité
+
+La demande vague « Résous ce problème de traçabilité » peut être décomposée en livrables
+vérifiables :
+
+1. Une liste de contrôle pour comparer données de terrain, de réception et d’entrepôt d’un lot.
+2. Un court message en français qui demande un fait manquant au membre du personnel responsable.
+3. Un prompt text-to-image pour une affiche de formation sur la saisie lisible des identifiants.
+4. Une synthèse de rapprochement qui sépare faits confirmés, contradictions et questions ouvertes.
+
+Chaque prompt fournit les données connues, le public visé, le format de sortie et les hypothèses
+interdites. Le personnel autorisé résout l’écart et approuve la communication. Les mesures proposées
+sont dossiers incomplets, identifiants en double, temps de rapprochement et corrections du
+personnel. Elles servent à l’évaluation et ne constituent pas des résultats obtenus.
+
 ### Clarifier une demande de carrière
 
 La demande initiale cumule plusieurs considérations :

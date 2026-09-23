@@ -561,18 +561,22 @@ applicable standards, regulations, and legal requirements.
 
 ## Practical Application
 
-### Responsible AI for an Ivorian Financial-Service Application
+### Nawa Cocoa Cooperative: Responsible AI for Traceability and Quality Support
 
-- **Situation:** A financial institution in Côte d'Ivoire wants to use AI to assess customer
-  information, detect potential fraud, and support credit decisions.
-- **Action:** The organization should protect customer data, evaluate the model for unfair bias,
-  document how recommendations are produced, define who is accountable for decisions, monitor model
-  performance, and retain human review for consequential lending decisions.
-- **Result:** AI can augment employees' analytical capabilities while reducing the risk of opaque,
-  discriminatory, or unaccountable automated decisions.
+The cooperative’s data may include member identities, farm locations, field observations, lot
+weights, quality results, and payment records. Their use creates privacy, security, fairness, and
+accountability risks.
 
-This example shows that responsible AI should be integrated into the system design and operating
-process rather than added after deployment.
+- Collect only data needed for a defined purpose and restrict access by role.
+- Test whether alerts work consistently across farm sizes, locations, seasons, and record quality.
+- Show the source records behind a recommendation in language staff and members can question.
+- Log corrections, monitor recurring errors, and provide a manual process when the assistant is
+  unavailable.
+- Keep generated notices separate from official certificates and verified inspection results.
+
+The assistant may organize evidence, but authorized people accept lots, assign grades, approve
+payments, and submit official documents. Consequential decisions require human review and a clearly
+accountable person.
 
 ## Labs and Activities
 

@@ -294,17 +294,22 @@ different types of output.
 
 ## Practical Application
 
-### Small-Business AI Assistant for Côte d'Ivoire
+### Nawa Cocoa Cooperative: Augmented Intelligence in Cooperative Work
 
-- **Situation:** Many small businesses manage customer communication, orders, payments, and requests
-  through WhatsApp, phone calls, spreadsheets, and manually written documents.
-- **Action:** Use NLP and generative AI to understand customer messages, summarize conversations,
-  extract important business information, draft responses, and organize records.
-- **Result:** Employees spend less time on repetitive administrative work while retaining human
-  control over important decisions.
+The Nawa Cocoa Cooperative is a fictional organization near Soubré. Member producers deliver cocoa
+lots while field agents, quality technicians, warehouse staff, and an operations manager maintain
+field, intake, quality, and traceability records.
 
-This is an example of augmented intelligence because the AI supports employees rather than removing
-human judgment from the workflow.
+- **Narrow AI:** classifies field reports and flags incomplete lot records.
+- **Generative AI:** drafts a producer notice or summarizes collection and warehouse information.
+- **Multimodal AI:** helps interpret a lot label, bean photo, or document image for human review.
+- **Augmented intelligence:** presents evidence and recommendations while cooperative staff retain
+  the decision.
+- **Continuity:** the application records essential events locally and synchronizes pending updates
+  after connectivity returns.
+
+The assistant does not diagnose crop disease, reject a lot, assign a quality grade, determine a
+producer payment, or submit an official certificate.
 
 ## Labs and Activities
 

@@ -217,6 +217,18 @@ on-device models and safer open alternatives remain forecasts, not established g
 
 ## Practical Application
 
+### Nawa Cocoa Cooperative: Discriminative and Generative AI
+
+The same cooperative need can involve different forms of AI. A discriminative model could classify
+a field report as complete, incomplete, urgent, or ready for routine review. A predictive model
+could estimate an upcoming collection volume from supplied operational data. Generative AI could
+then draft a French follow-up message, summarize the evidence, or explain missing fields to a staff
+member.
+
+Classification and prediction select or estimate from defined possibilities. Generation produces
+new content from learned patterns and a prompt. Cooperative staff verify both types of output before
+using them.
+
 The following are synthesized from the recorded “Exploring What Generative AI Can Do” dialogue, not
 new KRAAK services or claims of completed work.
 
