@@ -21,7 +21,8 @@ and explicit human responsibility for consequential decisions.
   - S01 — AI Fundamentals / Fondamentaux de l’IA
   - Duration: 60 minutes
   - French teaching source: available
-  - English teaching source: pending
+  - English teaching source: available
+  - Bilingual structural alignment: verified
 
 The V1 artifact pipeline does not yet generate a combined session deck from these sources. Pipeline
 integration requires an explicit source contract, deterministic identifiers, bilingual verification,

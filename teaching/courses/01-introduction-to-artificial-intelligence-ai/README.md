@@ -21,14 +21,15 @@ Each language uses a dedicated session source:
 teaching/courses/01-introduction-to-artificial-intelligence-ai/
 ├── en/
 │   └── sessions/
+│       └── s01-ai-fundamentals.md
 └── fr/
     └── sessions/
         └── s01-fondamentaux-de-l-ia.md
 ```
 
-The French source is the first implementation. The English counterpart must preserve the same 30
-identifiers, order, durations, learning functions, and case-study decisions without becoming a
-mechanical word-for-word translation.
+The English and French sources preserve the same 30 identifiers, order, durations, learning
+functions, and case-study decisions. They are conceptually equivalent adaptations rather than
+mechanical word-for-word translations.
 
 ## Authoring contract
 
@@ -36,8 +37,9 @@ Every slide uses an H2 heading and contains:
 
 - a stable `S01-nn` identifier;
 - an explicit duration;
-- `Contenu de la diapositive` for projected text;
-- `Notes pédagogiques` for the key message, explanation, interaction, and transition.
+- `On-Slide Content` or `Contenu de la diapositive` for projected text;
+- `Teaching Notes` or `Notes pédagogiques` for the key message, explanation, interaction, and
+  transition.
 
 The title and objectives slides also declare renderer-oriented semantic roles. Canonical sources are
 listed in the session metadata and mapped to slide ranges in its traceability section.
