@@ -376,6 +376,60 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       fr: 'Brouillon et actions agentiques',
       name: 'agents',
     },
+    'S03-05': {
+      kind: 'mermaid',
+      en: 'Draft and check against the task',
+      fr: 'Brouillon et contrôle de la tâche',
+      name: 'workflow',
+    },
+    'S03-08': {
+      kind: 'simulation',
+      en: 'Fictional source-grounded prompt',
+      fr: 'Demande fictive fondée sur la source',
+      name: 'prompt',
+    },
+    'S03-13': {
+      kind: 'simulation',
+      en: 'Fictional input-output examples',
+      fr: 'Exemples fictifs d’entrée et de sortie',
+      name: 'examples',
+    },
+    'S03-14': {
+      kind: 'mermaid',
+      en: 'Choose the prompt method',
+      fr: 'Choisir la méthode de demande',
+      name: 'methods',
+    },
+    'S03-16': {
+      kind: 'simulation',
+      en: 'Fictional interview prompt',
+      fr: 'Demande fictive en mode entretien',
+      name: 'interview',
+    },
+    'S03-17': {
+      kind: 'mermaid',
+      en: 'Observable steps before approval',
+      fr: 'Étapes observables avant validation',
+      name: 'steps',
+    },
+    'S03-19': {
+      kind: 'simulation',
+      en: 'Deliberately unsupported draft',
+      fr: 'Brouillon volontairement sans fondement',
+      name: 'wrong-output',
+    },
+    'S03-20': {
+      kind: 'simulation',
+      en: 'Fictional correction and revised draft',
+      fr: 'Correction et nouveau brouillon fictifs',
+      name: 'revision',
+    },
+    'S03-23': {
+      kind: 'mermaid',
+      en: 'Checks before human approval',
+      fr: 'Contrôles avant validation humaine',
+      name: 'checks',
+    },
   };
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];

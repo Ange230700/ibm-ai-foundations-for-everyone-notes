@@ -1,0 +1,8 @@
+flowchart TB
+ A["Task and context"] --> B["Provided source"]
+ B --> C["Grounded prompt"]
+ C --> D["Proposed draft"]
+ D --> E{"Facts and format checked?"}
+ E -->|No| F["Revise the request"]
+ F --> C
+ E -->|Yes| G["Human approval"]

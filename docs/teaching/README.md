@@ -24,7 +24,8 @@ This directory contains delivery specifications derived from the canonical learn
   60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
   canonical Course 03 French adaptations await personal review. French and English
   teaching-source drafts are available and structurally aligned; draft PDF and PPTX derivatives
-  can be generated and verified from the registered S03 session.
+  can be generated and verified from the registered S03 session. PPTX diagrams and teaching
+  simulations are authored under `teaching/visuals/s03/` and remain fictional examples.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 

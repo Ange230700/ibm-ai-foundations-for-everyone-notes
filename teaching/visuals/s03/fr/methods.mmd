@@ -1,0 +1,8 @@
+flowchart TB
+ A{"Les faits sont-ils disponibles ?"} -->|Non| B["Poser des questions"]
+ A -->|Oui| C{"Format difficile à décrire ?"}
+ C -->|Non| D["Demande directe"]
+ C -->|Oui| E["Exemple fictif vérifié"]
+ B --> F["Contrôler la réponse proposée"]
+ D --> F
+ E --> F

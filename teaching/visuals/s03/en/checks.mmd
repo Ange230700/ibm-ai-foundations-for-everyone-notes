@@ -1,0 +1,10 @@
+flowchart TB
+ A["Proposed response"] --> B{"Facts in S03-04?"}
+ B -->|No| F["Correct the draft"]
+ B -->|Yes| C{"Audience and format fit?"}
+ C -->|No| F
+ C -->|Yes| D{"Unknowns visible?"}
+ D -->|No| F
+ D -->|Yes| E{"Human reviewer named?"}
+ E -->|No| F
+ E -->|Yes| G["Send for human review"]

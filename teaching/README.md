@@ -91,7 +91,10 @@ For S03, run `pnpm teaching:artifact plan --session=s03`, then
 `.artifacts/teaching-sessions/s03/<language>/`. Run
 `pnpm teaching:artifact visual-qa --session=s03 --format=pdf` to create PDF page images and
 contact sheets for review. These 25-slide decks include speaker notes and slide numbering.
-The S03 examples are projected as text at this stage; visual simulations and animated copies
-are separate production steps.
+The S03 PPTX includes four Mermaid diagrams and five clearly labelled fictional teaching
+screens per language. Their editable sources live in `teaching/visuals/s03/`; regenerate SVG
+and PNG files with `node --import tsx scripts/generate-s03-visuals.mjs` before building S03
+PPTX. These images are not captures of a real model interaction. Animated S03 copies are a
+separate production step.
 The canonical Course 03 French adaptations still need personal review; the bilingual drafts
 need visual inspection and a timed rehearsal before release.

@@ -33,3 +33,10 @@ sur le contrat, sans remplacer une relecture pédagogique bilingue. S03 est déc
 `pnpm teaching:artifact build --session=s03` et `pnpm teaching:artifact verify --session=s03`.
 Leur contrôle visuel et une répétition chronométrée restent à faire. Le contrat de contenu n’est
 pas une preuve que la séance réelle tient déjà en 60 minutes.
+
+Les PPTX de travail contiennent quatre diagrammes Mermaid et cinq captures de simulation
+pédagogique par langue. Les captures représentent des consignes et réponses construites pour
+l’exercice, pas des échanges avec un véritable service d’IA. Leurs sources modifiables sont dans
+`teaching/visuals/s03/`. Pour les actualiser, exécuter
+`node --import tsx scripts/generate-s03-visuals.mjs`, reconstruire S03, puis vérifier les PPTX.
+Les PDF projetés continuent de refléter le contenu textuel des sources pédagogiques.

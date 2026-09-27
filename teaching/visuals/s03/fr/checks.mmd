@@ -1,0 +1,10 @@
+flowchart TB
+ A["Réponse proposée"] --> B{"Faits dans S03-04 ?"}
+ B -->|Non| F["Corriger le brouillon"]
+ B -->|Oui| C{"Public et format adaptés ?"}
+ C -->|Non| F
+ C -->|Oui| D{"Inconnues visibles ?"}
+ D -->|Non| F
+ D -->|Oui| E{"Responsable identifié ?"}
+ E -->|Non| F
+ E -->|Oui| G["Soumettre à une personne"]
