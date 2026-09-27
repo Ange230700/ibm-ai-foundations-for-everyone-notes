@@ -64,7 +64,7 @@ function parseArguments(args: string[]): Arguments {
     command !== 'animate'
   ) {
     throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01|s02] [--lang=en|fr] [--format=pdf|pptx]',
+      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01|s02|s03] [--lang=en|fr] [--format=pdf|pptx]',
     );
   }
   const result: Arguments = { command };

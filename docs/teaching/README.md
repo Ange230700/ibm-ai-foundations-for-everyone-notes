@@ -23,13 +23,13 @@ This directory contains delivery specifications derived from the canonical learn
 - `s03-prompt-engineering-60-min-content-contract.md` proposes a bilingual 25-slide,
   60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
   canonical Course 03 French adaptations await personal review. French and English
-  teaching-source drafts are available and structurally aligned; derivative artifacts have not
-  yet been produced.
+  teaching-source drafts are available and structurally aligned; draft PDF and PPTX derivatives
+  can be generated and verified from the registered S03 session.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 
 Session PDF and PPTX are generated from the maintained sources in `teaching/`. Run
-`pnpm teaching:artifact build --session=s01` or `pnpm teaching:artifact build --session=s02`
+`pnpm teaching:artifact build --session=s01`, `pnpm teaching:artifact build --session=s02`, or
+`pnpm teaching:artifact build --session=s03`
 to select one session, then replace `build` with `verify` to check its projected text and
-notes. S03 is a content contract only and is not a registered artifact target yet. Actual pacing
-needs an instructor rehearsal.
+notes. Actual pacing needs an instructor rehearsal.

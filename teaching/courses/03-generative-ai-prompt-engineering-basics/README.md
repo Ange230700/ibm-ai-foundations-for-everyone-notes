@@ -28,7 +28,8 @@ type d’éléments projetés. Les deux premières diapositives déclarent les r
 
 Cette source est un **brouillon pédagogique**. Les adaptations françaises canoniques du cours 03
 attendent encore leur révision personnelle. Les deux sources sont alignées sur la structure et
-sur le contrat, sans remplacer une relecture pédagogique bilingue. La déclaration dans
-`manifest.json`, les supports PDF/PPTX, leur contrôle visuel et une répétition chronométrée
-restent à faire. Le contrat de contenu n’est pas une preuve que la séance réelle tient déjà en
-60 minutes.
+sur le contrat, sans remplacer une relecture pédagogique bilingue. S03 est déclaré dans
+`manifest.json` : les quatre supports PDF/PPTX bilingues peuvent être générés et vérifiés avec
+`pnpm teaching:artifact build --session=s03` et `pnpm teaching:artifact verify --session=s03`.
+Leur contrôle visuel et une répétition chronométrée restent à faire. Le contrat de contenu n’est
+pas une preuve que la séance réelle tient déjà en 60 minutes.

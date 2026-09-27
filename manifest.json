@@ -231,6 +231,16 @@
         "en": "teaching/courses/02-generative-ai-introduction-and-applications/en/sessions/s02-generative-ai-introduction.md",
         "fr": "teaching/courses/02-generative-ai-introduction-and-applications/fr/sessions/s02-introduction-a-l-ia-generative.md"
       }
+    },
+    {
+      "courseId": "course_04cff506-289b-409c-917d-c0bd0c03caf9",
+      "durationMinutes": 60,
+      "id": "s03",
+      "slideCount": 25,
+      "source": {
+        "en": "teaching/courses/03-generative-ai-prompt-engineering-basics/en/sessions/s03-prompt-engineering-basics.md",
+        "fr": "teaching/courses/03-generative-ai-prompt-engineering-basics/fr/sessions/s03-conception-des-prompts.md"
+      }
     }
   ],
   "templateVersion": "0.1.0",

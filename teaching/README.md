@@ -35,7 +35,7 @@ and explicit human responsibility for consequential decisions.
   - S03 — Principes de base de la conception des prompts
   - Duration: 60 minutes; 25 slides in each language
   - French and English teaching sources: drafts available and structurally aligned with the S03 content contract
-  - S03 is not yet declared in `manifest.json`; PDF and PPTX generation is not available
+  - S03 is declared in `manifest.json`; draft PDF and PPTX generation is available
   - The Course 03 French canonical adaptations still await personal review.
 
 ## Session artifacts
@@ -84,3 +84,14 @@ create `session-animated.pptx` for both languages. The plan covers all 26 slides
 clicks and 158 shape effects per language; diagrams and simulation screens are visible when the
 slide opens, while text rows reveal one by one. The Course 02 French adaptations still need
 personal review, and the draft decks need visual inspection and a timed rehearsal before release.
+
+For S03, run `pnpm teaching:artifact plan --session=s03`, then
+`pnpm teaching:artifact build --session=s03` and
+`pnpm teaching:artifact verify --session=s03`. The four draft files are generated under
+`.artifacts/teaching-sessions/s03/<language>/`. Run
+`pnpm teaching:artifact visual-qa --session=s03 --format=pdf` to create PDF page images and
+contact sheets for review. These 25-slide decks include speaker notes and slide numbering.
+The S03 examples are projected as text at this stage; visual simulations and animated copies
+are separate production steps.
+The canonical Course 03 French adaptations still need personal review; the bilingual drafts
+need visual inspection and a timed rehearsal before release.
