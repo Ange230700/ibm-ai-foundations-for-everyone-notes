@@ -16,11 +16,13 @@ This directory contains delivery specifications derived from the canonical learn
   content contract for a 60-minute AI fundamentals session.
 - `s02-generative-ai-60-min-content-contract.md` proposes the aligned French and English
   60-minute introduction to generative AI. The canonical Course 02 French adaptations still await
-  personal review; the S02 teaching sources and generated artifacts have not yet been produced.
+  personal review. The bilingual S02 teaching sources are drafts under `teaching/courses/02-generative-ai-introduction-and-applications/`;
+  S02 has no generated artifacts yet.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 
-The session PDF and PPTX are generated from the maintained sources in `teaching/`, not from this
-specification. `pnpm teaching:artifact build` creates the bilingual supports, and
-`pnpm teaching:artifact verify` independently checks their projected text and notes. The planned
-minute total is verified automatically; actual pacing needs an instructor rehearsal.
+Session PDF and PPTX are generated from the maintained sources in `teaching/`. For S01,
+`pnpm teaching:artifact build` creates the bilingual supports, and
+`pnpm teaching:artifact verify` checks their projected text and notes. S02 must be declared
+and supported by the artifact pipeline before it can be built. Actual pacing needs an instructor
+rehearsal.

@@ -15,7 +15,13 @@ sans nom d’organisation ni résultats réels attribués au cas.
 
 - Français : `fr/sessions/s02-introduction-a-l-ia-generative.md` — **version de travail**, 26
   diapositives, 60 minutes.
-- Anglais : source à rédiger avec les mêmes identifiants, durées et décisions pédagogiques.
+- Anglais : `en/sessions/s02-generative-ai-introduction.md` — **version de travail**, 26
+  diapositives, 60 minutes.
+
+Les deux sources conservent les mêmes identifiants S02-01 à S02-26, l’ordre, les durées, les
+interactions et les limites du cas fictif. Elles reprennent respectivement les contenus projetés
+du contrat en français et en anglais. Les notes sont adaptées à l’oral plutôt que traduites mot à
+mot.
 
 Chaque diapositive comporte un titre de niveau 2, un identifiant S02-nn, une durée, le contenu
 projeté et des notes de présentation. Les deux premières déclarent leur rôle de couverture et
@@ -25,7 +31,7 @@ mention de simulation pédagogique ; les décisions sensibles restent sous contr
 ## Statut de production
 
 Les trois adaptations canoniques françaises restent en attente de révision personnelle. La source
-pédagogique française sert de brouillon pour examiner la sélection des notions et le rythme de la
-séance. Le manifeste et la chaîne de génération des PDF/PPTX n’intègrent pas encore S02 : leur
-extension interviendra après la création et l’alignement de la source anglaise. Une répétition
-chronométrée sera nécessaire avant la diffusion des supports définitifs.
+pédagogique bilingue sert de brouillon pour examiner la sélection des notions et le rythme de la
+séance. Le manifeste et la chaîne de génération des PDF/PPTX n’intègrent pas encore S02 : il faut
+adapter et vérifier cette chaîne, puis examiner visuellement les supports avant leur diffusion. Une
+répétition chronométrée sera également nécessaire.
