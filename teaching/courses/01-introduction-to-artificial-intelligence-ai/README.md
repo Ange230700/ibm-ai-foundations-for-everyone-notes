@@ -56,3 +56,8 @@ These Markdown files are maintained teaching sources, declared under `teachingSe
 and editable PPTX language variants. Slides retain the identifiers and one-minute to three-minute
 allocations from the teaching contract; the PPTX speaker notes include the facilitation text.
 Visual review and a timed rehearsal remain necessary before the session is released.
+
+On Windows with desktop PowerPoint, `pnpm teaching:artifact animate --session=s01` builds
+separate animated PPTX copies after the native PPTX files have been generated. Slides 02, 03,
+and 08 reveal their remaining content lines on click in FR and EN. Both languages keep the
+same 30 slides and speaker notes.

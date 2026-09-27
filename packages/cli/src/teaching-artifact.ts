@@ -1,7 +1,8 @@
+import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-import { atomicWrite, repositoryRoot, sha256 } from '@coursera-notes/core';
+import { atomicWrite, canonicalJson, repositoryRoot, sha256 } from '@coursera-notes/core';
 import { readManifest, type TeachingSession } from '@coursera-notes/manifest';
 import {
   parseTeachingSession,
@@ -24,11 +25,13 @@ import {
   type TeachingSessionContent,
 } from '@coursera-notes/presentations';
 
+import { createS01AnimationPlan } from './teaching-animation-plan.js';
+
 type Format = 'pdf' | 'pptx';
 type Language = 'en' | 'fr';
 
 interface Arguments {
-  command: 'plan' | 'build' | 'verify' | 'visual-qa';
+  command: 'plan' | 'build' | 'verify' | 'visual-qa' | 'animate';
   session?: string;
   language?: Language;
   format?: Format;
@@ -40,10 +43,11 @@ function parseArguments(args: string[]): Arguments {
     command !== 'plan' &&
     command !== 'build' &&
     command !== 'verify' &&
-    command !== 'visual-qa'
+    command !== 'visual-qa' &&
+    command !== 'animate'
   ) {
     throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa [--session=s01] [--lang=en|fr] [--format=pdf|pptx]',
+      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01] [--lang=en|fr] [--format=pdf|pptx]',
     );
   }
   const result: Arguments = { command };
@@ -93,6 +97,40 @@ async function readPair(
   return content;
 }
 
+async function animateWithPowerPoint(
+  root: string,
+  language: Language,
+  planPath: string,
+): Promise<void> {
+  if (process.platform !== 'win32') {
+    throw new Error('Native S01 animations require desktop PowerPoint on Windows.');
+  }
+  await new Promise<void>((resolvePromise, rejectPromise) => {
+    const child = spawn(
+      'powershell.exe',
+      [
+        '-NoProfile',
+        '-ExecutionPolicy',
+        'Bypass',
+        '-File',
+        resolve(root, 'scripts/teaching-animate-s01.ps1'),
+        '-RepoRoot',
+        root,
+        '-PlanPath',
+        planPath,
+        '-Language',
+        language,
+      ],
+      { cwd: root, stdio: 'inherit' },
+    );
+    child.once('error', rejectPromise);
+    child.once('close', (code) => {
+      if (code === 0) resolvePromise();
+      else rejectPromise(new Error(`PowerPoint animation failed for S01/${language}: ${code}.`));
+    });
+  });
+}
+
 async function main(): Promise<void> {
   const args = parseArguments(process.argv.slice(2));
   const manifest = await readManifest();
@@ -113,6 +151,55 @@ async function main(): Promise<void> {
     for (const language of (args.language ? [args.language] : ['en', 'fr']) as Language[]) {
       const content = pair[language];
       const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
+      if (args.command === 'animate') {
+        if (session.id !== 's01' || (args.format && args.format !== 'pptx')) {
+          throw new Error('Native animations currently support S01 PPTX only.');
+        }
+        const path = resolve(outputRoot, 'session.pptx');
+        const spec = teachingDeckSpec(content);
+        const record = JSON.parse(
+          await readFile(resolve(outputRoot, 'pptx-artifact.json'), 'utf8'),
+        ) as {
+          pptxSha256: string;
+          sourceSha256: string;
+          moduleContentSha256: string;
+          deckSpecSha256: string;
+        };
+        const source = await verifyNativePptx(spec, root, path);
+        if (
+          record.pptxSha256 !== source.pptxSha256 ||
+          record.sourceSha256 !== content.sourceSha256 ||
+          record.moduleContentSha256 !== content.contentSha256 ||
+          record.deckSpecSha256 !== source.deckSpecSha256
+        ) {
+          throw new Error(`Stale S01 PPTX: rebuild ${language} before animating.`);
+        }
+        const plan = createS01AnimationPlan(content);
+        const planPath = resolve(outputRoot, 'animation-plan.json');
+        await atomicWrite(planPath, canonicalJson(plan));
+        await animateWithPowerPoint(root, language, planPath);
+        const animatedPath = resolve(outputRoot, 'session-animated.pptx');
+        const animated = await verifyNativePptx(spec, root, animatedPath);
+        await atomicWrite(
+          resolve(outputRoot, 'pptx-animation.json'),
+          canonicalJson({
+            schemaVersion: 1,
+            sessionId: session.id,
+            language,
+            sourceSha256: content.sourceSha256,
+            deckSpecSha256: source.deckSpecSha256,
+            inputPptxSha256: source.pptxSha256,
+            outputPptxSha256: animated.pptxSha256,
+            animationPlanSha256: sha256(canonicalJson(plan)),
+            animatedSlideIds: plan.slides.map(
+              (slide) => `${session.id.toUpperCase()}-${String(slide.number).padStart(2, '0')}`,
+            ),
+            slideCount: animated.slideCount,
+          }),
+        );
+        console.log(`ANIMATED ${session.id}/${language}/pptx slides=30 effects=30`);
+        continue;
+      }
       const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];
       if (args.command === 'plan') {
         console.log(
