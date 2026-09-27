@@ -152,7 +152,7 @@ Le module cite le NIST AI Risk Management Framework et l’EU AI Act pour illust
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : IA responsable pour la traçabilité et la qualité
+### Une coopérative cacaoyère près de Soubré : IA responsable pour la traçabilité et la qualité
 
 Les données de la coopérative peuvent comprendre identités des membres, localisation des
 exploitations, observations de terrain, poids des lots, résultats qualité et paiements. Leur usage

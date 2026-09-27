@@ -302,6 +302,58 @@
       "const": 1,
       "type": "number"
     },
+    "teachingSessions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "courseId": {
+            "pattern": "^course_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "durationMinutes": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "id": {
+            "pattern": "^s\\d{2}$",
+            "type": "string"
+          },
+          "slideCount": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "en": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "fr": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "en",
+              "fr"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "durationMinutes",
+          "slideCount",
+          "source"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
     "templateVersion": {
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "type": "string"

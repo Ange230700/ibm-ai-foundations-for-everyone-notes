@@ -84,7 +84,7 @@ Le projet relie contexte et prompt à un texte d’annonce, à des images de bou
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : projet de formation avec validation
+### Une coopérative cacaoyère près de Soubré : projet de formation avec validation
 
 Un petit projet final pourrait expliquer une procédure approuvée de réception des lots dans trois
 formats :

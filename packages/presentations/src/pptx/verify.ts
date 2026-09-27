@@ -197,7 +197,7 @@ function normalizedText(values: readonly string[]): string {
 function expectedText(slide: SlideSpec): string[] {
   switch (slide.kind) {
     case 'title':
-      return [slide.title, slide.subtitle];
+      return [slide.title, slide.subtitle, ...(slide.items ?? [])];
 
     case 'objectives':
     case 'overview':
@@ -441,6 +441,15 @@ export async function verifyNativePptx(
 
     if (!sourceNotesPresent) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
+    }
+    const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
+    if (
+      slideSpec.teachingNotes &&
+      (!notes?.includes(`[${teachingLabel}]`) ||
+        !notes.includes(normalizedText([slideSpec.teachingNotes])) ||
+        !notes.includes(`[/${teachingLabel}]`))
+    ) {
+      throw new Error(`PPTX slide ${slideSpec.slideId} is missing teaching notes.`);
     }
 
     const bounds = objectBounds(document);

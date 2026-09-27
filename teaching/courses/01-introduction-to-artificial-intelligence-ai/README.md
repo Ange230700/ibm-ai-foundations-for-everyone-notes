@@ -13,6 +13,10 @@ The bilingual delivery contract for the first session is:
 
 - `docs/teaching/s01-ai-fundamentals-60-min-content-contract.md`
 
+The unnamed fictional cocoa cooperative near Soubré is defined in
+`docs/case-studies/cocoa-cooperative-near-soubre.md`. Its proposed AI uses must not be attributed
+to a real cooperative.
+
 ## Session structure
 
 Each language uses a dedicated session source:
@@ -46,6 +50,9 @@ listed in the session metadata and mapped to slide ranges in its traceability se
 
 ## Production status
 
-These Markdown files are maintained teaching sources, but they are not artifact targets in the V1
-manifest. PDF and PPTX production requires a separately reviewed pipeline extension. Until then, no
-generated session artifact should be treated as a verified release.
+These Markdown files are maintained teaching sources, declared under `teachingSessions` in
+`manifest.json`. Run `pnpm teaching:artifact build --session=s01`, then
+`pnpm teaching:artifact verify --session=s01` to generate and independently check the two PDF
+and editable PPTX language variants. Slides retain the identifiers and one-minute to three-minute
+allocations from the teaching contract; the PPTX speaker notes include the facilitation text.
+Visual review and a timed rehearsal remain necessary before the session is released.

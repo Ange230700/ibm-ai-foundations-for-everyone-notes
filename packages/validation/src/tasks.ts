@@ -3,6 +3,7 @@ import { basename, dirname, relative, resolve } from 'node:path';
 
 import { canonicalJson, fromRoot, padOrdinal } from '@coursera-notes/core';
 import { manifestJsonSchema, readManifest } from '@coursera-notes/manifest';
+import { parseTeachingSession, validateTeachingPair } from '@coursera-notes/presentations';
 
 import { analyzeArtifactImpact } from './artifact-impact.js';
 
@@ -71,6 +72,44 @@ async function manifestFormat(): Promise<TaskResult> {
       ok: false,
       messages: [error instanceof Error ? error.message : String(error)],
     };
+  }
+}
+
+async function teachingSessions(): Promise<TaskResult> {
+  try {
+    const manifest = await readManifest();
+    for (const session of manifest.teachingSessions ?? []) {
+      const course = manifest.courses.find((candidate) => candidate.id === session.courseId);
+      if (!course) throw new Error(`Unknown teaching course: ${session.courseId}.`);
+      const parse = async (language: 'en' | 'fr') => {
+        const sourcePath = session.source[language];
+        const absolutePath = fromRoot(sourcePath);
+        if (
+          !sourcePath.startsWith('teaching/') ||
+          relative(fromRoot('teaching'), absolutePath).startsWith('..')
+        ) {
+          throw new Error(`Teaching source outside teaching/: ${sourcePath}.`);
+        }
+        return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
+          id: session.id,
+          courseId: session.courseId,
+          language,
+          sourcePath,
+          durationMinutes: session.durationMinutes,
+          slideCount: session.slideCount,
+          canonicalSources: course.modules.map((module) => module.source[language]),
+        });
+      };
+      validateTeachingPair(await parse('en'), await parse('fr'));
+    }
+    return {
+      ok: true,
+      messages: [
+        `Teaching sessions valid: ${manifest.teachingSessions?.length ?? 0} bilingual session(s).`,
+      ],
+    };
+  } catch (error) {
+    return { ok: false, messages: [error instanceof Error ? error.message : String(error)] };
   }
 }
 
@@ -264,6 +303,13 @@ export const TASKS: ValidationTask[] = [
     inputs: ['manifest.json', 'courses/**'],
     dependencies: ['manifest.validate'],
     execute: courseStructure,
+  },
+  {
+    id: 'teaching.sessions',
+    description: 'Check declared teaching sources, bilingual structure and scheduled duration.',
+    inputs: ['manifest.json', 'teaching/**', 'packages/presentations/src/teaching/**'],
+    dependencies: ['manifest.validate'],
+    execute: teachingSessions,
   },
   {
     id: 'artifacts.impact',

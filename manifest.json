@@ -211,6 +211,18 @@
     "status": "configured"
   },
   "schemaVersion": 1,
+  "teachingSessions": [
+    {
+      "courseId": "course_ac0d423b-6536-46a9-988f-d929d9f3cedb",
+      "durationMinutes": 60,
+      "id": "s01",
+      "slideCount": 30,
+      "source": {
+        "en": "teaching/courses/01-introduction-to-artificial-intelligence-ai/en/sessions/s01-ai-fundamentals.md",
+        "fr": "teaching/courses/01-introduction-to-artificial-intelligence-ai/fr/sessions/s01-fondamentaux-de-l-ia.md"
+      }
+    }
+  ],
   "templateVersion": "0.1.0",
   "validation": {
     "canonicalLanguages": [

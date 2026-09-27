@@ -561,7 +561,7 @@ applicable standards, regulations, and legal requirements.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Responsible AI for Traceability and Quality Support
+### A cocoa cooperative near Soubré: Responsible AI for Traceability and Quality Support
 
 The cooperative’s data may include member identities, farm locations, field observations, lot
 weights, quality results, and payment records. Their use creates privacy, security, fairness, and

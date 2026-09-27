@@ -147,7 +147,7 @@ Les LLM peuvent participer aux deux systèmes. Le terme « chain-of-thought » s
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : choisir l’outil selon la sortie attendue
+### Une coopérative cacaoyère près de Soubré : choisir l’outil selon la sortie attendue
 
 Supposons que la coopérative ait approuvé une campagne de formation sur la complétude des dossiers
 de réception des lots.

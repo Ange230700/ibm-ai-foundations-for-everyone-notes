@@ -399,7 +399,7 @@ term.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Engineering a Traceability Follow-Up
+### A cocoa cooperative near Soubré: Engineering a Traceability Follow-Up
 
 An initial request such as “Ask for the missing information” lacks the facts and constraints needed
 for safe use. A more deliberate prompt separates them:

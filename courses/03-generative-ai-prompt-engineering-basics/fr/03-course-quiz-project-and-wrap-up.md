@@ -226,7 +226,7 @@ La communication claire reste utile ; une tâche précise peut demander des cont
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : processus final pour un écart de traçabilité
+### Une coopérative cacaoyère près de Soubré : processus final pour un écart de traçabilité
 
 La demande vague « Résous ce problème de traçabilité » peut être décomposée en livrables
 vérifiables :

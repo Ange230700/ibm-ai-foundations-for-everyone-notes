@@ -8,7 +8,7 @@
 - **Audience:** Professionals and learners with no technical prerequisite
 - **Duration:** 60 minutes
 - **Number of slides:** 30
-- **Case study:** Nawa Cocoa Cooperative, a fictional organization near Soubré
+- **Case study:** a fictional cocoa cooperative near Soubré
 - **Bilingual contract:**
   `docs/teaching/s01-ai-fundamentals-60-min-content-contract.md`
 
@@ -28,7 +28,7 @@ responsibility.
 ## Facilitation principles
 
 1. Present one central idea per slide.
-2. Use the fictional Nawa case as the common scenario throughout the session.
+2. Use the fictional cooperative case as the common scenario throughout the session.
 3. Involve learners at the moments indicated in the teaching notes.
 4. Consistently distinguish what the system proposes from what a person decides.
 5. Keep technical and regulatory detail in the reference resources.
@@ -47,7 +47,7 @@ course-title
 S01: AI Fundamentals
 
 - 60-minute session
-- Case study: Nawa Cocoa Cooperative
+- Fictional case: a cocoa cooperative near Soubré
 
 ### Teaching Notes
 
@@ -75,16 +75,16 @@ course-objectives
 
 **Key takeaway:** Participants will build a simple mental model for assessing an AI use case.
 
-Present the objectives as abilities participants will use during the session. Explain that the Nawa case will help test each concept in a professional setting.
+Present the objectives as abilities participants will use during the session. Explain that the cooperative case will help test each concept in a professional setting.
 
-## Slide 03 — Nawa Cocoa Cooperative
+## Slide 03 — A cocoa cooperative near Soubré
 
 - **Identifier:** S01-03
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Producers deliver cocoa lots to the cooperative
+- Fictional case: producers deliver cocoa lots to the cooperative
 - Teams record field visits, weights, quality results, and warehouse movements
 - Internet access remains intermittent at some sites
 - Question: where could AI help without making the final decision?
@@ -93,7 +93,7 @@ Present the objectives as abilities participants will use during the session. Ex
 
 **Key takeaway:** A clearly defined operational need makes it possible to assess the real value of AI.
 
-Introduce Nawa as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
+Introduce the cooperative as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
 
 ## Slide 04 — Artificial intelligence
 
@@ -128,7 +128,7 @@ Explain that AI is a broad field rather than a single tool. Connect each capabil
 
 **Key takeaway:** Augmented intelligence uses AI to improve human work while keeping human responsibility clear.
 
-Use the example of a quality technician at Nawa. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
+Use the example of a quality technician at the fictional cooperative. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
 
 ## Slide 06 — Levels of AI capability
 
@@ -213,7 +213,7 @@ Contrast this approach with a program containing an explicit rule for every situ
 - **Supervised:** learns from labeled examples
 - **Unsupervised:** discovers groups or anomalies
 - **Reinforcement:** improves a sequence of actions through feedback
-- At Nawa: collection forecasting or unusual weight detection
+- At the fictional cooperative: collection forecasting or unusual weight detection
 
 ### Teaching Notes
 
@@ -267,7 +267,7 @@ Explain that an LLM predicts language units from context. Distinguish knowledge 
 - Generative AI produces text, images, audio, video, or code
 - A unimodal model processes one type of information
 - A multimodal model combines several types of information
-- Nawa example: a label photo combined with a written report
+- Cooperative example: a label photo combined with a written report
 
 ### Teaching Notes
 
@@ -285,7 +285,7 @@ Address the common confusion between generation and multimodality. A system may 
 - Natural language processing analyzes or produces text
 - Speech recognition converts speech into text
 - Speech synthesis converts text into speech
-- Nawa example: transcription of a field voice note
+- Cooperative example: transcription of a field voice note
 
 ### Teaching Notes
 
@@ -303,7 +303,7 @@ Describe a field agent recording an observation. The system transcribes the mess
 - Locate objects or text in an image
 - Classify an image using defined categories
 - Flag an unusual feature for review
-- At Nawa, the technician retains the quality decision
+- At the fictional cooperative, the technician retains the quality decision
 
 ### Teaching Notes
 
@@ -321,7 +321,7 @@ Use the example of a cocoa bean photo or lot label. The system may draw attentio
 - **Internet of Things:** devices that collect and exchange data
 - **Cloud:** remotely available computing and storage
 - **Edge or local:** processing performed near the source
-- At Nawa, essential events remain recordable offline
+- At the fictional cooperative, essential events remain recordable offline
 
 ### Teaching Notes
 
@@ -347,7 +347,7 @@ Explain that the fictional application could record essential operations locally
 
 Ask participants which application they use most often. Briefly connect each example to a capability already discussed, such as classification, forecasting, language, or vision.
 
-## Slide 18 — Nawa: data and operational problem
+## Slide 18 — Cooperative case: data and operational problem
 
 - **Identifier:** S01-18
 - **Duration:** 2 minutes
@@ -365,7 +365,7 @@ Ask participants which application they use most often. Briefly connect each exa
 
 Ask which data is truly necessary for the two goals. Point out that collecting more data also increases responsibilities related to privacy and quality.
 
-## Slide 19 — Nawa: selecting AI techniques
+## Slide 19 — Cooperative case: selecting AI techniques
 
 - **Identifier:** S01-19
 - **Duration:** 3 minutes
@@ -386,7 +386,7 @@ Ask which data is truly necessary for the two goals. Point out that collecting m
 
 Hide the second column at first if the presentation format allows it. Ask participants to propose the matches. Reveal the answers and remind them that a real system may combine several techniques.
 
-## Slide 20 — Nawa: AI assistant and offline operation
+## Slide 20 — Cooperative case: AI assistant and offline operation
 
 - **Identifier:** S01-20
 - **Duration:** 2 minutes
@@ -405,7 +405,7 @@ Hide the second column at first if the presentation format allows it. Ask partic
 
 Present this workflow as a design proposal. Distinguish deterministic local checks from AI functions that may require more resources. Continuity of essential work should not depend on constant access to the model.
 
-## Slide 21 — Nawa: human decisions and assistant limits
+## Slide 21 — Cooperative case: human decisions and assistant limits
 
 - **Identifier:** S01-21
 - **Duration:** 3 minutes
@@ -439,7 +439,7 @@ Return to the participants’ initial suggestions. Ask why each sensitive decisi
 
 **Key takeaway:** AI adoption begins with a precise problem and a measurable outcome.
 
-Illustrate the steps with Nawa’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
+Illustrate the steps with the cooperative’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
 
 ## Slide 23 — Generative AI in everyday work
 
@@ -489,7 +489,7 @@ Explain that a chatbot answering a question is not necessarily an agent. An agen
 2. Add those passages to the request context
 3. Generate an answer grounded in that context
 
-- Nawa example: current internal procedures and document requirements
+- Cooperative example: current internal procedures and document requirements
 
 ### Teaching Notes
 
@@ -514,7 +514,7 @@ Explain that RAG improves grounding and can show the sources used. It does not g
 
 **Key takeaway:** Sustainable adoption combines business goals, data readiness, and user skills.
 
-Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At Nawa, training field agents and supervisors matters as much as selecting the model.
+Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At the fictional cooperative, training field agents and supervisors matters as much as selecting the model.
 
 ## Slide 27 — Main generative AI risks
 
@@ -551,7 +551,7 @@ Define a hallucination as plausible but inaccurate or fabricated information. Gi
 
 **Key takeaway:** An organization remains responsible for the effects of an AI system.
 
-Connect these principles to payments, quality decisions, and producer data at Nawa. An automated recommendation does not transfer responsibility to the model.
+Connect these principles to payments, quality decisions, and producer data at the fictional cooperative. An automated recommendation does not transfer responsibility to the model.
 
 ## Slide 29 — Practical AI governance
 
@@ -581,7 +581,7 @@ Explain that governance continues after launch. Mention escalation and stop mech
 
 1. Which technique can flag unusual weights?
 2. What must be checked before using generated content?
-3. Which Nawa decision must remain human?
+3. Which cooperative decision must remain human?
 
 - Final idea: AI supports a person who retains responsibility
 

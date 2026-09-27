@@ -1,17 +1,17 @@
-# Nawa Cocoa Cooperative Case-Study Contract
+# Fictional Cocoa Cooperative near Soubré: Case-Study Contract
 
 ## Purpose
 
-The Nawa Cocoa Cooperative is the recurring fictional example for the completed modules in Courses
-01–03. It connects the course concepts to cocoa production and collection in Côte d’Ivoire without
-presenting a real cooperative, deployed product, or measured result.
+A fictional cocoa cooperative near Soubré is the recurring example for the completed modules in
+Courses 01–03. It connects the course concepts to cocoa production and collection in Côte d’Ivoire
+without presenting a real cooperative, deployed product, or measured result.
 
 Recorded course activities, attributed external cases, quiz evidence, and personal reflections keep
 their original context. The cooperative is a synthesis layer used to apply the concepts consistently.
 
 ## Stable Scenario
 
-- **Organization:** a fictional cocoa cooperative near Soubré in the Nawa region.
+- **Organization:** an unnamed, fictional cocoa cooperative near Soubré, Côte d’Ivoire.
 - **People:** member producers, field agents, quality technicians, warehouse staff, an operations
   manager, and an elected cooperative board.
 - **Work:** producer registration, field visits, lot intake, quality checks, collection planning,
@@ -46,6 +46,14 @@ The proposed assistant must not:
 - submit an official certificate or shipment record; or
 - invent measurements, traceability events, regulatory requirements, or inspection results.
 
+## Attribution Boundary
+
+Soubré and Côte d’Ivoire provide the real geographic and sector context. The organization, its
+staff, data, processes, constraints, proposed application, and AI uses form a teaching scenario.
+They must not be attributed to any existing cooperative. When introducing the case, explicitly
+say that the cooperative and its application are fictional; cite the context references only for
+sector-wide background.
+
 ## Offline and Online Responsibilities
 
 The core application records field visits and lot events locally, queues updates, and synchronizes
@@ -61,16 +69,16 @@ accepted after review. These are evaluation criteria, not achieved results.
 
 ## Bilingual Terms
 
-| English                | French                 |
-| ---------------------- | ---------------------- |
-| Nawa Cocoa Cooperative | Coopérative Cacao Nawa |
-| member producer        | producteur membre      |
-| field agent            | agent de terrain       |
-| quality technician     | technicien qualité     |
-| lot intake             | réception du lot       |
-| traceability record    | donnée de traçabilité  |
-| collection forecast    | prévision de collecte  |
-| human review           | validation humaine     |
+| English                                 | French                                       |
+| --------------------------------------- | -------------------------------------------- |
+| fictional cocoa cooperative near Soubré | coopérative cacaoyère fictive près de Soubré |
+| member producer                         | producteur membre                            |
+| field agent                             | agent de terrain                             |
+| quality technician                      | technicien qualité                           |
+| lot intake                              | réception du lot                             |
+| traceability record                     | donnée de traçabilité                        |
+| collection forecast                     | prévision de collecte                        |
+| human review                            | validation humaine                           |
 
 ## Module Map
 
@@ -94,5 +102,7 @@ fictional cooperative:
 
 - Coffee-Cocoa Council of Côte d’Ivoire, sustainable and traceable cocoa:
   <https://conseilcafecacao.ci/index.php?id=1489&option=com_k2&view=item>
+- Ivorian Press Agency, presentation of the national traceability system in Soubré:
+  <https://www.aip.ci/cote-divoire-aip-cafe-cacao-le-systeme-national-de-tracabilite-presente-a-soubre-comme-un-outil-de-securisation-des-producteurs/>
 - World Bank, digital phytosanitary certification for cocoa trade in Côte d’Ivoire:
   <https://blogs.worldbank.org/en/trade/digital-certification-makes-cocoa-traders-cote-divoire-more-competitive>

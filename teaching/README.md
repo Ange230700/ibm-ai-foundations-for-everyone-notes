@@ -24,6 +24,17 @@ and explicit human responsibility for consequential decisions.
   - English teaching source: available
   - Bilingual structural alignment: verified
 
-The V1 artifact pipeline does not yet generate a combined session deck from these sources. Pipeline
-integration requires an explicit source contract, deterministic identifiers, bilingual verification,
-and independent PDF and PPTX validation.
+## Session artifacts
+
+`manifest.json` declares the bilingual S01 source and its 30-slide, 60-minute delivery contract.
+Use `pnpm teaching:artifact plan` to inspect the targets, `pnpm teaching:artifact build` to
+generate both languages in PDF and native PPTX, and `pnpm teaching:artifact verify` to recheck
+the generated files against the current sources. Add `--lang=en|fr` or `--format=pdf|pptx` to
+select a subset. Outputs are written under `.artifacts/teaching-sessions/s01/<language>/`.
+`pnpm teaching:artifact visual-qa --format=pdf` creates page images and contact sheets for
+inspection. PPTX visual QA uses LibreOffice when available.
+
+The PDF contains the projected slides. The editable PPTX also includes facilitation notes and
+source references in its speaker notes. Generation checks slide count and planned duration;
+the instructor must still rehearse the 60-minute delivery and visually inspect both formats
+before distributing them as final supports.

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@coursera-notes/core": "workspace:*",
-    "@coursera-notes/manifest": "workspace:*"
+    "@coursera-notes/manifest": "workspace:*",
+    "@coursera-notes/presentations": "workspace:*"
   }
 }

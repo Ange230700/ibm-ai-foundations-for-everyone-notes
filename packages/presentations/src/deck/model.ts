@@ -13,22 +13,27 @@ interface BaseSlideSpec {
   slideId: string;
   title: string;
   sourceRefs: DeckSourceRef[];
+  teachingNotes?: string;
+  durationMinutes?: number;
 }
 
 export interface TitleSlideSpec extends BaseSlideSpec {
   kind: 'title';
   subtitle: string;
+  items?: string[];
 }
 
 export interface ObjectivesSlideSpec extends BaseSlideSpec {
   kind: 'objectives';
   items: string[];
   leadIn?: string;
+  itemLabels?: string[];
 }
 
 export interface OverviewSlideSpec extends BaseSlideSpec {
   kind: 'overview';
   items: string[];
+  itemLabels?: string[];
 }
 
 export interface ConceptSlideSpec extends BaseSlideSpec {
@@ -64,6 +69,7 @@ export interface CodeSlideSpec extends BaseSlideSpec {
 export interface SummarySlideSpec extends BaseSlideSpec {
   kind: 'summary';
   items: string[];
+  itemLabels?: string[];
 }
 
 export type SlideSpec =

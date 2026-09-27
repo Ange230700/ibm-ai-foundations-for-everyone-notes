@@ -74,17 +74,24 @@ function validateSourceRef(input: unknown, blockIds: Set<string>, label: string)
   return input as unknown as DeckSourceRef;
 }
 
-const baseSlideKeys = ['kind', 'slideId', 'title', 'sourceRefs'] as const;
+const baseSlideKeys = [
+  'kind',
+  'slideId',
+  'title',
+  'sourceRefs',
+  'teachingNotes',
+  'durationMinutes',
+] as const;
 
 const slideKeys: Record<SlideSpec['kind'], readonly string[]> = {
-  title: [...baseSlideKeys, 'subtitle'],
-  objectives: [...baseSlideKeys, 'items', 'leadIn'],
-  overview: [...baseSlideKeys, 'items'],
+  title: [...baseSlideKeys, 'subtitle', 'items'],
+  objectives: [...baseSlideKeys, 'items', 'leadIn', 'itemLabels'],
+  overview: [...baseSlideKeys, 'items', 'itemLabels'],
   concepts: [...baseSlideKeys, 'concepts'],
   diagram: [...baseSlideKeys, 'diagramId', 'explanation'],
   table: [...baseSlideKeys, 'tableId', 'headers', 'rows', 'explanation'],
   code: [...baseSlideKeys, 'codeExampleId', 'language', 'code', 'explanation'],
-  summary: [...baseSlideKeys, 'items'],
+  summary: [...baseSlideKeys, 'items', 'itemLabels'],
 };
 
 function validateSlideIdentity(
@@ -121,6 +128,29 @@ function validateSlideIdentity(
     throw new Error(`${label} must retain at least one source reference.`);
   }
 
+  if (
+    input.itemLabels !== undefined &&
+    (!Array.isArray(input.itemLabels) ||
+      !Array.isArray(input.items) ||
+      input.itemLabels.length !== input.items.length ||
+      !input.itemLabels.every((item) => typeof item === 'string'))
+  ) {
+    throw new Error(`${label}.itemLabels must match the projected items.`);
+  }
+
+  if (
+    input.teachingNotes !== undefined &&
+    (typeof input.teachingNotes !== 'string' || !input.teachingNotes.trim())
+  ) {
+    throw new Error(`${label}.teachingNotes must be non-empty.`);
+  }
+  if (
+    input.durationMinutes !== undefined &&
+    (!Number.isInteger(input.durationMinutes) || Number(input.durationMinutes) <= 0)
+  ) {
+    throw new Error(`${label}.durationMinutes must be a positive integer.`);
+  }
+
   input.sourceRefs.forEach((source, sourceIndex) =>
     validateSourceRef(source, blockIds, `${label}.sourceRefs[${sourceIndex}]`),
   );
@@ -145,6 +175,7 @@ function validateTitleSlide(value: Record<string, unknown>, label: string): void
   if (typeof value.subtitle !== 'string') {
     throw new TypeError(`${label}.subtitle must be a string.`);
   }
+  if (value.items !== undefined) validateStringItems(value.items, `${label}.items`);
 }
 
 function validateObjectivesSlide(value: Record<string, unknown>, label: string): void {

@@ -162,6 +162,9 @@ importers:
       '@coursera-notes/manifest':
         specifier: workspace:*
         version: link:../manifest
+      '@coursera-notes/presentations':
+        specifier: workspace:*
+        version: link:../presentations
 
 packages:
 

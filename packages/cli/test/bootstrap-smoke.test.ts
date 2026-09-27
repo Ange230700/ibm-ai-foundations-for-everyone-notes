@@ -16,6 +16,7 @@ interface CommandResult {
 
 interface SeedManifest {
   courses: unknown[];
+  teachingSessions?: unknown[];
   program: {
     id: string | null;
     license: {
@@ -57,6 +58,7 @@ async function seedTemplate(repositoryRoot: string): Promise<void> {
   const templateManifest: SeedManifest = {
     ...manifest,
     courses: [],
+    teachingSessions: [],
     program: {
       ...manifest.program,
       id: null,

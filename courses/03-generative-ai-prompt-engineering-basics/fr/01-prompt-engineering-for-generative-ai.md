@@ -185,7 +185,7 @@ Les références à OpenAI, Microsoft Copilot, Llama2 et à la mémoire conversa
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : structurer un suivi de traçabilité
+### Une coopérative cacaoyère près de Soubré : structurer un suivi de traçabilité
 
 Une demande comme « Demande l’information manquante » ne fournit ni les faits ni les contraintes
 nécessaires. Un prompt plus précis les sépare :

@@ -294,9 +294,9 @@ different types of output.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Augmented Intelligence in Cooperative Work
+### A cocoa cooperative near Soubré: Augmented Intelligence in Cooperative Work
 
-The Nawa Cocoa Cooperative is a fictional organization near Soubré. Member producers deliver cocoa
+The cooperative in this fictional case is located near Soubré. Member producers deliver cocoa
 lots while field agents, quality technicians, warehouse staff, and an operations manager maintain
 field, intake, quality, and traceability records.
 

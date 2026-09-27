@@ -400,7 +400,7 @@ generative AI responsibly and productively within their professional domains.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Adoption and Workforce Change
+### A cocoa cooperative near Soubré: Adoption and Workforce Change
 
 The cooperative starts with two defined goals: improve traceability-record completeness and prepare
 collection plans with fewer manual reconciliations.

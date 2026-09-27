@@ -7,7 +7,7 @@
 - **Durée totale :** 60 minutes
 - **Nombre de diapositives :** 30 en français et 30 en anglais
 - **Public :** professionnels et apprenants sans prérequis technique
-- **Cas fil rouge :** Coopérative Cacao Nawa, organisation fictive située près de Soubré
+- **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
 - **Principe éditorial :** les sources détaillées restent des documents de référence. Ce contrat définit uniquement le parcours présenté en direct.
 
 ## Règles communes aux deux langues
@@ -17,7 +17,7 @@
 3. Une diapositive développe une seule idée centrale.
 4. Le texte visible reste bref. Les précisions, exemples secondaires et transitions figurent dans les notes.
 5. L’IA soutient le travail humain. Les décisions importantes restent attribuées à des personnes clairement identifiées.
-6. Le cas Nawa illustre les notions sans présenter le système fictif comme un produit existant.
+6. Le cas de la coopérative illustre les notions sans présenter le système fictif comme un produit existant.
 
 ---
 
@@ -32,7 +32,7 @@ Durée : **1 minute**
 - **Message principal :** La session présente les notions indispensables pour comprendre les capacités, les usages et les limites de l’intelligence artificielle.
 - **Contenu visible :**
   - Session de 60 minutes
-  - Étude de cas : Coopérative Cacao Nawa
+  - Cas fictif : une coopérative cacaoyère près de Soubré
 - **Notes du formateur :** Accueillir les participants. Expliquer que la session donne une vue d’ensemble pratique. Préciser que les détails techniques restent disponibles dans les supports de référence.
 
 ### English
@@ -42,7 +42,7 @@ Durée : **1 minute**
 - **Key message:** The session introduces the essential concepts needed to understand artificial intelligence capabilities, uses, and limitations.
 - **On-slide content:**
   - 60-minute session
-  - Case study: Nawa Cocoa Cooperative
+  - Fictional case: a cocoa cooperative near Soubré
 - **Facilitator notes:** Welcome participants. Explain that the session provides a practical overview. Mention that detailed technical material remains available in the reference resources.
 
 ## S01-02 : Objectifs de la session / Session objectives
@@ -58,7 +58,7 @@ Durée : **2 minutes**
   - Relier apprentissage automatique, apprentissage profond et IA générative
   - Associer une technique d’IA à un besoin concret
   - Reconnaître les risques et les responsabilités humaines
-- **Notes du formateur :** Présenter les objectifs comme des capacités à utiliser pendant la séance. Annoncer que le cas Nawa servira à vérifier chaque notion dans un contexte professionnel.
+- **Notes du formateur :** Présenter les objectifs comme des capacités à utiliser pendant la séance. Annoncer que le cas de la coopérative servira à vérifier chaque notion dans un contexte professionnel.
 
 ### English
 
@@ -69,7 +69,7 @@ Durée : **2 minutes**
   - Connect machine learning, deep learning, and generative AI
   - Match an AI technique to a concrete need
   - Recognize risks and human responsibilities
-- **Facilitator notes:** Present the objectives as abilities participants will use during the session. Explain that the Nawa case will help test each concept in a professional setting.
+- **Facilitator notes:** Present the objectives as abilities participants will use during the session. Explain that the cooperative case will help test each concept in a professional setting.
 
 ## S01-03 : Situation de départ / Starting situation
 
@@ -77,25 +77,25 @@ Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Coopérative Cacao Nawa
+- **Titre :** Une coopérative cacaoyère près de Soubré
 - **Message principal :** Un besoin opérationnel clair permet d’évaluer l’utilité réelle de l’IA.
 - **Contenu visible :**
-  - Des producteurs livrent leurs lots de cacao à la coopérative
+  - Cas fictif : des producteurs livrent leurs lots de cacao à la coopérative
   - Les équipes enregistrent les visites, les pesées, la qualité et les mouvements de stock
   - La connexion internet reste intermittente sur certains sites
   - Question : où l’IA pourrait-elle aider sans prendre la décision finale ?
-- **Notes du formateur :** Présenter Nawa comme une organisation fictive située près de Soubré. Demander aux participants de proposer un ou deux usages. Ne pas corriger immédiatement. Les propositions seront reprises plus tard.
+- **Notes du formateur :** Présenter la coopérative comme une organisation fictive située près de Soubré. Demander aux participants de proposer un ou deux usages. Ne pas corriger immédiatement. Les propositions seront reprises plus tard.
 
 ### English
 
-- **Title:** Nawa Cocoa Cooperative
+- **Title:** A cocoa cooperative near Soubré
 - **Key message:** A clearly defined operational need makes it possible to assess the real value of AI.
 - **On-slide content:**
-  - Producers deliver cocoa lots to the cooperative
+  - Fictional case: producers deliver cocoa lots to the cooperative
   - Teams record field visits, weights, quality results, and warehouse movements
   - Internet access remains intermittent at some sites
   - Question: where could AI help without making the final decision?
-- **Facilitator notes:** Introduce Nawa as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
+- **Facilitator notes:** Introduce the cooperative as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
 
 ## S01-04 : Définition de l’intelligence artificielle / Definition of artificial intelligence
 
@@ -135,7 +135,7 @@ Durée : **2 minutes**
   - **L’IA peut :** analyser, signaler, résumer ou proposer
   - **La personne doit :** définir l’objectif, vérifier les éléments et décider
   - Plus les conséquences sont importantes, plus la supervision doit être forte
-- **Notes du formateur :** Utiliser l’exemple d’un technicien qualité chez Nawa. Le système peut signaler une anomalie dans un dossier. Le technicien examine les preuves et décide de la suite.
+- **Notes du formateur :** Utiliser l’exemple d’un technicien qualité au sein de la coopérative fictive. Le système peut signaler une anomalie dans un dossier. Le technicien examine les preuves et décide de la suite.
 
 ### English
 
@@ -145,7 +145,7 @@ Durée : **2 minutes**
   - **AI can:** analyze, flag, summarize, or propose
   - **A person must:** define the goal, verify the evidence, and decide
   - Stronger consequences require stronger oversight
-- **Facilitator notes:** Use the example of a quality technician at Nawa. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
+- **Facilitator notes:** Use the example of a quality technician at the fictional cooperative. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
 
 ## S01-06 : ANI, AGI et ASI / ANI, AGI, and ASI
 
@@ -263,7 +263,7 @@ Durée : **3 minutes**
   - **Supervisé :** apprend à partir d’exemples étiquetés
   - **Non supervisé :** découvre des groupes ou des anomalies
   - **Par renforcement :** améliore une suite d’actions grâce à un retour
-  - Chez Nawa : prévision des volumes ou détection de pesées inhabituelles
+  - Dans la coopérative fictive : prévision des volumes ou détection de pesées inhabituelles
 - **Notes du formateur :** Demander aux participants d’associer la prévision des volumes à l’apprentissage supervisé et la détection de pesées inhabituelles à l’apprentissage non supervisé. Présenter le renforcement comme une approche adaptée aux décisions successives dans un environnement contrôlé.
 
 ### English
@@ -274,7 +274,7 @@ Durée : **3 minutes**
   - **Supervised:** learns from labeled examples
   - **Unsupervised:** discovers groups or anomalies
   - **Reinforcement:** improves a sequence of actions through feedback
-  - At Nawa: collection forecasting or unusual weight detection
+  - At the fictional cooperative: collection forecasting or unusual weight detection
 - **Facilitator notes:** Ask participants to match collection forecasting with supervised learning and unusual weight detection with unsupervised learning. Present reinforcement learning as an approach for sequential decisions in a controlled environment.
 
 ## S01-11 : Réseaux de neurones et apprentissage profond / Neural networks and deep learning
@@ -341,7 +341,7 @@ Durée : **2 minutes**
   - L’IA générative produit du texte, des images, du son, de la vidéo ou du code
   - Un modèle unimodal traite un seul type d’information
   - Un modèle multimodal combine plusieurs types d’information
-  - Exemple Nawa : photo d’une étiquette associée à un rapport écrit
+  - Exemple de la coopérative : photo d’une étiquette associée à un rapport écrit
 - **Notes du formateur :** Corriger la confusion fréquente entre génération et multimodalité. Un système peut générer uniquement du texte. Un autre peut analyser une image et un texte sans produire plusieurs formats de sortie.
 
 ### English
@@ -352,7 +352,7 @@ Durée : **2 minutes**
   - Generative AI produces text, images, audio, video, or code
   - A unimodal model processes one type of information
   - A multimodal model combines several types of information
-  - Nawa example: a label photo combined with a written report
+  - Cooperative example: a label photo combined with a written report
 - **Facilitator notes:** Address the common confusion between generation and multimodality. A system may generate only text. Another system may analyze an image and text without producing several output formats.
 
 ## S01-14 : Langage et technologies vocales / Language and speech technologies
@@ -367,7 +367,7 @@ Durée : **2 minutes**
   - Le traitement automatique du langage analyse ou produit du texte
   - La reconnaissance vocale transforme la parole en texte
   - La synthèse vocale transforme le texte en parole
-  - Exemple Nawa : transcription d’une note vocale envoyée depuis le terrain
+  - Exemple de la coopérative : transcription d’une note vocale envoyée depuis le terrain
 - **Notes du formateur :** Décrire un agent de terrain qui enregistre une observation. Le système transcrit le message et extrait le lieu ou l’action demandée. L’agent vérifie ensuite la transcription avant son enregistrement.
 
 ### English
@@ -378,7 +378,7 @@ Durée : **2 minutes**
   - Natural language processing analyzes or produces text
   - Speech recognition converts speech into text
   - Speech synthesis converts text into speech
-  - Nawa example: transcription of a field voice note
+  - Cooperative example: transcription of a field voice note
 - **Facilitator notes:** Describe a field agent recording an observation. The system transcribes the message and extracts the location or requested action. The agent then verifies the transcription before saving it.
 
 ## S01-15 : Vision par ordinateur / Computer vision
@@ -393,7 +393,7 @@ Durée : **2 minutes**
   - Repérer des objets ou du texte dans une image
   - Classer une image selon des catégories définies
   - Signaler une caractéristique inhabituelle pour examen
-  - Chez Nawa, le technicien conserve la décision sur la qualité du lot
+  - Dans la coopérative fictive, le technicien conserve la décision sur la qualité du lot
 - **Notes du formateur :** Utiliser l’exemple d’une photo de fèves ou d’une étiquette de lot. Le système peut attirer l’attention sur une irrégularité. Il ne diagnostique pas une maladie et n’attribue pas seul une note de qualité.
 
 ### English
@@ -404,7 +404,7 @@ Durée : **2 minutes**
   - Locate objects or text in an image
   - Classify an image using defined categories
   - Flag an unusual feature for review
-  - At Nawa, the technician retains the quality decision
+  - At the fictional cooperative, the technician retains the quality decision
 - **Facilitator notes:** Use the example of a cocoa bean photo or lot label. The system may draw attention to an irregularity. It does not diagnose crop disease or assign a quality grade by itself.
 
 ## S01-16 : IoT, cloud et périphérie / IoT, cloud, and edge computing
@@ -419,7 +419,7 @@ Durée : **2 minutes**
   - **Objets connectés :** appareils qui collectent et échangent des données
   - **Cloud :** calcul et stockage accessibles à distance
   - **Périphérie ou local :** traitement effectué près de la source
-  - Chez Nawa, les événements essentiels restent enregistrables hors connexion
+  - Dans la coopérative fictive, les événements essentiels restent enregistrables hors connexion
 - **Notes du formateur :** Expliquer que l’application fictive peut enregistrer localement les opérations essentielles, conserver les mises à jour en attente et les synchroniser au retour de la connexion. Ne pas présenter ce scénario comme une architecture déjà déployée.
 
 ### English
@@ -430,7 +430,7 @@ Durée : **2 minutes**
   - **Internet of Things:** devices that collect and exchange data
   - **Cloud:** remotely available computing and storage
   - **Edge or local:** processing performed near the source
-  - At Nawa, essential events remain recordable offline
+  - At the fictional cooperative, essential events remain recordable offline
 - **Facilitator notes:** Explain that the fictional application could record essential operations locally, keep pending updates, and synchronize them when connectivity returns. Do not present this scenario as an already deployed architecture.
 
 ## S01-17 : Applications de l’IA / AI applications
@@ -465,7 +465,7 @@ Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Nawa : données et problème opérationnel
+- **Titre :** Coopérative : données et problème opérationnel
 - **Message principal :** Un cas d’usage utile part de données disponibles et d’un problème mesurable.
 - **Contenu visible :**
   - **Données :** producteurs, parcelles, visites, lots, pesées, qualité et stock
@@ -476,7 +476,7 @@ Durée : **2 minutes**
 
 ### English
 
-- **Title:** Nawa: data and operational problem
+- **Title:** Cooperative case: data and operational problem
 - **Key message:** A useful use case begins with available data and a measurable problem.
 - **On-slide content:**
   - **Data:** producers, farms, visits, lots, weights, quality, and inventory
@@ -491,7 +491,7 @@ Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Nawa : choix des techniques d’IA
+- **Titre :** Coopérative : choix des techniques d’IA
 - **Message principal :** Chaque tâche appelle une technique adaptée à son résultat attendu.
 - **Contenu visible :**
 
@@ -507,7 +507,7 @@ Durée : **3 minutes**
 
 ### English
 
-- **Title:** Nawa: selecting AI techniques
+- **Title:** Cooperative case: selecting AI techniques
 - **Key message:** Each task requires a technique suited to its expected result.
 - **On-slide content:**
 
@@ -527,7 +527,7 @@ Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Nawa : assistant IA et fonctionnement hors connexion
+- **Titre :** Coopérative : assistant IA et fonctionnement hors connexion
 - **Message principal :** L’assistant soutient le processus même lorsque la connexion n’est pas disponible en permanence.
 - **Contenu visible :**
   1. L’agent enregistre les informations essentielles localement
@@ -539,7 +539,7 @@ Durée : **2 minutes**
 
 ### English
 
-- **Title:** Nawa: AI assistant and offline operation
+- **Title:** Cooperative case: AI assistant and offline operation
 - **Key message:** The assistant supports the workflow even when continuous connectivity is unavailable.
 - **On-slide content:**
   1. The agent records essential information locally
@@ -555,7 +555,7 @@ Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Nawa : décisions humaines et limites de l’assistant
+- **Titre :** Coopérative : décisions humaines et limites de l’assistant
 - **Message principal :** L’utilité de l’assistant dépend de limites explicites et d’une responsabilité humaine identifiable.
 - **Contenu visible :**
   - **L’assistant peut :** classer des rapports, signaler un dossier incomplet et préparer un avis
@@ -565,7 +565,7 @@ Durée : **3 minutes**
 
 ### English
 
-- **Title:** Nawa: human decisions and assistant limits
+- **Title:** Cooperative case: human decisions and assistant limits
 - **Key message:** The assistant is useful only when its limits are explicit and human responsibility is identifiable.
 - **On-slide content:**
   - **The assistant can:** classify reports, flag an incomplete record, and draft a notice
@@ -587,7 +587,7 @@ Durée : **2 minutes**
   3. Cas d’usage limité avec un responsable identifié
   4. Essai auprès des utilisateurs avec des règles de contrôle
   5. Mesure de la qualité, du délai et des erreurs
-- **Notes du formateur :** Illustrer les étapes avec les objectifs de Nawa : améliorer la complétude des dossiers et réduire les rapprochements manuels. Expliquer qu’un projet commence avec une portée limitée avant une extension éventuelle.
+- **Notes du formateur :** Illustrer les étapes avec les objectifs de la coopérative : améliorer la complétude des dossiers et réduire les rapprochements manuels. Expliquer qu’un projet commence avec une portée limitée avant une extension éventuelle.
 
 ### English
 
@@ -599,7 +599,7 @@ Durée : **2 minutes**
   3. Limited use case with an identified owner
   4. User trial with control rules
   5. Measurement of quality, time, and errors
-- **Facilitator notes:** Illustrate the steps with Nawa’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
+- **Facilitator notes:** Illustrate the steps with the cooperative’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
 
 ## S01-23 : IA générative au travail / Generative AI at work
 
@@ -667,7 +667,7 @@ Durée : **2 minutes**
   1. Rechercher les passages pertinents
   2. Ajouter ces passages au contexte de la demande
   3. Générer une réponse fondée sur ce contexte
-  - Exemple Nawa : procédures internes et exigences documentaires en vigueur
+  - Exemple de la coopérative : procédures internes et exigences documentaires en vigueur
 - **Notes du formateur :** Expliquer que la RAG améliore l’ancrage de la réponse et permet d’afficher les sources consultées. Elle ne garantit pas l’exactitude. L’utilisateur doit vérifier que les passages récupérés sont pertinents et à jour.
 
 ### English
@@ -678,7 +678,7 @@ Durée : **2 minutes**
   1. Retrieve relevant passages
   2. Add those passages to the request context
   3. Generate an answer grounded in that context
-  - Nawa example: current internal procedures and document requirements
+  - Cooperative example: current internal procedures and document requirements
 - **Facilitator notes:** Explain that RAG improves grounding and can show the sources used. It does not guarantee accuracy. The user must verify that retrieved passages are relevant and current.
 
 ## S01-26 : Adoption et compétences / Adoption and skills
@@ -695,7 +695,7 @@ Durée : **2 minutes**
   - Formation à la vérification et à la confidentialité
   - Déploiement progressif avec suivi après le lancement
   - Culture de l’IA : capacités, limites et usage responsable
-- **Notes du formateur :** Éviter les cadres propres à une marque. Présenter la culture de l’IA comme une compétence professionnelle générale. Chez Nawa, former les agents et les responsables compte autant que choisir le modèle.
+- **Notes du formateur :** Éviter les cadres propres à une marque. Présenter la culture de l’IA comme une compétence professionnelle générale. Dans la coopérative fictive, former les agents et les responsables compte autant que choisir le modèle.
 
 ### English
 
@@ -707,7 +707,7 @@ Durée : **2 minutes**
   - Training in verification and confidentiality
   - Gradual deployment with monitoring after launch
   - AI literacy: capabilities, limits, and responsible use
-- **Facilitator notes:** Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At Nawa, training field agents and supervisors matters as much as selecting the model.
+- **Facilitator notes:** Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At the fictional cooperative, training field agents and supervisors matters as much as selecting the model.
 
 ## S01-27 : Risques de l’IA générative / Generative AI risks
 
@@ -750,7 +750,7 @@ Durée : **1 minute**
   - **Transparence :** expliquer le rôle, les données et les limites du système
   - **Responsabilité :** désigner la personne qui répond des décisions et corrections
   - **Supervision :** renforcer le contrôle lorsque les conséquences augmentent
-- **Notes du formateur :** Relier ces principes aux paiements, aux décisions de qualité et aux données des producteurs chez Nawa. Une recommandation automatisée ne transfère pas la responsabilité au modèle.
+- **Notes du formateur :** Relier ces principes aux paiements, aux décisions de qualité et aux données des producteurs au sein de la coopérative fictive. Une recommandation automatisée ne transfère pas la responsabilité au modèle.
 
 ### English
 
@@ -761,7 +761,7 @@ Durée : **1 minute**
   - **Transparency:** explain the system’s role, data, and limits
   - **Accountability:** identify who owns decisions and corrections
   - **Oversight:** increase control as consequences increase
-- **Facilitator notes:** Connect these principles to payments, quality decisions, and producer data at Nawa. An automated recommendation does not transfer responsibility to the model.
+- **Facilitator notes:** Connect these principles to payments, quality decisions, and producer data at the fictional cooperative. An automated recommendation does not transfer responsibility to the model.
 
 ## S01-29 : Gouvernance pratique / Practical governance
 
@@ -802,7 +802,7 @@ Durée : **1 minute**
 - **Contenu visible :**
   1. Quelle technique peut signaler des pesées inhabituelles ?
   2. Que faut-il vérifier avant d’utiliser un contenu généré ?
-  3. Quelle décision de Nawa doit rester humaine ?
+  3. Quelle décision de la coopérative doit rester humaine ?
   - Idée finale : l’IA soutient une personne qui conserve la responsabilité
 - **Notes du formateur :** Recueillir des réponses rapides. Réponses attendues : détection d’anomalies par apprentissage non supervisé, exactitude et sources du contenu, puis une décision comme la note de qualité, le rejet d’un lot ou le paiement. Conclure en rappelant que l’IA part d’un problème défini.
 
@@ -813,7 +813,7 @@ Durée : **1 minute**
 - **On-slide content:**
   1. Which technique can flag unusual weights?
   2. What must be checked before using generated content?
-  3. Which Nawa decision must remain human?
+  3. Which cooperative decision must remain human?
   - Final idea: AI supports a person who retains responsibility
 - **Facilitator notes:** Collect quick answers. Expected answers are anomaly detection through unsupervised learning, verification of accuracy and sources, and a decision such as quality grading, lot rejection, or producer payment. Close by reminding participants that AI work begins with a defined problem.
 

@@ -26,7 +26,8 @@
     "prepare": "husky",
     "check:semantic": "tsx packages/cli/src/check.ts",
     "test": "pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
-    "artifact": "tsx packages/cli/src/artifact.ts"
+    "artifact": "tsx packages/cli/src/artifact.ts",
+    "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts"
   },
   "devDependencies": {
     "@commitlint/cli": "20.5.3",

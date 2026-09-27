@@ -136,7 +136,7 @@ Le principe pratique reste de vérifier les faits et les usages. Vie privée, d�
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : IA discriminative et IA générative
+### Une coopérative cacaoyère près de Soubré : IA discriminative et IA générative
 
 Un même besoin de la coopérative peut mobiliser plusieurs formes d’IA. Un modèle discriminatif
 pourrait classer un rapport de terrain comme complet, incomplet, urgent ou prêt pour une vérification

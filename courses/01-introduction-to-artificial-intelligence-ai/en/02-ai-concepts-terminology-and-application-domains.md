@@ -501,7 +501,7 @@ Applications introduced in the course include:
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: One Workflow, Several AI Techniques
+### A cocoa cooperative near Soubré: One Workflow, Several AI Techniques
 
 The cooperative provides one setting for several AI concepts:
 

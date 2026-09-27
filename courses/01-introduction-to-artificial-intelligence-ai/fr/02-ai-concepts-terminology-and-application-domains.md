@@ -158,7 +158,7 @@ Combinées avec l’IA, ces technologies permettent de collecter, traiter, déci
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : plusieurs techniques d’IA dans un même processus
+### Une coopérative cacaoyère près de Soubré : plusieurs techniques d’IA dans un même processus
 
 La coopérative permet d’appliquer plusieurs notions d’IA dans un seul contexte :
 

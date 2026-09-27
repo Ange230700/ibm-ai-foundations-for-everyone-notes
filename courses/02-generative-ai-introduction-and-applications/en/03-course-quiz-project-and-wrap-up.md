@@ -106,7 +106,7 @@ a generated product visual proves a product claim.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: A Reviewed Training Project
+### A cocoa cooperative near Soubré: A Reviewed Training Project
 
 A small final project could explain one approved lot-intake procedure across three formats:
 

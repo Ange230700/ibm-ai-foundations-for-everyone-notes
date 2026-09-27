@@ -8,7 +8,7 @@
 - **Public :** Professionnels et apprenants sans prérequis technique
 - **Durée :** 60 minutes
 - **Nombre de diapositives :** 30
-- **Cas fil rouge :** Coopérative Cacao Nawa, organisation fictive située près de Soubré
+- **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
 - **Contrat bilingue :**
   `docs/teaching/s01-ai-fundamentals-60-min-content-contract.md`
 
@@ -28,7 +28,7 @@ risques et à une responsabilité humaine clairement définie.
 ## Principes d’animation
 
 1. Présenter une idée centrale par diapositive.
-2. Utiliser le cas Nawa comme scénario fictif commun à toute la session.
+2. Utiliser le cas de la coopérative comme scénario fictif commun à toute la session.
 3. Faire participer les apprenants aux moments indiqués dans les notes pédagogiques.
 4. Distinguer systématiquement ce que le système propose de ce que la personne décide.
 5. Réserver les détails techniques et réglementaires aux ressources de référence.
@@ -47,7 +47,7 @@ course-title
 S01 : Fondamentaux de l’IA
 
 - Session de 60 minutes
-- Étude de cas : Coopérative Cacao Nawa
+- Cas fictif : une coopérative cacaoyère près de Soubré
 
 ### Notes pédagogiques
 
@@ -75,16 +75,16 @@ course-objectives
 
 **Message à faire retenir :** Les participants construiront un modèle mental simple pour analyser un usage de l’IA.
 
-Présenter les objectifs comme des capacités à utiliser pendant la séance. Annoncer que le cas Nawa servira à vérifier chaque notion dans un contexte professionnel.
+Présenter les objectifs comme des capacités à utiliser pendant la séance. Annoncer que le cas de la coopérative servira à vérifier chaque notion dans un contexte professionnel.
 
-## Diapositive 03 — Coopérative Cacao Nawa
+## Diapositive 03 — Une coopérative cacaoyère près de Soubré
 
 - **Identifiant :** S01-03
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Des producteurs livrent leurs lots de cacao à la coopérative
+- Cas fictif : des producteurs livrent leurs lots de cacao à la coopérative
 - Les équipes enregistrent les visites, les pesées, la qualité et les mouvements de stock
 - La connexion internet reste intermittente sur certains sites
 - Question : où l’IA pourrait-elle aider sans prendre la décision finale ?
@@ -93,7 +93,7 @@ Présenter les objectifs comme des capacités à utiliser pendant la séance. An
 
 **Message à faire retenir :** Un besoin opérationnel clair permet d’évaluer l’utilité réelle de l’IA.
 
-Présenter Nawa comme une organisation fictive située près de Soubré. Demander aux participants de proposer un ou deux usages. Ne pas corriger immédiatement. Les propositions seront reprises plus tard.
+Présenter la coopérative comme une organisation fictive située près de Soubré. Demander aux participants de proposer un ou deux usages. Ne pas corriger immédiatement. Les propositions seront reprises plus tard.
 
 ## Diapositive 04 — L’intelligence artificielle
 
@@ -128,7 +128,7 @@ Expliquer que l’IA constitue un domaine large et non un outil unique. Relier c
 
 **Message à faire retenir :** L’intelligence augmentée utilise l’IA pour améliorer le travail humain tout en maintenant une responsabilité humaine claire.
 
-Utiliser l’exemple d’un technicien qualité chez Nawa. Le système peut signaler une anomalie dans un dossier. Le technicien examine les preuves et décide de la suite.
+Utiliser l’exemple d’un technicien qualité au sein de la coopérative fictive. Le système peut signaler une anomalie dans un dossier. Le technicien examine les preuves et décide de la suite.
 
 ## Diapositive 06 — Niveaux de capacité de l’IA
 
@@ -213,7 +213,7 @@ Expliquer la différence avec un programme contenant une règle écrite pour cha
 - **Supervisé :** apprend à partir d’exemples étiquetés
 - **Non supervisé :** découvre des groupes ou des anomalies
 - **Par renforcement :** améliore une suite d’actions grâce à un retour
-- Chez Nawa : prévision des volumes ou détection de pesées inhabituelles
+- Dans la coopérative fictive : prévision des volumes ou détection de pesées inhabituelles
 
 ### Notes pédagogiques
 
@@ -267,7 +267,7 @@ Expliquer qu’un LLM prédit des unités de langage à partir du contexte. Dist
 - L’IA générative produit du texte, des images, du son, de la vidéo ou du code
 - Un modèle unimodal traite un seul type d’information
 - Un modèle multimodal combine plusieurs types d’information
-- Exemple Nawa : photo d’une étiquette associée à un rapport écrit
+- Exemple de la coopérative : photo d’une étiquette associée à un rapport écrit
 
 ### Notes pédagogiques
 
@@ -285,7 +285,7 @@ Corriger la confusion fréquente entre génération et multimodalité. Un systè
 - Le traitement automatique du langage analyse ou produit du texte
 - La reconnaissance vocale transforme la parole en texte
 - La synthèse vocale transforme le texte en parole
-- Exemple Nawa : transcription d’une note vocale envoyée depuis le terrain
+- Exemple de la coopérative : transcription d’une note vocale envoyée depuis le terrain
 
 ### Notes pédagogiques
 
@@ -303,7 +303,7 @@ Décrire un agent de terrain qui enregistre une observation. Le système transcr
 - Repérer des objets ou du texte dans une image
 - Classer une image selon des catégories définies
 - Signaler une caractéristique inhabituelle pour examen
-- Chez Nawa, le technicien conserve la décision sur la qualité du lot
+- Dans la coopérative fictive, le technicien conserve la décision sur la qualité du lot
 
 ### Notes pédagogiques
 
@@ -321,7 +321,7 @@ Utiliser l’exemple d’une photo de fèves ou d’une étiquette de lot. Le sy
 - **Objets connectés :** appareils qui collectent et échangent des données
 - **Cloud :** calcul et stockage accessibles à distance
 - **Périphérie ou local :** traitement effectué près de la source
-- Chez Nawa, les événements essentiels restent enregistrables hors connexion
+- Dans la coopérative fictive, les événements essentiels restent enregistrables hors connexion
 
 ### Notes pédagogiques
 
@@ -347,7 +347,7 @@ Expliquer que l’application fictive peut enregistrer localement les opération
 
 Demander aux participants d’identifier l’application qu’ils utilisent le plus souvent. Relier brièvement chaque exemple à une capacité étudiée, comme la classification, la prévision, le langage ou la vision.
 
-## Diapositive 18 — Nawa : données et problème opérationnel
+## Diapositive 18 — Coopérative : données et problème opérationnel
 
 - **Identifiant :** S01-18
 - **Durée :** 2 minutes
@@ -365,7 +365,7 @@ Demander aux participants d’identifier l’application qu’ils utilisent le p
 
 Demander quelles données sont réellement nécessaires pour les deux objectifs. Faire remarquer que la collecte de données supplémentaires augmente aussi les responsabilités liées à la confidentialité et à la qualité.
 
-## Diapositive 19 — Nawa : choix des techniques d’IA
+## Diapositive 19 — Coopérative : choix des techniques d’IA
 
 - **Identifiant :** S01-19
 - **Durée :** 3 minutes
@@ -386,7 +386,7 @@ Demander quelles données sont réellement nécessaires pour les deux objectifs.
 
 Masquer d’abord la deuxième colonne si le support le permet. Demander aux participants de proposer les correspondances. Révéler les réponses et rappeler qu’un système réel peut combiner plusieurs techniques.
 
-## Diapositive 20 — Nawa : assistant IA et fonctionnement hors connexion
+## Diapositive 20 — Coopérative : assistant IA et fonctionnement hors connexion
 
 - **Identifiant :** S01-20
 - **Durée :** 2 minutes
@@ -405,7 +405,7 @@ Masquer d’abord la deuxième colonne si le support le permet. Demander aux par
 
 Présenter ce fonctionnement comme une proposition de conception. Distinguer les contrôles locaux déterministes des fonctions d’IA qui peuvent nécessiter davantage de ressources. La continuité du travail essentiel ne doit pas dépendre d’un accès constant au modèle.
 
-## Diapositive 21 — Nawa : décisions humaines et limites de l’assistant
+## Diapositive 21 — Coopérative : décisions humaines et limites de l’assistant
 
 - **Identifiant :** S01-21
 - **Durée :** 3 minutes
@@ -439,7 +439,7 @@ Reprendre les premières propositions des participants. Leur demander pourquoi c
 
 **Message à faire retenir :** L’adoption de l’IA commence par un problème précis et un résultat mesurable.
 
-Illustrer les étapes avec les objectifs de Nawa : améliorer la complétude des dossiers et réduire les rapprochements manuels. Expliquer qu’un projet commence avec une portée limitée avant une extension éventuelle.
+Illustrer les étapes avec les objectifs de la coopérative : améliorer la complétude des dossiers et réduire les rapprochements manuels. Expliquer qu’un projet commence avec une portée limitée avant une extension éventuelle.
 
 ## Diapositive 23 — IA générative dans le travail quotidien
 
@@ -489,7 +489,7 @@ Expliquer qu’un chatbot qui répond uniquement à une question n’est pas né
 2. Ajouter ces passages au contexte de la demande
 3. Générer une réponse fondée sur ce contexte
 
-- Exemple Nawa : procédures internes et exigences documentaires en vigueur
+- Exemple de la coopérative : procédures internes et exigences documentaires en vigueur
 
 ### Notes pédagogiques
 
@@ -514,7 +514,7 @@ Expliquer que la RAG améliore l’ancrage de la réponse et permet d’afficher
 
 **Message à faire retenir :** Une adoption durable associe objectifs métier, préparation des données et compétences des utilisateurs.
 
-Éviter les cadres propres à une marque. Présenter la culture de l’IA comme une compétence professionnelle générale. Chez Nawa, former les agents et les responsables compte autant que choisir le modèle.
+Éviter les cadres propres à une marque. Présenter la culture de l’IA comme une compétence professionnelle générale. Dans la coopérative fictive, former les agents et les responsables compte autant que choisir le modèle.
 
 ## Diapositive 27 — Principaux risques de l’IA générative
 
@@ -551,7 +551,7 @@ Définir une hallucination comme une information plausible mais inexacte ou inve
 
 **Message à faire retenir :** Une organisation reste responsable des effets d’un système d’IA.
 
-Relier ces principes aux paiements, aux décisions de qualité et aux données des producteurs chez Nawa. Une recommandation automatisée ne transfère pas la responsabilité au modèle.
+Relier ces principes aux paiements, aux décisions de qualité et aux données des producteurs au sein de la coopérative fictive. Une recommandation automatisée ne transfère pas la responsabilité au modèle.
 
 ## Diapositive 29 — Gouvernance pratique de l’IA
 
@@ -581,7 +581,7 @@ Expliquer que la gouvernance continue après le lancement. Mentionner les mécan
 
 1. Quelle technique peut signaler des pesées inhabituelles ?
 2. Que faut-il vérifier avant d’utiliser un contenu généré ?
-3. Quelle décision de Nawa doit rester humaine ?
+3. Quelle décision de la coopérative doit rester humaine ?
 
 - Idée finale : l’IA soutient une personne qui conserve la responsabilité
 

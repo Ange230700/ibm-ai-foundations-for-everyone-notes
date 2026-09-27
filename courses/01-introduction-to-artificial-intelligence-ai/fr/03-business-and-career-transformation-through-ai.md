@@ -142,7 +142,7 @@ L’objectif est un usage productif et responsable dans le domaine professionnel
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : adoption de l’IA et évolution du travail
+### Une coopérative cacaoyère près de Soubré : adoption de l’IA et évolution du travail
 
 La coopérative commence par deux objectifs définis : améliorer la complétude des données de
 traçabilité et préparer les plans de collecte avec moins de rapprochements manuels.

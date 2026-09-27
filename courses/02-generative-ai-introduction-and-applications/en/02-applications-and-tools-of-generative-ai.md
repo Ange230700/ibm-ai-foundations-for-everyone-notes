@@ -254,7 +254,7 @@ vision of systems that both create and act remains a forecast.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Matching a Generative Tool to the Output
+### A cocoa cooperative near Soubré: Matching a Generative Tool to the Output
 
 Suppose the cooperative has approved a training campaign on complete lot-intake records.
 

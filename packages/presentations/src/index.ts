@@ -25,3 +25,5 @@ export * from './pptx/theme.js';
 export * from './pptx/resources.js';
 export * from './pptx/verify.js';
 export * from './pptx/visual-qa.js';
+export * from './teaching/session.js';
+export * from './teaching/pdf.js';

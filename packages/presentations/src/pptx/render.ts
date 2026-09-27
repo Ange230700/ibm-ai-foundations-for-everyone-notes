@@ -329,8 +329,11 @@ async function resolveNativePptxBrand(
   };
 }
 
-function sourceNotes(slide: SlideSpec): string {
+function sourceNotes(slide: SlideSpec, language: 'en' | 'fr'): string {
+  const label = language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
+  const duration = `${language === 'fr' ? 'Durée' : 'Duration'}: ${slide.durationMinutes} ${slide.durationMinutes === 1 ? 'minute' : 'minutes'}`;
   return [
+    ...(slide.teachingNotes ? [`[${label}]`, duration, slide.teachingNotes, `[/${label}]`] : []),
     '[Sources]',
     ...slide.sourceRefs.map((source) => {
       const heading = source.headingPath.join(' > ');
@@ -445,7 +448,7 @@ function finishSlide(
 ): void {
   addFooter(slide, spec, pageNumber, theme, brand);
 
-  slide.addNotes(sourceNotes(slideSpec));
+  slide.addNotes(sourceNotes(slideSpec, spec.language));
 }
 
 interface Frame {
@@ -535,9 +538,9 @@ function renderTitle(
 
   slide.addText(slideSpec.title, {
     x: SLIDE.left,
-    y: 2.05,
+    y: slideSpec.items?.length ? 1.85 : 2.05,
     w: 11.45,
-    h: 3.65,
+    h: slideSpec.items?.length ? 2.25 : 3.65,
     margin: 0,
     fontFace: theme.fonts.heading,
     fontSize: 38,
@@ -546,6 +549,21 @@ function renderTitle(
     fit: 'shrink',
     valign: 'middle',
   });
+
+  if (slideSpec.items?.length) {
+    slide.addText(slideSpec.items.join('\n'), {
+      x: SLIDE.left,
+      y: 4.55,
+      w: 11.45,
+      h: 1.62,
+      margin: 0,
+      breakLine: false,
+      fontFace: theme.fonts.body,
+      fontSize: 19,
+      color: theme.colors.ink,
+      fit: 'shrink',
+    });
+  }
 
   finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
@@ -622,7 +640,7 @@ function renderListSlide(
       },
     });
 
-    slide.addText(String(index + 1).padStart(2, '0'), {
+    slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
       x: SLIDE.left + 0.08,
       y: y + 0.05,
       w: 0.52,

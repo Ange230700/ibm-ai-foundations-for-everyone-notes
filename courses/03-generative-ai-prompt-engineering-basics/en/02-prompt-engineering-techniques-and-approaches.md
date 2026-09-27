@@ -411,7 +411,7 @@ Several recurring cautions apply across the module:
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Choosing a Technique for Collection Planning
+### A cocoa cooperative near Soubré: Choosing a Technique for Collection Planning
 
 “Help the cooperative plan collection” is too broad for a reliable answer. The prompting technique
 should address the missing information:

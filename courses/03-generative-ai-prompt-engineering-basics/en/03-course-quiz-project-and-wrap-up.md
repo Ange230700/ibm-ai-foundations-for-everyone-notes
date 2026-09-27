@@ -397,7 +397,7 @@ may benefit from more open-ended direction.
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Final Prompt Workflow for a Record Mismatch
+### A cocoa cooperative near Soubré: Final Prompt Workflow for a Record Mismatch
 
 The vague request “Resolve this traceability problem” can be divided into verifiable deliverables:
 

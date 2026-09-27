@@ -256,9 +256,9 @@ Multimodal signifie travailler avec plusieurs modalités de données, pas simple
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : intelligence augmentée dans le travail coopératif
+### Une coopérative cacaoyère près de Soubré : intelligence augmentée dans le travail coopératif
 
-La Coopérative Cacao Nawa est une organisation fictive située près de Soubré. Les producteurs
+Dans ce cas fictif situé près de Soubré, les producteurs
 membres livrent des lots de cacao, tandis que les agents de terrain, techniciens qualité,
 magasiniers et responsables des opérations tiennent les données de terrain, de réception, de
 qualité et de traçabilité.

@@ -219,7 +219,7 @@ Expertise demandée, neutralité, explication longue, branches multiples ou auto
 
 ## Application pratique
 
-### Coopérative Cacao Nawa : choisir une technique pour planifier la collecte
+### Une coopérative cacaoyère près de Soubré : choisir une technique pour planifier la collecte
 
 « Aide la coopérative à planifier la collecte » reste trop large pour produire une réponse fiable.
 La technique doit traiter les informations manquantes :

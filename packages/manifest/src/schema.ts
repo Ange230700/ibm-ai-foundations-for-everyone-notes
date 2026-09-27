@@ -48,6 +48,17 @@ export const CourseSchema = z.strictObject({
   modules: z.array(ModuleSchema),
 });
 
+export const TeachingSessionSchema = z.strictObject({
+  id: z.string().regex(/^s\d{2}$/),
+  courseId: prefixedUuid('course'),
+  durationMinutes: z.int().positive(),
+  slideCount: z.int().positive(),
+  source: z.strictObject({
+    en: z.string().min(1),
+    fr: z.string().min(1),
+  }),
+});
+
 const ManifestObjectSchema = z.strictObject({
   schemaVersion: z.literal(1),
   templateVersion: z.string().regex(/^\d+\.\d+\.\d+$/),
@@ -68,6 +79,7 @@ const ManifestObjectSchema = z.strictObject({
     }),
   }),
   courses: z.array(CourseSchema),
+  teachingSessions: z.array(TeachingSessionSchema).optional(),
   artifacts: z.strictObject({
     generatedOnDemand: z.literal(true),
     formats: z.tuple([z.literal('txt'), z.literal('pdf'), z.literal('pptx')]),
@@ -186,6 +198,24 @@ function configuredRepositoryIssues(manifest: ManifestInput): ManifestValidation
 export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, context) => {
   const issues = [...uniquenessIssues(manifest), ...configuredRepositoryIssues(manifest)];
 
+  const ids = new Set<string>();
+
+  manifest.teachingSessions?.forEach((session, index) => {
+    if (ids.has(session.id)) {
+      issues.push({
+        path: ['teachingSessions', index, 'id'],
+        message: `Duplicate session ${session.id}.`,
+      });
+    }
+    ids.add(session.id);
+    if (!manifest.courses.some((course) => course.id === session.courseId)) {
+      issues.push({
+        path: ['teachingSessions', index, 'courseId'],
+        message: `Unknown course ${session.courseId}.`,
+      });
+    }
+  });
+
   for (const issue of issues) {
     context.addIssue({
       code: 'custom',
@@ -198,6 +228,7 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
 export type Manifest = z.infer<typeof ManifestSchema>;
 export type Course = z.infer<typeof CourseSchema>;
 export type Module = z.infer<typeof ModuleSchema>;
+export type TeachingSession = z.infer<typeof TeachingSessionSchema>;
 
 export function manifestJsonSchema(): Record<string, unknown> {
   return {

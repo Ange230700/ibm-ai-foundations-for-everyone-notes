@@ -217,7 +217,7 @@ on-device models and safer open alternatives remain forecasts, not established g
 
 ## Practical Application
 
-### Nawa Cocoa Cooperative: Discriminative and Generative AI
+### A cocoa cooperative near Soubré: Discriminative and Generative AI
 
 The same cooperative need can involve different forms of AI. A discriminative model could classify
 a field report as complete, incomplete, urgent, or ready for routine review. A predictive model
