@@ -31,6 +31,12 @@ and explicit human responsibility for consequential decisions.
   - Bilingual structural and contract alignment: verified at the source level
   - The Course 02 French canonical adaptations still await personal review.
   - S02 is declared in `manifest.json`; draft PDF and native PPTX generation is available.
+- Course 03 — Generative AI: Prompt Engineering Basics
+  - S03 — Principes de base de la conception des prompts
+  - Duration: 60 minutes; 25 slides in the French teaching source
+  - French teaching source: draft available, aligned with the S03 content contract
+  - English teaching source: pending; S03 is not yet declared in `manifest.json`
+  - The Course 03 French canonical adaptations still await personal review.
 
 ## Session artifacts
 
