@@ -14,7 +14,7 @@ import {
 } from './resources.js';
 import { formatTeachingNotes } from './teaching-notes.js';
 
-export const PPTX_RENDERER_VERSION = 5;
+export const PPTX_RENDERER_VERSION = 6;
 
 const SLIDE = {
   width: (7.5 / 9) * 16,
@@ -410,10 +410,13 @@ function addFooter(
     color: theme.colors.muted,
   });
 
-  slide.addText(String(pageNumber).padStart(2, '0'), {
-    x: 11.8,
+  const current = String(pageNumber).padStart(2, '0');
+  const total = String(spec.slides.length).padStart(2, '0');
+
+  slide.addText(`${current} / ${total}`, {
+    x: 11.4,
     y: 7.02,
-    w: 0.8,
+    w: 1.2,
     h: 0.22,
     margin: 0,
     align: 'right',

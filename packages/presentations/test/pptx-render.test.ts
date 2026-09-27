@@ -161,7 +161,7 @@ test(
 
       assert.equal(artifact.renderer.version, '4.0.1');
 
-      assert.equal(artifact.renderer.rendererVersion, 5);
+      assert.equal(artifact.renderer.rendererVersion, 6);
 
       assert.equal(
         artifact.brandAssets.logo.path,
@@ -201,6 +201,12 @@ test(
       const titleSlide = await archive.file('ppt/slides/slide1.xml')?.async('string');
 
       assert.match(titleSlide ?? '', /KRAAK CONSULTING/);
+
+      assert.match(titleSlide ?? '', /01 \/ 05/);
+
+      const lastSlide = await archive.file('ppt/slides/slide5.xml')?.async('string');
+
+      assert.match(lastSlide ?? '', /05 \/ 05/);
 
       assert.ok(
         Object.keys(archive.files).filter((path) => path.startsWith('ppt/media/')).length >= 2,

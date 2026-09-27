@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
 import test from 'node:test';
+
+import JSZip from 'jszip';
 
 import { renderNativePptx, verifyNativePptx } from '../src/index.js';
 import {
@@ -117,3 +120,34 @@ test(
     }
   },
 );
+
+test('PPTX verification rejects a stale slide total', async () => {
+  const fixture = await createPptxFixture({
+    name: 'pptx-pagination-verify-test',
+    outputFile: 'verified.pptx',
+    svg: TEST_SVG,
+  });
+
+  try {
+    await renderNativePptx(spec, {
+      repositoryRoot: fixture.repositoryRoot,
+      outputPath: fixture.outputPath,
+      diagramAssets: [fixture.diagramAsset()],
+    });
+
+    const archive = await JSZip.loadAsync(await readFile(fixture.outputPath));
+    const slide = await archive.file('ppt/slides/slide1.xml')?.async('string');
+
+    assert.ok(slide?.includes('01 / 05'));
+
+    archive.file('ppt/slides/slide1.xml', slide.replace('01 / 05', '01 / 06'));
+    await writeFile(fixture.outputPath, await archive.generateAsync({ type: 'nodebuffer' }));
+
+    await assert.rejects(
+      () => verifyNativePptx(spec, fixture.repositoryRoot, fixture.outputPath),
+      /missing pagination 01 \/ 05/,
+    );
+  } finally {
+    await fixture.cleanup();
+  }
+});

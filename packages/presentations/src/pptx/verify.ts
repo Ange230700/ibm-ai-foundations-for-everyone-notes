@@ -9,7 +9,7 @@ import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';
 import type { DeckSpec, SlideSpec } from '../deck/model.js';
 import { teachingNoteParts } from './teaching-notes.js';
 
-export const PPTX_VERIFIER_VERSION = 1;
+export const PPTX_VERIFIER_VERSION = 2;
 
 const EMU_PER_INCH = 914_400;
 
@@ -444,6 +444,14 @@ export async function verifyNativePptx(
     const textItems = slideText(document);
 
     assertExpectedText(slideSpec, textItems);
+
+    const current = String(index + 1).padStart(2, '0');
+    const total = String(spec.slides.length).padStart(2, '0');
+    const pagination = `${current} / ${total}`;
+
+    if (!textItems.includes(pagination)) {
+      throw new Error(`PPTX slide ${slideSpec.slideId} is missing pagination ${pagination}.`);
+    }
 
     verifyResourceStructure(slideSpec, document);
 
