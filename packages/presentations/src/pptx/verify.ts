@@ -465,12 +465,12 @@ export async function verifyNativePptx(
     if (!sourceNotesPresent) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
     }
-    if (spec.moduleId === 's01' && slideSpec.teachingNotes && !notesData?.formatted) {
+    if (/^s\d{2}$/u.test(spec.moduleId) && slideSpec.teachingNotes && !notesData?.formatted) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing formatted presenter cues.`);
     }
     const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
     const expectedNotes = slideSpec.teachingNotes
-      ? spec.moduleId === 's01'
+      ? /^s\d{2}$/u.test(spec.moduleId)
         ? (() => {
             const { label, takeaway, cues } = teachingNoteParts(slideSpec.teachingNotes);
             return [label, takeaway, ...cues];

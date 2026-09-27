@@ -144,3 +144,61 @@ test('projected PDF contains the slide content without facilitator notes', async
   assert.doesNotMatch(html, /\*\*Message à faire retenir/);
   assert.doesNotMatch(html, /Notes pédagogiques/);
 });
+
+test('S02 generates aligned 26-slide decks with readable presenter notes', async () => {
+  const manifest = await readManifest();
+  const session = manifest.teachingSessions?.find((entry) => entry.id === 's02');
+  assert.ok(session);
+  const course = manifest.courses.find((entry) => entry.id === session.courseId);
+  assert.ok(course);
+  const content = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
+  for (const language of ['en', 'fr'] as const) {
+    const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
+    content[language] = parseTeachingSession(markdown, {
+      id: session.id,
+      courseId: session.courseId,
+      language,
+      sourcePath: session.source[language],
+      slideCount: session.slideCount,
+      durationMinutes: session.durationMinutes,
+      canonicalSources: course.modules.map((module) => module.source[language]),
+    });
+  }
+  validateTeachingPair(content.en, content.fr);
+  await mkdir(resolve(repositoryRoot(), '.artifacts'), { recursive: true });
+  const output = await mkdtemp(resolve(repositoryRoot(), '.artifacts/s02-artifact-test-'));
+  try {
+    for (const language of ['en', 'fr'] as const) {
+      const current = content[language];
+      assert.equal(current.slides.length, 26);
+      assert.equal(current.durationMinutes, 60);
+      assert.equal(current.slides[0]?.id, 'S02-01');
+      assert.equal(current.slides[25]?.id, 'S02-26');
+      const spec = teachingDeckSpec(current);
+      assert.deepEqual(
+        spec.slides.slice(0, 2).map((slide) => slide.kind),
+        ['title', 'objectives'],
+      );
+      const html = renderTeachingPdfHtml(current);
+      assert.equal((html.match(/<section class="slide/g) ?? []).length, 26);
+      assert.doesNotMatch(html, /\*\*Key takeaway|\*\*Message à faire retenir/u);
+      const pptxPath = resolve(output, `s02-${language}.pptx`);
+      await renderNativePptx(spec, { repositoryRoot: repositoryRoot(), outputPath: pptxPath });
+      const verification = await verifyNativePptx(spec, repositoryRoot(), pptxPath);
+      assert.equal(verification.slideCount, 26);
+      assert.deepEqual(
+        verification.slides.map((slide) => slide.slideId),
+        current.slides.map((slide) => slide.id),
+      );
+      const zip = await JSZip.loadAsync(await readFile(pptxPath));
+      for (let number = 1; number <= 26; number += 1) {
+        const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
+        assert.ok(xml?.includes(' b="1"'), `bold S02 ${language} slide ${number}`);
+        assert.ok(xml.includes(' u="sng"'), `underlined cue S02 ${language} slide ${number}`);
+        assert.ok(xml.includes(' i="1"'), `italic source S02 ${language} slide ${number}`);
+      }
+    }
+  } finally {
+    await rm(output, { recursive: true, force: true });
+  }
+});

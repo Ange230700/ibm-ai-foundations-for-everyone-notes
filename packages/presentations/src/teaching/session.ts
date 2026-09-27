@@ -121,13 +121,14 @@ function parseSlide(
   heading: Nodes,
   lines: string[],
   language: 'en' | 'fr',
+  sessionId: string,
 ): TeachingSlide {
   const headingText = plainText(heading);
   const match = headingText.match(/^(?:Slide|Diapositive)\s+(\d{2})\s+—\s+(.+)$/u);
   if (!match) throw new Error(`Invalid teaching slide heading: ${headingText}.`);
   const [, ordinal, title] = match;
   if (!ordinal || !title) throw new Error(`Incomplete slide heading: ${headingText}.`);
-  const label = `S01-${ordinal}`;
+  const label = `${sessionId.toUpperCase()}-${ordinal}`;
   const metadata = nodes
     .filter((node) => node.type !== 'heading')
     .slice(0, 1)
@@ -215,9 +216,9 @@ export function parseTeachingSession(
     ) {
       return [];
     }
-    return [parseSlide(slideNodes(root, index), node, lines, options.language)];
+    return [parseSlide(slideNodes(root, index), node, lines, options.language, options.id)];
   });
-  if (slides.length !== options.slideCount || slides.length !== 30) {
+  if (slides.length !== options.slideCount) {
     throw new Error(
       `${options.sourcePath}: expected ${options.slideCount} slides; found ${slides.length}.`,
     );

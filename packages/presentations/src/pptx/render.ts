@@ -1327,7 +1327,7 @@ export async function renderNativePptx(
     fileName: outputPath,
   });
 
-  if (spec.moduleId === 's01') {
+  if (/^s\d{2}$/u.test(spec.moduleId)) {
     await writeFile(outputPath, await formatTeachingNotes(await readFile(outputPath), spec));
   }
 

@@ -30,7 +30,7 @@ and explicit human responsibility for consequential decisions.
   - English teaching source: draft available
   - Bilingual structural and contract alignment: verified at the source level
   - The Course 02 French canonical adaptations still await personal review.
-  - S02 is not yet declared in `manifest.json`; artifact generation remains scoped to S01.
+  - S02 is declared in `manifest.json`; draft PDF and native PPTX generation is available.
 
 ## Session artifacts
 
@@ -62,3 +62,12 @@ The PDF contains the projected slides. The editable PPTX also includes facilitat
 source references in its speaker notes. Generation checks slide count and planned duration;
 the instructor must still rehearse the 60-minute delivery and visually inspect both formats
 before distributing them as final supports.
+
+For S02, run `pnpm teaching:artifact plan --session=s02`, then
+`pnpm teaching:artifact build --session=s02` and
+`pnpm teaching:artifact verify --session=s02`. The four draft outputs live under
+`.artifacts/teaching-sessions/s02/<language>/`; `visual-qa --session=s02 --format=pdf`
+provides contact sheets. S02 has 26 slides per language and the same rich presenter-note
+formatting as S01. It does not yet have native slide animations or the simulated visual assets
+described in its teaching notes. The Course 02 French adaptations still need personal review,
+and the draft decks need those visuals, visual inspection, and a timed rehearsal before release.

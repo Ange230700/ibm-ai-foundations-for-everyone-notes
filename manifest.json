@@ -221,6 +221,16 @@
         "en": "teaching/courses/01-introduction-to-artificial-intelligence-ai/en/sessions/s01-ai-fundamentals.md",
         "fr": "teaching/courses/01-introduction-to-artificial-intelligence-ai/fr/sessions/s01-fondamentaux-de-l-ia.md"
       }
+    },
+    {
+      "courseId": "course_d40c1003-b693-4680-a838-bcd4850e6040",
+      "durationMinutes": 60,
+      "id": "s02",
+      "slideCount": 26,
+      "source": {
+        "en": "teaching/courses/02-generative-ai-introduction-and-applications/en/sessions/s02-generative-ai-introduction.md",
+        "fr": "teaching/courses/02-generative-ai-introduction-and-applications/fr/sessions/s02-introduction-a-l-ia-generative.md"
+      }
     }
   ],
   "templateVersion": "0.1.0",

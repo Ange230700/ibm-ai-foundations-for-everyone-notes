@@ -32,6 +32,9 @@ mention de simulation pédagogique ; les décisions sensibles restent sous contr
 
 Les trois adaptations canoniques françaises restent en attente de révision personnelle. La source
 pédagogique bilingue sert de brouillon pour examiner la sélection des notions et le rythme de la
-séance. Le manifeste et la chaîne de génération des PDF/PPTX n’intègrent pas encore S02 : il faut
-adapter et vérifier cette chaîne, puis examiner visuellement les supports avant leur diffusion. Une
-répétition chronométrée sera également nécessaire.
+séance. Le manifeste déclare S02 et la chaîne génère désormais des PDF et PPTX de travail :
+`pnpm teaching:artifact build --session=s02`, puis
+`pnpm teaching:artifact verify --session=s02`. Les affiches, captures et schémas évoqués dans
+les notes ne sont pas encore intégrés aux supports ; les PPTX S02 n’ont pas encore d’animations.
+Ces éléments, la révision visuelle et une répétition chronométrée restent nécessaires avant
+toute diffusion définitive.

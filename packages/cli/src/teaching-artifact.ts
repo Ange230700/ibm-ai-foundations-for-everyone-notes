@@ -60,7 +60,7 @@ function parseArguments(args: string[]): Arguments {
     command !== 'animate'
   ) {
     throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01] [--lang=en|fr] [--format=pdf|pptx]',
+      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01|s02] [--lang=en|fr] [--format=pdf|pptx]',
     );
   }
   const result: Arguments = { command };
@@ -148,9 +148,11 @@ async function main(): Promise<void> {
   const args = parseArguments(process.argv.slice(2));
   const manifest = await readManifest();
   const root = repositoryRoot();
+  const requestedSession = args.session ?? (args.command === 'animate' ? 's01' : undefined);
   const sessions =
-    manifest.teachingSessions?.filter((session) => !args.session || session.id === args.session) ??
-    [];
+    manifest.teachingSessions?.filter(
+      (session) => !requestedSession || session.id === requestedSession,
+    ) ?? [];
   if (sessions.length === 0)
     throw new Error(`No teaching session matched ${args.session ?? 'manifest'}.`);
 
