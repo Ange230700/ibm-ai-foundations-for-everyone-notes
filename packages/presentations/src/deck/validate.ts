@@ -81,6 +81,7 @@ const baseSlideKeys = [
   'sourceRefs',
   'teachingNotes',
   'durationMinutes',
+  'visual',
 ] as const;
 
 const slideKeys: Record<SlideSpec['kind'], readonly string[]> = {
@@ -143,6 +144,19 @@ function validateSlideIdentity(
     (typeof input.teachingNotes !== 'string' || !input.teachingNotes.trim())
   ) {
     throw new Error(`${label}.teachingNotes must be non-empty.`);
+  }
+  if (input.visual !== undefined) {
+    assertObject(input.visual, `${label}.visual`);
+    assertExactKeys(input.visual, ['kind', 'path', 'caption'], `${label}.visual`);
+    if (
+      !['mermaid', 'simulation'].includes(String(input.visual.kind)) ||
+      typeof input.visual.path !== 'string' ||
+      !/^teaching\/visuals\/s01\/(en|fr)\/[a-z-]+\.(svg|png)$/u.test(input.visual.path) ||
+      typeof input.visual.caption !== 'string' ||
+      !input.visual.caption.trim()
+    ) {
+      throw new Error(`${label}.visual must describe an approved teaching asset.`);
+    }
   }
   if (
     input.durationMinutes !== undefined &&

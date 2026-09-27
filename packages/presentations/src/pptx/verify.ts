@@ -7,6 +7,7 @@ import JSZip from 'jszip';
 import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';
 
 import type { DeckSpec, SlideSpec } from '../deck/model.js';
+import { teachingNoteParts } from './teaching-notes.js';
 
 export const PPTX_VERIFIER_VERSION = 1;
 
@@ -333,7 +334,10 @@ async function orderedSlideParts(zip: JSZip): Promise<string[]> {
   });
 }
 
-async function notesForSlide(zip: JSZip, slidePart: string): Promise<string | undefined> {
+async function notesForSlide(
+  zip: JSZip,
+  slidePart: string,
+): Promise<{ text: string; formatted: boolean } | undefined> {
   const filename = slidePart.split('/').at(-1);
 
   if (!filename) {
@@ -368,7 +372,14 @@ async function notesForSlide(zip: JSZip, slidePart: string): Promise<string | un
 
   const document = parseXml(await notesEntry.async('string'), notesPart);
 
-  return normalizedText(slideText(document));
+  const runs = elements(document, 'rPr');
+  return {
+    text: normalizedText(slideText(document)),
+    formatted:
+      runs.some((run) => run.getAttribute('b') === '1') &&
+      runs.some((run) => run.getAttribute('u') === 'sng') &&
+      runs.some((run) => run.getAttribute('i') === '1'),
+  };
 }
 
 function verifyResourceStructure(slide: SlideSpec, document: Document): void {
@@ -384,6 +395,9 @@ function verifyResourceStructure(slide: SlideSpec, document: Document): void {
 
   if (slide.kind === 'diagram' && pictures < 1) {
     throw new Error(`PPTX slide ${slide.slideId} must contain an embedded diagram image.`);
+  }
+  if (slide.visual && pictures < 2) {
+    throw new Error(`PPTX slide ${slide.slideId} is missing its teaching visual.`);
   }
 }
 
@@ -433,7 +447,8 @@ export async function verifyNativePptx(
 
     verifyResourceStructure(slideSpec, document);
 
-    const notes = await notesForSlide(zip, slidePart);
+    const notesData = await notesForSlide(zip, slidePart);
+    const notes = notesData?.text;
 
     const sourceNotesPresent = Boolean(
       notes?.includes('[Sources]') && notes.includes('[/Sources]'),
@@ -442,11 +457,22 @@ export async function verifyNativePptx(
     if (!sourceNotesPresent) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
     }
+    if (spec.moduleId === 's01' && slideSpec.teachingNotes && !notesData?.formatted) {
+      throw new Error(`PPTX slide ${slideSpec.slideId} is missing formatted presenter cues.`);
+    }
     const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
+    const expectedNotes = slideSpec.teachingNotes
+      ? spec.moduleId === 's01'
+        ? (() => {
+            const { label, takeaway, cues } = teachingNoteParts(slideSpec.teachingNotes);
+            return [label, takeaway, ...cues];
+          })()
+        : [slideSpec.teachingNotes]
+      : [];
     if (
       slideSpec.teachingNotes &&
       (!notes?.includes(`[${teachingLabel}]`) ||
-        !notes.includes(normalizedText([slideSpec.teachingNotes])) ||
+        expectedNotes.some((part) => !notes.includes(normalizedText([part]))) ||
         !notes.includes(`[/${teachingLabel}]`))
     ) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing teaching notes.`);

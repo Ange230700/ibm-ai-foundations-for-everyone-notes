@@ -1,0 +1,8 @@
+flowchart TB
+ A["Saisie locale"] --> B["Contrôle des champs"]
+ B --> C{"Connexion ?"}
+ C -->|Non| D["Travail enregistré en attente"]
+ C -->|Oui| E["Résumé IA, si disponible"]
+ D --> F["Synchronisation au retour"]
+ E --> G["Validation humaine"]
+ F --> G

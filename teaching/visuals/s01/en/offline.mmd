@@ -1,0 +1,8 @@
+flowchart TB
+ A["Local entry"] --> B["Required-field checks"]
+ B --> C{"Connected?"}
+ C -->|No| D["Save work locally"]
+ C -->|Yes| E["AI summary, if available"]
+ D --> F["Sync when connected"]
+ E --> G["Human review"]
+ F --> G

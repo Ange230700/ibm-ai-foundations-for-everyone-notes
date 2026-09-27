@@ -1,4 +1,4 @@
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,8 +12,9 @@ import {
   type NativePptxDiagramAsset,
   type ResolvedNativePptxDiagramAsset,
 } from './resources.js';
+import { formatTeachingNotes } from './teaching-notes.js';
 
-export const PPTX_RENDERER_VERSION = 4;
+export const PPTX_RENDERER_VERSION = 5;
 
 const SLIDE = {
   width: (7.5 / 9) * 16,
@@ -173,6 +174,7 @@ export interface NativePptxArtifactRecord {
     logo: NativePptxBrandAssetRecord;
     symbol: NativePptxBrandAssetRecord;
   };
+  visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
   renderInputSha256: string;
   renderer: {
     name: 'pptxgenjs';
@@ -580,6 +582,12 @@ function renderListSlide(
   pageNumber: number,
   theme: NativePptxTheme,
   brand: ResolvedNativePptxBrand,
+  visual?: {
+    absolutePath: string;
+    aspectRatio: number;
+    kind: 'mermaid' | 'simulation';
+    caption: string;
+  },
 ): void {
   if (slideSpec.items.length === 0) {
     throw new Error(`${slideSpec.slideId} has no list items.`);
@@ -615,10 +623,16 @@ function renderListSlide(
 
   const gap = 0.11;
   const availableHeight = 6.55 - top - gap * (slideSpec.items.length - 1);
-  const initialWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, 88));
+  const initialWeights = slideSpec.items.map((item) =>
+    estimatedWrappedLines(item, visual ? 46 : 88),
+  );
   const visualLines = initialWeights.reduce((total, weight) => total + weight, 0);
-  const fontSize = listFontSize(slideSpec.items.length, visualLines);
-  const charactersPerLine = fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
+  const fontSize = visual
+    ? visualLines > 14
+      ? 14
+      : 16
+    : listFontSize(slideSpec.items.length, visualLines);
+  const charactersPerLine = visual ? 48 : fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
   const rowWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, charactersPerLine));
   const rowHeights = proportionalHeights(rowWeights, availableHeight, 0.46);
   let y = top;
@@ -657,7 +671,7 @@ function renderListSlide(
     slide.addText(item, {
       x: SLIDE.left + 0.88,
       y: y + 0.05,
-      w: 10.95,
+      w: visual ? 6.12 : 10.95,
       h: rowHeight - 0.1,
       margin: 0,
       valign: 'middle',
@@ -669,6 +683,30 @@ function renderListSlide(
 
     y += rowHeight + gap;
   });
+
+  if (visual) {
+    const frame: Frame = { x: 7.85, y: top, w: 4.75, h: 4.61 };
+    slide.addShape('roundRect', {
+      ...frame,
+      rectRadius: 0.12,
+      fill: { color: theme.colors.surface },
+      line: { color: theme.colors.border, width: 0.75 },
+    });
+    slide.addImage({ path: visual.absolutePath, ...containFrame(frame, visual.aspectRatio, 0.14) });
+    slide.addText(visual.caption, {
+      x: frame.x,
+      y: frame.y + frame.h + 0.11,
+      w: frame.w,
+      h: 0.47,
+      margin: 0,
+      align: 'center',
+      fontFace: theme.fonts.body,
+      fontSize: 12,
+      italic: visual.kind === 'simulation',
+      color: theme.colors.muted,
+      fit: 'shrink',
+    });
+  }
 
   finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
@@ -1107,6 +1145,50 @@ export async function renderNativePptx(
     spec,
     options.diagramAssets ?? [],
   );
+  const visuals = new Map<
+    string,
+    {
+      absolutePath: string;
+      sha256: string;
+      aspectRatio: number;
+      kind: 'mermaid' | 'simulation';
+      caption: string;
+    }
+  >();
+  for (const slide of spec.slides) {
+    if (!slide.visual) continue;
+    const { path, kind, caption } = slide.visual;
+    if (!/^teaching\/visuals\/s01\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u.test(path)) {
+      throw new Error(`Unsafe teaching visual path: ${path}`);
+    }
+    const absolutePath = resolve(repositoryRoot, path);
+    const bytes = await readFile(absolutePath);
+    if (kind === 'mermaid' && !Buffer.from(bytes).toString('utf8').includes('<svg'))
+      throw new Error(`Invalid teaching SVG: ${path}`);
+    if (
+      kind === 'simulation' &&
+      !Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    )
+      throw new Error(`Invalid teaching PNG: ${path}`);
+    const ratio =
+      kind === 'simulation'
+        ? bytes.readUInt32BE(16) / bytes.readUInt32BE(20)
+        : (() => {
+            const viewBox = Buffer.from(bytes)
+              .toString('utf8')
+              .match(/viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)"/u);
+            return viewBox ? Number(viewBox[1]) / Number(viewBox[2]) : 1;
+          })();
+    if (!Number.isFinite(ratio) || ratio <= 0)
+      throw new Error(`Invalid visual dimensions: ${path}`);
+    visuals.set(slide.slideId, {
+      absolutePath,
+      sha256: sha256(bytes),
+      aspectRatio: ratio,
+      kind,
+      caption,
+    });
+  }
 
   const unsupported = spec.slides.filter((slide) => !SUPPORTED_SLIDE_KINDS.has(slide.kind));
 
@@ -1158,7 +1240,15 @@ export async function renderNativePptx(
       case 'objectives':
       case 'overview':
       case 'summary':
-        renderListSlide(pptx, spec, slideSpec, pageNumber, theme, brand);
+        renderListSlide(
+          pptx,
+          spec,
+          slideSpec,
+          pageNumber,
+          theme,
+          brand,
+          visuals.get(slideSpec.slideId),
+        );
         break;
 
       case 'concepts':
@@ -1219,6 +1309,10 @@ export async function renderNativePptx(
         },
       },
       diagramAssets: diagramIdentity,
+      teachingVisuals: [...visuals.entries()].map(([slideId, visual]) => ({
+        slideId,
+        sha256: visual.sha256,
+      })),
       metadata: {
         author,
         company,
@@ -1229,6 +1323,10 @@ export async function renderNativePptx(
   await pptx.writeFile({
     fileName: outputPath,
   });
+
+  if (spec.moduleId === 's01') {
+    await writeFile(outputPath, await formatTeachingNotes(await readFile(outputPath), spec));
+  }
 
   const bytes = await readFile(outputPath);
 
@@ -1256,6 +1354,12 @@ export async function renderNativePptx(
         sha256: brand.symbol.sha256,
       },
     },
+    visualAssets: spec.slides.flatMap((slide) => {
+      const visual = visuals.get(slide.slideId);
+      return slide.visual && visual
+        ? [{ slideId: slide.slideId, path: slide.visual.path, sha256: visual.sha256 }]
+        : [];
+    }),
     renderInputSha256,
     renderer: {
       name: 'pptxgenjs',

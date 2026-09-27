@@ -30,6 +30,19 @@ import { animationCounts, createS01AnimationPlan } from './teaching-animation-pl
 type Format = 'pdf' | 'pptx';
 type Language = 'en' | 'fr';
 
+async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, root: string) {
+  return Promise.all(
+    spec.slides
+      .flatMap((slide) =>
+        slide.visual ? [{ slideId: slide.slideId, path: slide.visual.path }] : [],
+      )
+      .map(async (visual) => ({
+        ...visual,
+        sha256: sha256(await readFile(resolve(root, visual.path))),
+      })),
+  );
+}
+
 interface Arguments {
   command: 'plan' | 'build' | 'verify' | 'visual-qa' | 'animate';
   session?: string;
@@ -164,13 +177,16 @@ async function main(): Promise<void> {
           sourceSha256: string;
           moduleContentSha256: string;
           deckSpecSha256: string;
+          visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
         };
         const source = await verifyNativePptx(spec, root, path);
         if (
           record.pptxSha256 !== source.pptxSha256 ||
           record.sourceSha256 !== content.sourceSha256 ||
           record.moduleContentSha256 !== content.contentSha256 ||
-          record.deckSpecSha256 !== source.deckSpecSha256
+          record.deckSpecSha256 !== source.deckSpecSha256 ||
+          canonicalJson(record.visualAssets) !==
+            canonicalJson(await currentVisualAssets(spec, root))
         ) {
           throw new Error(`Stale S01 PPTX: rebuild ${language} before animating.`);
         }
@@ -340,13 +356,16 @@ async function main(): Promise<void> {
               sourceSha256: string;
               moduleContentSha256: string;
               deckSpecSha256: string;
+              visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
             };
             const verification = await verifyNativePptx(spec, root, path);
             if (
               record.pptxSha256 !== verification.pptxSha256 ||
               record.sourceSha256 !== content.sourceSha256 ||
               record.moduleContentSha256 !== content.contentSha256 ||
-              record.deckSpecSha256 !== verification.deckSpecSha256
+              record.deckSpecSha256 !== verification.deckSpecSha256 ||
+              canonicalJson(record.visualAssets) !==
+                canonicalJson(await currentVisualAssets(spec, root))
             ) {
               throw new Error(`Stale teaching PPTX: ${session.id}/${language}.`);
             }

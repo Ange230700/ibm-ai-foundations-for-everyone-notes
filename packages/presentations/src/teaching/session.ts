@@ -281,12 +281,63 @@ export function validateTeachingPair(en: TeachingSessionContent, fr: TeachingSes
 }
 
 export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
+  const visualSlides: Record<
+    string,
+    { kind: 'mermaid' | 'simulation'; en: string; fr: string; name: string }
+  > = {
+    'S01-08': {
+      kind: 'mermaid',
+      en: 'Coexisting AI approaches',
+      fr: 'Approches d’IA complémentaires',
+      name: 'evolution',
+    },
+    'S01-10': {
+      kind: 'mermaid',
+      en: 'Learning methods',
+      fr: 'Modes d’apprentissage',
+      name: 'learning',
+    },
+    'S01-20': {
+      kind: 'mermaid',
+      en: 'Offline workflow',
+      fr: 'Travail hors connexion',
+      name: 'offline',
+    },
+    'S01-21': {
+      kind: 'simulation',
+      en: 'Illustrative assistant alert',
+      fr: 'Alerte simulée de l’assistant',
+      name: 'alert',
+    },
+    'S01-23': {
+      kind: 'simulation',
+      en: 'Illustrative prompt and draft',
+      fr: 'Demande et réponse simulées',
+      name: 'prompt',
+    },
+    'S01-25': {
+      kind: 'mermaid',
+      en: 'Retrieval then generation',
+      fr: 'Recherche puis génération',
+      name: 'rag',
+    },
+  };
   const slides: SlideSpec[] = content.slides.map((slide) => {
+    const visual = visualSlides[slide.id];
     const base = {
       slideId: slide.id,
       title: slide.title,
       teachingNotes: slide.notes,
       durationMinutes: slide.durationMinutes,
+      ...(visual
+        ? {
+            visual: {
+              kind: visual.kind,
+              path: `teaching/visuals/s01/${content.language}/${visual.name}.${visual.kind === 'mermaid' ? 'svg' : 'png'}`,
+              caption: visual[content.language],
+            },
+          }
+        : {}),
       sourceRefs: [
         {
           path: content.sourcePath,

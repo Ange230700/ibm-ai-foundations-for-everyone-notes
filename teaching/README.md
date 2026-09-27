@@ -36,6 +36,12 @@ inspection. PPTX visual QA uses LibreOffice when available.
 
 On Windows with desktop PowerPoint, run `pnpm teaching:artifact animate --session=s01` after
 building the PPTX files to create `session-animated.pptx` beside each language's static PPTX.
+The S01 PPTX includes four Mermaid diagrams and two clearly labelled simulated screens in each
+language. Its 30 presenter notes use a bold key message, underlined action cues, and compact
+source references; the editable teaching Markdown remains the source of the full text.
+The visuals are kept in `teaching/visuals/s01/`. After editing the Mermaid or HTML sources,
+regenerate the SVG and PNG files with `node --import tsx scripts/generate-s01-visuals.mjs` before
+building and animating again.
 The animation plan comes from the current teaching sources and covers all 30 slides in both
 languages. The cover reveals its main heading and context together, slide 19 reveals its complete table,
 and the other 28 slides reveal each row after the first on click; the first row is visible on

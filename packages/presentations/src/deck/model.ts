@@ -15,6 +15,11 @@ interface BaseSlideSpec {
   sourceRefs: DeckSourceRef[];
   teachingNotes?: string;
   durationMinutes?: number;
+  visual?: {
+    kind: 'mermaid' | 'simulation';
+    path: string;
+    caption: string;
+  };
 }
 
 export interface TitleSlideSpec extends BaseSlideSpec {

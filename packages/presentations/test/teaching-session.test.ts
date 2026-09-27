@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import test from 'node:test';
+import JSZip from 'jszip';
 
 import { repositoryRoot } from '@coursera-notes/core';
 import { readManifest } from '@coursera-notes/manifest';
@@ -12,6 +13,7 @@ import {
   validateTeachingPair,
 } from '../src/teaching/session.js';
 import { renderTeachingPdfHtml } from '../src/teaching/pdf.js';
+import { renderNativePptx, verifyNativePptx } from '../src/index.js';
 
 async function fixture() {
   const manifest = await readManifest();
@@ -67,6 +69,44 @@ test('S01 teaching sources preserve 30 aligned slides and exactly 60 minutes', a
       ),
     );
     assert.equal(spec.slides[18]?.kind, 'table');
+  }
+});
+
+test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on all slides', async () => {
+  const { content } = await fixture();
+  await mkdir(resolve(repositoryRoot(), '.artifacts'), { recursive: true });
+  const output = await mkdtemp(resolve(repositoryRoot(), '.artifacts/s01-visual-test-'));
+  try {
+    for (const language of ['en', 'fr'] as const) {
+      const spec = teachingDeckSpec(content[language]);
+      assert.deepEqual(
+        spec.slides.filter((slide) => slide.visual).map((slide) => slide.slideId),
+        ['S01-08', 'S01-10', 'S01-20', 'S01-21', 'S01-23', 'S01-25'],
+      );
+      const path = resolve(output, `${language}.pptx`);
+      const artifact = await renderNativePptx(spec, {
+        repositoryRoot: repositoryRoot(),
+        outputPath: path,
+      });
+      assert.equal(artifact.visualAssets.length, 6);
+      const verification = await verifyNativePptx(spec, repositoryRoot(), path);
+      assert.deepEqual(
+        verification.slides
+          .filter((slide) => slide.pictures >= 2 && slide.slideId !== 'S01-01')
+          .map((slide) => slide.slideId),
+        ['S01-08', 'S01-10', 'S01-20', 'S01-21', 'S01-23', 'S01-25'],
+      );
+      const zip = await JSZip.loadAsync(await readFile(path));
+      for (let index = 1; index <= 30; index++) {
+        const xml = await zip.file(`ppt/notesSlides/notesSlide${index}.xml`)?.async('string');
+        assert.ok(xml?.includes(' b="1"'), `bold S01 slide ${index}`);
+        assert.ok(xml.includes(' u="sng"'), `underlined cue S01 slide ${index}`);
+        assert.ok(xml.includes(' i="1"'), `italic source S01 slide ${index}`);
+        assert.doesNotMatch(xml, /\*\*Message|\*\*Key takeaway/u);
+      }
+    }
+  } finally {
+    await rm(output, { recursive: true, force: true });
   }
 });
 
