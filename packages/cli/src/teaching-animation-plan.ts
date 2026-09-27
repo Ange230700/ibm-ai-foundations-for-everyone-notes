@@ -12,10 +12,10 @@ type SlidePlan =
 
 export interface TeachingAnimationPlan {
   schemaVersion: 2;
-  sessionId: 's01' | 's02';
+  sessionId: 's01' | 's02' | 's03';
   language: 'en' | 'fr';
   sourceSha256: string;
-  slideCount: 30 | 26;
+  slideCount: 30 | 26 | 25;
   slides: SlidePlan[];
 }
 
@@ -40,8 +40,8 @@ export function animationCounts(plan: TeachingAnimationPlan): {
 
 function createAnimationPlan(
   content: TeachingSessionContent,
-  sessionId: 's01' | 's02',
-  slideCount: 30 | 26,
+  sessionId: 's01' | 's02' | 's03',
+  slideCount: 30 | 26 | 25,
 ): TeachingAnimationPlan {
   const label = sessionId.toUpperCase();
   if (
@@ -108,4 +108,8 @@ export function createS01AnimationPlan(content: TeachingSessionContent): Teachin
 
 export function createS02AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
   return createAnimationPlan(content, 's02', 26);
+}
+
+export function createS03AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's03', 25);
 }

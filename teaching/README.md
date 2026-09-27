@@ -94,7 +94,11 @@ contact sheets for review. These 25-slide decks include speaker notes and slide 
 The S03 PPTX includes four Mermaid diagrams and five clearly labelled fictional teaching
 screens per language. Their editable sources live in `teaching/visuals/s03/`; regenerate SVG
 and PNG files with `node --import tsx scripts/generate-s03-visuals.mjs` before building S03
-PPTX. These images are not captures of a real model interaction. Animated S03 copies are a
-separate production step.
+PPTX. These images are not captures of a real model interaction. On Windows with desktop
+PowerPoint, run `pnpm teaching:artifact animate --session=s03` after building and verifying
+the PPTX to create `session-animated.pptx` for both languages. The plan covers 25 slides,
+52 clicks and 155 shape effects per language: the images remain visible on arrival, and the
+text rows reveal one by one. The command reopens both saved decks to verify every animated
+shape and trigger. A timed rehearsal and visual review remain necessary before release.
 The canonical Course 03 French adaptations still need personal review; the bilingual drafts
 need visual inspection and a timed rehearsal before release.

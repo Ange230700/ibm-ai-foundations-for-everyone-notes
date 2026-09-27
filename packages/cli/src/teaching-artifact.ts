@@ -29,6 +29,7 @@ import {
   animationCounts,
   createS01AnimationPlan,
   createS02AnimationPlan,
+  createS03AnimationPlan,
 } from './teaching-animation-plan.js';
 
 type Format = 'pdf' | 'pptx';
@@ -116,7 +117,7 @@ async function readPair(
 
 async function animateWithPowerPoint(
   root: string,
-  sessionId: 's01' | 's02',
+  sessionId: 's01' | 's02' | 's03',
   language: Language,
   planPath: string,
 ): Promise<void> {
@@ -176,10 +177,10 @@ async function main(): Promise<void> {
       const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
       if (args.command === 'animate') {
         if (
-          (session.id !== 's01' && session.id !== 's02') ||
+          (session.id !== 's01' && session.id !== 's02' && session.id !== 's03') ||
           (args.format && args.format !== 'pptx')
         ) {
-          throw new Error('Native animations currently support S01/S02 PPTX only.');
+          throw new Error('Native animations currently support S01/S02/S03 PPTX only.');
         }
         const path = resolve(outputRoot, 'session.pptx');
         const spec = teachingDeckSpec(content);
@@ -206,7 +207,11 @@ async function main(): Promise<void> {
           );
         }
         const plan =
-          session.id === 's01' ? createS01AnimationPlan(content) : createS02AnimationPlan(content);
+          session.id === 's01'
+            ? createS01AnimationPlan(content)
+            : session.id === 's02'
+              ? createS02AnimationPlan(content)
+              : createS03AnimationPlan(content);
         const counts = animationCounts(plan);
         const planPath = resolve(outputRoot, 'animation-plan.json');
         await atomicWrite(planPath, canonicalJson(plan));

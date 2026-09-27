@@ -40,3 +40,9 @@ l’exercice, pas des échanges avec un véritable service d’IA. Leurs sources
 `teaching/visuals/s03/`. Pour les actualiser, exécuter
 `node --import tsx scripts/generate-s03-visuals.mjs`, reconstruire S03, puis vérifier les PPTX.
 Les PDF projetés continuent de refléter le contenu textuel des sources pédagogiques.
+
+Sous Windows avec PowerPoint installé, exécuter
+`pnpm teaching:artifact animate --session=s03` après la construction des PPTX. La commande
+crée `session-animated.pptx` dans chaque dossier de langue, avec 52 clics et 155 effets
+répartis sur les 25 diapositives. Les images restent visibles dès l’ouverture des diapositives.
+La version non animée et les PDF demeurent disponibles pour la relecture.
