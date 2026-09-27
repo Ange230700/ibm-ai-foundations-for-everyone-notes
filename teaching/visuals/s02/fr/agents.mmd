@@ -1,0 +1,8 @@
+flowchart TB
+ A["Demande"] --> B{"Type d’usage"}
+ B -->|Génération| C["Brouillon pour examen"]
+ B -->|Système agentique| D["Étapes et actions possibles"]
+ D --> E["Limiter les permissions"]
+ E --> F["Supervision humaine"]
+ C --> F
+ F --> G["Décision par une personne autorisée"]

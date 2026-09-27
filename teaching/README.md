@@ -68,6 +68,10 @@ For S02, run `pnpm teaching:artifact plan --session=s02`, then
 `pnpm teaching:artifact verify --session=s02`. The four draft outputs live under
 `.artifacts/teaching-sessions/s02/<language>/`; `visual-qa --session=s02 --format=pdf`
 provides contact sheets. S02 has 26 slides per language and the same rich presenter-note
-formatting as S01. It does not yet have native slide animations or the simulated visual assets
-described in its teaching notes. The Course 02 French adaptations still need personal review,
-and the draft decks need those visuals, visual inspection, and a timed rehearsal before release.
+formatting as S01. Its PPTX includes four Mermaid diagrams and five clearly labelled teaching
+simulations per language: the prompt, a wrong response, its revision, a poster, and a local HTML
+guide. The editable sources are in `teaching/visuals/s02/`. Regenerate SVG and PNG assets with
+`node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX. These screens
+were authored for teaching and are not captured responses from an AI service. S02 does not yet
+have native slide animations. The Course 02 French adaptations still need personal review, and
+the draft decks need visual inspection and a timed rehearsal before release.

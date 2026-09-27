@@ -322,6 +322,60 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       fr: 'Recherche puis génération',
       name: 'rag',
     },
+    'S02-06': {
+      kind: 'mermaid',
+      en: 'Training, request, and review',
+      fr: 'Entraînement, consigne et contrôle',
+      name: 'model-workflow',
+    },
+    'S02-09': {
+      kind: 'mermaid',
+      en: 'Audience, format, and check',
+      fr: 'Public, format et contrôle',
+      name: 'formats',
+    },
+    'S02-11': {
+      kind: 'simulation',
+      en: 'Fictional prompt for the staff notice',
+      fr: 'Consigne fictive pour l’avis aux agents',
+      name: 'prompt',
+    },
+    'S02-12': {
+      kind: 'simulation',
+      en: 'Deliberately wrong draft',
+      fr: 'Brouillon volontairement erroné',
+      name: 'wrong-output',
+    },
+    'S02-13': {
+      kind: 'mermaid',
+      en: 'Three checks before sharing',
+      fr: 'Trois contrôles avant diffusion',
+      name: 'review',
+    },
+    'S02-14': {
+      kind: 'simulation',
+      en: 'Revised fictional draft',
+      fr: 'Brouillon fictif corrigé',
+      name: 'revised-output',
+    },
+    'S02-17': {
+      kind: 'simulation',
+      en: 'Fictional poster for review',
+      fr: 'Affiche fictive à vérifier',
+      name: 'poster',
+    },
+    'S02-20': {
+      kind: 'simulation',
+      en: 'Local HTML guide simulation',
+      fr: 'Simulation d’un guide HTML local',
+      name: 'guide',
+    },
+    'S02-21': {
+      kind: 'mermaid',
+      en: 'Drafting and agentic actions',
+      fr: 'Brouillon et actions agentiques',
+      name: 'agents',
+    },
   };
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];
@@ -334,7 +388,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
         ? {
             visual: {
               kind: visual.kind,
-              path: `teaching/visuals/s01/${content.language}/${visual.name}.${visual.kind === 'mermaid' ? 'svg' : 'png'}`,
+              path: `teaching/visuals/${content.id}/${content.language}/${visual.name}.${visual.kind === 'mermaid' ? 'svg' : 'png'}`,
               caption: visual[content.language],
             },
           }

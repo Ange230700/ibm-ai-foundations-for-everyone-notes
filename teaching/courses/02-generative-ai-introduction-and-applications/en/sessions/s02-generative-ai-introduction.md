@@ -503,6 +503,6 @@ Recap need, output, and review. Explain that S03 will deepen prompt design using
 ## Pending before final release
 
 - The three French canonical adaptations of Course 02 still require the personal review noted in their source files.
-- Outputs on S02-12, S02-14, S02-17, and S02-20 are teaching simulations to create and label for this session, not preserved outputs from the IBM course.
+- Outputs on S02-12, S02-14, S02-17, and S02-20 are labelled teaching simulations created for this session, not preserved outputs from the IBM course. Review their rendered appearance before release.
 - The bilingual slides and presenter notes must be generated, inspected, and rehearsed for 60 minutes before distribution.
 - S02 is not yet declared in the teaching-session manifest; artifact generation currently targets S01.

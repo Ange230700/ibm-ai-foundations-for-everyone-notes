@@ -35,6 +35,9 @@ pédagogique bilingue sert de brouillon pour examiner la sélection des notions 
 séance. Le manifeste déclare S02 et la chaîne génère désormais des PDF et PPTX de travail :
 `pnpm teaching:artifact build --session=s02`, puis
 `pnpm teaching:artifact verify --session=s02`. Les affiches, captures et schémas évoqués dans
-les notes ne sont pas encore intégrés aux supports ; les PPTX S02 n’ont pas encore d’animations.
-Ces éléments, la révision visuelle et une répétition chronométrée restent nécessaires avant
-toute diffusion définitive.
+les notes sont intégrés aux supports. Les PPTX comprennent quatre schémas et cinq captures
+simulées par langue, générés depuis `teaching/visuals/s02/` avec
+`node --import tsx scripts/generate-s02-visuals.mjs` avant la construction des PPTX. Les
+captures sont des exemples fictifs créés pour la séance, sans sortie réelle d’un outil d’IA.
+Les PPTX S02 n’ont pas encore d’animations. La révision visuelle et une répétition chronométrée
+restent nécessaires avant toute diffusion définitive.

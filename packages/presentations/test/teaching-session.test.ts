@@ -175,6 +175,21 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
       assert.equal(current.slides[0]?.id, 'S02-01');
       assert.equal(current.slides[25]?.id, 'S02-26');
       const spec = teachingDeckSpec(current);
+      const visualSlideIds = [
+        'S02-06',
+        'S02-09',
+        'S02-11',
+        'S02-12',
+        'S02-13',
+        'S02-14',
+        'S02-17',
+        'S02-20',
+        'S02-21',
+      ];
+      assert.deepEqual(
+        spec.slides.filter((slide) => slide.visual).map((slide) => slide.slideId),
+        visualSlideIds,
+      );
       assert.deepEqual(
         spec.slides.slice(0, 2).map((slide) => slide.kind),
         ['title', 'objectives'],
@@ -183,9 +198,19 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
       assert.equal((html.match(/<section class="slide/g) ?? []).length, 26);
       assert.doesNotMatch(html, /\*\*Key takeaway|\*\*Message à faire retenir/u);
       const pptxPath = resolve(output, `s02-${language}.pptx`);
-      await renderNativePptx(spec, { repositoryRoot: repositoryRoot(), outputPath: pptxPath });
+      const artifact = await renderNativePptx(spec, {
+        repositoryRoot: repositoryRoot(),
+        outputPath: pptxPath,
+      });
+      assert.equal(artifact.visualAssets.length, visualSlideIds.length);
       const verification = await verifyNativePptx(spec, repositoryRoot(), pptxPath);
       assert.equal(verification.slideCount, 26);
+      assert.deepEqual(
+        verification.slides
+          .filter((slide) => slide.pictures >= 2 && slide.slideId !== 'S02-01')
+          .map((slide) => slide.slideId),
+        visualSlideIds,
+      );
       assert.deepEqual(
         verification.slides.map((slide) => slide.slideId),
         current.slides.map((slide) => slide.id),

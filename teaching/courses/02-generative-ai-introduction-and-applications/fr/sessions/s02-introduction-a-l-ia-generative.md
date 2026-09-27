@@ -504,6 +504,6 @@ Résumer le chemin besoin, sortie et contrôle. Annoncer que S03 approfondira la
 ## Points à confirmer avant diffusion
 
 - Les trois adaptations françaises du cours 02 attendent encore la révision personnelle indiquée dans leurs fichiers.
-- Les sorties des diapositives S02-12, S02-14, S02-17 et S02-20 sont des simulations à créer et à étiqueter pour cette session ; elles ne sont pas des résultats conservés du cours IBM.
+- Les sorties des diapositives S02-12, S02-14, S02-17 et S02-20 sont des simulations étiquetées créées pour cette session ; elles ne sont pas des résultats conservés du cours IBM. Vérifier leur rendu avant diffusion.
 - Aucun outil, interface ou modèle particulier n’est nécessaire pour la démonstration préparée.
 - Le contrat prévoit aussi une version anglaise alignée ; elle sera rédigée séparément avant l’intégration des supports bilingues.

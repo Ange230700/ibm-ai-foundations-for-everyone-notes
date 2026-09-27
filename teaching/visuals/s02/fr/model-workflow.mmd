@@ -1,0 +1,8 @@
+flowchart TB
+ A["Entraînement antérieur"] --> B["Capacités du modèle"]
+ B --> C["Brouillon proposé"]
+ D["Consigne de l’exercice"] --> C
+ C --> E{"Contrôle humain"}
+ E -->|Corriger| C
+ E -->|Rejeter| F["Aucune diffusion"]
+ E -->|Autoriser| G["Avis relu"]
