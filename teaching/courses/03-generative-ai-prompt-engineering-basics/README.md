@@ -15,18 +15,20 @@ champs et le traitement des dossiers incomplets déjà présentés en S02.
 
 - Français : `fr/sessions/s03-conception-des-prompts.md` — version de travail, 25 diapositives et
   60 minutes, avec notes de présentation.
-- Anglais : à rédiger à partir du même contrat, avec les mêmes identifiants, durées, interactions
-  et limites du scénario.
+- Anglais : `en/sessions/s03-prompt-engineering-basics.md` — version de travail, 25 diapositives et
+  60 minutes, avec notes de présentation.
 
 Le fichier français conserve une idée principale par diapositive. Les éléments projetés restent
 brefs ; les notes détaillent les relances, les corrections attendues et les limites des réponses
-simulées. Les deux premières diapositives déclarent les rôles `course-title` et
+simulées. La source anglaise conserve les mêmes identifiants, durées, interactions, nombre et
+type d’éléments projetés. Les deux premières diapositives déclarent les rôles `course-title` et
 `course-objectives` utilisés par la chaîne de présentation.
 
 ## Statut de production
 
 Cette source est un **brouillon pédagogique**. Les adaptations françaises canoniques du cours 03
-attendent encore leur révision personnelle. La version anglaise, l’alignement bilingue, la
-déclaration dans `manifest.json`, les supports PDF/PPTX, leur contrôle visuel et une répétition
-chronométrée restent à faire. Le contrat de contenu n’est pas une preuve que la séance réelle
-tient déjà en 60 minutes.
+attendent encore leur révision personnelle. Les deux sources sont alignées sur la structure et
+sur le contrat, sans remplacer une relecture pédagogique bilingue. La déclaration dans
+`manifest.json`, les supports PDF/PPTX, leur contrôle visuel et une répétition chronométrée
+restent à faire. Le contrat de contenu n’est pas une preuve que la séance réelle tient déjà en
+60 minutes.

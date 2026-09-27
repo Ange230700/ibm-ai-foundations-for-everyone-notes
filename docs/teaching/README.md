@@ -22,8 +22,9 @@ This directory contains delivery specifications derived from the canonical learn
   rehearsal are still required before release.
 - `s03-prompt-engineering-60-min-content-contract.md` proposes a bilingual 25-slide,
   60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
-  canonical Course 03 French adaptations await personal review. A French teaching-source draft
-  is available; its English counterpart and derivative artifacts have not yet been produced.
+  canonical Course 03 French adaptations await personal review. French and English
+  teaching-source drafts are available and structurally aligned; derivative artifacts have not
+  yet been produced.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 

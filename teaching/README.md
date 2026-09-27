@@ -33,9 +33,9 @@ and explicit human responsibility for consequential decisions.
   - S02 is declared in `manifest.json`; draft PDF and native PPTX generation is available.
 - Course 03 — Generative AI: Prompt Engineering Basics
   - S03 — Principes de base de la conception des prompts
-  - Duration: 60 minutes; 25 slides in the French teaching source
-  - French teaching source: draft available, aligned with the S03 content contract
-  - English teaching source: pending; S03 is not yet declared in `manifest.json`
+  - Duration: 60 minutes; 25 slides in each language
+  - French and English teaching sources: drafts available and structurally aligned with the S03 content contract
+  - S03 is not yet declared in `manifest.json`; PDF and PPTX generation is not available
   - The Course 03 French canonical adaptations still await personal review.
 
 ## Session artifacts
