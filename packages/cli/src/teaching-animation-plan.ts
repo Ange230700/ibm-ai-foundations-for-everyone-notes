@@ -12,10 +12,10 @@ type SlidePlan =
 
 export interface TeachingAnimationPlan {
   schemaVersion: 2;
-  sessionId: 's01';
+  sessionId: 's01' | 's02';
   language: 'en' | 'fr';
   sourceSha256: string;
-  slideCount: 30;
+  slideCount: 30 | 26;
   slides: SlidePlan[];
 }
 
@@ -38,19 +38,28 @@ export function animationCounts(plan: TeachingAnimationPlan): {
   );
 }
 
-export function createS01AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
-  if (content.id !== 's01' || content.slides.length !== 30 || content.durationMinutes !== 60) {
-    throw new Error('S01 animation requires the approved 30-slide, 60-minute teaching session.');
+function createAnimationPlan(
+  content: TeachingSessionContent,
+  sessionId: 's01' | 's02',
+  slideCount: 30 | 26,
+): TeachingAnimationPlan {
+  const label = sessionId.toUpperCase();
+  if (
+    content.id !== sessionId ||
+    content.slides.length !== slideCount ||
+    content.durationMinutes !== 60
+  ) {
+    throw new Error(`${label} animation requires ${slideCount} slides and a 60-minute session.`);
   }
 
   const slides: SlidePlan[] = content.slides.map((slide, index) => {
     const number = index + 1;
-    if (slide.id !== `S01-${String(number).padStart(2, '0')}`) {
-      throw new Error(`S01 animation slide ${number} is missing or out of order.`);
+    if (slide.id !== `${label}-${String(number).padStart(2, '0')}`) {
+      throw new Error(`${label} animation slide ${number} is missing or out of order.`);
     }
     if (number === 1) {
       if (slide.role !== 'course-title' || slide.table || slide.items.length < 2)
-        throw new Error('S01 cover has an unexpected layout.');
+        throw new Error(`${label} cover has an unexpected layout.`);
       return {
         kind: 'cover',
         number,
@@ -59,13 +68,13 @@ export function createS01AnimationPlan(content: TeachingSessionContent): Teachin
         context: slide.items.slice(1).join(' '),
       };
     }
-    if (number === 19) {
+    if (sessionId === 's01' && number === 19) {
       if (!slide.table || slide.items.length)
         throw new Error('S01 table slide has an unexpected layout.');
       return { kind: 'table', number, title: slide.title, ...slide.table };
     }
     if (slide.table || slide.items.length < 2 || slide.itemKinds.length !== slide.items.length) {
-      throw new Error(`S01 animation slide ${number} has an unexpected list layout.`);
+      throw new Error(`${label} animation slide ${number} has an unexpected list layout.`);
     }
     return {
       kind: 'rows',
@@ -85,10 +94,18 @@ export function createS01AnimationPlan(content: TeachingSessionContent): Teachin
 
   return {
     schemaVersion: 2,
-    sessionId: 's01',
+    sessionId,
     language: content.language,
     sourceSha256: content.sourceSha256,
-    slideCount: 30,
+    slideCount,
     slides,
   };
+}
+
+export function createS01AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's01', 30);
+}
+
+export function createS02AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's02', 26);
 }

@@ -72,6 +72,9 @@ formatting as S01. Its PPTX includes four Mermaid diagrams and five clearly labe
 simulations per language: the prompt, a wrong response, its revision, a poster, and a local HTML
 guide. The editable sources are in `teaching/visuals/s02/`. Regenerate SVG and PNG assets with
 `node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX. These screens
-were authored for teaching and are not captured responses from an AI service. S02 does not yet
-have native slide animations. The Course 02 French adaptations still need personal review, and
-the draft decks need visual inspection and a timed rehearsal before release.
+were authored for teaching and are not captured responses from an AI service. On Windows with
+desktop PowerPoint, run `pnpm teaching:artifact animate --session=s02` after building the PPTX to
+create `session-animated.pptx` for both languages. The plan covers all 26 slides, including 53
+clicks and 158 shape effects per language; diagrams and simulation screens are visible when the
+slide opens, while text rows reveal one by one. The Course 02 French adaptations still need
+personal review, and the draft decks need visual inspection and a timed rehearsal before release.

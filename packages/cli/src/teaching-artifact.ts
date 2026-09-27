@@ -25,7 +25,11 @@ import {
   type TeachingSessionContent,
 } from '@coursera-notes/presentations';
 
-import { animationCounts, createS01AnimationPlan } from './teaching-animation-plan.js';
+import {
+  animationCounts,
+  createS01AnimationPlan,
+  createS02AnimationPlan,
+} from './teaching-animation-plan.js';
 
 type Format = 'pdf' | 'pptx';
 type Language = 'en' | 'fr';
@@ -112,11 +116,12 @@ async function readPair(
 
 async function animateWithPowerPoint(
   root: string,
+  sessionId: 's01' | 's02',
   language: Language,
   planPath: string,
 ): Promise<void> {
   if (process.platform !== 'win32') {
-    throw new Error('Native S01 animations require desktop PowerPoint on Windows.');
+    throw new Error('Native teaching animations require desktop PowerPoint on Windows.');
   }
   await new Promise<void>((resolvePromise, rejectPromise) => {
     const child = spawn(
@@ -126,7 +131,7 @@ async function animateWithPowerPoint(
         '-ExecutionPolicy',
         'Bypass',
         '-File',
-        resolve(root, 'scripts/teaching-animate-s01.ps1'),
+        resolve(root, `scripts/teaching-animate-${sessionId}.ps1`),
         '-RepoRoot',
         root,
         '-PlanPath',
@@ -139,7 +144,10 @@ async function animateWithPowerPoint(
     child.once('error', rejectPromise);
     child.once('close', (code) => {
       if (code === 0) resolvePromise();
-      else rejectPromise(new Error(`PowerPoint animation failed for S01/${language}: ${code}.`));
+      else
+        rejectPromise(
+          new Error(`PowerPoint animation failed for ${sessionId}/${language}: ${code}.`),
+        );
     });
   });
 }
@@ -167,8 +175,11 @@ async function main(): Promise<void> {
       const content = pair[language];
       const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
       if (args.command === 'animate') {
-        if (session.id !== 's01' || (args.format && args.format !== 'pptx')) {
-          throw new Error('Native animations currently support S01 PPTX only.');
+        if (
+          (session.id !== 's01' && session.id !== 's02') ||
+          (args.format && args.format !== 'pptx')
+        ) {
+          throw new Error('Native animations currently support S01/S02 PPTX only.');
         }
         const path = resolve(outputRoot, 'session.pptx');
         const spec = teachingDeckSpec(content);
@@ -190,13 +201,16 @@ async function main(): Promise<void> {
           canonicalJson(record.visualAssets) !==
             canonicalJson(await currentVisualAssets(spec, root))
         ) {
-          throw new Error(`Stale S01 PPTX: rebuild ${language} before animating.`);
+          throw new Error(
+            `Stale ${session.id.toUpperCase()} PPTX: rebuild ${language} before animating.`,
+          );
         }
-        const plan = createS01AnimationPlan(content);
+        const plan =
+          session.id === 's01' ? createS01AnimationPlan(content) : createS02AnimationPlan(content);
         const counts = animationCounts(plan);
         const planPath = resolve(outputRoot, 'animation-plan.json');
         await atomicWrite(planPath, canonicalJson(plan));
-        await animateWithPowerPoint(root, language, planPath);
+        await animateWithPowerPoint(root, session.id, language, planPath);
         const animatedPath = resolve(outputRoot, 'session-animated.pptx');
         const animated = await verifyNativePptx(spec, root, animatedPath);
         await atomicWrite(

@@ -39,5 +39,8 @@ les notes sont intégrés aux supports. Les PPTX comprennent quatre schémas et 
 simulées par langue, générés depuis `teaching/visuals/s02/` avec
 `node --import tsx scripts/generate-s02-visuals.mjs` avant la construction des PPTX. Les
 captures sont des exemples fictifs créés pour la séance, sans sortie réelle d’un outil d’IA.
-Les PPTX S02 n’ont pas encore d’animations. La révision visuelle et une répétition chronométrée
-restent nécessaires avant toute diffusion définitive.
+Sur Windows avec PowerPoint, `pnpm teaching:artifact animate --session=s02` crée une copie
+`session-animated.pptx` dans chaque langue. Elle anime les 26 diapositives avec 53 clics et 158
+effets sur les textes par langue. Les schémas et captures restent visibles dès l’arrivée sur la
+diapositive. La révision visuelle et une répétition chronométrée restent nécessaires avant toute
+diffusion définitive.
