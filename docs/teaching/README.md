@@ -14,6 +14,9 @@ This directory contains delivery specifications derived from the canonical learn
 
 - `s01-ai-fundamentals-60-min-content-contract.md` defines the aligned French and English
   content contract for a 60-minute AI fundamentals session.
+- `s02-generative-ai-60-min-content-contract.md` proposes the aligned French and English
+  60-minute introduction to generative AI. The canonical Course 02 French adaptations still await
+  personal review; the S02 teaching sources and generated artifacts have not yet been produced.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 
