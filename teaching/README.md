@@ -23,6 +23,13 @@ and explicit human responsibility for consequential decisions.
   - French teaching source: available
   - English teaching source: available
   - Bilingual structural alignment: verified
+- Course 02 — Generative AI: Introduction and Applications
+  - S02 — Introduction to Generative AI / Introduction à l’IA générative
+  - Duration: 60 minutes; 26 slides planned in each language
+  - French teaching source: draft available
+  - English teaching source: pending
+  - The Course 02 French canonical adaptations still await personal review.
+  - S02 is not yet declared in `manifest.json`; artifact generation remains scoped to S01.
 
 ## Session artifacts
 
