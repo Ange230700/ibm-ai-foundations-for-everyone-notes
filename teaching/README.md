@@ -36,11 +36,13 @@ inspection. PPTX visual QA uses LibreOffice when available.
 
 On Windows with desktop PowerPoint, run `pnpm teaching:artifact animate --session=s01` after
 building the PPTX files to create `session-animated.pptx` beside each language's static PPTX.
-The animation plan comes from the current teaching sources. Slides 02, 03, and 08 reveal each
-remaining row on click in both languages; the first row is visible on arrival. The command checks
-the source PPTX before animation, then checks the copied PPTX and its click sequence. Rerun it
-after rebuilding S01 to refresh these copies. The 30-slide, 60-minute contract and PDF output
-remain the same.
+The animation plan comes from the current teaching sources and covers all 30 slides in both
+languages. The cover reveals its main heading and context together, slide 19 reveals its complete table,
+and the other 28 slides reveal each row after the first on click; the first row is visible on
+arrival. This plan contains 90 clicks and 267 individual PowerPoint shape effects per language.
+The command checks the source PPTX before animation, then checks every slide and each animated
+shape after saving the copy. Rerun it after rebuilding S01 to refresh these copies. The 30-slide,
+60-minute contract and PDF output remain the same.
 
 The PDF contains the projected slides. The editable PPTX also includes facilitation notes and
 source references in its speaker notes. Generation checks slide count and planned duration;

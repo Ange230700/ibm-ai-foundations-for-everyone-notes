@@ -25,7 +25,7 @@ import {
   type TeachingSessionContent,
 } from '@coursera-notes/presentations';
 
-import { createS01AnimationPlan } from './teaching-animation-plan.js';
+import { animationCounts, createS01AnimationPlan } from './teaching-animation-plan.js';
 
 type Format = 'pdf' | 'pptx';
 type Language = 'en' | 'fr';
@@ -175,6 +175,7 @@ async function main(): Promise<void> {
           throw new Error(`Stale S01 PPTX: rebuild ${language} before animating.`);
         }
         const plan = createS01AnimationPlan(content);
+        const counts = animationCounts(plan);
         const planPath = resolve(outputRoot, 'animation-plan.json');
         await atomicWrite(planPath, canonicalJson(plan));
         await animateWithPowerPoint(root, language, planPath);
@@ -183,7 +184,7 @@ async function main(): Promise<void> {
         await atomicWrite(
           resolve(outputRoot, 'pptx-animation.json'),
           canonicalJson({
-            schemaVersion: 1,
+            schemaVersion: 2,
             sessionId: session.id,
             language,
             sourceSha256: content.sourceSha256,
@@ -195,9 +196,12 @@ async function main(): Promise<void> {
               (slide) => `${session.id.toUpperCase()}-${String(slide.number).padStart(2, '0')}`,
             ),
             slideCount: animated.slideCount,
+            ...counts,
           }),
         );
-        console.log(`ANIMATED ${session.id}/${language}/pptx slides=30 effects=30`);
+        console.log(
+          `ANIMATED ${session.id}/${language}/pptx slides=${counts.animatedSlides} clicks=${counts.clicks} effects=${counts.effects}`,
+        );
         continue;
       }
       const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];

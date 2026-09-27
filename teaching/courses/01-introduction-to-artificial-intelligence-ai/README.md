@@ -58,6 +58,7 @@ allocations from the teaching contract; the PPTX speaker notes include the facil
 Visual review and a timed rehearsal remain necessary before the session is released.
 
 On Windows with desktop PowerPoint, `pnpm teaching:artifact animate --session=s01` builds
-separate animated PPTX copies after the native PPTX files have been generated. Slides 02, 03,
-and 08 reveal their remaining content lines on click in FR and EN. Both languages keep the
-same 30 slides and speaker notes.
+separate animated PPTX copies after the native PPTX files have been generated. In FR and EN, all
+30 slides contain click animations: the cover introduces its subtitle, slide 19 introduces the
+complete table, and the other slides reveal their content lines progressively. Each language
+keeps the same 30 slides and speaker notes.
