@@ -1,5 +1,5 @@
-flowchart TB
- A["Exemples disponibles"] --> B{"Quel signal ?"}
- B -->|Étiquettes| C["Supervisé"]
- B -->|Sans étiquettes| D["Non supervisé"]
- B -->|Retour sur action| E["Renforcement"]
+flowchart LR
+ A["Exemples"] --> B{"Signal ?"}
+ B --> C["Étiquettes : supervisé"]
+ B --> D["Sans étiquettes : non supervisé"]
+ B --> E["Retour : renforcement"]

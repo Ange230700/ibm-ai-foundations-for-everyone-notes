@@ -1,8 +1,8 @@
-flowchart TB
- A["Demande"] --> B{"Type d’usage"}
- B -->|Génération| C["Brouillon pour examen"]
- B -->|Système agentique| D["Étapes et actions possibles"]
- D --> E["Limiter les permissions"]
+flowchart LR
+ A["Demande"] --> B{"Usage ?"}
+ B --> C["Brouillon"]
+ B --> D["Étapes d’action"]
+ D --> E["Permissions"]
  E --> F["Supervision humaine"]
  C --> F
- F --> G["Décision par une personne autorisée"]
+ F --> G["Décision"]

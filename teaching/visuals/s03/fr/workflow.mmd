@@ -1,8 +1,6 @@
-flowchart TB
- A["Tâche et contexte"] --> B["Source fournie"]
- B --> C["Demande fondée sur la source"]
- C --> D["Brouillon proposé"]
- D --> E{"Faits et format contrôlés ?"}
- E -->|Non| F["Réviser la demande"]
- F --> C
- E -->|Oui| G["Validation humaine"]
+flowchart LR
+ A["Tâche + source"] --> B["Demande fondée"]
+ B --> C["Brouillon"]
+ C --> D{"Faits + format vérifiés ?"}
+ D -->|Non| E["Réviser la demande"]
+ D -->|Oui| F["Validation humaine"]

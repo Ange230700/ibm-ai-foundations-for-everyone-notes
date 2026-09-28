@@ -1,8 +1,8 @@
-flowchart TB
- A["Saisie locale"] --> B["Contrôle des champs"]
+flowchart LR
+ A["Saisie locale"] --> B["Champs vérifiés"]
  B --> C{"Connexion ?"}
- C -->|Non| D["Travail enregistré en attente"]
- C -->|Oui| E["Résumé IA, si disponible"]
- D --> F["Synchronisation au retour"]
+ C -->|Non| D["Stockage local"]
+ C -->|Oui| E["Résumé IA facultatif"]
+ D --> F["Synchroniser"]
  E --> G["Validation humaine"]
  F --> G

@@ -40,6 +40,14 @@ and explicit human responsibility for consequential decisions.
 
 ## Session artifacts
 
+The Mermaid visuals for S01–S03 use a wide diagram area above the slide's teaching points.
+Their short labels preserve the underlying process while leaving the fuller explanation in
+the slide text and presenter notes. After editing a `.mmd` file, regenerate its SVG with
+`node --import tsx scripts/generate-s01-visuals.mjs --diagrams-only` (or the corresponding
+S02/S03 script). Rebuild and verify the affected PPTX, then regenerate the animated copy.
+`--diagrams-only` leaves the simulated screen images untouched. The presentation tests
+check the minimum projected size of the Mermaid node labels.
+
 `manifest.json` declares the bilingual S01 source and its 30-slide, 60-minute delivery contract.
 Use `pnpm teaching:artifact plan` to inspect the targets, `pnpm teaching:artifact build` to
 generate both languages in PDF and native PPTX, and `pnpm teaching:artifact verify` to recheck

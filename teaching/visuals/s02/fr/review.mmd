@@ -1,8 +1,5 @@
-flowchart TB
- A["Brouillon"] --> B{"Faits présents dans la source ?"}
- B -->|Non| C["Réécrire"]
- B -->|Oui| D{"Adapté aux destinataires ?"}
- D -->|Non| C
- D -->|Oui| E{"Validation autorisée ?"}
- E -->|Non| F["Attendre l’accord"]
- E -->|Oui| G["Diffusion possible"]
+flowchart LR
+ A["Brouillon"] --> B["Faits vérifiés"]
+ B --> C["Public adapté"]
+ C --> D["Avis validé"]
+ D --> E["Diffusion"]

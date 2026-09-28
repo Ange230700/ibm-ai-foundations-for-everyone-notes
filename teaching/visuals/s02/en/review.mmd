@@ -1,8 +1,5 @@
-flowchart TB
- A["Draft"] --> B{"Facts in the source?"}
- B -->|No| C["Revise"]
- B -->|Yes| D{"Fits the audience?"}
- D -->|No| C
- D -->|Yes| E{"Authorized approval?"}
- E -->|No| F["Wait for approval"]
- E -->|Yes| G["Ready to share"]
+flowchart LR
+ A["Draft"] --> B["Facts verified"]
+ B --> C["Audience fit"]
+ C --> D["Approved"]
+ D --> E["Share"]

@@ -1,8 +1,7 @@
-flowchart TB
- A["Earlier training"] --> B["Model capability"]
- B --> C["Proposed draft"]
- D["Exercise request"] --> C
+flowchart LR
+ A["Training"] --> B["Model"]
+ B --> C["Draft"]
+ D["Task"] --> C
  C --> E{"Human review"}
- E -->|Revise| C
- E -->|Reject| F["Do not share"]
- E -->|Approve| G["Reviewed notice"]
+ E --> F["Revise or stop"]
+ E --> G["Reviewed notice"]

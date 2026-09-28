@@ -1,5 +1,5 @@
-flowchart TB
- A["Approved documents"] --> B["Retrieve passages"]
- B --> C["Add passages to context"]
- C --> D["Generate a draft answer"]
- D --> E["Human verification"]
+flowchart LR
+ A["Approved sources"] --> B["Retrieve passages"]
+ B --> C["Add context"]
+ C --> D["Draft answer"]
+ D --> E["Human check"]

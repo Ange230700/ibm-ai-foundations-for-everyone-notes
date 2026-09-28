@@ -1,8 +1,8 @@
-flowchart TB
- A["Request"] --> B{"Type of use"}
- B -->|Generation| C["Draft for review"]
- B -->|Agentic system| D["Possible steps and actions"]
- D --> E["Limit permissions"]
+flowchart LR
+ A["Request"] --> B{"Use?"}
+ B --> C["Draft"]
+ B --> D["Action steps"]
+ D --> E["Permissions"]
  E --> F["Human oversight"]
  C --> F
- F --> G["Decision by an authorized person"]
+ F --> G["Decision"]

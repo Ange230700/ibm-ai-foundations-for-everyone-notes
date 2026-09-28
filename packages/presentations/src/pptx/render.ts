@@ -624,21 +624,28 @@ function renderListSlide(
 
   const top = slideSpec.kind === 'objectives' && slideSpec.leadIn ? 1.86 : 1.55;
 
-  const gap = 0.11;
-  const availableHeight = 6.55 - top - gap * (slideSpec.items.length - 1);
+  const wideDiagram =
+    visual?.kind === 'mermaid' && !(slideSpec.kind === 'objectives' && slideSpec.leadIn);
+  const gap = wideDiagram ? 0.04 : 0.11;
+  const rowTop = wideDiagram ? 4.95 : top;
+  const rowBottom = wideDiagram ? 6.65 : 6.55;
+  const availableHeight = rowBottom - rowTop - gap * (slideSpec.items.length - 1);
   const initialWeights = slideSpec.items.map((item) =>
-    estimatedWrappedLines(item, visual ? 46 : 88),
+    estimatedWrappedLines(item, visual && !wideDiagram ? 46 : 88),
   );
   const visualLines = initialWeights.reduce((total, weight) => total + weight, 0);
-  const fontSize = visual
-    ? visualLines > 14
-      ? 14
-      : 16
-    : listFontSize(slideSpec.items.length, visualLines);
-  const charactersPerLine = visual ? 48 : fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
+  const fontSize = wideDiagram
+    ? 15
+    : visual
+      ? visualLines > 14
+        ? 14
+        : 16
+      : listFontSize(slideSpec.items.length, visualLines);
+  const charactersPerLine =
+    visual && !wideDiagram ? 48 : fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
   const rowWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, charactersPerLine));
-  const rowHeights = proportionalHeights(rowWeights, availableHeight, 0.46);
-  let y = top;
+  const rowHeights = proportionalHeights(rowWeights, availableHeight, wideDiagram ? 0.25 : 0.46);
+  let y = rowTop;
 
   slideSpec.items.forEach((item, index) => {
     const rowHeight = rowHeights[index] ?? availableHeight / slideSpec.items.length;
@@ -659,9 +666,9 @@ function renderListSlide(
 
     slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
       x: SLIDE.left + 0.08,
-      y: y + 0.05,
+      y: y + (wideDiagram ? 0.02 : 0.05),
       w: 0.52,
-      h: rowHeight - 0.1,
+      h: rowHeight - (wideDiagram ? 0.04 : 0.1),
       margin: 0,
       align: 'center',
       valign: 'middle',
@@ -673,9 +680,9 @@ function renderListSlide(
 
     slide.addText(item, {
       x: SLIDE.left + 0.88,
-      y: y + 0.05,
-      w: visual ? 6.12 : 10.95,
-      h: rowHeight - 0.1,
+      y: y + (wideDiagram ? 0.02 : 0.05),
+      w: visual && !wideDiagram ? 6.12 : 10.95,
+      h: rowHeight - (wideDiagram ? 0.04 : 0.1),
       margin: 0,
       valign: 'middle',
       fontFace: theme.fonts.body,
@@ -688,19 +695,24 @@ function renderListSlide(
   });
 
   if (visual) {
-    const frame: Frame = { x: 7.85, y: top, w: 4.75, h: 4.61 };
+    const frame: Frame = wideDiagram
+      ? { x: SLIDE.left, y: top, w: SLIDE.width - SLIDE.left - SLIDE.right, h: 3.0 }
+      : { x: 7.85, y: top, w: 4.75, h: 4.61 };
     slide.addShape('roundRect', {
       ...frame,
       rectRadius: 0.12,
       fill: { color: theme.colors.surface },
       line: { color: theme.colors.border, width: 0.75 },
     });
-    slide.addImage({ path: visual.absolutePath, ...containFrame(frame, visual.aspectRatio, 0.14) });
+    slide.addImage({
+      path: visual.absolutePath,
+      ...containFrame(frame, visual.aspectRatio, wideDiagram ? 0.08 : 0.14),
+    });
     slide.addText(visual.caption, {
       x: frame.x,
-      y: frame.y + frame.h + 0.11,
+      y: frame.y + frame.h + (wideDiagram ? 0.02 : 0.11),
       w: frame.w,
-      h: 0.47,
+      h: wideDiagram ? 0.25 : 0.47,
       margin: 0,
       align: 'center',
       fontFace: theme.fonts.body,

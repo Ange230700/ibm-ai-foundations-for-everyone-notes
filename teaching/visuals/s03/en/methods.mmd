@@ -1,8 +1,8 @@
-flowchart TB
- A{"Are the facts available?"} -->|No| B["Ask questions first"]
- A -->|Yes| C{"Is the format hard to describe?"}
+flowchart LR
+ A{"Facts available?"} -->|No| B["Ask first"]
+ A -->|Yes| C{"Format unclear?"}
  C -->|No| D["Direct request"]
- C -->|Yes| E["Checked fictional example"]
- B --> F["Check the proposed response"]
+ C -->|Yes| E["Checked example"]
+ B --> F["Review response"]
  D --> F
  E --> F

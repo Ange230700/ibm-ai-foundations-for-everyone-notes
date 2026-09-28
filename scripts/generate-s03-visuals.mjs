@@ -8,9 +8,11 @@ import {
   createMermaidConfiguration,
   normalizeMermaidSvgForOffice,
 } from '../packages/presentations/src/index.ts';
+import { teachingMermaidConfiguration } from './teaching-mermaid-config.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const visualRoot = resolve(root, 'teaching/visuals/s03');
+const diagramsOnly = process.argv.includes('--diagrams-only');
 const diagrams = ['workflow', 'methods', 'steps', 'checks'];
 const screens = ['prompt', 'examples', 'interview', 'wrong-output', 'revision'];
 const css = await readFile(resolve(visualRoot, 'screen.css'), 'utf8');
@@ -25,7 +27,7 @@ for (const language of ['en', 'fr']) {
     }
     sources.push({ language, name, stem, kind: 'mermaid' });
   }
-  for (const name of screens) {
+  for (const name of diagramsOnly ? [] : screens) {
     const stem = resolve(visualRoot, language, name);
     const html = await readFile(`${stem}.html`, 'utf8');
     const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
@@ -47,7 +49,10 @@ if (process.argv.includes('--check-sources')) {
         await run(`${source.stem}.mmd`, `${source.stem}.svg`, {
           browser,
           quiet: true,
-          parseMMDOptions: { mermaidConfig: configuration, backgroundColor: '#F3F3F3' },
+          parseMMDOptions: {
+            mermaidConfig: teachingMermaidConfiguration(configuration),
+            backgroundColor: '#F3F3F3',
+          },
         });
         await writeFile(
           `${source.stem}.svg`,
