@@ -16,7 +16,7 @@ interface BaseSlideSpec {
   teachingNotes?: string;
   durationMinutes?: number;
   visual?: {
-    kind: 'mermaid' | 'simulation';
+    kind: 'mermaid' | 'simulation' | 'capture';
     path: string;
     caption: string;
   };

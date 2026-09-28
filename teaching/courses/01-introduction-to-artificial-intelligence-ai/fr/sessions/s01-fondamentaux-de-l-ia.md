@@ -460,6 +460,8 @@ Illustrer les étapes avec les objectifs de la coopérative : améliorer la comp
 
 Donner un exemple professionnel adapté au public. Comparer une demande vague avec une demande contenant le rôle, l’objectif, le public et les contraintes. Garder les listes de marques et d’outils dans l’annexe.
 
+Montrer la capture d’un véritable échange avec ChatGPT sur le scénario fictif de la coopérative. Faire vérifier que la réponse respecte la limite de mots et ne présente ni date ni quantité inventée. La capture illustre une réponse à examiner, pas un document déjà validé pour diffusion.
+
 ## Diapositive 24 — Agents d’IA et automatisation
 
 - **Identifiant :** S01-24

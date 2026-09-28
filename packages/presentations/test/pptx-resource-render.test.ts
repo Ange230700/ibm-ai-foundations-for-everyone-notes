@@ -67,7 +67,7 @@ test(
 
       assert.equal(artifact.slides, 3);
 
-      assert.equal(artifact.renderer.rendererVersion, 6);
+      assert.equal(artifact.renderer.rendererVersion, 7);
 
       assert.match(artifact.pptxSha256, /^[a-f0-9]{64}$/);
 

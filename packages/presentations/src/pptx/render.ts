@@ -14,7 +14,7 @@ import {
 } from './resources.js';
 import { formatTeachingNotes } from './teaching-notes.js';
 
-export const PPTX_RENDERER_VERSION = 6;
+export const PPTX_RENDERER_VERSION = 7;
 
 const SLIDE = {
   width: (7.5 / 9) * 16,
@@ -588,7 +588,7 @@ function renderListSlide(
   visual?: {
     absolutePath: string;
     aspectRatio: number;
-    kind: 'mermaid' | 'simulation';
+    kind: 'mermaid' | 'simulation' | 'capture';
     caption: string;
   },
 ): void {
@@ -607,6 +607,81 @@ function renderListSlide(
   prepareSlide(slide, theme);
 
   addSlideTitle(slide, slideSpec.title, theme);
+
+  if (visual?.kind === 'capture') {
+    // A real chat capture needs the slide width to keep its original text legible.
+    // The teaching points remain visible below it and retain their individual animation shapes.
+    const frame: Frame = {
+      x: SLIDE.left,
+      y: 1.45,
+      w: SLIDE.width - SLIDE.left - SLIDE.right,
+      h: 3.98,
+    };
+    slide.addShape('roundRect', {
+      ...frame,
+      rectRadius: 0.12,
+      fill: { color: theme.colors.surface },
+      line: { color: theme.colors.border, width: 0.75 },
+    });
+    slide.addImage({ path: visual.absolutePath, ...containFrame(frame, visual.aspectRatio, 0) });
+    slide.addText(visual.caption, {
+      x: frame.x,
+      y: 5.47,
+      w: frame.w,
+      h: 0.19,
+      margin: 0,
+      align: 'center',
+      fontFace: theme.fonts.body,
+      fontSize: 11,
+      color: theme.colors.muted,
+    });
+    const placements = [
+      { x: SLIDE.left, y: 5.7, w: 5.78, h: 0.31 },
+      { x: 6.8, y: 5.7, w: 5.78, h: 0.31 },
+      { x: SLIDE.left, y: 6.05, w: 5.78, h: 0.39 },
+      { x: 6.8, y: 6.05, w: 5.78, h: 0.39 },
+      { x: SLIDE.left, y: 6.48, w: 11.86, h: 0.31 },
+    ];
+    slideSpec.items.forEach((item, index) => {
+      const placement = placements[index];
+      if (!placement) throw new Error(`${slideSpec.slideId} has too many capture teaching points.`);
+      slide.addShape('rect', {
+        x: placement.x,
+        y: placement.y,
+        w: 0.46,
+        h: placement.h,
+        fill: { color: theme.colors.surface },
+        line: { color: theme.colors.border, width: 0.75 },
+      });
+      slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
+        x: placement.x + 0.015,
+        y: placement.y,
+        w: 0.43,
+        h: placement.h,
+        margin: 0,
+        align: 'center',
+        valign: 'middle',
+        fontFace: theme.fonts.body,
+        fontSize: 12,
+        bold: true,
+        color: theme.colors.accent,
+      });
+      slide.addText(item, {
+        x: placement.x + 0.62,
+        y: placement.y,
+        w: placement.w - 0.62,
+        h: placement.h,
+        margin: 0,
+        valign: 'middle',
+        fontFace: theme.fonts.body,
+        fontSize: 13,
+        color: theme.colors.ink,
+        fit: 'shrink',
+      });
+    });
+    finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
+    return;
+  }
 
   if (slideSpec.kind === 'objectives' && slideSpec.leadIn) {
     slide.addText(slideSpec.leadIn, {
@@ -1166,7 +1241,7 @@ export async function renderNativePptx(
       absolutePath: string;
       sha256: string;
       aspectRatio: number;
-      kind: 'mermaid' | 'simulation';
+      kind: 'mermaid' | 'simulation' | 'capture';
       caption: string;
     }
   >();
@@ -1181,12 +1256,12 @@ export async function renderNativePptx(
     if (kind === 'mermaid' && !Buffer.from(bytes).toString('utf8').includes('<svg'))
       throw new Error(`Invalid teaching SVG: ${path}`);
     if (
-      kind === 'simulation' &&
+      kind !== 'mermaid' &&
       !Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
     )
       throw new Error(`Invalid teaching PNG: ${path}`);
     const ratio =
-      kind === 'simulation'
+      kind !== 'mermaid'
         ? bytes.readUInt32BE(16) / bytes.readUInt32BE(20)
         : (() => {
             const viewBox = Buffer.from(bytes)

@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import test from 'node:test';
 import JSZip from 'jszip';
 
-import { repositoryRoot } from '@coursera-notes/core';
+import { repositoryRoot, sha256 } from '@coursera-notes/core';
 import { readManifest } from '@coursera-notes/manifest';
 
 import {
@@ -97,6 +97,26 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
         ['S01-08', 'S01-10', 'S01-20', 'S01-21', 'S01-23', 'S01-25'],
       );
       const zip = await JSZip.loadAsync(await readFile(path));
+      if (language === 'fr') {
+        const capturePath = 'teaching/visuals/s01/fr/chat-capture.png';
+        const capture = spec.slides[22]?.visual;
+        assert.equal(capture?.kind, 'capture');
+        assert.equal(capture.path, capturePath);
+        assert.match(capture.caption, /Échange réel avec ChatGPT/u);
+        assert.equal(
+          artifact.visualAssets.find((asset) => asset.slideId === 'S01-23')?.sha256,
+          sha256(await readFile(resolve(repositoryRoot(), capturePath))),
+        );
+        const slideXml = await zip.file('ppt/slides/slide23.xml')?.async('string');
+        assert.ok(slideXml);
+        const imageWidths = [
+          ...slideXml.matchAll(/<p:pic>[\s\S]*?<a:ext cx="(\d+)" cy="\d+"/gu),
+        ].map((match) => Number(match[1]));
+        assert.ok(
+          imageWidths.some((width) => width >= 8 * 914400),
+          'capture uses the wide slide layout',
+        );
+      }
       for (let index = 1; index <= 30; index++) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${index}.xml`)?.async('string');
         assert.ok(xml?.includes(' b="1"'), `bold S01 slide ${index}`);

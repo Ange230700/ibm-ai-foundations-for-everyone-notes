@@ -149,7 +149,7 @@ function validateSlideIdentity(
     assertObject(input.visual, `${label}.visual`);
     assertExactKeys(input.visual, ['kind', 'path', 'caption'], `${label}.visual`);
     if (
-      !['mermaid', 'simulation'].includes(String(input.visual.kind)) ||
+      !['mermaid', 'simulation', 'capture'].includes(String(input.visual.kind)) ||
       typeof input.visual.path !== 'string' ||
       !/^teaching\/visuals\/s01\/(en|fr)\/[a-z-]+\.(svg|png)$/u.test(input.visual.path) ||
       typeof input.visual.caption !== 'string' ||

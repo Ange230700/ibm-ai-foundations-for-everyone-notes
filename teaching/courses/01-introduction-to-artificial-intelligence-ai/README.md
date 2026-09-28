@@ -57,6 +57,12 @@ and editable PPTX language variants. Slides retain the identifiers and one-minut
 allocations from the teaching contract; the PPTX speaker notes include the facilitation text.
 Visual review and a timed rehearsal remain necessary before the session is released.
 
+The French S01-23 PPTX uses an unaltered capture of a real ChatGPT exchange at
+`teaching/visuals/s01/fr/chat-capture.png`. The cocoa cooperative in the prompt is fictional;
+the response still needs human review. The English S01-23 visual remains a labelled teaching
+simulation. The screenshot is a maintained source asset and the visual generator does not
+overwrite it.
+
 On Windows with desktop PowerPoint, `pnpm teaching:artifact animate --session=s01` builds
 separate animated PPTX copies after the native PPTX files have been generated. In FR and EN, all
 30 slides contain click animations: the cover introduces its subtitle, slide 19 introduces the

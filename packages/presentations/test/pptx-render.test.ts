@@ -161,7 +161,7 @@ test(
 
       assert.equal(artifact.renderer.version, '4.0.1');
 
-      assert.equal(artifact.renderer.rendererVersion, 6);
+      assert.equal(artifact.renderer.rendererVersion, 7);
 
       assert.equal(
         artifact.brandAssets.logo.path,

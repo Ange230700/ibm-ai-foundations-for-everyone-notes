@@ -284,7 +284,13 @@ export function validateTeachingPair(en: TeachingSessionContent, fr: TeachingSes
 export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
   const visualSlides: Record<
     string,
-    { kind: 'mermaid' | 'simulation'; en: string; fr: string; name: string }
+    {
+      kind: 'mermaid' | 'simulation';
+      en: string;
+      fr: string;
+      name: string;
+      frCapture?: { name: string; caption: string };
+    }
   > = {
     'S01-08': {
       kind: 'mermaid',
@@ -315,6 +321,10 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Illustrative prompt and draft',
       fr: 'Demande et réponse simulées',
       name: 'prompt',
+      frCapture: {
+        name: 'chat-capture',
+        caption: 'Échange réel avec ChatGPT · scénario de coopérative fictive',
+      },
     },
     'S01-25': {
       kind: 'mermaid',
@@ -433,6 +443,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
   };
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];
+    const capture = content.language === 'fr' ? visual?.frCapture : undefined;
     const base = {
       slideId: slide.id,
       title: slide.title,
@@ -441,9 +452,9 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       ...(visual
         ? {
             visual: {
-              kind: visual.kind,
-              path: `teaching/visuals/${content.id}/${content.language}/${visual.name}.${visual.kind === 'mermaid' ? 'svg' : 'png'}`,
-              caption: visual[content.language],
+              kind: capture ? ('capture' as const) : visual.kind,
+              path: `teaching/visuals/${content.id}/${content.language}/${capture?.name ?? visual.name}.${visual.kind === 'mermaid' ? 'svg' : 'png'}`,
+              caption: capture?.caption ?? visual[content.language],
             },
           }
         : {}),
