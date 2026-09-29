@@ -228,7 +228,7 @@ Read the three lines of the fictional instruction slowly. Ask what they do not s
 
 **Key takeaway:** Context and source material guide a first draft without guaranteeing accuracy.
 
-Show a prompt screen clearly marked “teaching simulation.” Identify its task, audience, and source. Save advanced prompting methods for S03, and use no real member data.
+Show the capture of a real ChatGPT exchange about the fictional cooperative. Identify the task, audience, and source; check that the draft lists the required fields without adding a payment, certification, quality, or threshold rule. The answer is a draft to review, not an approved notice. Save advanced prompting methods for S03, and use no real member data.
 
 ## Slide 12 — A plausible sentence can be wrong
 
