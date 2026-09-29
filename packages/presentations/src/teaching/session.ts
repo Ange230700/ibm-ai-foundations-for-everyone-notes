@@ -289,6 +289,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: string;
       fr: string;
       name: string;
+      enCapture?: { name: string; caption: string };
       frCapture?: { name: string; caption: string };
     }
   > = {
@@ -321,6 +322,10 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Illustrative prompt and draft',
       fr: 'Demande et réponse simulées',
       name: 'prompt',
+      enCapture: {
+        name: 'chat-capture',
+        caption: 'Real ChatGPT exchange · fictional cocoa cooperative scenario',
+      },
       frCapture: {
         name: 'chat-capture',
         caption: 'Échange réel avec ChatGPT · scénario de coopérative fictive',
@@ -451,7 +456,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
   };
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];
-    const capture = content.language === 'fr' ? visual?.frCapture : undefined;
+    const capture = content.language === 'fr' ? visual?.frCapture : visual?.enCapture;
     const base = {
       slideId: slide.id,
       title: slide.title,

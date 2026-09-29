@@ -460,6 +460,8 @@ Illustrate the steps with the cooperative’s goals: improve record completeness
 
 Give a professional example suited to the audience. Compare a vague request with one that includes the role, objective, audience, and constraints. Keep lists of brands and tools in the appendix.
 
+Show the capture of a real ChatGPT exchange about the fictional cocoa cooperative. Ask learners to check the word limit and whether the response invents a date, weight, or quantity. The draft is still subject to human review before use.
+
 ## Slide 24 — AI agents and automation
 
 - **Identifier:** S01-24
