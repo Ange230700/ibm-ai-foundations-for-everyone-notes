@@ -410,6 +410,10 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Fictional source-grounded prompt',
       fr: 'Demande fictive fondée sur la source',
       name: 'prompt',
+      enCapture: {
+        name: 'chat-capture',
+        caption: 'Real ChatGPT exchange · fictional cooperative source',
+      },
       frCapture: {
         name: 'chat-capture',
         caption: 'Échange réel avec ChatGPT · source de coopérative fictive',

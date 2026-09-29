@@ -177,7 +177,7 @@ Map these six cues back to the four prompt components on S03-05. Ask where to pl
 
 **Key takeaway:** A structured prompt names the task, audience, source, and boundaries.
 
-Read the three lines as one example prompt and ask which line restricts the facts. It is a new teaching adaptation, not a verbatim quotation from the recorded course or a guarantee of compliance. A person must still compare any draft with the source.
+Show the capture of a real ChatGPT exchange using the fictional S03-04 instruction. Read the three lines as one example prompt and ask which line restricts the facts. Check that the reply includes the three fields, “needs completion” status, and staff review without adding another rule. This is a new teaching adaptation, not a verbatim quotation from the recorded course or a guarantee of compliance. A person must still compare the draft with the source before use.
 
 ## Slide 09 — A notice people can read
 

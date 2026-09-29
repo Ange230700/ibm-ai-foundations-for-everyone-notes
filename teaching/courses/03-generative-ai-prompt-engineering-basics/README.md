@@ -34,14 +34,14 @@ sur le contrat, sans remplacer une relecture pédagogique bilingue. S03 est déc
 Leur contrôle visuel et une répétition chronométrée restent à faire. Le contrat de contenu n’est
 pas une preuve que la séance réelle tient déjà en 60 minutes.
 
-Les PPTX de travail contiennent quatre diagrammes Mermaid par langue. L’anglais comporte cinq
-écrans simulés ; le français comporte quatre simulations et une capture d’un véritable échange
-avec ChatGPT sur la consigne fictive en S03-08. Le contre-exemple volontairement erroné en S03-19
+Les PPTX de travail contiennent quatre diagrammes Mermaid par langue. Chaque langue comporte quatre
+écrans simulés et une capture d’un véritable échange avec ChatGPT sur la consigne fictive en S03-08.
+Le contre-exemple volontairement erroné en S03-19
 n’est pas issu de cet échange. Les sources modifiables des simulations sont dans
 `teaching/visuals/s03/`. La capture originale est
-`teaching/visuals/s03/fr/chat-capture.png`. Pour actualiser les simulations, exécuter
+`teaching/visuals/s03/<langue>/chat-capture.png` pour chaque langue. Pour actualiser les simulations, exécuter
 `node --import tsx scripts/generate-s03-visuals.mjs`, reconstruire S03, puis vérifier les PPTX.
-Ce générateur ne réécrit pas la capture originale.
+Ce générateur ne réécrit pas les captures originales.
 Les PDF projetés continuent de refléter le contenu textuel des sources pédagogiques.
 
 Sous Windows avec PowerPoint installé, exécuter
