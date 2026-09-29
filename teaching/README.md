@@ -84,10 +84,11 @@ For S02, run `pnpm teaching:artifact plan --session=s02`, then
 `pnpm teaching:artifact verify --session=s02`. The four draft outputs live under
 `.artifacts/teaching-sessions/s02/<language>/`; `visual-qa --session=s02 --format=pdf`
 provides contact sheets. S02 has 26 slides per language and the same rich presenter-note
-formatting as S01. Its PPTX includes four Mermaid diagrams in each language. Each language has four
-labelled teaching simulations: a wrong response, its revision, a poster, and a local HTML guide.
-Both replace the S02-11 prompt simulation with a real ChatGPT exchange about a fictional
-cooperative. Their original captures are `teaching/visuals/s02/<language>/chat-capture.png`; the
+formatting as S01. Its PPTX includes four Mermaid diagrams in each language. Each language has
+three labelled teaching simulations: a wrong response, its revision, and a poster. S02-20 shows a
+browser capture of the local HTML guide prototype in each language. Both decks replace the S02-11
+prompt simulation with a real ChatGPT exchange about a fictional cooperative. The original
+captures are `teaching/visuals/s02/<language>/chat-capture.png` and `guide-capture.png`; the
 wrong response on S02-12 remains a separate, deliberately invented teaching example. The editable
 simulation sources are in `teaching/visuals/s02/`. Regenerate SVG and simulated PNG assets with
 `node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX; the script does
@@ -104,12 +105,15 @@ For S03, run `pnpm teaching:artifact plan --session=s03`, then
 `.artifacts/teaching-sessions/s03/<language>/`. Run
 `pnpm teaching:artifact visual-qa --session=s03 --format=pdf` to create PDF page images and
 contact sheets for review. These 25-slide decks include speaker notes and slide numbering.
-The S03 PPTX includes four Mermaid diagrams per language. Each language has four labelled
-fictional teaching screens and a real ChatGPT exchange about the fictional source on S03-08.
+The S03 PPTX includes four Mermaid diagrams per language. Each language has three labelled
+fictional teaching screens, a real ChatGPT exchange about the fictional source on S03-08, and a
+capture of ChatGPT's opening interview question on S03-16. The unknown reply is a spoken teaching
+cue; it is not present in the screenshot.
 The invented error on S03-19 is a separate teaching example. Editable
 simulation sources live in `teaching/visuals/s03/`; regenerate SVG and simulated PNG files with
 `node --import tsx scripts/generate-s03-visuals.mjs` before building S03 PPTX. The script does
-not overwrite the original captures at `teaching/visuals/s03/<language>/chat-capture.png`. On Windows with desktop
+not overwrite the original captures at `teaching/visuals/s03/<language>/chat-capture.png` or
+`interview-capture.png`. On Windows with desktop
 PowerPoint, run `pnpm teaching:artifact animate --session=s03` after building and verifying
 the PPTX to create `session-animated.pptx` for both languages. The plan covers 25 slides,
 52 clicks and 155 shape effects per language: the images remain visible on arrival, and the

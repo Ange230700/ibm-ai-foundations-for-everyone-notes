@@ -392,6 +392,14 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Local HTML guide simulation',
       fr: 'Simulation d’un guide HTML local',
       name: 'guide',
+      enCapture: {
+        name: 'guide-capture',
+        caption: 'Browser capture of a local HTML guide · teaching prototype',
+      },
+      frCapture: {
+        name: 'guide-capture',
+        caption: 'Capture navigateur d’un guide HTML local · prototype pédagogique',
+      },
     },
     'S02-21': {
       kind: 'mermaid',
@@ -436,6 +444,14 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Fictional interview prompt',
       fr: 'Demande fictive en mode entretien',
       name: 'interview',
+      enCapture: {
+        name: 'interview-capture',
+        caption: 'Real ChatGPT opening question · fictional cocoa cooperative',
+      },
+      frCapture: {
+        name: 'interview-capture',
+        caption: 'Première question réelle de ChatGPT · coopérative fictive',
+      },
     },
     'S03-17': {
       kind: 'mermaid',

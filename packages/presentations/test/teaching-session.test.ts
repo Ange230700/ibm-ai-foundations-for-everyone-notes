@@ -259,6 +259,27 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
         imageWidths.some((width) => width >= minimumCaptureWidth),
         'S02 capture remains legible within its original aspect ratio',
       );
+      const guidePath = `teaching/visuals/s02/${language}/guide-capture.png`;
+      const guide = spec.slides[19]?.visual;
+      assert.equal(guide?.kind, 'capture');
+      assert.equal(guide.path, guidePath);
+      assert.match(
+        guide.caption,
+        language === 'fr' ? /prototype pédagogique/u : /teaching prototype/u,
+      );
+      assert.equal(
+        artifact.visualAssets.find((asset) => asset.slideId === 'S02-20')?.sha256,
+        sha256(await readFile(resolve(repositoryRoot(), guidePath))),
+      );
+      const guideXml = await zip.file('ppt/slides/slide20.xml')?.async('string');
+      assert.ok(guideXml);
+      const guideWidths = [...guideXml.matchAll(/<p:pic>[\s\S]*?<a:ext cx="(\d+)" cy="\d+"/gu)].map(
+        (match) => Number(match[1]),
+      );
+      assert.ok(
+        guideWidths.some((width) => width >= 5.5 * 914400),
+        'local guide capture is readable in the slide frame',
+      );
       for (let number = 1; number <= 26; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
         assert.ok(xml?.includes(' b="1"'), `bold S02 ${language} slide ${number}`);
@@ -364,6 +385,27 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       assert.ok(
         imageWidths.some((width) => width >= minimumCaptureWidth),
         'S03 capture remains legible within its original aspect ratio',
+      );
+      const interviewPath = `teaching/visuals/s03/${language}/interview-capture.png`;
+      const interview = spec.slides[15]?.visual;
+      assert.equal(interview?.kind, 'capture');
+      assert.equal(interview.path, interviewPath);
+      assert.match(
+        interview.caption,
+        language === 'fr' ? /Première question réelle/u : /Real ChatGPT opening question/u,
+      );
+      assert.equal(
+        artifact.visualAssets.find((asset) => asset.slideId === 'S03-16')?.sha256,
+        sha256(await readFile(resolve(repositoryRoot(), interviewPath))),
+      );
+      const interviewXml = await zip.file('ppt/slides/slide16.xml')?.async('string');
+      assert.ok(interviewXml);
+      const interviewWidths = [
+        ...interviewXml.matchAll(/<p:pic>[\s\S]*?<a:ext cx="(\d+)" cy="\d+"/gu),
+      ].map((match) => Number(match[1]));
+      assert.ok(
+        interviewWidths.some((width) => width >= 11 * 914400),
+        'the opening question uses the full-width capture frame',
       );
       for (let number = 1; number <= 25; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');

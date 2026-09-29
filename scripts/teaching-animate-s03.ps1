@@ -201,10 +201,38 @@ try {
       $check.Close()
       $check = $null
 
+      $publishedPath = $outputPath
       if (Test-Path -LiteralPath $outputPath) {
-        # La copie précédente reste disponible si le remplacement échoue.
-        [IO.File]::Replace($temporaryPath, $outputPath, $backupPath, $true)
-        Remove-Item -LiteralPath $backupPath -Force
+        # Le PPTX provisoire a deja passe la verification des animations.
+        # PowerPoint ou un apercu Windows peut garder l'ancienne copie ouverte.
+        $replaced = $false
+        for ($attempt = 1; $attempt -le 4; $attempt++) {
+          try {
+            [IO.File]::Replace($temporaryPath, $outputPath, $backupPath, $true)
+            $replaced = $true
+            break
+          }
+          catch {
+            $cause = $_.Exception
+            while ($null -ne $cause -and $cause -isnot [IO.IOException]) {
+              $cause = $cause.InnerException
+            }
+            if ($null -eq $cause) { throw }
+            if ($attempt -lt 4) { Start-Sleep -Milliseconds 500 }
+          }
+        }
+        if ($replaced) {
+          try { Remove-Item -LiteralPath $backupPath -Force }
+          catch { Write-Warning "Ancienne copie a nettoyer plus tard : $backupPath" }
+        } else {
+          # Ne jamais ecraser ni supprimer la copie ouverte. Le nouveau support
+          # verifie reste accessible sous un nom distinct pour la revue.
+          $publishedPath = Join-Path (Split-Path -Parent $outputPath) (
+            "session-animated-review-" + [guid]::NewGuid().ToString('N') + '.pptx'
+          )
+          Move-Item -LiteralPath $temporaryPath -Destination $publishedPath
+          Write-Warning "Copie canonique verrouillee : $outputPath. Nouvelle copie verifiee : $publishedPath"
+        }
       } else {
         Move-Item -LiteralPath $temporaryPath -Destination $outputPath
       }
@@ -215,7 +243,9 @@ try {
         $clicks += $count
         $effects += $(if ($entry.kind -eq 'rows') { 3 * $count } elseif ($entry.kind -eq 'cover') { 2 } else { 1 })
       }
-      Write-Output "PASS $Language diapositives_animees=25 clics=$clicks effets=$effects sortie=$outputPath"
+      $status = if ($publishedPath -eq $outputPath) { 'PASS' } else { 'REVUE' }
+      Write-Output "$status $Language diapositives_animees=25 clics=$clicks effets=$effects sortie=$publishedPath"
+      Write-Output "ANIMATION_OUTPUT_FILE=$([IO.Path]::GetFileName($publishedPath))"
   }
   finally {
     if ($null -ne $check) { $check.Close() }

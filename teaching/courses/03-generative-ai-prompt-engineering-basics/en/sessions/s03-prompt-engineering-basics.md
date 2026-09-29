@@ -313,7 +313,7 @@ Role-play these questions with a volunteer. An answer of “I do not know” rem
 
 **Key takeaway:** An interview separates confirmed answers from missing information.
 
-Ask “Which field is missing?” and simulate an “I do not know” reply. The notice should then stay general or await verification instead of naming a specific missing field. An interview collects context; it does not make a model inherently reliable.
+The capture shows the request and ChatGPT’s first question, not an answer. Reply “I do not know” aloud, then separate confirmed facts from the unknown field. The notice should stay general or await verification instead of naming a specific missing field. An interview collects context; it does not make a model inherently reliable.
 
 ## Slide 17 — Split the observable checks
 

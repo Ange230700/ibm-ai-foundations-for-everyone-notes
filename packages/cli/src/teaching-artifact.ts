@@ -31,6 +31,7 @@ import {
   createS02AnimationPlan,
   createS03AnimationPlan,
 } from './teaching-animation-plan.js';
+import { animatedOutputFile } from './teaching-animation-output.js';
 
 type Format = 'pdf' | 'pptx';
 type Language = 'en' | 'fr';
@@ -120,11 +121,12 @@ async function animateWithPowerPoint(
   sessionId: 's01' | 's02' | 's03',
   language: Language,
   planPath: string,
-): Promise<void> {
+): Promise<string> {
   if (process.platform !== 'win32') {
     throw new Error('Native teaching animations require desktop PowerPoint on Windows.');
   }
-  await new Promise<void>((resolvePromise, rejectPromise) => {
+  return new Promise<string>((resolvePromise, rejectPromise) => {
+    let stdout = '';
     const child = spawn(
       'powershell.exe',
       [
@@ -140,15 +142,25 @@ async function animateWithPowerPoint(
         '-Language',
         language,
       ],
-      { cwd: root, stdio: 'inherit' },
+      { cwd: root, stdio: ['inherit', 'pipe', 'inherit'] },
     );
+    child.stdout?.on('data', (chunk: Buffer) => {
+      stdout += chunk.toString('utf8');
+      process.stdout.write(chunk);
+    });
     child.once('error', rejectPromise);
     child.once('close', (code) => {
-      if (code === 0) resolvePromise();
-      else
+      if (code === 0) {
+        try {
+          resolvePromise(animatedOutputFile(stdout, sessionId === 's03'));
+        } catch (error) {
+          rejectPromise(error);
+        }
+      } else {
         rejectPromise(
           new Error(`PowerPoint animation failed for ${sessionId}/${language}: ${code}.`),
         );
+      }
     });
   });
 }
@@ -215,8 +227,8 @@ async function main(): Promise<void> {
         const counts = animationCounts(plan);
         const planPath = resolve(outputRoot, 'animation-plan.json');
         await atomicWrite(planPath, canonicalJson(plan));
-        await animateWithPowerPoint(root, session.id, language, planPath);
-        const animatedPath = resolve(outputRoot, 'session-animated.pptx');
+        const animatedFile = await animateWithPowerPoint(root, session.id, language, planPath);
+        const animatedPath = resolve(outputRoot, animatedFile);
         const animated = await verifyNativePptx(spec, root, animatedPath);
         await atomicWrite(
           resolve(outputRoot, 'pptx-animation.json'),
@@ -228,6 +240,7 @@ async function main(): Promise<void> {
             deckSpecSha256: source.deckSpecSha256,
             inputPptxSha256: source.pptxSha256,
             outputPptxSha256: animated.pptxSha256,
+            outputFile: animatedFile,
             animationPlanSha256: sha256(canonicalJson(plan)),
             animatedSlideIds: plan.slides.map(
               (slide) => `${session.id.toUpperCase()}-${String(slide.number).padStart(2, '0')}`,
@@ -237,7 +250,7 @@ async function main(): Promise<void> {
           }),
         );
         console.log(
-          `ANIMATED ${session.id}/${language}/pptx slides=${counts.animatedSlides} clicks=${counts.clicks} effects=${counts.effects}`,
+          `ANIMATED ${session.id}/${language}/pptx slides=${counts.animatedSlides} clicks=${counts.clicks} effects=${counts.effects} file=${animatedFile}`,
         );
         continue;
       }

@@ -36,11 +36,13 @@ séance. Le manifeste déclare S02 et la chaîne génère désormais des PDF et 
 `pnpm teaching:artifact build --session=s02`, puis
 `pnpm teaching:artifact verify --session=s02`. Les affiches, captures et schémas évoqués dans
 les notes sont intégrés aux supports. Les PPTX comprennent quatre schémas par langue. Chaque langue
-comporte quatre écrans simulés et un véritable échange avec ChatGPT sur le cas fictif en S02-11.
+comporte trois écrans simulés, une capture du guide HTML local en S02-20 et un véritable échange
+avec ChatGPT sur le cas fictif en S02-11.
 Les simulations sont générées depuis `teaching/visuals/s02/` avec
 `node --import tsx scripts/generate-s02-visuals.mjs` avant la construction des PPTX. Les
 simulations sont des exemples fictifs créés pour la séance. Les captures originales se trouvent à
-`teaching/visuals/s02/<langue>/chat-capture.png` et ne sont pas réécrites par ce générateur.
+`teaching/visuals/s02/<langue>/chat-capture.png` et `guide-capture.png` et ne sont pas réécrites par
+ce générateur. Le guide photographié reste un prototype local, non déployé.
 La réponse de S02-11 reste un brouillon à vérifier ; le contre-exemple volontairement erroné de
 S02-12 n’est pas issu de cet échange.
 Sur Windows avec PowerPoint, `pnpm teaching:artifact animate --session=s02` crée une copie

@@ -313,7 +313,7 @@ Mettre les trois questions en scène avec un participant volontaire. Si une rép
 
 **Message à faire retenir :** L’entretien sépare les réponses confirmées des informations absentes.
 
-Simuler la question « Quel champ manque ? » puis répondre « je ne sais pas ». Dire que la rédaction doit alors rester générale ou attendre une vérification, sans inventer le champ manquant. L’entretien améliore la collecte de contexte, pas la fiabilité intrinsèque du modèle.
+La capture montre la consigne et la première question de ChatGPT, pas une réponse. À l’oral, répondre « je ne sais pas », puis distinguer les faits confirmés du champ inconnu. Dire que la rédaction doit alors rester générale ou attendre une vérification, sans inventer le champ manquant. L’entretien améliore la collecte de contexte, pas la fiabilité intrinsèque du modèle.
 
 ## Diapositive 17 — Décomposer les contrôles observables
 
