@@ -229,7 +229,7 @@ Lire lentement les trois lignes de la consigne fictive. Faire constater l’abse
 
 **Message à faire retenir :** Le contexte et la source orientent la première version sans garantir sa justesse.
 
-Montrer une capture clairement marquée « simulation pédagogique ». Faire repérer la tâche, le public et la source. Les techniques de formulation avancées viendront en S03 ; ne saisir aucune donnée réelle.
+Montrer la capture d’un véritable échange avec ChatGPT sur le scénario fictif. Faire repérer la tâche, le public et la source, puis contrôler que l’avis reprend les champs à relever et n’ajoute aucune règle de paiement, de certification, de qualité ou de seuil. La réponse est un brouillon à vérifier, pas un avis approuvé. Les techniques de formulation avancées viendront en S03 ; ne saisir aucune donnée réelle.
 
 ## Diapositive 12 — Une phrase plausible peut être fausse
 
@@ -246,7 +246,7 @@ Montrer une capture clairement marquée « simulation pédagogique ». Faire rep
 
 **Message à faire retenir :** La fluidité d’un texte ne prouve pas qu’il respecte la source.
 
-Laisser quelques secondes de lecture silencieuse. Demander : « Où la consigne donne-t-elle le délai de 24 heures ? » La phrase a été inventée pour l’exercice ; elle ne provient pas d’une exécution du cours IBM.
+Laisser quelques secondes de lecture silencieuse. Demander : « Où la consigne donne-t-elle le délai de 24 heures ? » La phrase a été inventée pour l’exercice ; elle ne provient ni de la capture ChatGPT montrée en S02-11 ni d’une exécution du cours IBM.
 
 ## Diapositive 13 — Trois vérifications avant usage
 

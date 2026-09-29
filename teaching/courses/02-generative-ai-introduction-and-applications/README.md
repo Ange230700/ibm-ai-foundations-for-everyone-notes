@@ -35,10 +35,14 @@ pédagogique bilingue sert de brouillon pour examiner la sélection des notions 
 séance. Le manifeste déclare S02 et la chaîne génère désormais des PDF et PPTX de travail :
 `pnpm teaching:artifact build --session=s02`, puis
 `pnpm teaching:artifact verify --session=s02`. Les affiches, captures et schémas évoqués dans
-les notes sont intégrés aux supports. Les PPTX comprennent quatre schémas et cinq captures
-simulées par langue, générés depuis `teaching/visuals/s02/` avec
+les notes sont intégrés aux supports. Les PPTX comprennent quatre schémas par langue. L’anglais
+comporte cinq écrans simulés ; le français comporte quatre écrans simulés et un véritable échange
+avec ChatGPT sur le cas fictif en S02-11. Les simulations sont générées depuis `teaching/visuals/s02/` avec
 `node --import tsx scripts/generate-s02-visuals.mjs` avant la construction des PPTX. Les
-captures sont des exemples fictifs créés pour la séance, sans sortie réelle d’un outil d’IA.
+simulations sont des exemples fictifs créés pour la séance. La capture originale en français se
+trouve à `teaching/visuals/s02/fr/chat-capture.png` et n’est pas réécrite par ce générateur.
+La réponse de S02-11 reste un brouillon à vérifier ; le contre-exemple volontairement erroné de
+S02-12 n’est pas issu de cet échange.
 Sur Windows avec PowerPoint, `pnpm teaching:artifact animate --session=s02` crée une copie
 `session-animated.pptx` dans chaque langue. Elle anime les 26 diapositives avec 53 clics et 158
 effets sur les textes par langue. Les schémas et captures restent visibles dès l’arrivée sur la

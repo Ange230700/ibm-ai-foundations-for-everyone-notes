@@ -84,14 +84,17 @@ For S02, run `pnpm teaching:artifact plan --session=s02`, then
 `pnpm teaching:artifact verify --session=s02`. The four draft outputs live under
 `.artifacts/teaching-sessions/s02/<language>/`; `visual-qa --session=s02 --format=pdf`
 provides contact sheets. S02 has 26 slides per language and the same rich presenter-note
-formatting as S01. Its PPTX includes four Mermaid diagrams and five clearly labelled teaching
-simulations per language: the prompt, a wrong response, its revision, a poster, and a local HTML
-guide. The editable sources are in `teaching/visuals/s02/`. Regenerate SVG and PNG assets with
-`node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX. These screens
-were authored for teaching and are not captured responses from an AI service. On Windows with
+formatting as S01. Its PPTX includes four Mermaid diagrams in each language. English has five
+labelled teaching simulations: the prompt, a wrong response, its revision, a poster, and a local
+HTML guide. French replaces the S02-11 prompt simulation with a real ChatGPT exchange about a
+fictional cooperative. Its original capture is `teaching/visuals/s02/fr/chat-capture.png`; the
+wrong response on S02-12 remains a separate, deliberately invented teaching example. The editable
+simulation sources are in `teaching/visuals/s02/`. Regenerate SVG and simulated PNG assets with
+`node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX; the script does
+not overwrite the original capture. On Windows with
 desktop PowerPoint, run `pnpm teaching:artifact animate --session=s02` after building the PPTX to
 create `session-animated.pptx` for both languages. The plan covers all 26 slides, including 53
-clicks and 158 shape effects per language; diagrams and simulation screens are visible when the
+clicks and 158 shape effects per language; diagrams and images are visible when the
 slide opens, while text rows reveal one by one. The Course 02 French adaptations still need
 personal review, and the draft decks need visual inspection and a timed rehearsal before release.
 

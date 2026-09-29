@@ -349,6 +349,10 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       en: 'Fictional prompt for the staff notice',
       fr: 'Consigne fictive pour l’avis aux agents',
       name: 'prompt',
+      frCapture: {
+        name: 'chat-capture',
+        caption: 'Échange réel avec ChatGPT · consigne de coopérative fictive',
+      },
     },
     'S02-12': {
       kind: 'simulation',

@@ -151,7 +151,7 @@ function validateSlideIdentity(
     if (
       !['mermaid', 'simulation', 'capture'].includes(String(input.visual.kind)) ||
       typeof input.visual.path !== 'string' ||
-      !/^teaching\/visuals\/s01\/(en|fr)\/[a-z-]+\.(svg|png)$/u.test(input.visual.path) ||
+      !/^teaching\/visuals\/s0[1-3]\/(en|fr)\/[a-z-]+\.(svg|png)$/u.test(input.visual.path) ||
       typeof input.visual.caption !== 'string' ||
       !input.visual.caption.trim()
     ) {
