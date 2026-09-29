@@ -177,7 +177,7 @@ Faire relier les six repères aux quatre composantes vues sur S03-05. Demander o
 
 **Message à faire retenir :** Un prompt structuré fixe la tâche, le public, la source et les limites.
 
-Lire les trois lignes comme un seul prompt de démonstration, puis demander quelle partie limite les faits. Le prompt est une adaptation pédagogique nouvelle, pas une citation littérale du cours ni la garantie d’un texte fidèle. Avant usage, le brouillon devra encore être vérifié.
+Montrer la capture d’un véritable échange avec ChatGPT sur la consigne fictive S03-04. Lire les trois lignes comme un seul prompt de démonstration, puis demander quelle partie limite les faits. Vérifier dans la réponse les trois champs, le statut « à compléter » et le contrôle par un agent ; aucune autre règle ne doit apparaître. Le prompt est une adaptation pédagogique nouvelle, pas une citation littérale du cours ni la garantie d’un texte fidèle. Avant usage, le brouillon devra encore être vérifié.
 
 ## Diapositive 09 — Un avis destiné à être lu
 
@@ -365,7 +365,7 @@ Demander quel critère est éliminatoire si une option ajoute un délai non four
 
 **Message à faire retenir :** Toute affirmation doit pouvoir être rapprochée de la consigne fictive.
 
-Laisser une minute de lecture puis une minute d’échange en binôme. La seconde phrase invente certification et délai ; la première devrait préciser « identifiant du lot ». Faire proposer une correction orale avant de passer au prompt de révision. Ne pas attribuer ce contre-exemple à un service utilisé en direct.
+Laisser une minute de lecture puis une minute d’échange en binôme. La seconde phrase invente certification et délai ; la première devrait préciser « identifiant du lot ». Faire proposer une correction orale avant de passer au prompt de révision. Ce contre-exemple construit pour l’exercice ne provient ni de la capture ChatGPT montrée en S03-08 ni d’un service utilisé en direct.
 
 ## Diapositive 20 — Corriger l’écart précis
 

@@ -45,7 +45,8 @@ function Badge-Shapes($Shapes, $Body, [string] $ExpectedLabel, [string] $Context
   $left = [double] $Body.Left
   $top = [double] $Body.Top
   $candidates = @($Shapes | Where-Object {
-    [double]$_.Left -lt ($left - 8) -and
+    $gap = $left - ([double]$_.Left + [double]$_.Width)
+    $gap -ge 6 -and $gap -le 30 -and
     [Math]::Abs([double]$_.Top - $top) -le 12 -and
     [double]$_.Width -ge 26 -and [double]$_.Width -le 55
   })

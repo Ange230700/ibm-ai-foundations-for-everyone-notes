@@ -340,6 +340,26 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
         current.slides.map((slide) => slide.id),
       );
       const zip = await JSZip.loadAsync(await readFile(pptxPath));
+      if (language === 'fr') {
+        const capturePath = 'teaching/visuals/s03/fr/chat-capture.png';
+        const capture = spec.slides[7]?.visual;
+        assert.equal(capture?.kind, 'capture');
+        assert.equal(capture.path, capturePath);
+        assert.match(capture.caption, /Échange réel avec ChatGPT/u);
+        assert.equal(
+          artifact.visualAssets.find((asset) => asset.slideId === 'S03-08')?.sha256,
+          sha256(await readFile(resolve(repositoryRoot(), capturePath))),
+        );
+        const slideXml = await zip.file('ppt/slides/slide8.xml')?.async('string');
+        assert.ok(slideXml);
+        const imageWidths = [
+          ...slideXml.matchAll(/<p:pic>[\s\S]*?<a:ext cx="(\d+)" cy="\d+"/gu),
+        ].map((match) => Number(match[1]));
+        assert.ok(
+          imageWidths.some((width) => width >= 8 * 914400),
+          'S03 capture uses the wide slide layout',
+        );
+      }
       for (let number = 1; number <= 25; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
         assert.ok(xml?.includes(' b="1"'), `bold S03 ${language} slide ${number}`);
