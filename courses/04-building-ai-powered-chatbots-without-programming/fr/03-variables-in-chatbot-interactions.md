@@ -184,21 +184,49 @@ Sans ville :
 
 ## Application pratique
 
-### Choix du type de variable
+### Une coopérative cacaoyère près de Soubré : contexte de session entre plusieurs actions
 
-| Besoin                                                                      | Type de variable    |
-| --------------------------------------------------------------------------- | ------------------- |
-| Conserver une valeur uniquement pendant l’exécution d’une action            | Variable d’action   |
-| Réutiliser une valeur dans des actions ultérieures de la même session       | Variable de session |
-| Mémoriser la ville sélectionnée pour des questions ultérieures              | Variable de session |
-| Enregistrer une réponse Oui/Non nécessaire uniquement à la branche actuelle | Variable d’action   |
+Dans le cas pratique du dépôt, le même modèle de gestion de l’état peut relier les workflows de
+point de collecte et d’horaires de réception introduits dans le module précédent.
 
-### Modèle de gestion de l’état de session
+Le laboratoire IBM utilise la variable de session `City`. L’adaptation à la coopérative utilise le
+nom conceptuel `CollectionPoint` afin de rendre explicite le rôle équivalent. `CollectionPoint` est
+une variable du cas pratique du dépôt et non une variable enregistrée dans le laboratoire IBM.
 
-1. recueillir l’information une seule fois ;
-2. la stocker au niveau de la session lorsque des actions ultérieures en ont besoin ;
-3. protéger les écritures afin qu’une valeur valide ne soit pas remplacée par une valeur vide ;
-4. lire la même variable depuis les actions associées.
+Une conversation pourrait fonctionner ainsi :
+
+1. un membre ou un agent demande où un lot de cacao peut être livré ;
+2. l’assistant demande, si nécessaire, quel point de collecte pris en charge est concerné ;
+3. la valeur sélectionnée est stockée dans `CollectionPoint` pour la session en cours ;
+4. l’utilisateur demande ensuite : « Quand puis-je y livrer mon lot ? » ;
+5. l’action consacrée aux horaires de réception réutilise `CollectionPoint` ;
+6. l’assistant retourne uniquement les informations de réception fournies par une source approuvée
+   de la coopérative.
+
+Cela évite de demander deux fois le même contexte tout en maintenant l’interaction liée à des
+données opérationnelles explicites et vérifiables.
+
+### Modèle d’état de session avec CollectionPoint
+
+| Besoin                                                                          | Type de variable    |
+| ------------------------------------------------------------------------------- | ------------------- |
+| Conserver une valeur nécessaire uniquement pendant l’exécution d’une action     | Variable d’action   |
+| Réutiliser le point de collecte dans des actions ultérieures de la même session | Variable de session |
+| Enregistrer une confirmation temporaire propre à la branche actuelle            | Variable d’action   |
+| Préserver un contexte approuvé tel que le point de collecte courant             | Variable de session |
+
+Une implémentation défensive suit le même modèle que celui démontré avec la variable IBM `City` :
+
+1. recueillir le point de collecte uniquement lorsqu’il n’est pas déjà connu ;
+2. écrire `CollectionPoint` uniquement lorsqu’une nouvelle valeur valide a réellement été recueillie ;
+3. ne pas remplacer une valeur de session existante par une valeur vide ;
+4. permettre aux actions associées de lire la même variable de session ;
+5. réinitialiser le contexte de session lorsqu’une conversation indépendante commence.
+
+La variable préserve le contexte, mais ne confère aucune autorité. La connaissance du point de
+collecte sélectionné ne permet pas à l’assistant d’inférer une adresse, un horaire de réception, un
+statut de lot, un résultat de qualité, un statut de paiement ou tout autre fait qui n’aurait pas été
+fourni par une source approuvée.
 
 ## Travaux pratiques et activités
 
@@ -284,6 +312,12 @@ Les variables d’action et les variables de session répondent à deux problèm
 - Les **variables d’action** sont temporaires et propres à une tâche.
 - Les **variables de session** préservent le contexte à travers plusieurs interactions d’une même session.
 
-L’exemple `City` montre pourquoi la portée est importante : une valeur recueillie dans une action doit passer au niveau de la session avant de pouvoir être réutilisée par une autre action.
+L’exemple IBM `City` montre pourquoi la portée est importante : une valeur recueillie dans une
+action doit passer au niveau de la session avant de pouvoir être réutilisée par une autre action.
+Dans le fil conducteur de la coopérative cacaoyère du dépôt, le même principe est appliqué
+conceptuellement avec `CollectionPoint` entre les actions de point de collecte et d’horaires de
+réception.
 
-Le module montre également que la qualité conversationnelle ne dépend pas uniquement de la logique des tâches. Les salutations, les variations de réponse, les formules de départ, les tests et les formulations tenant compte du contexte améliorent tous l’expérience utilisateur.
+Le module montre également que la qualité conversationnelle ne dépend pas uniquement de la logique
+des tâches. Les salutations, les variations de réponse, les formules de départ, les tests et les
+formulations tenant compte du contexte améliorent tous l’expérience utilisateur.

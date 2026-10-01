@@ -202,21 +202,39 @@ The course also presents a hybrid model: routine interactions can follow a decis
 
 ## Practical Application
 
-### Flower-shop scenario
+### A cocoa cooperative near Soubré: A Cooperative Operations Assistant
 
-The course chatbot is designed around three major customer needs:
+The repository's continuing fictional case study applies the chatbot concepts to the same cocoa
+cooperative used in Courses 01–03. IBM's flower-shop example remains the source exercise; this
+cooperative scenario is a separate practical adaptation.
 
-1. **Location information** — for example, "Where is your nearest branch?"
-2. **Opening hours** — for example, "What time do you open tomorrow?"
-3. **Recommendations** — suggest flower arrangements based on the occasion and recipient-related criteria.
+A cooperative operations assistant could support structured, low-risk information tasks such as:
+
+1. **Collection-point information** — help a member or staff user identify the relevant collection
+   point from approved records.
+2. **Receiving information** — return recorded receiving hours or instructions when those facts are
+   available in the cooperative's approved data.
+3. **Record-completeness guidance** — explain which supplied intake or traceability field is missing
+   without inventing a value.
+4. **Traceability follow-up** — draft a concise request for a missing fact or summarize confirmed
+   information for staff review.
+5. **Escalation** — redirect unresolved or consequential cases to authorized cooperative staff.
+
+The assistant does not reject a cocoa lot, assign a quality grade, determine a producer payment,
+diagnose crop disease, or submit an official certificate. Those decisions remain with authorized
+people.
+
+No real collection-point locations, receiving hours, or operational rules are asserted by this
+scenario unless they are explicitly supplied as source data.
 
 ### Choosing a chatbot style
 
-A source-aligned rule of thumb is:
+A source-aligned rule of thumb applied to the cooperative is:
 
-- use a decision tree when the conversation must follow a known path;
-- use generative AI when users may ask open-ended questions;
-- combine both when important workflows need control but other interactions benefit from flexibility.
+- use a decision tree when the interaction must follow a known, verifiable procedure;
+- use generative AI for open-ended explanation or drafting when staff can verify the result;
+- combine both when controlled operational workflows need predictable branches but supporting
+  communication benefits from greater flexibility.
 
 ## Labs and Activities
 
@@ -253,4 +271,4 @@ The assessment material reinforces that:
 
 Chatbots are software applications that simulate conversation and can support customer interactions through text or voice. The course emphasizes operational efficiency, availability, scalability, proactive engagement, and multi-channel delivery.
 
-In watsonx Assistant, **actions** model tasks and **action workflows** connect steps, conditions, and branches. Decision-tree chatbots provide predictable, controlled flows, while generative AI chatbots provide dynamic, context-sensitive responses. The flower-shop project uses these concepts as the foundation for the hands-on modules that follow.
+In watsonx Assistant, **actions** model tasks and **action workflows** connect steps, conditions, and branches. Decision-tree chatbots provide predictable, controlled flows, while generative AI chatbots provide dynamic, context-sensitive responses. The IBM flower-shop project uses these concepts as the foundation for the hands-on modules that follow. In the repository's separate practical thread, the same concepts begin a Cooperative Operations Assistant for the fictional cocoa cooperative near Soubré.

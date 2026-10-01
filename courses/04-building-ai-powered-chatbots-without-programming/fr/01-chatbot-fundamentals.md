@@ -204,21 +204,43 @@ Le cours présente également un modèle hybride : les interactions routinières
 
 ## Application pratique
 
-### Scénario de la boutique de fleurs
+### Une coopérative cacaoyère près de Soubré : un assistant opérationnel de coopérative
 
-Le chatbot du cours est conçu autour de trois besoins principaux des clients :
+Le fil conducteur fictif du dépôt applique les concepts de chatbot à la même coopérative cacaoyère
+utilisée dans les cours 01 à 03. L'exemple de la boutique de fleurs d'IBM reste l'exercice source ;
+ce scénario de coopérative constitue une application pratique distincte.
 
-1. **Informations sur les emplacements** — par exemple, demander où se trouve une agence.
-2. **Heures d’ouverture** — par exemple, demander à quelle heure un magasin ouvre.
-3. **Recommandations** — suggérer des compositions florales selon l’occasion et des critères liés au destinataire.
+Un assistant opérationnel de coopérative pourrait prendre en charge des tâches d'information
+structurées et à faible risque, par exemple :
+
+1. **Informations sur les points de collecte** — aider un membre ou un agent à identifier le point
+   de collecte pertinent à partir de données approuvées.
+2. **Informations de réception** — retourner les horaires ou instructions de réception enregistrés
+   lorsque ces faits sont disponibles dans les données approuvées de la coopérative.
+3. **Aide à la complétude des dossiers** — expliquer quel champ fourni d'un dossier de réception ou
+   de traçabilité manque sans inventer de valeur.
+4. **Suivi de traçabilité** — rédiger une demande concise concernant un fait manquant ou résumer les
+   informations confirmées pour vérification par un agent.
+5. **Escalade** — transférer les cas non résolus ou à conséquence importante vers le personnel
+   autorisé de la coopérative.
+
+L'assistant ne rejette pas un lot de cacao, n'attribue pas de grade de qualité, ne détermine pas le
+paiement d'un producteur, ne diagnostique pas de maladie des cultures et ne soumet pas de certificat
+officiel. Ces décisions restent sous la responsabilité des personnes autorisées.
+
+Ce scénario n'affirme aucun emplacement réel de point de collecte, aucun horaire de réception ni
+aucune règle opérationnelle qui n'aurait pas été explicitement fournie comme donnée source.
 
 ### Choisir un style de chatbot
 
-Une règle pratique conforme aux supports est la suivante :
+Une règle pratique conforme aux supports, appliquée à la coopérative, est la suivante :
 
-- utiliser un arbre de décision lorsque la conversation doit suivre un parcours connu ;
-- utiliser l’IA générative lorsque les utilisateurs peuvent poser des questions ouvertes ;
-- combiner les deux lorsque des workflows importants exigent du contrôle mais que d’autres interactions bénéficient de davantage de flexibilité.
+- utiliser un arbre de décision lorsque l'interaction doit suivre une procédure connue et
+  vérifiable ;
+- utiliser l'IA générative pour une explication ou une rédaction ouverte lorsque le personnel peut
+  vérifier le résultat ;
+- combiner les deux lorsque des workflows opérationnels contrôlés exigent des branches prévisibles
+  mais que les communications d'accompagnement bénéficient de davantage de flexibilité.
 
 ## Travaux pratiques et activités
 
@@ -255,4 +277,4 @@ Les supports d’évaluation renforcent les points suivants :
 
 Les chatbots sont des applications logicielles qui simulent une conversation et peuvent prendre en charge les interactions clients par texte ou par voix. Le cours met l’accent sur l’efficacité opérationnelle, la disponibilité, l’évolutivité, l’engagement proactif et la diffusion multicanale.
 
-Dans watsonx Assistant, les **actions** représentent des tâches et les **workflows d’action** relient étapes, conditions et branches. Les chatbots à arbre de décision fournissent des parcours prévisibles et contrôlés, tandis que les chatbots d’IA générative fournissent des réponses dynamiques et sensibles au contexte. Le projet de boutique de fleurs utilise ces concepts comme fondation des modules pratiques suivants.
+Dans watsonx Assistant, les **actions** représentent des tâches et les **workflows d’action** relient étapes, conditions et branches. Les chatbots à arbre de décision fournissent des parcours prévisibles et contrôlés, tandis que les chatbots d’IA générative fournissent des réponses dynamiques et sensibles au contexte. Le projet IBM de boutique de fleurs utilise ces concepts comme fondation des modules pratiques suivants. Dans le fil pratique distinct du dépôt, ces mêmes concepts amorcent un assistant opérationnel pour la coopérative cacaoyère fictive près de Soubré.

@@ -11,7 +11,8 @@ The course progresses from chatbot fundamentals and action workflows through dec
 - **Source basis:** owner-supplied Coursera screenshots, subtitle transcripts, graded-assessment feedback, and course certificate.
 - **Product/UI note:** watsonx Assistant and WordPress details describe the recorded course environment and are not a current product survey.
 - **English edition:** canonical source notes synthesized from the supplied raw material.
-- **French edition:** remains a separate adaptation step.
+- **French edition:** canonical adaptation of the English notes, without external additions.
+- **Repository case-study thread:** IBM's recorded exercises retain the fictitious flower shop. The `Practical Application` sections continue the separate fictional cocoa cooperative near Soubré used across Courses 01–03. Those cooperative scenarios are repository adaptations, not claims about the IBM course material.
 
 ## Learning outcomes
 

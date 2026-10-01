@@ -152,23 +152,9 @@ Les tests permettent de vérifier :
 - que la réponse correspondante est retournée ;
 - que l’action se termine ou se poursuit comme prévu.
 
-## Application pratique
+### Heures d’ouverture enregistrées pour la boutique de fleurs
 
-### Recherche déterministe d’un magasin
-
-| Étape     | Rôle                                          |
-| --------- | --------------------------------------------- |
-| Trigger   | Reconnaître une demande d’emplacement         |
-| Étape 1   | Demander la ville lorsque cela est nécessaire |
-| Condition | Faire correspondre la ville sélectionnée      |
-| Ville     | Retourner les informations propres à la ville |
-| Fin       | Terminer l’action                             |
-
-La même structure peut être adaptée à n’importe quelle information propre à un magasin.
-
-### Heures d’ouverture enregistrées
-
-Le laboratoire fourni enregistre les horaires suivants :
+Le laboratoire IBM fourni enregistre les horaires suivants :
 
 | Ville     | Horaires                                                                                                               |
 | --------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -177,6 +163,60 @@ Le laboratoire fourni enregistre les horaires suivants :
 | Calgary   | Du lundi au samedi, 10:00–18:00 ; fermé le dimanche et les jours fériés officiels de l’Alberta                         |
 | Kelowna   | Du mardi au samedi, 10:00–17:45 ; fermé le dimanche, le lundi et les jours fériés officiels de la Colombie-Britannique |
 | Vancouver | Tous les jours, 10:00–17:00 ; fermé les jours fériés officiels de la Colombie-Britannique et le Boxing Day             |
+
+Ces valeurs appartiennent à l’exercice enregistré de la boutique de fleurs. Elles ne sont pas
+réutilisées comme faits concernant le cas de la coopérative cacaoyère du dépôt.
+
+## Application pratique
+
+### Une coopérative cacaoyère près de Soubré : recherche d’un point de collecte
+
+Le cas pratique du dépôt réutilise la structure d’arbre de décision pour la logistique de la
+coopérative sans modifier l’exercice IBM lui-même.
+
+Une recherche contrôlée de point de collecte pourrait suivre ce modèle :
+
+| Étape     | Rôle                                                                         |
+| --------- | ---------------------------------------------------------------------------- |
+| Trigger   | Reconnaître une demande sur le lieu où un lot de cacao peut être réceptionné |
+| Étape 1   | Demander, si nécessaire, quel point de collecte pris en charge est concerné  |
+| Condition | Faire correspondre le point de collecte sélectionné                          |
+| Point     | Retourner les informations approuvées d’emplacement ou de réception          |
+| Fin       | Terminer l’action                                                            |
+
+L’assistant ne devrait retourner que les points de collecte et les informations d’emplacement
+provenant d’une source approuvée de la coopérative. Le cas pratique n’invente aucun nom ni aucune
+adresse réelle de point de collecte.
+
+### Workflow des horaires de réception
+
+La même structure de branchement peut prendre en charge une action distincte consacrée aux horaires
+de réception :
+
+1. reconnaître que l’utilisateur demande quand un point de collecte reçoit les lots ;
+2. identifier le point de collecte concerné ;
+3. le faire correspondre à une branche conditionnelle ;
+4. retourner l’horaire de réception enregistré ;
+5. terminer l’action ou poursuivre vers une autre tâche prise en charge.
+
+Cela reprend le principe IBM consistant à dupliquer une action de structure similaire, mais la
+version de la coopérative utilise
+`point de collecte -> branche correspondante -> informations de réception approuvées`.
+
+Aucun horaire de réception n’est affirmé s’il n’a pas été explicitement fourni. Si le point ou
+l’horaire requis est absent, l’assistant devrait indiquer que l’information n’est pas disponible et
+transférer la question au personnel pour vérification plutôt que d’inventer une réponse.
+
+### Pourquoi ce workflow reste déterministe
+
+Les emplacements des points de collecte et les horaires de réception se prêtent bien à un arbre de
+décision lorsque la coopérative dispose d’un ensemble fini de valeurs approuvées. Les options
+prédéfinies réduisent l’ambiguïté et les branches conditionnelles maintiennent les informations
+opérationnelles retournées liées au point sélectionné.
+
+Le module suivant pourra alors conserver le point de collecte sélectionné entre plusieurs actions,
+afin qu’une question de suivi telle que « Quand puis-je y livrer mon lot ? » n’oblige pas
+l’utilisateur à le sélectionner de nouveau.
 
 ## Travaux pratiques et activités
 

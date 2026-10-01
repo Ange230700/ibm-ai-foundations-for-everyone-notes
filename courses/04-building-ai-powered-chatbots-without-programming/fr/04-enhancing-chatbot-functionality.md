@@ -254,27 +254,76 @@ L’éditeur visuel évite de devoir construire le code applicatif environnant, 
 
 ## Application pratique
 
-### Workflow de recommandation
+### Une coopérative cacaoyère près de Soubré : assistance structurée à la traçabilité
 
-Le résumé fourni dans le cours couvre les éléments suivants :
+Le cas pratique du dépôt applique les mêmes techniques de workflow à une assistance contrôlée en
+matière de traçabilité. Le workflow IBM de recommandation de fleurs reste l’exercice source
+enregistré ; les variables et catégories ci-dessous constituent des adaptations conceptuelles pour
+le fil conducteur de la coopérative.
 
-1. construire l’action ;
-2. créer un tableau de réponses ;
-3. utiliser des questions de suivi ;
-4. gérer les occasions particulières ;
-5. intégrer des images ;
-6. utiliser des expressions ;
-7. mettre à jour les réponses ;
-8. tester le workflow intégré.
+Un assistant de coopérative pourrait commencer par classer le type d’assistance demandé dans un
+`IssueType` approuvé. Les exemples déjà établis dans le cas pratique du dépôt comprennent :
+
+- un champ de réception manquant ;
+- un identifiant de lot illisible ;
+- une alerte d’identifiant dupliqué ;
+- une incohérence entre les dossiers de terrain et de réception ;
+- une incohérence de mouvement d’entrepôt ;
+- un autre cas nécessitant une vérification par le personnel.
+
+Le workflow pourrait ensuite utiliser trois valeurs conceptuelles :
+
+- `IssueType` — la catégorie sélectionnée de demande d’assistance à la traçabilité ;
+- `IssueResponses` — un dictionnaire qui associe une catégorie approuvée à une consigne contrôlée ;
+- `IssueOutput` — la consigne sélectionnée pour le problème courant.
+
+Conceptuellement, la recherche suit le même modèle que l’exercice IBM :
+
+```text
+$IssueResponses[$IssueType]
+```
+
+Cette expression est une adaptation propre au dépôt du modèle de dictionnaire enseigné dans le
+cours. Il ne s’agit ni d’une variable ni d’une expression enregistrée dans le laboratoire IBM.
+
+Une correspondance illustrative pourrait être :
+
+| Type de problème                    | Comportement contrôlé de l’assistant                                    |
+| ----------------------------------- | ----------------------------------------------------------------------- |
+| Champ de réception manquant         | Identifier le champ fourni comme manquant et demander sa vérification   |
+| Identifiant de lot illisible        | Demander une source plus lisible ou une vérification manuelle           |
+| Alerte d’identifiant dupliqué       | Séparer les dossiers en conflit et les transmettre pour rapprochement   |
+| Incohérence terrain/réception       | Résumer les faits confirmés, les conflits et les questions non résolues |
+| Incohérence de mouvement d’entrepôt | Présenter les dossiers fournis et demander une vérification             |
+| Autre / vérification nécessaire     | Escalader sans inventer de résolution                                   |
+
+L’assistant ne détermine pas quel dossier fait juridiquement autorité, ne rejette pas de lot,
+n’attribue pas de grade de qualité, n’approuve pas de paiement et n’émet pas de certificat. Ces
+décisions restent sous la responsabilité du personnel autorisé de la coopérative.
 
 ### Logique métier avant logique d’implémentation
 
-Le cours sépare deux questions :
+La même séparation mise en avant dans l’exercice IBM de recommandation devient :
 
-- **Que doit recommander l’entreprise ?**
-- **Comment le chatbot doit-il implémenter cette recommandation ?**
+- **Quelle consigne la coopérative est-elle autorisée à fournir pour chaque type de problème défini ?**
+- **Comment le chatbot doit-il sélectionner et présenter cette consigne ?**
 
-Cette séparation réduit le risque de mélanger les décisions métier avec les mécanismes du workflow.
+Une implémentation contrôlée pourrait :
+
+1. définir les catégories de problèmes et les textes de réponse approuvés avant de construire les
+   branches ;
+2. utiliser une recherche dans un dictionnaire pour les correspondances stables qui ne nécessitent
+   pas de clarification supplémentaire ;
+3. utiliser des branches explicites lorsqu’un problème exige une question de suivi ou une
+   escalade vers le personnel ;
+4. utiliser uniquement les dossiers sources fournis pour décrire le cas courant ;
+5. marquer comme inconnus les faits indisponibles au lieu de les générer ;
+6. maintenir les décisions à conséquence importante hors de l’assistant ;
+7. tester chaque parcours pris en charge ainsi que chaque parcours d’escalade.
+
+Cela préserve la leçon de conception centrale du cours : modéliser d’abord les règles métier, puis
+choisir la structure de workflow la plus simple permettant de les implémenter sans duplication
+inutile.
 
 ## Travaux pratiques et activités
 
@@ -372,3 +421,8 @@ Les techniques centrales consistent à :
 - réserver les branches explicites aux cas qui nécessitent une logique de suivi ;
 - intégrer des images afin d’enrichir les réponses ;
 - tester chaque parcours important.
+
+Dans le fil conducteur de la coopérative cacaoyère du dépôt, ces mêmes techniques peuvent structurer
+une assistance à la traçabilité tout en maintenant les décisions à conséquence importante sous la
+responsabilité du personnel autorisé. L’exercice source IBM reste le système de recommandation de
+fleurs documenté ci-dessus.

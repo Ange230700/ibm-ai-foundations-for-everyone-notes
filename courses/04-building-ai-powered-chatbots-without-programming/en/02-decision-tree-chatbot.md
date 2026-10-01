@@ -150,23 +150,9 @@ Testing verifies:
 - the matching response is returned;
 - the action ends or continues as intended.
 
-## Practical Application
+### Recorded flower-shop opening hours
 
-### Deterministic store lookup
-
-| Stage     | Purpose                              |
-| --------- | ------------------------------------ |
-| Trigger   | Recognize a location request         |
-| Step 1    | Ask for the city when needed         |
-| Condition | Match the selected city              |
-| City step | Return location-specific information |
-| End       | Complete the action                  |
-
-The same structure can be adapted for any store-specific attribute.
-
-### Recorded opening hours
-
-The supplied lab records the following hours:
+The supplied IBM lab records the following hours:
 
 | City      | Hours                                                                                           |
 | --------- | ----------------------------------------------------------------------------------------------- |
@@ -175,6 +161,55 @@ The supplied lab records the following hours:
 | Calgary   | Monday–Saturday, 10:00–18:00; closed Sundays and Alberta statutory holidays                     |
 | Kelowna   | Tuesday–Saturday, 10:00–17:45; closed Sundays, Mondays, and British Columbia statutory holidays |
 | Vancouver | Every day, 10:00–17:00; closed on British Columbia statutory holidays and Boxing Day            |
+
+These values belong to the recorded flower-shop exercise. They are not reused as facts about the
+repository's cocoa-cooperative case study.
+
+## Practical Application
+
+### A cocoa cooperative near Soubré: Collection-Point Lookup
+
+The repository case study reuses the decision-tree structure for cooperative logistics rather than
+changing the IBM lab itself.
+
+A controlled collection-point lookup could follow this pattern:
+
+| Stage      | Purpose                                                          |
+| ---------- | ---------------------------------------------------------------- |
+| Trigger    | Recognize a request about where a cocoa lot can be received      |
+| Step 1     | Ask which supported collection point the user means when needed  |
+| Condition  | Match the selected collection point                              |
+| Point step | Return approved location or receiving information for that point |
+| End        | Complete the action                                              |
+
+The assistant should only return collection points and location details supplied by an approved
+cooperative data source. The case study does not invent real collection-point names or addresses.
+
+### Receiving-hours workflow
+
+The same branching structure can support a separate receiving-hours action:
+
+1. recognize that the user is asking when a collection point receives lots;
+2. identify the relevant collection point;
+3. match it to a conditional branch;
+4. return the recorded receiving schedule;
+5. end the action or continue to another supported task.
+
+This mirrors the IBM pattern of duplicating a structurally similar action, but the cooperative
+version uses `collection point -> matching branch -> approved receiving information`.
+
+No receiving schedule is asserted unless one has been explicitly supplied. If the required point or
+schedule is absent, the assistant should report that the information is unavailable and route the
+question for staff review rather than inventing an answer.
+
+### Why this remains deterministic
+
+Collection-point locations and receiving schedules are good candidates for decision-tree behavior
+when the cooperative has a finite approved set of values. Predefined options reduce ambiguity,
+while conditional branches keep the returned operational information tied to the selected point.
+
+The next module can then preserve the selected collection point across actions so that a follow-up
+such as "When can I deliver there?" does not require the user to select it again.
 
 ## Labs and Activities
 

@@ -124,33 +124,104 @@ La distinction attendue est que l’approche fondée sur les actions utilise l�
 
 ## Application pratique
 
-### Modèle mental de bout en bout
+### Une coopérative cacaoyère près de Soubré : le fil conducteur de la spécialisation
 
-Une manière conforme aux sources de raisonner sur le chatbot terminé consiste à :
+La coopérative cacaoyère fictive du dépôt constitue désormais un cas pratique continu à travers les
+quatre cours. Le projet IBM de boutique de fleurs reste l’exercice enregistré du cours 04 ; cette
+section relie les adaptations du dépôt dans un même récit système au niveau de la spécialisation.
 
-1. reconnaître l’intention de l’utilisateur ;
-2. déclencher l’action pertinente ;
-3. recueillir uniquement les informations manquantes ;
-4. stocker localement les données propres à la tâche ;
-5. stocker au niveau de la session le contexte réutilisable pendant cette même session ;
-6. évaluer les conditions ;
-7. produire une réponse directe ou sélectionnée dynamiquement ;
-8. terminer ou poursuivre l’action ;
-9. ne publier que du contenu testé ;
-10. tester le déploiement Live.
+| Cours                                                 | Progression du cas pratique de la coopérative                                                                                                                          |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01 — Introduction to Artificial Intelligence          | Établir les concepts d’IA, l’intelligence augmentée, l’assistance à la traçabilité, les risques opérationnels, l’usage responsable et l’autorité décisionnelle humaine |
+| 02 — Generative AI: Introduction and Applications     | Appliquer la génération de texte, d’image, d’audio et de code à des communications, formations et productions d’assistance opérationnelle contrôlées                   |
+| 03 — Generative AI: Prompt Engineering Basics         | Ajouter des faits explicites, des contraintes, la gestion des informations manquantes, des prompts structurés, la décomposition et la vérification                     |
+| 04 — Building AI Powered Chatbots Without Programming | Transformer ces principes en actions conversationnelles, contexte de session, assistance structurée à la traçabilité, escalade et déploiement contrôlé                 |
 
-### Enseignements orientés production visibles dans le cours
+Le cas évolue ainsi de la **compréhension de l’IA** vers **l’utilisation de l’IA générative**, puis
+vers **le contrôle des interactions avec le modèle**, avant d’aboutir à **l’organisation de ces
+capacités dans une application conversationnelle**.
 
-Même si le cours est sans code, plusieurs principes de conception logicielle apparaissent tout au long du parcours :
+### Assistant opérationnel intégré de la coopérative
 
+À la fin du fil conducteur du dépôt, l’assistant opérationnel conceptuel de la coopérative regroupe
+les capacités suivantes :
+
+- répondre aux questions approuvées sur les points de collecte ;
+- retourner les informations de réception approuvées ;
+- conserver le point de collecte sélectionné pendant la même session au moyen de `CollectionPoint` ;
+- identifier une catégorie fournie de demande d’assistance à la traçabilité ;
+- sélectionner des consignes contrôlées à l’aide de correspondances telles que `IssueType`,
+  `IssueResponses` et `IssueOutput` ;
+- demander les informations manquantes lorsqu’un workflow pris en charge exige une clarification ;
+- résumer les faits confirmés sans combler silencieusement les lacunes ;
+- rédiger des communications de suivi à faible risque pour vérification par le personnel ;
+- escalader les situations non prises en charge, sensibles ou à conséquence importante vers les
+  personnes autorisées ;
+- faire passer une logique conversationnelle testée d’un environnement Draft vers Live.
+
+Ces noms et workflows sont des adaptations propres au dépôt. Ils ne remplacent ni ne réécrivent le
+laboratoire IBM de la boutique de fleurs.
+
+### Modèle mental de bout en bout pour la coopérative
+
+Une interaction contrôlée peut être raisonnée de la manière suivante :
+
+1. identifier la demande prise en charge de l’utilisateur ;
+2. déterminer si la tâche doit suivre un workflow déterministe ou nécessite une assistance
+   générative encadrée ;
+3. recueillir uniquement les informations requises et explicitement disponibles ;
+4. conserver le contexte de la même session uniquement lorsqu’une autre action en a besoin ;
+5. utiliser des correspondances ou conditions approuvées pour les consignes opérationnelles connues ;
+6. conserver comme inconnus les faits indisponibles ;
+7. générer un texte explicatif ou de suivi uniquement dans les limites des contraintes fournies ;
+8. transmettre les cas non résolus ou à conséquence importante au personnel autorisé ;
+9. publier uniquement une logique conversationnelle vérifiée et testée ;
+10. vérifier le comportement déployé à l’aide de cas de test connus.
+
+### Limites maintenues à travers les quatre cours
+
+Le cas pratique conserve la même limite de supervision humaine établie dans le cours 01.
+
+L’assistant n’effectue aucune des actions suivantes :
+
+- rejeter ou accepter un lot de cacao ;
+- attribuer un grade officiel de qualité ;
+- déterminer ou approuver le paiement d’un producteur ;
+- diagnostiquer une maladie des cultures ;
+- décider quel dossier en conflit fait juridiquement autorité ;
+- inventer des faits de traçabilité manquants ;
+- émettre ou soumettre un certificat officiel.
+
+Ces actions restent sous la responsabilité de personnes autorisées et des processus approuvés de la
+coopérative.
+
+Le cas conserve également les contraintes antérieures liées à la confidentialité et aux opérations.
+Les identités des membres, les emplacements des exploitations, les détails de paiement, les données
+de qualité, les informations d’inspection non publiées, les identifiants et les autres données
+sensibles nécessitent un traitement approprié. Le choix d’un canal de déploiement ne supprime pas
+ces exigences.
+
+### Enseignements orientés production visibles dans l’ensemble du fil conducteur
+
+Le cas pratique réparti sur les quatre cours renforce plusieurs principes de conception récurrents :
+
+- séparer les éléments de preuve des productions générées ;
+- recueillir uniquement les informations nécessaires à une tâche définie ;
+- préserver les inconnues plutôt que fabriquer des valeurs ;
+- utiliser des parcours déterministes lorsqu’un comportement opérationnel prévisible est important ;
+- utiliser les capacités génératives uniquement lorsque leur flexibilité apporte une valeur et que
+  les résultats peuvent être vérifiés ;
+- préserver le contexte pertinent sans considérer un état mémorisé comme une nouvelle preuve ;
+- modéliser les règles métier avant les détails d’implémentation ;
+- maintenir les décisions à conséquence importante sous la responsabilité de personnes identifiées ;
+- tester les parcours normaux, avec données manquantes, non pris en charge et d’escalade ;
 - séparer le travail Draft des versions Live ;
-- réutiliser les structures communes ;
-- éviter d’écraser un état valide ;
-- modéliser la logique métier avant d’implémenter les branches ;
-- réduire la duplication à l’aide de correspondances et d’expressions ;
-- tester plusieurs parcours ;
-- ne pas conserver de secrets dans des notes partagées ;
-- vérifier l’expérience Live après le déploiement.
+- protéger les informations sensibles et les identifiants ;
+- vérifier le comportement déployé par rapport aux procédures approuvées et aux dossiers sources.
+
+Le résultat ne constitue pas l’affirmation qu’un système de production pour une coopérative a été
+implémenté. Il s’agit d’un cas pratique cohérent du dépôt montrant comment les concepts de la
+spécialisation peuvent s’accumuler pour former la conception d’un même système contrôlé.
 
 ## Travaux pratiques et activités
 
@@ -351,4 +422,11 @@ Un chatbot utile combine :
 - une discipline de publication ;
 - une intégration aux différents canaux.
 
-Le projet de boutique de fleurs évolue d’un assistant structuré simple vers un chatbot de recommandation tenant compte de la session et déployé sur un site web Live. Le résultat fourni de l’évaluation finale et le certificat établissent la réussite du cours.
+Le projet IBM de boutique de fleurs évolue d’un assistant structuré simple vers un chatbot de
+recommandation tenant compte de la session et déployé sur un site web Live. Le résultat fourni de
+l’évaluation finale et le certificat établissent la réussite du cours.
+
+Séparément, le fil conducteur de la coopérative cacaoyère du dépôt reste désormais continu du cours
+01 au cours 04 : les fondements de l’IA et l’usage responsable conduisent aux capacités génératives,
+aux contrôles par prompt, aux workflows conversationnels, à l’état de session, à l’assistance
+structurée à la traçabilité, à l’escalade humaine et au déploiement contrôlé.

@@ -205,22 +205,84 @@ The Voice Calling page references Twilio for browser-based calling.
 
 ## Practical Application
 
-### Deployment safety
+### A cocoa cooperative near Soubré: Controlled Assistant Deployment
 
-The Draft/Live separation solves an operational problem: work-in-progress changes should not automatically reach end users.
+The repository case study applies the deployment principles to the Cooperative Operations Assistant
+developed across the previous modules. IBM's recorded WordPress deployment remains the source
+exercise; the cooperative deployment below is a conceptual repository adaptation.
 
-A source-aligned release flow is:
+The assistant now combines several controlled capabilities:
 
-1. build and test in Draft;
-2. inspect unpublished content;
-3. publish a version;
-4. verify it in Live;
-5. connect the live environment to a channel;
-6. test the deployed experience.
+- collection-point lookup from approved data;
+- receiving-hours lookup from approved data;
+- same-session context through `CollectionPoint`;
+- structured traceability-support guidance;
+- follow-up questions where clarification is required;
+- escalation when a supported workflow cannot resolve the request safely.
 
-### Version and backup discipline
+For the cooperative, the Draft/Live separation becomes an operational control. A change to
+collection-point guidance, traceability-support text, branching logic, or escalation behavior should
+not reach users merely because it was edited.
 
-The **Initial release.** version message and downloaded backup demonstrate basic release discipline in a no-code workflow.
+A controlled release flow could be:
+
+1. build or modify the assistant in Draft;
+2. test each supported workflow with known inputs;
+3. test missing-data, unsupported, and escalation paths;
+4. review operational wording against approved cooperative procedures and source records;
+5. publish a named version only after review;
+6. verify the published behavior in Live;
+7. connect Live to the intended approved channel;
+8. run an end-to-end deployment test before broader use.
+
+### Staff-facing deployment boundary
+
+A staff-facing web experience is a natural conceptual deployment for this case study because the
+assistant handles operational and traceability-related context.
+
+The deployment boundary should distinguish between information that may be exposed through the
+selected channel and information that requires restricted access. Member identities, payment
+details, quality results, unpublished inspection information, credentials, and other sensitive
+records should not be exposed merely because a Web chat integration is technically available.
+
+A public-facing channel could still provide approved low-risk information, but access to internal
+records or consequential workflows would require appropriate authentication, authorization, and
+human review. This case study does not assert that such controls have been implemented.
+
+### Version, backup, and rollback discipline
+
+The IBM lab's **Initial release.** message and downloaded backup demonstrate basic release
+discipline. Applied to the cooperative, each release should make it possible to identify what
+operational logic changed and which version is currently serving users.
+
+A practical release record could capture:
+
+- version identifier;
+- approved change summary;
+- reviewer;
+- deployment date;
+- workflows tested;
+- known limitations;
+- rollback or backup reference.
+
+These fields describe a useful repository design pattern, not an IBM lab requirement.
+
+### Deployment test scenario
+
+A cooperative deployment test could verify a complete low-risk conversation such as:
+
+1. ask for supported collection-point information;
+2. select a collection point supplied in the test data;
+3. ask for its recorded receiving hours;
+4. confirm that `CollectionPoint` is reused within the session;
+5. present a supplied traceability issue such as a missing intake field;
+6. verify that the assistant returns only the approved guidance;
+7. present an unsupported or consequential case;
+8. verify that the assistant escalates rather than inventing a resolution.
+
+The expected result is not that the assistant makes an operational decision. The test verifies that
+the deployed version preserves approved information, session continuity, workflow boundaries, and
+human escalation.
 
 ## Labs and Activities
 
@@ -295,4 +357,11 @@ Deployment turns the chatbot from an internal exercise into a user-facing servic
 
 The recorded watsonx Assistant workflow separates Draft from Live, publishes versioned content, exposes Web chat and embed options, and supports additional channels and extensions.
 
-The WordPress lab then demonstrates a complete integration path: connect the Live environment with service credentials, customize the chat interface, and test a realistic multi-step conversation end to end.
+The WordPress lab then demonstrates a complete integration path: connect the Live environment
+with service credentials, customize the chat interface, and test a realistic multi-step conversation
+end to end.
+
+In the repository's cocoa-cooperative thread, those deployment principles become a controlled
+release path for the Cooperative Operations Assistant. The adaptation emphasizes approved data,
+channel boundaries, sensitive-information handling, version discipline, deployment testing, and
+human escalation while preserving IBM's recorded WordPress workflow as the source exercise.

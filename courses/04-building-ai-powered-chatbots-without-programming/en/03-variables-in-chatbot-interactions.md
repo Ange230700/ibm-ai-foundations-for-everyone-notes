@@ -182,21 +182,47 @@ Without a city:
 
 ## Practical Application
 
-### Variable selection
+### A cocoa cooperative near Soubré: Session Context Across Actions
 
-| Need                                                        | Variable type    |
-| ----------------------------------------------------------- | ---------------- |
-| Hold a value only while completing one action               | Action variable  |
-| Reuse a value in later actions during the same session      | Session variable |
-| Remember the selected store city for later questions        | Session variable |
-| Capture a Yes/No response needed only by the current branch | Action variable  |
+In the repository case study, the same state-management pattern can connect the collection-point and
+receiving-hours workflows introduced in the previous module.
 
-### Session-state pattern
+The IBM lab uses the session variable `City`. The cooperative adaptation uses the conceptual name
+`CollectionPoint` to make the equivalent role explicit. `CollectionPoint` is a repository
+case-study variable, not a variable recorded in the IBM lab.
 
-1. collect information once;
-2. store it at session scope when later actions need it;
-3. guard writes so a valid value is not replaced with an empty one;
-4. read the same variable from related actions.
+A conversation could work like this:
+
+1. a member or staff user asks where a cocoa lot can be delivered;
+2. the assistant asks for a supported collection point when necessary;
+3. the selected value is stored in `CollectionPoint` for the current session;
+4. the user then asks, "When can I deliver there?";
+5. the receiving-hours action reuses `CollectionPoint`;
+6. the assistant returns only receiving information supplied by an approved cooperative source.
+
+This avoids asking for the same context twice while keeping the interaction tied to explicit,
+reviewable operational data.
+
+### CollectionPoint session-state pattern
+
+| Need                                                                     | Variable type    |
+| ------------------------------------------------------------------------ | ---------------- |
+| Hold a value needed only while completing one action                     | Action variable  |
+| Reuse the selected collection point in later actions in the same session | Session variable |
+| Capture a temporary confirmation needed only by the current branch       | Action variable  |
+| Preserve approved context such as the current collection point           | Session variable |
+
+A defensive implementation follows the same pattern demonstrated by the IBM `City` variable:
+
+1. collect the collection point only when it is not already known;
+2. write `CollectionPoint` only when a new valid value was actually collected;
+3. do not overwrite an existing session value with an empty value;
+4. let related actions read the same session variable;
+5. reset session-scoped context when an independent conversation begins.
+
+The variable preserves context, not authority. Knowing the selected collection point does not allow
+the assistant to infer an address, receiving schedule, lot status, quality result, payment status,
+or any other fact that was not supplied by an approved source.
 
 ## Labs and Activities
 
@@ -282,6 +308,10 @@ Action variables and session variables solve different state-management problems
 - **Action variables** are temporary and task-specific.
 - **Session variables** preserve context across multiple interactions in the same session.
 
-The City example shows why scope matters: a value collected in one action must move to session scope before another action can reuse it.
+The IBM `City` example shows why scope matters: a value collected in one action must move to
+session scope before another action can reuse it. In the repository's cocoa-cooperative thread, the
+same principle is applied conceptually with `CollectionPoint` across collection-point and
+receiving-hours actions.
 
-The module also shows that conversational quality depends on more than task logic. Greetings, response variations, farewells, testing, and context-aware wording all improve the user experience.
+The module also shows that conversational quality depends on more than task logic. Greetings,
+response variations, farewells, testing, and context-aware wording all improve the user experience.

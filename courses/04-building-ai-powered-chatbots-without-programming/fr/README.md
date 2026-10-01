@@ -11,7 +11,8 @@ Le cours progresse des principes fondamentaux des chatbots et des workflows d’
 - **Base documentaire :** captures d’écran Coursera, transcriptions de sous-titres, retours des évaluations notées et certificat du cours fournis par le propriétaire du dépôt.
 - **Note sur les produits et interfaces :** les détails concernant watsonx Assistant et WordPress décrivent l’environnement enregistré du cours et ne constituent pas une étude actuelle de ces produits.
 - **Édition anglaise :** notes canoniques synthétisées à partir des supports bruts fournis.
-- **Édition française :** adaptation des notes canoniques anglaises, sans ajout de contenu externe.
+- **Édition française :** adaptation canonique des notes anglaises, sans ajout de contenu externe.
+- **Fil conducteur du dépôt :** les exercices IBM enregistrés conservent la boutique de fleurs fictive. Les sections `Application pratique` poursuivent séparément le cas fictif de la coopérative cacaoyère près de Soubré utilisé dans les cours 01 à 03. Ces scénarios de coopérative sont des adaptations propres au dépôt et ne sont pas présentés comme du contenu du cours IBM.
 
 ## Objectifs d’apprentissage
 

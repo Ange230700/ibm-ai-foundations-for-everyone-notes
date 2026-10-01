@@ -122,33 +122,100 @@ The intended distinction is that the action-based approach uses AI and simplifie
 
 ## Practical Application
 
-### End-to-end mental model
+### A cocoa cooperative near Soubré: The Specialization Thread
 
-A source-aligned way to reason about the finished chatbot is:
+The repository's fictional cocoa cooperative now provides one continuous practical case across all
+four courses. The IBM flower-shop project remains the recorded Course 04 exercise; this section
+connects the repository adaptations into a single specialization-level system narrative.
 
-1. recognize the user's intent;
-2. trigger the relevant action;
-3. collect only missing information;
-4. store task-specific data locally;
-5. store reusable same-session context at session scope;
-6. evaluate conditions;
-7. produce a direct or dynamically selected response;
-8. end or continue the action;
-9. publish only tested content;
-10. test the live deployment.
+| Course                                                | Cooperative case-study progression                                                                                                          |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01 — Introduction to Artificial Intelligence          | Establish AI concepts, augmented intelligence, traceability support, operational risks, responsible use, and human decision authority       |
+| 02 — Generative AI: Introduction and Applications     | Apply text, image, audio, and code generation to controlled communication, training, and operational-support outputs                        |
+| 03 — Generative AI: Prompt Engineering Basics         | Add explicit facts, constraints, missing-information handling, structured prompting, decomposition, and verification                        |
+| 04 — Building AI Powered Chatbots Without Programming | Turn those principles into conversational actions, session context, structured traceability guidance, escalation, and controlled deployment |
 
-### Production-oriented lessons visible in the course
+The case therefore evolves from **understanding AI** to **using generative AI**, then to
+**controlling model interactions**, and finally to **organizing those capabilities inside a
+conversational application**.
 
-Even though the course is no-code, several software-design principles appear throughout:
+### Integrated Cooperative Operations Assistant
 
+At the end of the repository thread, the conceptual Cooperative Operations Assistant combines the
+following capabilities:
+
+- answer approved collection-point questions;
+- return approved receiving information;
+- preserve the selected collection point within the same session through `CollectionPoint`;
+- identify a supplied category of traceability-support request;
+- select controlled guidance through mappings such as `IssueType`, `IssueResponses`, and
+  `IssueOutput`;
+- ask for missing information when a supported workflow requires clarification;
+- summarize confirmed facts without silently filling gaps;
+- draft low-risk follow-up communication for staff review;
+- escalate unsupported, sensitive, or consequential situations to authorized people;
+- move tested conversational logic through a Draft-to-Live release process.
+
+These names and workflows are repository adaptations. They do not replace or rewrite the IBM
+flower-shop lab.
+
+### End-to-end cooperative mental model
+
+A controlled interaction can be reasoned about as follows:
+
+1. identify the user's supported request;
+2. determine whether the task should follow a deterministic workflow or needs bounded generative
+   assistance;
+3. collect only information that is required and explicitly available;
+4. retain same-session context only when another action needs it;
+5. use approved mappings or conditions for known operational guidance;
+6. keep unavailable facts marked as unknown;
+7. generate explanatory or follow-up text only within supplied constraints;
+8. route unresolved or consequential cases to authorized staff;
+9. publish only reviewed and tested conversational logic;
+10. verify the deployed behavior against known test cases.
+
+### Boundaries carried across all four courses
+
+The case study keeps the same human-oversight boundary established in Course 01.
+
+The assistant does not:
+
+- reject or accept a cocoa lot;
+- assign an official quality grade;
+- determine or approve a producer payment;
+- diagnose crop disease;
+- decide which conflicting record is legally authoritative;
+- invent missing traceability facts;
+- issue or submit an official certificate.
+
+Those actions remain with authorized people and approved cooperative processes.
+
+The case also preserves the earlier privacy and operational constraints. Member identities, farm
+locations, payment details, quality records, unpublished inspection information, credentials, and
+other sensitive data require appropriate handling. A deployment channel does not remove those
+requirements.
+
+### Production-oriented lessons visible across the thread
+
+The four-course case study reinforces several recurring design principles:
+
+- separate evidence from generated output;
+- collect only the information needed for a defined task;
+- preserve unknowns instead of fabricating values;
+- use deterministic paths where predictable operational behavior matters;
+- use generative capabilities only where their flexibility adds value and outputs can be reviewed;
+- preserve relevant context without treating remembered state as new evidence;
+- model business rules before implementation details;
+- keep consequential decisions with accountable people;
+- test normal, missing-data, unsupported, and escalation paths;
 - separate draft work from live releases;
-- reuse common structures;
-- avoid overwriting valid state;
-- model business logic before implementing branches;
-- reduce duplication with mappings and expressions;
-- test multiple paths;
-- keep secrets out of shared notes;
-- verify the live experience after deployment.
+- protect sensitive information and credentials;
+- verify deployed behavior against approved procedures and source records.
+
+The result is not a claim that a production cooperative system has been implemented. It is a
+consistent repository case study showing how concepts from the specialization can accumulate into
+one controlled system design.
 
 ## Labs and Activities
 
@@ -349,4 +416,11 @@ A useful chatbot combines:
 - release discipline;
 - channel integration.
 
-The flower-shop project progresses from a simple structured assistant into a session-aware recommendation chatbot deployed to a live website. The supplied final-assessment result and certificate establish successful course completion.
+The IBM flower-shop project progresses from a simple structured assistant into a session-aware
+recommendation chatbot deployed to a live website. The supplied final-assessment result and
+certificate establish successful course completion.
+
+Separately, the repository's cocoa-cooperative thread now remains continuous from Course 01 through
+Course 04: AI foundations and responsible use lead into generative capabilities, prompt controls,
+conversational workflows, session state, structured traceability support, human escalation, and
+controlled deployment.

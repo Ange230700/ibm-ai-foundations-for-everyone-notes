@@ -207,22 +207,92 @@ La page **Voice Calling** fait référence à Twilio pour les appels depuis le n
 
 ## Application pratique
 
-### Sécurité du déploiement
+### Une coopérative cacaoyère près de Soubré : déploiement contrôlé de l’assistant
 
-La séparation Draft/Live résout un problème opérationnel : les modifications en cours ne doivent pas atteindre automatiquement les utilisateurs finaux.
+Le cas pratique du dépôt applique les principes de déploiement à l’assistant opérationnel de
+coopérative développé dans les modules précédents. Le déploiement WordPress enregistré par IBM
+reste l’exercice source ; le déploiement de la coopérative ci-dessous constitue une adaptation
+conceptuelle propre au dépôt.
 
-Un processus de publication conforme aux supports est :
+L’assistant regroupe désormais plusieurs capacités contrôlées :
 
-1. construire et tester dans Draft ;
-2. examiner le contenu non publié ;
-3. publier une version ;
-4. la vérifier dans Live ;
-5. connecter l’environnement Live à un canal ;
-6. tester l’expérience déployée.
+- recherche de points de collecte à partir de données approuvées ;
+- recherche d’horaires de réception à partir de données approuvées ;
+- conservation du contexte pendant la session avec `CollectionPoint` ;
+- assistance structurée à la traçabilité ;
+- questions de suivi lorsqu’une clarification est nécessaire ;
+- escalade lorsqu’un workflow pris en charge ne permet pas de résoudre la demande de manière sûre.
 
-### Discipline de version et de sauvegarde
+Pour la coopérative, la séparation Draft/Live devient un contrôle opérationnel. Une modification
+portant sur les consignes de point de collecte, les textes d’assistance à la traçabilité, la logique
+de branchement ou le comportement d’escalade ne devrait pas atteindre les utilisateurs simplement
+parce qu’elle a été modifiée.
 
-Le message de version **Initial release.** et le téléchargement d’une sauvegarde illustrent une discipline élémentaire de publication dans un workflow sans code.
+Un processus de publication contrôlé pourrait être :
+
+1. construire ou modifier l’assistant dans Draft ;
+2. tester chaque workflow pris en charge avec des entrées connues ;
+3. tester les parcours avec données manquantes, cas non pris en charge et escalades ;
+4. vérifier les formulations opérationnelles par rapport aux procédures et dossiers approuvés de la
+   coopérative ;
+5. publier une version nommée uniquement après vérification ;
+6. vérifier le comportement publié dans Live ;
+7. connecter Live au canal approuvé prévu ;
+8. exécuter un test de déploiement de bout en bout avant une utilisation plus large.
+
+### Périmètre d’un déploiement destiné au personnel
+
+Une expérience web destinée au personnel constitue un déploiement conceptuel naturel pour ce cas
+pratique, puisque l’assistant manipule un contexte opérationnel et lié à la traçabilité.
+
+Le périmètre de déploiement devrait distinguer les informations pouvant être exposées sur le canal
+sélectionné de celles qui nécessitent un accès restreint. Les identités des membres, les détails de
+paiement, les résultats de qualité, les informations d’inspection non publiées, les identifiants et
+les autres dossiers sensibles ne devraient pas être exposés simplement parce qu’une intégration
+Web chat est techniquement disponible.
+
+Un canal public pourrait tout de même fournir des informations approuvées à faible risque, mais
+l’accès aux dossiers internes ou aux workflows à conséquence importante nécessiterait des contrôles
+appropriés d’authentification, d’autorisation et de vérification humaine. Ce cas pratique n’affirme
+pas que de tels contrôles ont été implémentés.
+
+### Discipline de version, de sauvegarde et de retour arrière
+
+Le message **Initial release.** et la sauvegarde téléchargée dans le laboratoire IBM illustrent une
+discipline élémentaire de publication. Appliquée à la coopérative, chaque version devrait permettre
+d’identifier la logique opérationnelle modifiée et la version actuellement mise à disposition des
+utilisateurs.
+
+Un enregistrement pratique de publication pourrait contenir :
+
+- l’identifiant de version ;
+- un résumé approuvé des modifications ;
+- la personne ayant effectué la vérification ;
+- la date de déploiement ;
+- les workflows testés ;
+- les limites connues ;
+- une référence de sauvegarde ou de retour arrière.
+
+Ces champs décrivent un modèle de conception utile pour le dépôt et non une exigence du laboratoire
+IBM.
+
+### Scénario de test du déploiement
+
+Un test de déploiement de la coopérative pourrait vérifier une conversation complète à faible
+risque :
+
+1. demander des informations sur les points de collecte pris en charge ;
+2. sélectionner un point de collecte fourni dans les données de test ;
+3. demander ses horaires de réception enregistrés ;
+4. vérifier que `CollectionPoint` est réutilisé pendant la session ;
+5. présenter un problème de traçabilité fourni, tel qu’un champ de réception manquant ;
+6. vérifier que l’assistant retourne uniquement la consigne approuvée ;
+7. présenter un cas non pris en charge ou à conséquence importante ;
+8. vérifier que l’assistant escalade le cas au lieu d’inventer une résolution.
+
+Le résultat attendu n’est pas que l’assistant prenne une décision opérationnelle. Le test vérifie que
+la version déployée respecte les informations approuvées, la continuité de session, les limites du
+workflow et l’escalade humaine.
 
 ## Travaux pratiques et activités
 
@@ -297,4 +367,12 @@ Le déploiement transforme le chatbot d’un exercice interne en un service acce
 
 Le workflow enregistré de watsonx Assistant sépare Draft de Live, publie du contenu versionné, fournit Web chat et des options d’intégration, et prend en charge des canaux et extensions supplémentaires.
 
-Le laboratoire WordPress montre ensuite un parcours complet d’intégration : connecter l’environnement Live à l’aide des identifiants de service, personnaliser l’interface de chat et tester de bout en bout une conversation réaliste en plusieurs étapes.
+Le laboratoire WordPress montre ensuite un parcours complet d’intégration : connecter
+l’environnement Live à l’aide des identifiants de service, personnaliser l’interface de chat et
+tester de bout en bout une conversation réaliste en plusieurs étapes.
+
+Dans le fil conducteur de la coopérative cacaoyère du dépôt, ces principes de déploiement deviennent
+un processus de publication contrôlé pour l’assistant opérationnel de coopérative. L’adaptation met
+l’accent sur les données approuvées, les limites des canaux, la gestion des informations sensibles,
+la discipline de version, les tests de déploiement et l’escalade humaine, tout en conservant le
+workflow WordPress enregistré par IBM comme exercice source.

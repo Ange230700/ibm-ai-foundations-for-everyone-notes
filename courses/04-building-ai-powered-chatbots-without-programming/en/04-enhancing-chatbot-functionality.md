@@ -252,27 +252,71 @@ The visual editor removes the need to build the surrounding application code, bu
 
 ## Practical Application
 
-### Recommendation workflow
+### A cocoa cooperative near Soubré: Structured Traceability Support
 
-The supplied course summary covers these building blocks:
+The repository case study applies the same workflow techniques to controlled traceability-support
+guidance. IBM's flower-recommendation workflow remains the recorded source exercise; the variables
+and categories below are conceptual adaptations for the cooperative thread.
 
-1. build the action;
-2. create a response table;
-3. use follow-up questions;
-4. handle special occasions;
-5. embed images;
-6. use expressions;
-7. update responses;
-8. test the integrated workflow.
+A cooperative assistant could begin by classifying the kind of support requested into an approved
+`IssueType`. Examples already established in the repository case study include:
+
+- a missing intake field;
+- an unreadable lot identifier;
+- a duplicate-identifier alert;
+- a mismatch between field and intake records;
+- a warehouse-movement mismatch;
+- another case that requires staff review.
+
+The workflow could then use three conceptual values:
+
+- `IssueType` — the selected category of traceability-support request;
+- `IssueResponses` — a dictionary that maps an approved issue category to controlled guidance;
+- `IssueOutput` — the guidance selected for the current issue.
+
+Conceptually, the lookup follows the same pattern as the IBM exercise:
+
+```text
+$IssueResponses[$IssueType]
+```
+
+This expression is a repository adaptation of the course's dictionary pattern. It is not a recorded
+IBM variable or expression.
+
+An illustrative mapping could be:
+
+| Issue type                  | Controlled assistant behavior                                      |
+| --------------------------- | ------------------------------------------------------------------ |
+| Missing intake field        | Identify the supplied missing field and request verification       |
+| Unreadable lot identifier   | Ask for a clearer source record or manual staff check              |
+| Duplicate-identifier alert  | Separate the conflicting records and route them for reconciliation |
+| Field/intake mismatch       | Summarize confirmed facts, conflicts, and unresolved questions     |
+| Warehouse-movement mismatch | Present the supplied records and request staff review              |
+| Other / needs review        | Escalate without inventing a resolution                            |
+
+The assistant does not determine which record is legally authoritative, reject a lot, assign a
+quality grade, approve a payment, or issue a certificate. Those decisions remain with authorized
+cooperative staff.
 
 ### Business logic before implementation logic
 
-The course separates two questions:
+The same separation emphasized by the IBM recommendation exercise becomes:
 
-- **What should the business recommend?**
-- **How should the chatbot implement that recommendation?**
+- **What guidance is the cooperative authorized to provide for each defined issue type?**
+- **How should the chatbot select and present that guidance?**
 
-This reduces the risk of mixing business decisions with workflow mechanics.
+A controlled implementation would:
+
+1. define approved issue categories and response text before building branches;
+2. use a dictionary lookup for stable mappings that do not need extra clarification;
+3. use explicit branches when an issue requires a follow-up question or staff escalation;
+4. use only supplied source records when describing the current case;
+5. mark unavailable facts as unknown instead of generating them;
+6. keep consequential decisions outside the assistant;
+7. test each supported path and each escalation path.
+
+This preserves the course's core design lesson: model the business rules first, then choose the
+simplest workflow structure that implements them without unnecessary duplication.
 
 ## Labs and Activities
 
@@ -370,3 +414,7 @@ The central techniques are:
 - reserve explicit branches for cases that need follow-up logic;
 - embed images for richer responses;
 - test every important path.
+
+In the repository's cocoa-cooperative thread, the same techniques can structure traceability-support
+guidance while keeping consequential decisions with authorized staff. The IBM source exercise
+remains the flower-recommendation system documented above.
