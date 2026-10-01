@@ -40,7 +40,8 @@ Le [registre des certificats](../../../certificates/README.md) documente la réu
 - [Certificat PDF original](../../../certificates/03-generative-ai-prompt-engineering-basics/coursera-MY0A0NAHZBRZ.pdf)
 - [Adresse de vérification Coursera](https://coursera.org/verify/MY0A0NAHZBRZ)
 - [Édition anglaise](../en/README.md)
-- [Feuille de route Prompt Engineering de roadmap.sh](https://roadmap.sh/prompt-engineering) — parcours d’apprentissage externe complémentaire ; ne fait pas partie de la spécialisation IBM/Coursera et n’est pas reproduit dans ce dépôt.
+- [Carte d’apprentissage locale du Prompt Engineering](../../../docs/learning-paths/prompt-engineering-roadmap.md) — représentation Mermaid générale adaptée de la feuille de route externe.
+- [Feuille de route Prompt Engineering de roadmap.sh](https://roadmap.sh/prompt-engineering) — parcours d’apprentissage externe original ; ne fait pas partie de la spécialisation IBM/Coursera.
 
 ## Références
 
