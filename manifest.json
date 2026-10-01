@@ -176,10 +176,89 @@
     },
     {
       "id": "course_87903369-55a7-485e-b999-6767bfb0e9ee",
-      "modules": [],
+      "modules": [
+        {
+          "id": "module_344aa1fd-d689-4ac0-a7d9-95aa7b298849",
+          "ordinal": 1,
+          "slug": "chatbot-fundamentals",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/01-chatbot-fundamentals.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/01-chatbot-fundamentals.md"
+          },
+          "title": {
+            "en": "Chatbot Fundamentals",
+            "fr": "Principes fondamentaux des chatbots"
+          }
+        },
+        {
+          "id": "module_88e0d7fa-6ee3-41ee-92d4-23823e816b6b",
+          "ordinal": 2,
+          "slug": "decision-tree-chatbot",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/02-decision-tree-chatbot.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/02-decision-tree-chatbot.md"
+          },
+          "title": {
+            "en": "Decision Tree Chatbot",
+            "fr": "Chatbot à arbre de décision"
+          }
+        },
+        {
+          "id": "module_e8790bc9-f7bd-4d79-ad36-9d549feb3acd",
+          "ordinal": 3,
+          "slug": "variables-in-chatbot-interactions",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/03-variables-in-chatbot-interactions.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/03-variables-in-chatbot-interactions.md"
+          },
+          "title": {
+            "en": "Variables in Chatbot Interactions",
+            "fr": "Variables dans les interactions d’un chatbot"
+          }
+        },
+        {
+          "id": "module_ed24c5ce-b6cd-49f1-b8b6-69501423c894",
+          "ordinal": 4,
+          "slug": "enhancing-chatbot-functionality",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/04-enhancing-chatbot-functionality.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/04-enhancing-chatbot-functionality.md"
+          },
+          "title": {
+            "en": "Enhancing Chatbot Functionality",
+            "fr": "Amélioration des fonctionnalités du chatbot"
+          }
+        },
+        {
+          "id": "module_bc19f247-8229-4162-9a90-d55aa0aa2a69",
+          "ordinal": 5,
+          "slug": "chatbot-deployment-essentials",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/05-chatbot-deployment-essentials.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/05-chatbot-deployment-essentials.md"
+          },
+          "title": {
+            "en": "Chatbot Deployment Essentials",
+            "fr": "Principes essentiels du déploiement d’un chatbot"
+          }
+        },
+        {
+          "id": "module_203dff93-ea48-4555-808c-2e350a9f29c1",
+          "ordinal": 6,
+          "slug": "final-exam-and-course-wrap-up",
+          "source": {
+            "en": "courses/04-building-ai-powered-chatbots-without-programming/en/06-final-exam-and-course-wrap-up.md",
+            "fr": "courses/04-building-ai-powered-chatbots-without-programming/fr/06-final-exam-and-course-wrap-up.md"
+          },
+          "title": {
+            "en": "Final Exam and Course Wrap-Up",
+            "fr": "Examen final et bilan du cours"
+          }
+        }
+      ],
       "ordinal": 4,
       "slug": "building-ai-powered-chatbots-without-programming",
-      "status": "planned",
+      "status": "notes-in-progress",
       "title": {
         "en": "Building AI Powered Chatbots Without Programming",
         "fr": "Créer des chatbots alimentés par l’IA sans programmation"
