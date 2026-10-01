@@ -16,7 +16,7 @@ This repository reuses Courses 01–03 already completed in the IBM Generative A
 | 02     | `02-generative-ai-introduction-and-applications` | `02-generative-ai-introduction-and-applications` | 3       |
 | 03     | `03-generative-ai-prompt-engineering-basics`     | `03-generative-ai-prompt-engineering-basics`     | 3       |
 
-The existing program and course IDs, ordinals, slugs and titles remain authoritative. The ten new module IDs belong to this destination manifest. Each module has matching EN/FR filenames under its course language directories. Course 04 remains planned and has no imported modules.
+The existing program and course IDs, ordinals, slugs and titles remain authoritative. The ten new module IDs belong to this destination manifest. Each imported module has matching EN/FR filenames under its course language directories. Course 04 is outside this one-time import: it was authored directly in this repository and is now registered separately in the manifest with six bilingual modules.
 
 ## Canonical content
 
@@ -30,9 +30,9 @@ Each language is a canonical Markdown input in this repository. Module identity 
 
 ## Completion and editorial status
 
-The three unmodified PDFs supplied by the owner are indexed in the [certificate register](../../certificates/README.md), with printed completion dates, verification URLs and SHA-256 checksums. These are evidence of the three individual course completions. They do not establish completion of Course 04, this specialization, or every optional exercise mentioned in the historical notes.
+The certificate register now contains the owner-supplied PDFs for Courses 01–04 and the completed AI Foundations for Everyone specialization, with printed completion dates, verification URLs and SHA-256 checksums. Only the first three course certificates belong to this historical import record; the Course 04 and specialization certificates were added later as direct repository evidence. None of these certificates establish completion of every optional exercise mentioned in the notes.
 
-All three imported courses use `notes-in-progress` in the manifest while the new French adaptations await personal review. This status describes the notes lifecycle, not the owner's Coursera achievement. The existing schema is unchanged; certificate metadata lives outside the strict manifest.
+All three imported courses use `notes-in-progress` in the manifest while their French adaptations await personal review. Course 04 also uses `notes-in-progress` for its directly authored bilingual notes. This status describes the notes lifecycle, not the owner's Coursera achievement. The existing schema is unchanged; certificate metadata lives outside the strict manifest.
 
 The original English checkboxes and statements about missing certificates or results describe what was available when those notes were authored. The certificate register records the newly supplied evidence. Neither certificate import nor French drafting marks a module as personally reviewed, an artifact as visually verified, or a course release as complete.
 
