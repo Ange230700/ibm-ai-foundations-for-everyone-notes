@@ -9,6 +9,8 @@
 - **Duration:** 60 minutes
 - **Number of slides:** 30
 - **Case study:** a fictional cocoa cooperative near Soubré
+- **Original learning source:** IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- **AI disclosure:** This teaching session is generated with AI as an independent repository adaptation.
 - **Bilingual contract:**
   `docs/teaching/s01-ai-fundamentals-60-min-content-contract.md`
 
@@ -48,6 +50,8 @@ S01: AI Fundamentals
 
 - 60-minute session
 - Fictional case: a cocoa cooperative near Soubré
+- Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- Independent teaching adaptation generated with AI
 
 ### Teaching Notes
 

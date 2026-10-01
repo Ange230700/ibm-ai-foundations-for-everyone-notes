@@ -2,6 +2,30 @@
 
 A manifest-driven, bilingual repository template for a multi-course Coursera program or Professional Certificate.
 
+## Source attribution and AI disclosure
+
+The learning content in this configured repository is based on IBM's **AI Foundations for Everyone**
+Specialization delivered through **Coursera**. IBM is the original course provider and Coursera is
+the delivery platform recorded in `manifest.json`.
+
+The canonical notes in `courses/` summarize and adapt material from that specialization for this
+repository. The teaching materials in `teaching/` are independent repository adaptations and are
+not official IBM or Coursera teaching materials. This repository does not imply endorsement by,
+affiliation with, or authorship by IBM or Coursera beyond the source attribution stated above.
+
+**Every instructor-led teaching session in `teaching/` is generated with AI.** AI is used to draft
+and structure session outlines, slide content, presenter notes, bilingual adaptations, teaching
+examples, and supporting instructional material from the repository's canonical notes, source
+constraints, and teaching contracts.
+
+AI-generated teaching material remains subject to repository validation and human review. Automated
+checks can verify structure, source alignment, bilingual consistency, and artifact integrity, but
+they do not replace human review, visual inspection, or rehearsal before final delivery.
+
+IBM and Coursera names, course titles, and referenced source material remain attributable to their
+respective owners. The repository's own adaptations, tooling, and generated teaching materials
+should not be presented as official IBM or Coursera content.
+
 ## V1 status
 
 V1 provides the complete local authoring and derivative-artifact pipeline:

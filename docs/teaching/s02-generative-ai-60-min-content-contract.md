@@ -20,6 +20,17 @@
 3. examiner un brouillon généré et repérer un fait inventé ou une étape non autorisée ;
 4. proposer un usage métier limité, un contrôle humain et un critère d’évaluation.
 
+## Attribution et transparence sur l’IA
+
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera.
+- **Génération avec l’IA :** la session pédagogique est générée avec l’IA en tant qu’adaptation
+  indépendante du dépôt.
+- **Exigence de couverture :** la première diapositive dans chaque langue doit afficher une
+  attribution compacte à IBM/Coursera ainsi qu’une déclaration indiquant que l’adaptation
+  pédagogique indépendante est générée avec l’IA.
+- Ces adaptations ne constituent pas du matériel pédagogique officiel d’IBM ou de Coursera et
+  n’impliquent aucune approbation de leur part.
+
 ## Règles communes aux deux langues
 
 1. Les diapositives FR et EN utilisent les mêmes identifiants S02-01 à S02-26, le même ordre, les mêmes durées et les mêmes interactions.
@@ -54,6 +65,8 @@ Durée : **1 minute**
 - **Contenu visible :**
   - S02 : session de 60 minutes
   - Cas fictif : une coopérative cacaoyère près de Soubré
+  - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+  - Adaptation pédagogique indépendante générée avec l’IA
 - **Notes du formateur :** Situer S02 après les fondements de S01. Expliquer que les exemples et captures de la séance sont des simulations pédagogiques, et que les notes complètes restent disponibles séparément.
 
 ### English
@@ -63,6 +76,8 @@ Durée : **1 minute**
 - **On-slide content:**
   - S02: 60-minute session
   - Fictional case: a cocoa cooperative near Soubré
+  - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
+  - Independent teaching adaptation generated with AI
 - **Facilitator notes:** Position S02 after the AI fundamentals session. Explain that the examples and screens are teaching simulations and that the full reference notes remain available separately.
 
 ## S02-02 : Objectifs / Objectives

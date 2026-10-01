@@ -10,6 +10,8 @@
 - **Nombre de diapositives :** 25
 - **Cas fil rouge :** une coopérative cacaoyère fictive et sans nom près de Soubré
 - **Statut :** source pédagogique française de travail ; révision personnelle des adaptations canoniques du cours 03 encore ouverte
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+- **Déclaration sur l’IA :** cette session pédagogique est générée avec l’IA en tant qu’adaptation indépendante du dépôt.
 - **Contrat bilingue :** `docs/teaching/s03-prompt-engineering-60-min-content-contract.md`
 
 ## Sources canoniques
@@ -48,6 +50,8 @@ S03 : session de 60 minutes
 
 - Cas fictif : une coopérative cacaoyère près de Soubré
 - Fil conducteur : un message aux agents de réception
+- Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+- Adaptation pédagogique indépendante générée avec l’IA
 
 ### Notes pédagogiques
 

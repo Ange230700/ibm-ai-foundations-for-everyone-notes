@@ -2,6 +2,27 @@
 
 This directory contains delivery specifications derived from the canonical learning content.
 
+## Attribution and AI-generation requirement
+
+Every teaching session registered in `manifest.json` must preserve source attribution and AI
+transparency in both languages.
+
+Each maintained session source must:
+
+- identify the original learning provider and delivery platform declared in `manifest.json`;
+- state explicitly in its teaching metadata that the session is generated with AI as an independent
+  repository adaptation;
+- repeat a compact source acknowledgment on Slide 01;
+- repeat a compact AI-generation disclosure on Slide 01;
+- avoid presenting repository-specific wording, examples, case studies, sequencing, or presentation
+  design as official material from the original provider or platform.
+
+The Slide 01 requirement ensures that attribution and AI disclosure remain visible when a teaching
+session is exported to PDF or PPTX independently of the repository.
+
+Repository tests enforce these requirements for every registered teaching session. Adding a future
+session without the required metadata and Slide 01 disclosures must fail validation.
+
 ## Authority boundary
 
 - `manifest.json` remains the authority for program, course, module, and source mappings.

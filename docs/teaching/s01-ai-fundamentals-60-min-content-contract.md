@@ -10,6 +10,17 @@
 - **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
 - **Principe éditorial :** les sources détaillées restent des documents de référence. Ce contrat définit uniquement le parcours présenté en direct.
 
+## Attribution et transparence sur l’IA
+
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera.
+- **Génération avec l’IA :** la session pédagogique est générée avec l’IA en tant qu’adaptation
+  indépendante du dépôt.
+- **Exigence de couverture :** la première diapositive dans chaque langue doit afficher une
+  attribution compacte à IBM/Coursera ainsi qu’une déclaration indiquant que l’adaptation
+  pédagogique indépendante est générée avec l’IA.
+- Ces adaptations ne constituent pas du matériel pédagogique officiel d’IBM ou de Coursera et
+  n’impliquent aucune approbation de leur part.
+
 ## Règles communes aux deux langues
 
 1. Les versions française et anglaise utilisent les mêmes identifiants de diapositives.
@@ -33,6 +44,8 @@ Durée : **1 minute**
 - **Contenu visible :**
   - Session de 60 minutes
   - Cas fictif : une coopérative cacaoyère près de Soubré
+  - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+  - Adaptation pédagogique indépendante générée avec l’IA
 - **Notes du formateur :** Accueillir les participants. Expliquer que la session donne une vue d’ensemble pratique. Préciser que les détails techniques restent disponibles dans les supports de référence.
 
 ### English
@@ -43,6 +56,8 @@ Durée : **1 minute**
 - **On-slide content:**
   - 60-minute session
   - Fictional case: a cocoa cooperative near Soubré
+  - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
+  - Independent teaching adaptation generated with AI
 - **Facilitator notes:** Welcome participants. Explain that the session provides a practical overview. Mention that detailed technical material remains available in the reference resources.
 
 ## S01-02 : Objectifs de la session / Session objectives

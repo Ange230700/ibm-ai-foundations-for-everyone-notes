@@ -20,6 +20,17 @@
 3. comparer un brouillon à sa source, relever une invention et affiner la demande ;
 4. remettre un brouillon révisé à une personne habilitée en explicitant les inconnues.
 
+## Attribution et transparence sur l’IA
+
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera.
+- **Génération avec l’IA :** la session pédagogique est générée avec l’IA en tant qu’adaptation
+  indépendante du dépôt.
+- **Exigence de couverture :** la première diapositive dans chaque langue doit afficher une
+  attribution compacte à IBM/Coursera ainsi qu’une déclaration indiquant que l’adaptation
+  pédagogique indépendante est générée avec l’IA.
+- Ces adaptations ne constituent pas du matériel pédagogique officiel d’IBM ou de Coursera et
+  n’impliquent aucune approbation de leur part.
+
 ## Règles communes aux deux langues
 
 1. Les versions FR et EN ont les identifiants S03-01 à S03-25, les mêmes durées, activités et critères de réussite.
@@ -51,14 +62,24 @@ Durée : **1 minute**
 
 - **Titre :** S03 : concevoir un prompt qui se vérifie
 - **Message principal :** Une demande précise prépare un brouillon vérifiable, jamais une décision automatique.
-- **Contenu visible :** Session de 60 minutes · même coopérative fictive près de Soubré · un message aux agents de réception.
+- **Contenu visible :**
+  - Session de 60 minutes
+  - Même coopérative fictive près de Soubré
+  - Un message aux agents de réception
+  - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+  - Adaptation pédagogique indépendante générée avec l’IA
 - **Notes du formateur :** Présenter S03 comme une suite de S02. Les écrans éventuels seront simulés et la rédaction d’un message ne remplacera pas sa validation.
 
 ### English
 
 - **Title:** S03: designing a prompt that can be checked
 - **Key message:** A precise request prepares a reviewable draft, never an automatic decision.
-- **On-slide content:** 60-minute session · same fictional cocoa cooperative near Soubré · one message for intake staff.
+- **On-slide content:**
+  - 60-minute session
+  - Same fictional cocoa cooperative near Soubré
+  - One message for intake staff
+  - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
+  - Independent teaching adaptation generated with AI
 - **Facilitator notes:** Connect S03 to S02. Any screens are simulations, and drafting a notice never replaces its approval.
 
 ## S03-02 : Résultats attendus / Intended outcomes

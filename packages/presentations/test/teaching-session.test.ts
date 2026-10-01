@@ -41,6 +41,95 @@ async function fixture() {
   return { session, course, markdown, content };
 }
 
+test('all registered teaching sessions disclose source attribution and AI generation', async () => {
+  const manifest = await readManifest();
+  const sessions = manifest.teachingSessions ?? [];
+  assert.ok(sessions.length > 0);
+
+  for (const session of sessions) {
+    const course = manifest.courses.find((entry) => entry.id === session.courseId);
+    assert.ok(course);
+
+    for (const language of ['en', 'fr'] as const) {
+      const sourcePath = session.source[language];
+      const markdown = await readFile(resolve(repositoryRoot(), sourcePath), 'utf8');
+
+      const content = parseTeachingSession(markdown, {
+        id: session.id,
+        courseId: session.courseId,
+        language,
+        sourcePath,
+        slideCount: session.slideCount,
+        durationMinutes: session.durationMinutes,
+        canonicalSources: course.modules.map((module) => module.source[language]),
+      });
+
+      const canonicalHeading = language === 'en' ? '## Canonical sources' : '## Sources canoniques';
+      const metadataEnd = markdown.indexOf(canonicalHeading);
+
+      assert.ok(metadataEnd > 0, `${sourcePath}: canonical-source heading missing`);
+
+      const metadata = markdown.slice(0, metadataEnd);
+      const sourceLabel =
+        language === 'en' ? '**Original learning source:**' : '**Source pédagogique d’origine :**';
+      const disclosureLabel =
+        language === 'en' ? '**AI disclosure:**' : '**Déclaration sur l’IA :**';
+
+      assert.ok(metadata.includes(sourceLabel), `${sourcePath}: source attribution missing`);
+      assert.ok(
+        metadata.includes(manifest.program.provider),
+        `${sourcePath}: provider attribution missing`,
+      );
+      assert.ok(
+        metadata.includes(manifest.program.platform),
+        `${sourcePath}: platform attribution missing`,
+      );
+      assert.ok(metadata.includes(disclosureLabel), `${sourcePath}: AI disclosure missing`);
+
+      if (language === 'en') {
+        assert.match(
+          metadata,
+          /\*\*AI disclosure:\*\*[^\n]*generated with AI[^\n]*independent repository adaptation/iu,
+          `${sourcePath}: AI disclosure is incomplete`,
+        );
+      } else {
+        assert.match(
+          metadata,
+          /\*\*Déclaration sur l’IA :\*\*[^\n]*générée avec l’IA[^\n]*adaptation indépendante/iu,
+          `${sourcePath}: déclaration sur l’IA incomplète`,
+        );
+      }
+
+      const cover = content.slides[0];
+      assert.ok(cover, `${sourcePath}: cover slide missing`);
+
+      assert.ok(
+        cover.items.some(
+          (item) =>
+            item.includes(manifest.program.provider) && item.includes(manifest.program.platform),
+        ),
+        `${sourcePath}: Slide 01 source attribution missing`,
+      );
+
+      if (language === 'en') {
+        assert.ok(
+          cover.items.some(
+            (item) => item.includes('Independent') && item.includes('generated with AI'),
+          ),
+          `${sourcePath}: Slide 01 AI disclosure missing`,
+        );
+      } else {
+        assert.ok(
+          cover.items.some(
+            (item) => item.includes('indépendante') && item.includes('générée avec l’IA'),
+          ),
+          `${sourcePath}: déclaration IA absente de la diapositive 01`,
+        );
+      }
+    }
+  }
+});
+
 test('S01 teaching sources preserve 30 aligned slides and exactly 60 minutes', async () => {
   const { content } = await fixture();
   validateTeachingPair(content.en, content.fr);

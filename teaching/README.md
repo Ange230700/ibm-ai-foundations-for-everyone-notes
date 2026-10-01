@@ -3,6 +3,35 @@
 This directory contains instructor-led teaching sources derived from the canonical bilingual
 learning content under `courses/`.
 
+## Source attribution and AI disclosure
+
+The original learning source for these adaptations is IBM's **AI Foundations for Everyone**
+Specialization delivered through **Coursera**. IBM is the original course provider and Coursera is
+the delivery platform.
+
+Every instructor-led session maintained in this directory is **generated with AI** from the
+repository's canonical notes, explicit source constraints, bilingual teaching contracts, and
+repository-specific case-study requirements.
+
+AI generation is used for activities including:
+
+- session structure and sequencing;
+- projected slide content;
+- presenter and facilitation notes;
+- bilingual EN/FR adaptations;
+- teaching examples and exercises;
+- supporting prompts, diagrams, and instructional material where applicable.
+
+These sessions are independent repository adaptations. They are not official IBM or Coursera
+teaching materials, and their wording, examples, case studies, instructional sequencing, and
+presentation design should not be attributed to IBM or Coursera unless a specific element is
+explicitly identified as source-derived.
+
+Automated repository checks validate structure, source alignment, bilingual consistency, artifact
+integrity, and other defined contracts. Human review remains required for factual judgment,
+instructional suitability, visual inspection, and rehearsal before a session is treated as ready
+for delivery.
+
 ## Authority boundary
 
 - `manifest.json` defines the canonical program, course, module, and source mappings.

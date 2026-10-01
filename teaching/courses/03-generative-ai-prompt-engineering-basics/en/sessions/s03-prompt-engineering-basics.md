@@ -10,6 +10,8 @@
 - **Number of slides:** 25
 - **Case study:** an unnamed, fictional cocoa cooperative near Soubré
 - **Status:** English teaching draft; the Course 03 French canonical adaptations still await personal review
+- **Original learning source:** IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- **AI disclosure:** This teaching session is generated with AI as an independent repository adaptation.
 - **Bilingual contract:** `docs/teaching/s03-prompt-engineering-60-min-content-contract.md`
 
 ## Canonical sources
@@ -48,6 +50,8 @@ S03: 60-minute session
 
 - Fictional case: a cocoa cooperative near Soubré
 - Common task: a notice for intake staff
+- Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- Independent teaching adaptation generated with AI
 
 ### Teaching Notes
 
