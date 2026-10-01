@@ -210,14 +210,14 @@ That answer is stored as an action-step variable and combined with Occasion to c
 
 ### Six special-scenario branches
 
-| Branch | Occasion | Confirmation |
-| --- | --- | --- |
-| SO Birthday | Birthday | Yes |
-| Other Birthday | Birthday | No |
-| SO Thank You | Thank You | Yes |
-| Other Thank You | Thank You | No |
-| SO Just Because | Other/Just Because | Yes |
-| Other Just Because | Other/Just Because | No |
+| Branch             | Occasion           | Confirmation |
+| ------------------ | ------------------ | ------------ |
+| SO Birthday        | Birthday           | Yes          |
+| Other Birthday     | Birthday           | No           |
+| SO Thank You       | Thank You          | Yes          |
+| Other Thank You    | Thank You          | No           |
+| SO Just Because    | Other/Just Because | Yes          |
+| Other Just Because | Other/Just Because | No           |
 
 Recorded examples include:
 

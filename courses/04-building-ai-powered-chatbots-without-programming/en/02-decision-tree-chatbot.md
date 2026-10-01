@@ -111,9 +111,7 @@ The supplied course material uses five store locations:
 - Kelowna;
 - Vancouver.
 
-The canonical pattern is:
-
-**selected city -> matching conditional branch -> city-specific answer**
+The canonical pattern is `selected city -> matching conditional branch -> city-specific answer`.
 
 ### Reusing an action structure
 
@@ -156,13 +154,13 @@ Testing verifies:
 
 ### Deterministic store lookup
 
-| Stage | Purpose |
-| --- | --- |
-| Trigger | Recognize a location request |
-| Step 1 | Ask for the city when needed |
-| Condition | Match the selected city |
+| Stage     | Purpose                              |
+| --------- | ------------------------------------ |
+| Trigger   | Recognize a location request         |
+| Step 1    | Ask for the city when needed         |
+| Condition | Match the selected city              |
 | City step | Return location-specific information |
-| End | Complete the action |
+| End       | Complete the action                  |
 
 The same structure can be adapted for any store-specific attribute.
 
@@ -170,13 +168,13 @@ The same structure can be adapted for any store-specific attribute.
 
 The supplied lab records the following hours:
 
-| City | Hours |
-| --- | --- |
-| Montreal | Every day, 10:00–17:00; closed on Quebec statutory holidays |
-| Toronto | Monday–Saturday, 09:00–18:00; closed Sundays and Ontario statutory holidays |
-| Calgary | Monday–Saturday, 10:00–18:00; closed Sundays and Alberta statutory holidays |
-| Kelowna | Tuesday–Saturday, 10:00–17:45; closed Sundays, Mondays, and British Columbia statutory holidays |
-| Vancouver | Every day, 10:00–17:00; closed on British Columbia statutory holidays and Boxing Day |
+| City      | Hours                                                                                           |
+| --------- | ----------------------------------------------------------------------------------------------- |
+| Montreal  | Every day, 10:00–17:00; closed on Quebec statutory holidays                                     |
+| Toronto   | Monday–Saturday, 09:00–18:00; closed Sundays and Ontario statutory holidays                     |
+| Calgary   | Monday–Saturday, 10:00–18:00; closed Sundays and Alberta statutory holidays                     |
+| Kelowna   | Tuesday–Saturday, 10:00–17:45; closed Sundays, Mondays, and British Columbia statutory holidays |
+| Vancouver | Every day, 10:00–17:00; closed on British Columbia statutory holidays and Boxing Day            |
 
 ## Labs and Activities
 

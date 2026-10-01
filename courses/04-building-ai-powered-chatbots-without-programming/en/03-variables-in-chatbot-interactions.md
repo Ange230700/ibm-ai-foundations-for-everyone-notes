@@ -184,12 +184,12 @@ Without a city:
 
 ### Variable selection
 
-| Need | Variable type |
-| --- | --- |
-| Hold a value only while completing one action | Action variable |
-| Reuse a value in later actions during the same session | Session variable |
-| Remember the selected store city for later questions | Session variable |
-| Capture a Yes/No response needed only by the current branch | Action variable |
+| Need                                                        | Variable type    |
+| ----------------------------------------------------------- | ---------------- |
+| Hold a value only while completing one action               | Action variable  |
+| Reuse a value in later actions during the same session      | Session variable |
+| Remember the selected store city for later questions        | Session variable |
+| Capture a Yes/No response needed only by the current branch | Action variable  |
 
 ### Session-state pattern
 
