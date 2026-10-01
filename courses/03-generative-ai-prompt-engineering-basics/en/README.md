@@ -40,6 +40,7 @@ The [certificate register](../../../certificates/README.md) records earned compl
 - [Original certificate PDF](../../../certificates/03-generative-ai-prompt-engineering-basics/coursera-MY0A0NAHZBRZ.pdf)
 - [Coursera verification URL](https://coursera.org/verify/MY0A0NAHZBRZ)
 - [French edition](../fr/README.md)
+- [roadmap.sh Prompt Engineering Roadmap](https://roadmap.sh/prompt-engineering) — external complementary learning path; not part of the IBM/Coursera specialization and not reproduced in this repository.
 
 ## References
 
