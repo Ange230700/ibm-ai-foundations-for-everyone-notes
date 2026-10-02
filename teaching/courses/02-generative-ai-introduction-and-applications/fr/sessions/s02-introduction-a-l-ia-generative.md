@@ -1,18 +1,21 @@
-# S02 — IA générative : introduction et applications
+# S02 — Utiliser l’IA générative au travail
 
 ## Métadonnées pédagogiques
 
-- **Programme :** Fondements de l’IA pour tous
-- **Session :** S02 — IA générative : introduction et applications
+- **Programme :** AI for Everyone — Professional Curriculum
+- **Session :** S02 — Utiliser l’IA générative au travail
 - **Langue :** Français
 - **Public :** Professionnels et apprenants sans prérequis technique
 - **Durée :** 60 minutes
 - **Nombre de diapositives :** 26
-- **Cas fil rouge :** une coopérative cacaoyère fictive et sans nom près de Soubré
-- **Statut :** source pédagogique française de travail ; révision personnelle des adaptations canoniques du cours 02 encore ouverte
+- **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
 - **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+- **Apport professionnel complémentaire :** matériel collaboratif documenté dans le contrat de programme parent
 - **Déclaration sur l’IA :** cette session pédagogique est générée avec l’IA en tant qu’adaptation indépendante du dépôt.
-- **Contrat bilingue :** `docs/teaching/s02-generative-ai-60-min-content-contract.md`
+- **Contrat bilingue :**
+  `docs/teaching/s02-generative-ai-60-min-content-contract.md`
+- **Audit de fusion :**
+  `docs/teaching/s02-professional-fusion-audit.md`
 
 ## Sources canoniques
 
@@ -22,20 +25,28 @@
 
 ## Objectif de la session
 
-Relier un besoin professionnel à une capacité de génération, choisir un format de sortie,
-examiner une proposition à la lumière d’une source définie et attribuer la validation finale
-à une personne responsable.
+Reconnaître des tâches professionnelles limitées où l’IA générative peut apporter une assistance,
+choisir une sortie adaptée au besoin et au public, préserver les faits fournis pendant une
+transformation et identifier ce qu’une personne responsable doit vérifier, approuver ou utiliser.
 
 ## Principes d’animation
 
-1. Montrer une idée principale par diapositive et réserver les précisions aux notes.
-2. Dire explicitement que la coopérative, la consigne et les sorties présentées sont fictives.
-3. Faire vérifier la réponse volontairement erronée avant d’afficher la correction.
-4. Garder les données des membres, paiements et inspections hors des exemples publics.
-5. Réserver les techniques de prompting avancées à S03 et les catalogues de produits aux références.
-6. Répéter la séance au chronomètre avant de diffuser un support définitif.
+1. Partir d’un travail professionnel reconnaissable avant de présenter les types de sorties ou les
+   outils.
+2. Présenter le contenu généré comme un brouillon à vérifier et non comme un résultat
+   automatiquement approuvé.
+3. Conserver la coopérative cacaoyère fictive près de Soubré comme cas fil rouge tout en
+   transférant la méthode à d’autres contextes professionnels.
+4. Préserver les faits fournis lors d’une réécriture, d’un résumé, d’une réorganisation ou d’un
+   changement de format.
+5. Traiter une information absente comme absente plutôt que comme une autorisation de l’inventer.
+6. Utiliser uniquement des informations fictives, anonymisées, publiques ou explicitement
+   autorisées dans les activités.
+7. Réserver la conception détaillée des prompts à S03 et l’analyse approfondie de documents à S04.
+8. Rendre explicites la vérification, l’approbation, l’autorisation ou l’utilisation humaine
+   lorsque la tâche l’exige.
 
-## Diapositive 01 — IA générative : introduction et applications
+## Diapositive 01 — L’IA générative au travail
 
 - **Identifiant :** S02-01
 - **Durée :** 1 minute
@@ -46,19 +57,21 @@ course-title
 
 ### Contenu de la diapositive
 
-S02 : session de 60 minutes
+S02 : Utiliser l’IA générative au travail
 
+- Session de 60 minutes
+- Aucun prérequis technique
 - Cas fictif : une coopérative cacaoyère près de Soubré
 - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
 - Adaptation pédagogique indépendante générée avec l’IA
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** La session passe des notions d’IA à la production de contenus utiles et vérifiables.
+**Message à faire retenir:** L’IA générative peut accélérer la préparation d’un travail, mais le résultat reste un brouillon à examiner avant utilisation.
 
-Accueillir les participants et situer S02 après les fondements de S01. Annoncer que la coopérative et les captures sont fictives. Les détails restent dans les notes de référence.
+Situer S02 après les fondements de S01. Annoncer que la session porte sur des tâches professionnelles reconnaissables : rédiger, réécrire, organiser, résumer et préparer différents types de contenus. Préciser que les exemples du dépôt sont des adaptations pédagogiques indépendantes.
 
-## Diapositive 02 — Quatre gestes pour utiliser la génération
+## Diapositive 02 — Ce que vous saurez faire
 
 - **Identifiant :** S02-02
 - **Durée :** 2 minutes
@@ -69,35 +82,36 @@ course-objectives
 
 ### Contenu de la diapositive
 
-- Distinguer générer, classer et prévoir
-- Choisir une sortie adaptée au besoin
-- Vérifier faits, droits et limites
-- Définir la décision humaine
+- Reconnaître une tâche adaptée à l’IA générative
+- Choisir une sortie adaptée au besoin et au public
+- Préserver les faits fournis et repérer les ajouts non soutenus
+- Définir ce qui doit être vérifié et par qui
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** On choisit une sortie, on produit un brouillon, puis on vérifie son adéquation au besoin.
+**Message à faire retenir:** L’objectif est de relier un besoin professionnel à une sortie générée et à un contrôle humain.
 
-Présenter les quatre objectifs comme des actions à réaliser pendant la séance. Demander lequel est souvent oublié entre production et diffusion. Retenir la vérification comme réponse à tester jusqu’à la clôture.
+Présenter les objectifs comme quatre gestes observables. La séance ne demande pas de mémoriser des marques ou des modèles. Les techniques détaillées de prompting viendront en S03.
 
-## Diapositive 03 — Partir de la tâche, pas de l’outil
+## Diapositive 03 — Partir du travail, pas de l’outil
 
 - **Identifiant :** S02-03
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Rapport incomplet ? → classer
-- Volume de collecte à venir ? → estimer
-- Avis aux agents ? → rédiger un brouillon
+- Service client : préparer une réponse
+- Gestion de projet : organiser des notes de réunion
+- Administration : structurer un document
+- Opérations : préparer une consigne
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une classification, une prévision et une génération répondent à des questions différentes.
+**Message à faire retenir:** Une utilisation professionnelle commence par une tâche concrète et un résultat attendu.
 
-Faire nommer une sortie pour chacun des trois besoins. Une même solution peut traiter plusieurs tâches ; le type de sortie définit ici la distinction. Revenir ensuite au scénario de la coopérative.
+Demander aux participants de nommer une tâche qu’ils réalisent souvent. Insister sur le résultat attendu avant de parler d’outil. Ces exemples représentent des tâches possibles, pas des recommandations d’automatisation.
 
-## Diapositive 04 — Une consigne de réception à communiquer
+## Diapositive 04 — Un besoin professionnel limité
 
 - **Identifiant :** S02-04
 - **Durée :** 2 minutes
@@ -106,33 +120,33 @@ Faire nommer une sortie pour chacun des trois besoins. Une même solution peut t
 
 - Coopérative fictive près de Soubré
 - Besoin : rappeler les champs d’un dossier de réception
-- Public : agents de terrain, puis producteurs membres
-- Point de départ : une consigne fictive fournie pour la démonstration
+- Public : agents de réception
+- Source : une consigne fictive fournie pour la démonstration
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le travail commence par un besoin opérationnel et une source définie pour l’exercice.
+**Message à faire retenir:** Un cas d’usage utile peut commencer par une tâche simple, une source définie et une personne responsable.
 
-Présenter la coopérative comme fictive et situer le besoin. La consigne d’exercice ne décrit aucune règle réelle. Une connexion intermittente ne signifie pas que la génération fonctionne hors ligne.
+Réintroduire le cas fil rouge. La consigne ne décrit aucune procédure réglementaire ou coopérative réelle. Aucun dossier membre ou lot réel n’est utilisé.
 
-## Diapositive 05 — Même dossier, deux sorties
+## Diapositive 05 — Générer, classer ou prévoir ?
 
 - **Identifiant :** S02-05
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Entrée : un dossier de réception fictif
-- Sortie A : « à compléter » → classement
-- Sortie B : explication aux agents → génération
+- Dossier incomplet ? → classer
+- Volume futur ? → prévoir
+- Avis aux agents ? → générer un brouillon
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Détecter un champ manquant n’est pas la même tâche que rédiger un message.
+**Message à faire retenir:** Une tâche de génération produit du contenu ; elle n’est pas identique à une classification ou une prévision.
 
-Opposer une étiquette « à compléter » à un avis rédigé pour les agents. Faire dire que ni l’étiquette ni le texte n’approuvent la qualité ou la certification d’un lot. Un agent contrôle le dossier.
+Faire nommer la sortie attendue pour chaque tâche. Une même solution peut prendre en charge plusieurs capacités ; la distinction sert ici à clarifier le travail demandé.
 
-## Diapositive 06 — Ce que fait le modèle pendant la séance
+## Diapositive 06 — Comment un brouillon est produit
 
 - **Identifiant :** S02-06
 - **Durée :** 2 minutes
@@ -140,119 +154,122 @@ Opposer une étiquette « à compléter » à un avis rédigé pour les agents. 
 ### Contenu de la diapositive
 
 - Entraînement antérieur → capacités du modèle
-- Consigne de l’exercice → sortie proposée
-- Examen humain → correction ou abandon
+- Demande et contexte → sortie proposée
+- Examen humain → corriger, utiliser ou abandonner
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le modèle utilise des régularités déjà apprises et la demande fournie pour produire un brouillon.
+**Message à faire retenir:** Le modèle combine des capacités acquises auparavant avec la demande et le contexte disponibles pour proposer une sortie.
 
-Suivre les trois étapes du schéma. Demander si une nouvelle demande réentraîne le modèle ; la réponse est non. Un brouillon doit être comparé à une source fournie et vérifié par une personne.
+Utiliser le schéma en trois étapes. Une nouvelle demande ne réentraîne pas automatiquement le modèle. Une sortie convaincante reste à examiner.
 
-## Diapositive 07 — Sept domaines, un critère : la sortie
+## Diapositive 07 — Ce que l’IA générative peut produire
 
 - **Identifiant :** S02-07
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Texte, image, audio, vidéo, code
-- Données synthétiques, mondes virtuels
-- Pour chaque famille : quel résultat examiner ?
+- Texte, image, audio, vidéo et code
+- Données synthétiques et environnements virtuels
+- Même principe : examiner le résultat avant usage
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le cours présente sept familles de contenus générés ; toutes ne demandent pas une démonstration en direct.
+**Message à faire retenir:** L’IA générative peut produire plusieurs types de contenus, mais le bon format dépend du travail à accomplir.
 
-Donner un exemple oral bref pour chaque famille de sorties. Réserver les détails des familles de modèles aux références. Les données synthétiques ne deviennent pas des observations réelles parce qu’elles semblent plausibles.
+Présenter brièvement les sept familles de sorties du cours canonique sans transformer la diapositive en catalogue. Distinguer données synthétiques et données observées. Annoncer que la suite se concentre sur les usages professionnels.
 
-## Diapositive 08 — Une capacité devient utile dans un processus
+## Diapositive 08 — Des tâches professionnelles courantes
 
 - **Identifiant :** S02-08
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Éducation : brouillon de support → enseignant
-- Développement : code proposé → tests
-- Coopérative fictive : avis préparé → responsable
+- Rédiger un premier courriel ou message
+- Réécrire un texte pour un autre public
+- Organiser ou résumer des notes autorisées
+- Structurer un rapport ou une présentation
+- Préparer un visuel ou une aide technique simple
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Générer du texte est une capacité ; préparer un document revu par une équipe est une application.
+**Message à faire retenir:** La génération devient utile lorsqu’elle aide à préparer un résultat concret dans un travail réel.
 
-Faire distinguer capacité et application sur les trois secteurs. Pour chaque sortie, nommer le contrôle : enseignant, tests ou responsable de la coopérative. Aucun gain mesuré n’est attribué à ces exemples.
+Donner un exemple très bref pour chaque famille de tâches. Expliquer que le niveau de vérification dépend du contenu et de ses conséquences. Ne pas supposer qu’un outil connaît les règles internes d’une organisation.
 
-## Diapositive 09 — Une campagne, plusieurs formats
+## Diapositive 09 — Même information, différents livrables
 
 - **Identifiant :** S02-09
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Agent de terrain → avis textuel
-- Formation interne → visuel ou briefing audio
-- Équipe technique → guide HTML testé
-- Même consigne fictive, contrôles différents
+- Client → courriel → vérifier faits, ton et engagements
+- Équipe projet → compte rendu → vérifier décisions et éléments manquants
+- Direction → plan de présentation → vérifier chaque affirmation
+- Opérations → consigne → vérifier la procédure et l’autorité
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le format se choisit selon le public et la preuve nécessaire.
+**Message à faire retenir:** Le public et l’usage attendu déterminent la forme du brouillon et les contrôles nécessaires.
 
-Parcourir la matrice public, sortie et preuve. Demander ce qu’il faudrait vérifier pour un briefing audio puis pour un guide HTML. Une page statique ne constitue pas un système de traçabilité déployé.
+Utiliser le schéma public, sortie et contrôle. Faire remarquer qu’un changement de format ne crée pas de nouveaux faits. Un responsable ou une échéance absent des notes ne doit pas apparaître comme s’il avait été fourni.
 
-## Diapositive 10 — Une consigne fictive et limitée
+## Diapositive 10 — Une source limitée pour la démonstration
 
 - **Identifiant :** S02-10
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Simulation pédagogique : relever identifiant du lot, date et poids
-- Si un champ manque : dossier « à compléter » et vérification par un agent
-- Aucune règle de paiement, de certification ou de qualité fournie
+- Relever l’identifiant du lot, la date et le poids
+- Si un champ manque : marquer le dossier « à compléter »
+- Faire vérifier le dossier par un agent
+- Aucune autre règle n’est fournie
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une source courte permet de vérifier si le brouillon ajoute des faits absents.
+**Message à faire retenir:** Une petite source permet de voir clairement si le brouillon ajoute une information absente.
 
-Lire lentement les trois lignes de la consigne fictive. Faire constater l’absence de règle sur paiement, certification ou qualité. Garder cette source disponible pendant les diapositives 11 à 14.
+Présenter ces quatre éléments comme la totalité de la source fictive. Elle ne contient aucun seuil, délai, paiement, certification ou règle de qualité. Garder la source visible mentalement pendant les diapositives suivantes.
 
-## Diapositive 11 — Demander un avis aux agents
+## Diapositive 11 — Préparer un avis aux agents
 
 - **Identifiant :** S02-11
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Simulation pédagogique : « Rédige un avis de 40 mots aux agents de réception. »
-- « Utilise uniquement la consigne de la diapositive précédente. »
-- « Si une règle manque, signale-le ; n’invente aucun seuil. »
+- Rédiger un court avis pour les agents de réception
+- Utiliser uniquement la consigne fournie
+- Ne pas inventer les informations manquantes
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le contexte et la source orientent la première version sans garantir sa justesse.
+**Message à faire retenir:** Une demande simple peut préciser la tâche, le public et la source sans garantir automatiquement la justesse du résultat.
 
-Montrer la capture d’un véritable échange avec ChatGPT sur le scénario fictif. Faire repérer la tâche, le public et la source, puis contrôler que l’avis reprend les champs à relever et n’ajoute aucune règle de paiement, de certification, de qualité ou de seuil. La réponse est un brouillon à vérifier, pas un avis approuvé. Les techniques de formulation avancées viendront en S03 ; ne saisir aucune donnée réelle.
+Montrer la capture du véritable échange ChatGPT préparé pour le scénario fictif. Faire repérer tâche, public et source. Ne pas transformer cette observation en cours détaillé de prompt engineering ; S03 approfondira la formulation.
 
-## Diapositive 12 — Une phrase plausible peut être fausse
+## Diapositive 12 — Fluide ne signifie pas fondé
 
 - **Identifiant :** S02-12
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Sortie simulée, volontairement erronée : « Un lot incomplet sera certifié sous 24 heures. »
-- Où cette règle figure-t-elle dans la consigne ?
-- Ne pas publier ce brouillon.
+- Contre-exemple pédagogique : « Un lot incomplet sera certifié sous 24 heures. »
+- Où la source fournit-elle cette règle ?
+- Ne pas publier ce brouillon
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** La fluidité d’un texte ne prouve pas qu’il respecte la source.
+**Message à faire retenir:** Une phrase professionnelle et convaincante peut quand même ajouter un fait inexistant.
 
-Laisser quelques secondes de lecture silencieuse. Demander : « Où la consigne donne-t-elle le délai de 24 heures ? » La phrase a été inventée pour l’exercice ; elle ne provient ni de la capture ChatGPT montrée en S02-11 ni d’une exécution du cours IBM.
+Laisser quelques secondes pour identifier l’invention. La source ne fournit ni certification ni délai. Le contre-exemple est volontairement fabriqué pour l’enseignement et ne provient pas de la capture réelle de S02-11.
 
-## Diapositive 13 — Trois vérifications avant usage
+## Diapositive 13 — Vérifier avant usage
 
 - **Identifiant :** S02-13
 - **Durée :** 3 minutes
@@ -260,14 +277,14 @@ Laisser quelques secondes de lecture silencieuse. Demander : « Où la consigne 
 ### Contenu de la diapositive
 
 - Faits : chaque affirmation vient-elle de la source ?
-- Usage : le message répond-il au bon public ?
-- Autorité : qui peut approuver et diffuser ?
+- Usage : le contenu convient-il au public et au besoin ?
+- Autorité : qui peut approuver, envoyer ou publier ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** La vérification est une étape de travail, pas un geste facultatif après publication.
+**Message à faire retenir:** La vérification fait partie du travail de génération ; elle ne commence pas après la diffusion.
 
-Demander qui contrôle les faits et qui autorise la diffusion. La phrase de S02-12 échoue au premier contrôle. Aucun dossier membre privé n’entre dans cet exemple destiné à un service public.
+Utiliser le schéma en trois contrôles. Faire identifier le contrôle que la phrase de S02-12 échoue. Rappeler que plus les conséquences sont importantes, plus le contrôle doit être rigoureux.
 
 ## Diapositive 14 — Revenir aux faits fournis
 
@@ -276,51 +293,55 @@ Demander qui contrôle les faits et qui autorise la diffusion. La phrase de S02-
 
 ### Contenu de la diapositive
 
-- Version d’exercice : « À la réception, relevez l’identifiant du lot, la date et le poids. »
-- « Si un champ manque, marquez le dossier à compléter et demandez une vérification. »
-- Validation par la personne chargée de la procédure avant diffusion
+- Relever identifiant du lot, date et poids
+- Si un champ manque : marquer le dossier « à compléter »
+- Faire vérifier le dossier par un agent
+- Validation de la procédure avant diffusion
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Corriger le brouillon exige de retirer les inventions, pas seulement d’améliorer le style.
+**Message à faire retenir:** Corriger un brouillon exige de retirer les inventions, pas seulement d’améliorer son style.
 
-Comparer chaque phrase avec la source de S02-10. La correction enlève délai et certification inventés. Elle reste un brouillon fictif tant que la personne chargée de la procédure ne l’a pas validée.
+Comparer chaque élément avec S02-10. La certification et le délai disparaissent. La dernière ligne décrit l’autorité de diffusion de l’exercice, pas une nouvelle règle concernant le lot.
 
-## Diapositive 15 — Même source, autre formulation
+## Diapositive 15 — Réécrire sans changer le sens
 
 - **Identifiant :** S02-15
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Agent : instruction de saisie
-- Producteur membre : explication accessible du dossier incomplet
-- Vérifier la fidélité dans les deux versions
+- Notes → résumé
+- Message long → message court
+- Formulation interne → version adaptée au public
+- Informations fournies → plan de présentation
+- Les faits et les inconnues restent les mêmes
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Réécrire ou résumer adapte la forme sans ajouter de nouvelles règles.
+**Message à faire retenir:** L’IA peut transformer la forme d’un contenu sans recevoir l’autorisation d’inventer les faits manquants.
 
-Inviter à reformuler oralement la même consigne pour un producteur membre. Refuser l’ajout d’un délai ou d’une conséquence financière. Une traduction exigerait la même vérification humaine.
+Relier ce principe au travail quotidien. Pour un compte rendu, un responsable ou une échéance absente doit rester non précisé. Pour un courriel ou une présentation, vérifier que la transformation n’introduit aucun engagement ou affirmation nouvelle.
 
-## Diapositive 16 — Un visuel aide, mais peut induire en erreur
+## Diapositive 16 — Un visuel reste un brouillon
 
 - **Identifiant :** S02-16
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Demande fictive : une affiche sur les trois champs de réception
-- Vérifier libellés, ordre, symboles et droits
-- Aucun sceau officiel ni résultat d’inspection inventé
+- Besoin fictif : rappeler les trois champs de réception
+- Vérifier textes, symboles et implications
+- Vérifier droits et provenance lorsque nécessaire
+- Aucun sceau officiel ou résultat d’inspection inventé
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une image générée doit être examinée comme un brouillon de communication.
+**Message à faire retenir:** Une image convaincante doit être vérifiée comme tout autre contenu généré.
 
-Comparer création d’image et modification d’image en une phrase. Vérifier aussi les textes et symboles sur l’affiche. Une illustration séduisante ne prouve aucune inspection réelle.
+Expliquer qu’un visuel peut sembler crédible tout en contenant un texte ou un symbole trompeur. Le contrôle porte donc sur le sens autant que sur l’apparence.
 
-## Diapositive 17 — Que corrigeriez-vous sur cette affiche ?
+## Diapositive 17 — Examiner une affiche générée
 
 - **Identifiant :** S02-17
 - **Durée :** 3 minutes
@@ -328,16 +349,16 @@ Comparer création d’image et modification d’image en une phrase. Vérifier 
 ### Contenu de la diapositive
 
 - Simulation pédagogique : affiche de réception fictive
-- Vérifier : identifiant, date, poids
-- Repérer : fausse certification ou information absente
+- Vérifier : identifiant, date et poids
+- Repérer : information absente ou fausse certification
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** L’évaluation d’un visuel porte aussi sur les mots, les implications et le contexte.
+**Message à faire retenir:** L’évaluation d’un visuel porte sur ce qu’il affirme et suggère, pas seulement sur son apparence.
 
-Montrer une affiche factice marquée « simulation pédagogique ». Demander un élément à garder et un détail à corriger. Écarter faux sceaux officiels, photos réelles de membres et toute preuve de conformité inventée.
+Montrer l’affiche pédagogique existante. Demander un élément correct et un élément à corriger. Ne pas utiliser de photo réelle de membre ou de preuve de conformité inventée.
 
-## Diapositive 18 — Certaines sorties demandent d’autres contrôles
+## Diapositive 18 — D’autres médias demandent d’autres contrôles
 
 - **Identifiant :** S02-18
 - **Durée :** 2 minutes
@@ -345,14 +366,14 @@ Montrer une affiche factice marquée « simulation pédagogique ». Demander un 
 ### Contenu de la diapositive
 
 - Audio : langue, prononciation, consentement et droits
-- Vidéo : séquence, cohérence et provenance
-- Données synthétiques : utilité et risque de confusion avec des données réelles
+- Vidéo : contenu, cohérence et provenance
+- Données synthétiques : les identifier comme telles
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le type de contenu détermine ce qu’il faut vérifier avant diffusion.
+**Message à faire retenir:** Le format produit change certains contrôles, mais pas l’obligation de vérifier avant diffusion.
 
-Présenter oralement un usage audio et un usage vidéo. La langue, le consentement, la cohérence et les droits se vérifient avant toute diffusion. Identifier explicitement les données synthétiques comme telles.
+Donner un exemple oral rapide pour l’audio et la vidéo. Les données synthétiques peuvent servir à certains usages, mais elles ne deviennent pas des observations réelles parce qu’elles paraissent plausibles.
 
 ## Diapositive 19 — Le code généré reste une proposition
 
@@ -361,153 +382,137 @@ Présenter oralement un usage audio et un usage vidéo. La langue, le consenteme
 
 ### Contenu de la diapositive
 
-- Besoin fictif : afficher une liste de champs obligatoires
-- Sortie possible : HTML statique ou aide au code
-- Vérifier comportement, sécurité et accessibilité
+- Besoin fictif : afficher les champs requis
+- Sortie possible : page HTML ou aide au code
+- Exécuter et tester le comportement
+- Vérifier sécurité, accessibilité et adéquation au besoin
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un programme plausible doit être lu, exécuté et testé avant usage.
+**Message à faire retenir:** Un programme plausible n’est pas automatiquement correct, sûr ou prêt à être utilisé.
 
-Rester au niveau du besoin : afficher des champs obligatoires dans une page statique. Une suggestion de code ne prouve ni bon fonctionnement ni sécurité. La diapositive suivante distinguera deux tests.
+Rester au niveau du principe professionnel. S02 ne devient pas un cours de programmation. Une personne techniquement responsable doit examiner le code selon le contexte.
 
-## Diapositive 20 — La page s’affiche ; est-elle juste ?
+## Diapositive 20 — Test technique et test métier
 
 - **Identifiant :** S02-20
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Simulation pédagogique : un guide HTML des trois champs
-- Test technique : le contenu s’affiche et reste lisible
-- Test métier : chaque phrase correspond à la consigne fictive
+- Guide HTML fictif des champs de réception
+- Test technique : la page s’affiche et reste utilisable
+- Test métier : chaque phrase correspond à la source
+- Publication : personne autorisée
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une page qui s’ouvre dans le navigateur peut encore contenir une consigne erronée.
+**Message à faire retenir:** Un contenu peut fonctionner techniquement tout en restant incorrect pour le travail demandé.
 
-Montrer une capture simulée ou une page locale préparée avant la séance. Vérifier son affichage et son accessibilité, puis comparer chaque phrase à la consigne fictive. Un navigateur ouvert n’autorise pas la publication.
+Montrer la capture du guide HTML local. Distinguer clairement « cela s’affiche » de « cela dit la bonne chose ». Une page techniquement fonctionnelle ne reçoit pas automatiquement l’autorisation d’être publiée.
 
-## Diapositive 21 — Produire un contenu ou poursuivre un objectif
+## Diapositive 21 — Génération ou action agentique ?
 
 - **Identifiant :** S02-21
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Génération : un brouillon à examiner
-- Système agentique : plusieurs étapes et actions possibles
-- Autorisations et supervision à définir avant toute action
+- Génération : proposer un brouillon
+- Action agentique : enchaîner des étapes ou des actions
+- Définir autorisations, limites et supervision avant l’action
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une interaction de génération et un enchaînement d’actions n’ont pas le même niveau d’autonomie.
+**Message à faire retenir:** Produire un contenu et poursuivre un objectif en exécutant plusieurs actions n’impliquent pas le même niveau d’autorisation.
 
-Comparer un brouillon proposé avec un système qui enchaînerait des actions. Faire nommer une autorisation à prévoir avant toute action sensible. Aucun agent fictif n’approuve lot, paiement ou certification.
+Rester introductif. Un système agentique n’obtient aucune autorité implicite sur un lot, un paiement, une certification, un engagement client ou une publication.
 
-## Diapositive 22 — Concevoir un usage limité
+## Diapositive 22 — Choisir une tâche professionnelle
 
 - **Identifiant :** S02-22
 - **Durée :** 4 minutes
 
 ### Contenu de la diapositive
 
-- Choisir un public : agent, producteur membre ou équipe technique
-- Choisir une sortie : texte, visuel ou guide statique
-- Nommer une source fictive, un risque et un validateur humain
+- Courriel ou message professionnel
+- Compte rendu ou résumé de notes
+- Plan de rapport ou de présentation
+- Consigne, visuel ou aide technique simple
+- Utiliser uniquement des informations fictives ou autorisées
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un bon cas d’usage précise ce qui sera produit et comment une personne le vérifiera.
+**Message à faire retenir:** Un bon exercice part d’un travail limité que l’on peut simuler et contrôler.
 
-Annoncer deux minutes de discussion et deux minutes de préparation. Laisser chaque binôme choisir public, sortie, risque et validateur humain à partir de S02-10. En solo, réaliser le même exercice individuellement.
+Laisser les participants choisir un type de tâche. En binôme ou en solo, définir ce que l’IA devrait préparer sans encore rédiger un prompt sophistiqué. Les données réelles confidentielles ne sont pas nécessaires.
 
-## Diapositive 23 — Besoin, sortie, contrôle
+## Diapositive 23 — Résultat, source, public, contrôle
 
 - **Identifiant :** S02-23
 - **Durée :** 3 minutes
 
 ### Contenu de la diapositive
 
-- Quel est le besoin ?
-- Quelle sortie est adaptée ?
-- Quel fait sera vérifié, par qui ?
+- Quel résultat faut-il préparer ?
+- Quelle information peut servir de source ?
+- Qui utilisera le résultat ?
+- Que faut-il vérifier, et par qui ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une proposition vaut par la clarté de son contrôle et de sa responsabilité.
+**Message à faire retenir:** Une utilisation professionnelle limitée devient plus claire lorsque ces quatre éléments sont explicités.
 
-Prendre deux propositions d’environ trente secondes. Pour chacune, reformuler besoin, sortie, vérification et autorisation. Transformer tout bénéfice chiffré non prouvé en mesure à relever lors d’un futur essai.
+Faire présenter rapidement une ou deux propositions. Ne pas introduire encore le cadre complet de prompt de S03. L’objectif est de cadrer le travail, pas d’optimiser la formulation.
 
-## Diapositive 24 — Tester la valeur sans inventer des résultats
+## Diapositive 24 — Mesurer l’utilité sans inventer les bénéfices
 
 - **Identifiant :** S02-24
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Critères possibles : exactitude, corrections nécessaires, temps de préparation
-- Données protégées et droits vérifiés avant l’essai
-- Décision d’utilisation : équipe responsable
+- Temps de préparation
+- Exactitude et cohérence
+- Nombre de corrections nécessaires
+- Utilité pour le public
+- Risques ou problèmes rencontrés
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un essai mesuré permet d’évaluer un usage ; une hypothèse ne constitue pas un bénéfice observé.
+**Message à faire retenir:** Une hypothèse de gain doit être testée avant d’être présentée comme un résultat.
 
-Distinguer un indicateur possible d’un résultat déjà obtenu. Demander qui vérifierait les faits et les droits avant l’essai. La décision d’utiliser ou de diffuser appartient à l’équipe responsable.
+Faire distinguer un indicateur possible d’un résultat déjà mesuré. Un gain de temps n’est utile que si la qualité et les règles applicables restent satisfaisantes.
 
-## Diapositive 25 — Trois questions pour repartir
+## Diapositive 25 — Apprendre → utiliser → vérifier
 
 - **Identifiant :** S02-25
 - **Durée :** 2 minutes
 
 ### Contenu de la diapositive
 
-- Est-ce une classification, une prévision ou une génération ?
-- Quelle source et quel format de sortie conviennent ?
-- Quelle affirmation vérifier avant diffusion ?
+- Qu’ai-je appris ?
+- Où pourrais-je l’utiliser ?
+- Que dois-je vérifier avant de l’utiliser ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une sortie produite par l’IA n’est utilisable qu’après un contrôle adapté.
+**Message à faire retenir:** L’objectif est de transférer la méthode à son propre travail sans oublier la vérification.
 
-Faire répondre aux trois questions avec l’avis de S02-12. Attendre génération de texte, source fictive S02-10 et identification de la certification inventée. Corriger brièvement les confusions restantes.
+Demander aux participants de répondre avec une tâche autre que le cas de la coopérative. Une bonne réponse identifie un travail limité, une sortie attendue et au moins un contrôle avant usage.
 
-## Diapositive 26 — Prochaine session : concevoir les prompts
+## Diapositive 26 — Ensuite : concevoir de meilleurs prompts
 
 - **Identifiant :** S02-26
 - **Durée :** 1 minute
 
 ### Contenu de la diapositive
 
-- S02 : besoins, formats, vérification
-- S03 : structure, variantes et évaluation des prompts
+- S02 : besoin, sortie, transformation et contrôle
+- S03 : structure, itération, exemples et évaluation des prompts
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le choix d’une sortie précède le travail détaillé sur la formulation des demandes.
+**Message à faire retenir:** Après avoir défini le travail, le résultat et les contrôles, S03 approfondira la manière de formuler la demande.
 
-Résumer le chemin besoin, sortie et contrôle. Annoncer que S03 approfondira la conception des prompts. Conserver la validation humaine comme condition de toute utilisation.
-
-## Traçabilité vers les modules canoniques
-
-| Module source                  | Diapositives principales                 |
-| ------------------------------ | ---------------------------------------- |
-| 01 — Introduction et capacités | S02-03 à S02-07, S02-10 à S02-15, S02-25 |
-| 02 — Applications et outils    | S02-08 à S02-09, S02-15 à S02-24         |
-| 03 — Quiz, projet et bilan     | S02-17, S02-19 à S02-20, S02-22 à S02-26 |
-
-## Contenus réservés aux ressources complémentaires
-
-- Détails des architectures et histoire des familles de modèles
-- Chiffres économiques, performances de fournisseurs et comparaisons d’outils enregistrées
-- Laboratoires Coursera dont aucune sortie personnelle n’est conservée
-- Guides de génération d’audio, de vidéo, de code et d’agents en plusieurs étapes
-- Quiz, consignes d’évaluation et projet facultatif du cours enregistré
-
-## Points à confirmer avant diffusion
-
-- Les trois adaptations françaises du cours 02 attendent encore la révision personnelle indiquée dans leurs fichiers.
-- Les sorties des diapositives S02-12, S02-14, S02-17 et S02-20 sont des simulations étiquetées créées pour cette session ; elles ne sont pas des résultats conservés du cours IBM. Vérifier leur rendu avant diffusion.
-- Aucun outil, interface ou modèle particulier n’est nécessaire pour la démonstration préparée.
-- Le contrat prévoit aussi une version anglaise alignée ; elle sera rédigée séparément avant l’intégration des supports bilingues.
+Résumer le parcours : besoin → brouillon → vérification → responsabilité humaine. Annoncer que S03 ajoutera une méthode structurée de conception et d’amélioration des prompts.
