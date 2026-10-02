@@ -12,7 +12,7 @@ import {
   teachingDeckSpec,
   validateTeachingPair,
 } from '../src/teaching/session.js';
-import { renderTeachingPdfHtml } from '../src/teaching/pdf.js';
+import { renderTeachingPdfHtml, resolveTeachingPdfVisuals } from '../src/teaching/pdf.js';
 import { renderNativePptx, verifyNativePptx } from '../src/index.js';
 
 async function fixture() {
@@ -235,18 +235,34 @@ test('S01 parser rejects changed timing and bilingual divergence', async () => {
   assert.throws(() => validateTeachingPair(content.en, divergent), /diverge/);
 });
 
-test('projected PDF contains the slide content without facilitator notes', async () => {
+test('projected PDF contains the slide content and teaching visuals without facilitator notes', async () => {
   const { content } = await fixture();
-  const html = renderTeachingPdfHtml(content.fr);
-  assert.equal((html.match(/<section class="slide/g) ?? []).length, 30);
-  assert.match(html, /Cas fictif : une coopérative cacaoyère près de Soubré/);
-  assert.doesNotMatch(html, /Nawa/);
-  assert.match(
-    renderTeachingPdfHtml(content.en),
-    /Fictional case: a cocoa cooperative near Soubré/,
-  );
-  assert.doesNotMatch(html, /\*\*Message à faire retenir/);
-  assert.doesNotMatch(html, /Notes pédagogiques/);
+  const root = repositoryRoot();
+
+  const enVisuals = await resolveTeachingPdfVisuals(content.en, root);
+  const frVisuals = await resolveTeachingPdfVisuals(content.fr, root);
+
+  const expectedVisualSlides = ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'];
+
+  assert.deepEqual([...enVisuals.keys()], expectedVisualSlides);
+  assert.deepEqual([...frVisuals.keys()], expectedVisualSlides);
+
+  const frHtml = renderTeachingPdfHtml(content.fr, undefined, frVisuals);
+  assert.equal((frHtml.match(/<section class="slide/g) ?? []).length, 30);
+  assert.equal((frHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 6);
+  assert.match(frHtml, /Cas fictif : une coopérative cacaoyère près de Soubré/);
+  assert.match(frHtml, /Échange réel avec ChatGPT/);
+  assert.doesNotMatch(frHtml, /Nawa/);
+  assert.doesNotMatch(frHtml, /\*\*Message à faire retenir/);
+  assert.doesNotMatch(frHtml, /Notes pédagogiques/);
+
+  const enHtml = renderTeachingPdfHtml(content.en, undefined, enVisuals);
+  assert.equal((enHtml.match(/<section class="slide/g) ?? []).length, 30);
+  assert.equal((enHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 6);
+  assert.match(enHtml, /Fictional case: a cocoa cooperative near Soubré/);
+  assert.match(enHtml, /Real ChatGPT exchange/);
+  assert.doesNotMatch(enHtml, /\*\*Key takeaway/);
+  assert.doesNotMatch(enHtml, /Teaching Notes/);
 });
 
 test('S02 generates aligned 26-slide decks with readable presenter notes', async () => {

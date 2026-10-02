@@ -12,6 +12,7 @@ import {
   renderNativePptxVisualQa,
   renderTeachingPdf,
   renderTeachingPdfHtml,
+  resolveTeachingPdfVisuals,
   serializeNativePptxArtifactRecord,
   serializeNativePptxVerification,
   serializeNativePptxVisualQaManifest,
@@ -345,9 +346,11 @@ async function main(): Promise<void> {
             const logo = await readFile(
               resolve(root, 'packages/presentations/assets/brand/kraak/kraak-logo.png'),
             );
+            const visuals = await resolveTeachingPdfVisuals(content, root);
             const html = renderTeachingPdfHtml(
               content,
               `data:image/png;base64,${logo.toString('base64')}`,
+              visuals,
             );
             if (
               record.pdfSha256 !== verification.pdfSha256 ||

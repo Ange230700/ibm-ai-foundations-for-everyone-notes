@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer';
 
 import { normalizePdfSemanticText } from '../document/verify-pdf.js';
 import { validatePdfBytes } from '../document/render-pdf.js';
-import type { TeachingSessionContent, TeachingSlide } from './session.js';
+import { teachingDeckSpec, type TeachingSessionContent, type TeachingSlide } from './session.js';
 
 export interface TeachingPdfRecord {
   schemaVersion: 1;
@@ -37,6 +37,15 @@ export interface TeachingPdfVerification {
   durationMinutes: number;
 }
 
+export interface TeachingPdfVisual {
+  slideId: string;
+  kind: 'mermaid' | 'simulation' | 'capture';
+  path: string;
+  caption: string;
+  dataUrl: string;
+  sha256: string;
+}
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll('&', '&amp;')
@@ -54,7 +63,60 @@ function relativePath(root: string, path: string): string {
   return value;
 }
 
-function slideHtml(slide: TeachingSlide, index: number, content: TeachingSessionContent): string {
+const TEACHING_VISUAL_PATH =
+  /^teaching\/visuals\/(?:s01|s02|s03)\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u;
+
+export async function resolveTeachingPdfVisuals(
+  content: TeachingSessionContent,
+  repositoryRootInput: string,
+): Promise<Map<string, TeachingPdfVisual>> {
+  const repositoryRoot = resolve(repositoryRootInput);
+  const spec = teachingDeckSpec(content);
+  const visuals = new Map<string, TeachingPdfVisual>();
+
+  for (const slide of spec.slides) {
+    if (!slide.visual) continue;
+
+    const { path, kind, caption } = slide.visual;
+
+    if (!TEACHING_VISUAL_PATH.test(path)) {
+      throw new Error(`Unsafe teaching PDF visual path: ${path}`);
+    }
+
+    const absolutePath = resolve(repositoryRoot, path);
+    relativePath(repositoryRoot, absolutePath);
+
+    const bytes = await readFile(absolutePath);
+
+    if (kind === 'mermaid') {
+      if (!bytes.toString('utf8').includes('<svg')) {
+        throw new Error(`Invalid teaching PDF SVG: ${path}`);
+      }
+    } else if (!bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+      throw new Error(`Invalid teaching PDF PNG: ${path}`);
+    }
+
+    const mime = kind === 'mermaid' ? 'image/svg+xml' : 'image/png';
+
+    visuals.set(slide.slideId, {
+      slideId: slide.slideId,
+      kind,
+      path,
+      caption,
+      dataUrl: `data:${mime};base64,${bytes.toString('base64')}`,
+      sha256: sha256(bytes),
+    });
+  }
+
+  return visuals;
+}
+
+function slideHtml(
+  slide: TeachingSlide,
+  index: number,
+  content: TeachingSessionContent,
+  visual?: TeachingPdfVisual,
+): string {
   const title = escapeHtml(slide.title);
   const body = slide.table
     ? `<table><thead><tr>${slide.table.headers.map((cell) => `<th>${escapeHtml(cell)}</th>`).join('')}</tr></thead><tbody>${slide.table.rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
@@ -65,9 +127,19 @@ function slideHtml(slide: TeachingSlide, index: number, content: TeachingSession
           return `<li><span class="marker">${label}</span>${escapeHtml(item)}</li>`;
         })
         .join('')}</ul>`;
+  const figure = visual
+    ? `<figure class="teaching-visual"><div class="visual-frame"><img src="${visual.dataUrl}" alt="${escapeHtml(visual.caption)}"></div><figcaption>${escapeHtml(visual.caption)}</figcaption></figure>`
+    : '';
+
+  const projected = visual
+    ? visual.kind === 'simulation'
+      ? `<div class="slide-content split-visual">${body}${figure}</div>`
+      : `<div class="slide-content wide-visual">${figure}${body}</div>`
+    : body;
+
   return `<section class="slide${slide.role === 'course-title' ? ' cover' : ''}">
     <div class="topline">${escapeHtml(content.id.toUpperCase())} · ${String(index + 1).padStart(2, '0')}/${content.slides.length}</div>
-    <h1>${title}</h1>${body}
+    <h1>${title}</h1>${projected}
     <footer>${escapeHtml(slide.id)} · ${slide.durationMinutes} min · KRAAK CONSULTING</footer>
   </section>`;
 }
@@ -75,8 +147,11 @@ function slideHtml(slide: TeachingSlide, index: number, content: TeachingSession
 export function renderTeachingPdfHtml(
   content: TeachingSessionContent,
   logoDataUrl?: string,
+  visuals: ReadonlyMap<string, TeachingPdfVisual> = new Map(),
 ): string {
-  const slides = content.slides.map((slide, index) => slideHtml(slide, index, content)).join('\n');
+  const slides = content.slides
+    .map((slide, index) => slideHtml(slide, index, content, visuals.get(slide.id)))
+    .join('\n');
   return `<!doctype html><html lang="${content.language}"><head><meta charset="utf-8">
   <title>${escapeHtml(content.title)}</title><style>
     @page { size: 13.333in 7.5in; margin: 0 }
@@ -99,6 +174,74 @@ export function renderTeachingPdfHtml(
     th, td { padding: .15in .18in; text-align: left; border: 1px solid #4CC3D9 }
     th { background: #1673AE; color: white }
     tr:nth-child(even) { background: #F4FBFD }
+    .slide-content { min-width: 0 }
+    .slide-content.wide-visual {
+      display: grid;
+      grid-template-rows: 3.15in minmax(0, 1fr);
+      gap: .14in;
+      height: 5.08in;
+    }
+    .slide-content.wide-visual ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .08in .14in;
+      margin: 0;
+      align-content: start;
+    }
+    .slide-content.wide-visual li {
+      font-size: 13pt;
+      line-height: 1.15;
+      padding: .07in .1in;
+    }
+    .slide-content.split-visual {
+      display: grid;
+      grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
+      gap: .22in;
+      height: 5.02in;
+      align-items: stretch;
+    }
+    .slide-content.split-visual ul {
+      margin: 0;
+      gap: .1in;
+    }
+    .slide-content.split-visual li {
+      font-size: 15pt;
+      line-height: 1.18;
+      padding: .1in .13in;
+    }
+    .teaching-visual {
+      margin: 0;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding: .08in;
+      background: white;
+      border: 1px solid #4CC3D9;
+      border-radius: .1in;
+      overflow: hidden;
+    }
+    .visual-frame {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .visual-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .teaching-visual figcaption {
+      flex: 0 0 auto;
+      margin-top: .05in;
+      text-align: center;
+      font-size: 10pt;
+      line-height: 1.15;
+      color: #445977;
+    }
     footer { position: absolute; left: .72in; right: .72in; bottom: .3in;
       border-top: 1px solid #4CC3D9; padding-top: .12in; font-size: 10pt; }
   </style></head><body>${slides.replaceAll('<div class="topline">', `${logoDataUrl ? `<img class="brand-logo" src="${logoDataUrl}" alt="KRAAK Consulting">` : ''}<div class="topline">`)}</body></html>`;
@@ -119,9 +262,11 @@ export async function renderTeachingPdf(
   const brandLogo = await readFile(
     resolve(repositoryRoot, 'packages/presentations/assets/brand/kraak/kraak-logo.png'),
   );
+  const visuals = await resolveTeachingPdfVisuals(content, repositoryRoot);
   const html = renderTeachingPdfHtml(
     content,
     `data:image/png;base64,${brandLogo.toString('base64')}`,
+    visuals,
   );
   const browser = await puppeteer.launch({ headless: 'shell' });
   try {
@@ -167,6 +312,7 @@ export async function verifyTeachingPdf(
   const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
   const loadingTask = getDocument({ data: new Uint8Array(bytes).slice(), useSystemFonts: true });
   const document = await loadingTask.promise;
+  const spec = teachingDeckSpec(content);
   try {
     if (document.numPages !== content.slides.length) {
       throw new Error(
@@ -181,11 +327,13 @@ export async function verifyTeachingPdf(
       const actual = normalizePdfSemanticText(
         text.items.map((item) => ('str' in item ? item.str : '')).join(' '),
       );
+      const visualCaption = spec.slides[index]?.visual?.caption;
       const expected = [
         slide.id,
         slide.title,
         ...slide.items,
         ...(slide.table ? [...slide.table.headers, ...slide.table.rows.flat()] : []),
+        ...(visualCaption ? [visualCaption] : []),
       ];
       for (const value of expected) {
         if (!actual.includes(normalizePdfSemanticText(value))) {
