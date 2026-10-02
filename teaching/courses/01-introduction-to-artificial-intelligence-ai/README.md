@@ -64,6 +64,5 @@ The screenshots are maintained source assets and the visual generator does not o
 
 On Windows with desktop PowerPoint, `pnpm teaching:artifact animate --session=s01` builds
 separate animated PPTX copies after the native PPTX files have been generated. In FR and EN, all
-30 slides contain click animations: the cover introduces its subtitle, slide 19 introduces the
-complete table, and the other slides reveal their content lines progressively. Each language
+30 slides contain click animations: the cover introduces its subtitle, slide 18 introduces the complete table, and the other slides reveal their content lines progressively. Each language
 keeps the same 30 slides and speaker notes.

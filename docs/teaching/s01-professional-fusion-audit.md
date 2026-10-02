@@ -2,7 +2,7 @@
 
 ## Status
 
-- **Session:** S01 — AI Fundamentals / Fondamentaux de l’IA
+- **Session:** S01 — Understanding AI / Comprendre l’IA
 - **Current duration:** 60 minutes
 - **Current slide count:** 30 per language
 - **Target duration:** 60 minutes
