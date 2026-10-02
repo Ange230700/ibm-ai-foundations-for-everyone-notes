@@ -189,7 +189,7 @@ export function renderTeachingPdfHtml(
       align-content: start;
     }
     .slide-content.wide-visual li {
-      font-size: 13pt;
+      font-size: 15pt;
       line-height: 1.15;
       padding: .07in .1in;
     }
