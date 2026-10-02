@@ -47,7 +47,7 @@ and explicit human responsibility for consequential decisions.
 ## Current sessions
 
 - Course 01 — Introduction to Artificial Intelligence (AI)
-  - S01 — AI Fundamentals / Fondamentaux de l’IA
+  - S01 — Understanding AI / Comprendre l’IA
   - Duration: 60 minutes
   - French teaching source: available
   - English teaching source: available
@@ -96,9 +96,9 @@ The visuals are kept in `teaching/visuals/s01/`. After editing the Mermaid or HT
 regenerate the SVG and simulated PNG files with `node --import tsx scripts/generate-s01-visuals.mjs`
 before building and animating again. The script leaves `chat-capture.png` untouched.
 The animation plan comes from the current teaching sources and covers all 30 slides in both
-languages. The cover reveals its main heading and context together, slide 19 reveals its complete table,
+languages. The cover reveals its main heading and context together, slide 18 reveals its complete table,
 and the other 28 slides reveal each row after the first on click; the first row is visible on
-arrival. This plan contains 90 clicks and 267 individual PowerPoint shape effects per language.
+arrival. This plan contains 93 clicks and 276 individual PowerPoint shape effects per language.
 The command checks the source PPTX before animation, then checks every slide and each animated
 shape after saving the copy. Rerun it after rebuilding S01 to refresh these copies. The 30-slide,
 60-minute contract and PDF output remain the same.

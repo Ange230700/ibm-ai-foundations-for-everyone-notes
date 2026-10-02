@@ -34,7 +34,7 @@ session without the required metadata and Slide 01 disclosures must fail validat
 ## Current specification
 
 - `s01-ai-fundamentals-60-min-content-contract.md` defines the aligned French and English
-  content contract for a 60-minute AI fundamentals session.
+  content contract for the 60-minute Understanding AI / Comprendre l’IA professional-curriculum session.
 - `s02-generative-ai-60-min-content-contract.md` proposes the aligned French and English
   60-minute introduction to generative AI. The canonical Course 02 French adaptations still await
   personal review. The bilingual S02 teaching sources are drafts under

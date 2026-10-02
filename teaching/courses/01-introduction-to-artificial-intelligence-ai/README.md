@@ -57,7 +57,7 @@ and editable PPTX language variants. Slides retain the identifiers and one-minut
 allocations from the teaching contract; the PPTX speaker notes include the facilitation text.
 Visual review and a timed rehearsal remain necessary before the session is released.
 
-The French and English S01-23 PPTX use unaltered captures of real ChatGPT exchanges at
+The French and English S01-22 PPTX use unaltered captures of real ChatGPT exchanges at
 `teaching/visuals/s01/fr/chat-capture.png` and `teaching/visuals/s01/en/chat-capture.png`.
 The cocoa cooperative in the prompts is fictional; both responses still need human review.
 The screenshots are maintained source assets and the visual generator does not overwrite them.
