@@ -137,13 +137,7 @@ test('S01 teaching sources preserve 30 aligned slides and exactly 60 minutes', a
   assert.equal(content.fr.slides.length, 30);
   assert.equal(content.en.durationMinutes, 60);
   assert.equal(content.fr.durationMinutes, 60);
-  assert.deepEqual(content.en.slides[7]?.itemKinds, [
-    'ordered',
-    'ordered',
-    'ordered',
-    'ordered',
-    'bullet',
-  ]);
+  assert.deepEqual(content.en.slides[7]?.itemKinds, ['ordered', 'ordered', 'ordered', 'ordered']);
   for (const language of ['en', 'fr'] as const) {
     const spec = teachingDeckSpec(content[language]);
     assert.equal(spec.slides.length, 30);
@@ -157,7 +151,7 @@ test('S01 teaching sources preserve 30 aligned slides and exactly 60 minutes', a
           slide.teachingNotes && slide.sourceRefs[0]?.path === content[language].sourcePath,
       ),
     );
-    assert.equal(spec.slides[18]?.kind, 'table');
+    assert.equal(spec.slides[17]?.kind, 'table');
   }
 });
 
@@ -170,7 +164,7 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
       const spec = teachingDeckSpec(content[language]);
       assert.deepEqual(
         spec.slides.filter((slide) => slide.visual).map((slide) => slide.slideId),
-        ['S01-08', 'S01-10', 'S01-20', 'S01-21', 'S01-23', 'S01-25'],
+        ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'],
       );
       const path = resolve(output, `${language}.pptx`);
       const artifact = await renderNativePptx(spec, {
@@ -183,11 +177,11 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
         verification.slides
           .filter((slide) => slide.pictures >= 2 && slide.slideId !== 'S01-01')
           .map((slide) => slide.slideId),
-        ['S01-08', 'S01-10', 'S01-20', 'S01-21', 'S01-23', 'S01-25'],
+        ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'],
       );
       const zip = await JSZip.loadAsync(await readFile(path));
       const capturePath = `teaching/visuals/s01/${language}/chat-capture.png`;
-      const capture = spec.slides[22]?.visual;
+      const capture = spec.slides[21]?.visual;
       assert.equal(capture?.kind, 'capture');
       assert.equal(capture.path, capturePath);
       assert.match(
@@ -195,10 +189,10 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
         language === 'fr' ? /Échange réel avec ChatGPT/u : /Real ChatGPT exchange/u,
       );
       assert.equal(
-        artifact.visualAssets.find((asset) => asset.slideId === 'S01-23')?.sha256,
+        artifact.visualAssets.find((asset) => asset.slideId === 'S01-22')?.sha256,
         sha256(await readFile(resolve(repositoryRoot(), capturePath))),
       );
-      const slideXml = await zip.file('ppt/slides/slide23.xml')?.async('string');
+      const slideXml = await zip.file('ppt/slides/slide22.xml')?.async('string');
       assert.ok(slideXml);
       const imageWidths = [...slideXml.matchAll(/<p:pic>[\s\S]*?<a:ext cx="(\d+)" cy="\d+"/gu)].map(
         (match) => Number(match[1]),
@@ -237,7 +231,7 @@ test('S01 parser rejects changed timing and bilingual divergence', async () => {
     /expected 60 minutes/,
   );
   const divergent = structuredClone(content.fr);
-  divergent.slides[18]?.table?.rows.pop();
+  divergent.slides[17]?.table?.rows.pop();
   assert.throws(() => validateTeachingPair(content.en, divergent), /diverge/);
 });
 

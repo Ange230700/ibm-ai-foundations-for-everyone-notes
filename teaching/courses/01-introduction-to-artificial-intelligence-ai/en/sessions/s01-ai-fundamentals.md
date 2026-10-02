@@ -1,18 +1,21 @@
-# S01 — AI Fundamentals
+# S01 — Understanding AI
 
 ## Teaching metadata
 
-- **Program:** AI Foundations for Everyone
-- **Session:** S01 — AI Fundamentals
+- **Program:** AI for Everyone — Professional Curriculum
+- **Session:** S01 — Understanding AI
 - **Language:** English
 - **Audience:** Professionals and learners with no technical prerequisite
 - **Duration:** 60 minutes
 - **Number of slides:** 30
 - **Case study:** a fictional cocoa cooperative near Soubré
 - **Original learning source:** IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- **Complementary professional-practice input:** collaborative material documented in the parent curriculum contract
 - **AI disclosure:** This teaching session is generated with AI as an independent repository adaptation.
 - **Bilingual contract:**
   `docs/teaching/s01-ai-fundamentals-60-min-content-contract.md`
+- **Fusion audit:**
+  `docs/teaching/s01-professional-fusion-audit.md`
 
 ## Canonical sources
 
@@ -23,17 +26,22 @@
 
 ## Session objective
 
-Build a simple mental model for understanding artificial intelligence capabilities, uses, and
-limitations, then connect an operational need to a technique, its risks, and clearly assigned human
-responsibility.
+Build a simple mental model for understanding what AI can do, where it can fail, how to match an AI
+capability to a professional need, and where human verification, authorization, or decision-making
+remains necessary.
 
 ## Facilitation principles
 
 1. Present one central idea per slide.
-2. Use the fictional cooperative case as the common scenario throughout the session.
-3. Involve learners at the moments indicated in the teaching notes.
-4. Consistently distinguish what the system proposes from what a person decides.
-5. Keep technical and regulatory detail in the reference resources.
+2. Start with the professional question before emphasizing technical terminology.
+3. Keep the fictional cocoa cooperative near Soubré as the anchor case while using transfer
+   examples from other professions.
+4. Treat fluent or plausible AI output as something to verify, not as evidence of correctness.
+5. Distinguish what AI may assist with from what a responsible person verifies, approves,
+   authorizes, or decides.
+6. Require only fictional, anonymized, public, or explicitly authorized information in learning
+   activities.
+7. Keep unnecessary technical and regulatory depth in presenter notes or reference resources.
 
 ## Slide 01 — AI Foundations for Everyone
 
@@ -46,20 +54,21 @@ course-title
 
 ### On-Slide Content
 
-S01: AI Fundamentals
+S01: Understanding AI
 
 - 60-minute session
+- No technical prerequisite
 - Fictional case: a cocoa cooperative near Soubré
 - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
 - Independent teaching adaptation generated with AI
 
 ### Teaching Notes
 
-**Key takeaway:** The session introduces the essential concepts needed to understand artificial intelligence capabilities, uses, and limitations.
+**Key takeaway:** Understanding AI helps people decide where it can help, where it can fail, and where a person must remain in control.
 
-Welcome participants. Explain that the session provides a practical overview. Mention that detailed technical material remains available in the reference resources.
+Present the session as a practical introduction to AI. Explain that the goal is not to train AI engineers, but to give participants a sufficient mental model for assessing professional uses.
 
-## Slide 02 — Session objectives
+## Slide 02 — What you will be able to do
 
 - **Identifier:** S01-02
 - **Duration:** 2 minutes
@@ -70,36 +79,38 @@ course-objectives
 
 ### On-Slide Content
 
-- Define AI and distinguish levels of capability
-- Connect machine learning, deep learning, and generative AI
-- Match an AI technique to a concrete need
-- Recognize risks and human responsibilities
+- Explain AI in simple terms
+- Distinguish predictive and generative AI
+- Match an AI capability to a professional need
+- Recognize limitations and information that must be checked
+- Identify decisions that remain human
 
 ### Teaching Notes
 
-**Key takeaway:** Participants will build a simple mental model for assessing an AI use case.
+**Key takeaway:** The session should enable learners to assess a simple AI use case rather than only memorize terminology.
 
-Present the objectives as abilities participants will use during the session. Explain that the cooperative case will help test each concept in a professional setting.
+Present the objectives as observable abilities. Explain that every technical concept will be connected to a professional situation.
 
-## Slide 03 — A cocoa cooperative near Soubré
+## Slide 03 — Where could AI help at work?
 
 - **Identifier:** S01-03
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Fictional case: producers deliver cocoa lots to the cooperative
-- Teams record field visits, weights, quality results, and warehouse movements
-- Internet access remains intermittent at some sites
-- Question: where could AI help without making the final decision?
+- Administration: organize or summarize information
+- Customer service: prepare a response
+- Project management: structure meeting notes
+- Operations: flag incomplete records
+- Anchor case: a fictional cocoa cooperative near Soubré
 
 ### Teaching Notes
 
-**Key takeaway:** A clearly defined operational need makes it possible to assess the real value of AI.
+**Key takeaway:** Start with the work that needs to be done, not with the tool.
 
-Introduce the cooperative as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
+Ask participants to name one work or learning task that might benefit from assistance. Then introduce the cooperative as the shared case used to test ideas throughout the session.
 
-## Slide 04 — Artificial intelligence
+## Slide 04 — What is artificial intelligence?
 
 - **Identifier:** S01-04
 - **Duration:** 2 minutes
@@ -108,49 +119,49 @@ Introduce the cooperative as a fictional organization near Soubré. Ask particip
 
 - Understand language or images
 - Recognize patterns in data
-- Produce predictions or recommendations
+- Classify, forecast, or recommend
 - Generate new content
 
 ### Teaching Notes
 
-**Key takeaway:** AI includes systems that perform tasks associated with human intelligence.
+**Key takeaway:** AI includes systems that perform tasks associated with some forms of human intelligence.
 
-Explain that AI is a broad field rather than a single tool. Connect each capability to a familiar example such as translation, fraud detection, or a conversational assistant.
+Explain that AI is a broad field rather than a single product. Connect each capability to a simple example. Avoid implying that the system necessarily thinks like a person.
 
-## Slide 05 — Artificial intelligence and augmented intelligence
+## Slide 05 — AI supports human work
 
 - **Identifier:** S01-05
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **AI can:** analyze, flag, summarize, or propose
-- **A person must:** define the goal, verify the evidence, and decide
-- Stronger consequences require stronger oversight
+- **AI can:** analyze, flag, summarize, classify, or suggest
+- **A person may need to:** verify, approve, authorize, or decide
+- Greater consequences require stronger controls
 
 ### Teaching Notes
 
-**Key takeaway:** Augmented intelligence uses AI to improve human work while keeping human responsibility clear.
+**Key takeaway:** Useful AI can augment human work without automatically receiving authority to make decisions.
 
-Use the example of a quality technician at the fictional cooperative. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
+Use a simple example: a system may flag an incomplete record, but a responsible staff member reviews the evidence before acting. Introduce human responsibility as a principle that will return throughout the program.
 
-## Slide 06 — Levels of AI capability
+## Slide 06 — What AI can do — and where it can fail
 
 - **Identifier:** S01-06
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **ANI:** AI specialized in a task or domain
-- **AGI:** general capability comparable to a human, still hypothetical
-- **ASI:** intelligence far beyond human capability, hypothetical
-- Current systems fall under ANI
+- **Useful for:** drafting, summarizing, organizing, explaining, comparing, or classifying
+- **Can fail through:** factual errors, invented information, misunderstood context
+- Responses may be generic or reflect bias
+- Plausible does not mean accurate
 
 ### Teaching Notes
 
-**Key takeaway:** Current AI systems perform limited tasks even when they appear versatile.
+**Key takeaway:** A convincing response may still be inaccurate, incomplete, or unsuitable for the context.
 
-Emphasize the difference between conversational fluency and general intelligence. A model that discusses many subjects still depends on its data, context, and available tools.
+Use the example of meeting notes in which AI invents the person responsible for an action. Explain that important information must be compared with the source or checked by a competent person.
 
 ## Slide 07 — Predictive and generative AI
 
@@ -159,35 +170,33 @@ Emphasize the difference between conversational fluency and general intelligence
 
 ### On-Slide Content
 
-- **Predictive AI:** classify, forecast, recommend, or detect an anomaly
-- **Generative AI:** produce text, images, audio, video, or code
-- One solution can combine both approaches
+- **Predictive:** classify, forecast, recommend, detect an anomaly
+- **Generative:** produce text, images, audio, video, or code
+- One solution may combine several approaches
 
 ### Teaching Notes
 
-**Key takeaway:** Predictive systems analyze existing data, while generative systems produce a new output.
+**Key takeaway:** Predictive AI estimates or classifies from existing data; generative AI produces new content.
 
-Compare forecasting collection volumes with drafting a report. Explain that generative AI does not replace classification or forecasting models.
+Compare forecasting collection volume with drafting a report. Explain that “generative” does not automatically mean more advanced or more suitable for the problem.
 
-## Slide 08 — Evolution of AI systems
+## Slide 08 — From rules to learned models
 
 - **Identifier:** S01-08
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-1. Rules written by specialists
-2. Patterns learned from data
+1. Explicitly written rules
+2. Models that learn patterns
 3. Deep networks for complex data
-4. Large models that generate content
-
-- These approaches continue to coexist
+4. Foundation models capable of generating content
 
 ### Teaching Notes
 
-**Key takeaway:** New approaches expand the range of possible tasks without making earlier approaches obsolete.
+**Key takeaway:** Different approaches coexist because they solve different kinds of problems.
 
-Give one example for each stage. A regulatory calculation may remain rule based. Forecasting often uses machine learning. Vision frequently uses deep learning. A writing assistant uses a generative model.
+Present this as a mental model rather than a complete history. A simple rule may remain preferable when it clearly solves the problem.
 
 ## Slide 09 — Machine learning
 
@@ -196,52 +205,52 @@ Give one example for each stage. A regulatory calculation may remain rule based.
 
 ### On-Slide Content
 
-- Data provides examples of the problem
+- Data describes examples of the problem
 - An algorithm searches for useful relationships
-- A model applies learned relationships to new data
-- Quality depends on the data and evaluation
+- The model applies those relationships to new data
+- Quality depends on data and evaluation
 
 ### Teaching Notes
 
 **Key takeaway:** Machine learning enables a system to learn patterns from examples.
 
-Contrast this approach with a program containing an explicit rule for every situation. Explain that the model learns statistical relationships and does not understand the domain like a human specialist.
+Contrast this with a program in which every rule is written manually. Explain that the model learns statistical relationships and does not replace domain knowledge.
 
-## Slide 10 — Three learning approaches
+## Slide 10 — How machines learn from examples
 
 - **Identifier:** S01-10
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- **Supervised:** learns from labeled examples
-- **Unsupervised:** discovers groups or anomalies
-- **Reinforcement:** improves a sequence of actions through feedback
-- At the fictional cooperative: collection forecasting or unusual weight detection
+- **Supervised:** learn from examples with a known answer
+- **Unsupervised:** identify groups or anomalies without a supplied answer
+- **Reinforcement:** adjust a sequence of actions from feedback
+- The professional need determines the useful approach
 
 ### Teaching Notes
 
-**Key takeaway:** The learning approach depends on the available data and the expected decision.
+**Key takeaway:** The learning approach depends on the available data and the desired outcome.
 
-Ask participants to match collection forecasting with supervised learning and unusual weight detection with unsupervised learning. Present reinforcement learning as an approach for sequential decisions in a controlled environment.
+Avoid algorithmic detail. Use volume forecasting, unusual-weight detection, and a system improving a sequence of actions as illustrations. The terms support understanding rather than specialist training.
 
-## Slide 11 — Neural networks and deep learning
+## Slide 11 — Deep learning without the mathematics
 
 - **Identifier:** S01-11
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- A neural network connects computational units arranged in layers
+- Neural networks organize computations in layers
 - Layers progressively learn useful features
-- Common uses involve images, speech, and language
-- Model complexity does not guarantee reliable results
+- Common uses: images, speech, and language
+- A complex model is not automatically reliable
 
 ### Teaching Notes
 
-**Key takeaway:** Deep learning uses multiple computational layers to learn complex representations.
+**Key takeaway:** Deep learning uses multiple layers to learn complex representations.
 
-Avoid mathematical detail. Use an image example in which early layers detect simple shapes and later layers combine that information. Remind participants that evaluation remains necessary.
+Use an image analogy: some layers detect simple shapes and later layers combine them. Avoid mathematical detail. Emphasize that complexity does not replace evaluation.
 
 ## Slide 12 — Foundation models and large language models
 
@@ -250,370 +259,349 @@ Avoid mathematical detail. Use an image example in which early layers detect sim
 
 ### On-Slide Content
 
-- Trained on large amounts of general data
-- Adapted through instructions, examples, or additional training
-- Produces text from the supplied context
-- Requires verification before professional use
+- Pretraining on large amounts of data
+- Reuse across many tasks
+- An LLM generates language from the supplied context
+- Generated output must be checked before professional use
 
 ### Teaching Notes
 
-**Key takeaway:** A foundation model provides a reusable base, while an LLM specializes in processing and generating language.
+**Key takeaway:** A foundation model provides a reusable base; an LLM applies that approach to language.
 
-Explain that an LLM predicts language units from context. Distinguish knowledge learned during training from documents supplied with a request. Mention that retrieval-augmented generation will appear later.
+Explain that an LLM produces probable sequences of language units from context. Distinguish this behavior from a database that simply retrieves an exact stored record.
 
-## Slide 13 — Generative and multimodal AI
+## Slide 13 — Text, images, audio, and multimodal AI
 
 - **Identifier:** S01-13
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Generative AI produces text, images, audio, video, or code
-- A unimodal model processes one type of information
-- A multimodal model combines several types of information
-- Cooperative example: a label photo combined with a written report
+- Text: analyze, summarize, or generate
+- Voice: transcribe or produce speech
+- Image: read, classify, or flag a feature
+- Multimodal: combine several information types
 
 ### Teaching Notes
 
-**Key takeaway:** Generation describes the production of content, while multimodality describes the types of information processed together.
+**Key takeaway:** AI systems can process different forms of information separately or together.
 
-Address the common confusion between generation and multimodality. A system may generate only text. Another system may analyze an image and text without producing several output formats.
+Connect terminology to capabilities. Example: a label photograph paired with a written note. Multiple modalities do not automatically make a result more reliable.
 
-## Slide 14 — Language and speech technologies
+## Slide 14 — What does conversational AI actually know?
 
 - **Identifier:** S01-14
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Natural language processing analyzes or produces text
-- Speech recognition converts speech into text
-- Speech synthesis converts text into speech
-- Cooperative example: transcription of a field voice note
+- The model uses patterns learned during training
+- The request supplies additional context
+- Documents or tools may sometimes add information
+- Access to recent, private, or internal information must not be assumed
 
 ### Teaching Notes
 
-**Key takeaway:** Language processing enables systems to use written and spoken communication.
+**Key takeaway:** A response depends on what the model learned, the supplied context, and the sources or tools it can actually access.
 
-Describe a field agent recording an observation. The system transcribes the message and extracts the location or requested action. The agent then verifies the transcription before saving it.
+Ask: “If the assistant has not received our internal procedure, how could it know the current version?” Use this to prepare the later concept of approved sources.
 
-## Slide 15 — Computer vision
+## Slide 15 — Choosing an AI tool for the job
 
 - **Identifier:** S01-15
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Locate objects or text in an image
-- Classify an image using defined categories
-- Flag an unusual feature for review
-- At the fictional cooperative, the technician retains the quality decision
+- What task must be completed?
+- Does the tool only need to draft, or also consult documents?
+- What information must be provided?
+- Is the tool authorized for that information?
+- Who will verify or approve the result?
 
 ### Teaching Notes
 
-**Key takeaway:** Computer vision extracts useful information from images or video.
+**Key takeaway:** A tool is suitable only when its capability, access, and rules match the need.
 
-Use the example of a cocoa bean photo or lot label. The system may draw attention to an irregularity. It does not diagnose crop disease or assign a quality grade by itself.
+Compare a general assistant rewriting fictional text with an authorized tool that can access internal documents. Do not recommend a particular product.
 
-## Slide 16 — Internet of Things, cloud, and edge computing
+## Slide 16 — AI across everyday professions
 
 - **Identifier:** S01-16
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **Internet of Things:** devices that collect and exchange data
-- **Cloud:** remotely available computing and storage
-- **Edge or local:** processing performed near the source
-- At the fictional cooperative, essential events remain recordable offline
+- Administration: summarize a procedure
+- Customer service: prepare a response
+- HR: structure a job description
+- Projects: organize meeting notes
+- Operations: identify missing information
 
 ### Teaching Notes
 
-**Key takeaway:** Where data is collected and processed affects availability, latency, and privacy in an AI solution.
+**Key takeaway:** The same capabilities can support different tasks in different professional contexts.
 
-Explain that the fictional application could record essential operations locally, keep pending updates, and synchronize them when connectivity returns. Do not present this scenario as an already deployed architecture.
+Add one spoken example relevant to the audience, such as sales, finance, entrepreneurship, or another field. For each example, remind learners that AI prepares or assists; the human role depends on the consequences.
 
-## Slide 17 — Personal and professional applications
+## Slide 17 — Cooperative: problem and available data
 
 - **Identifier:** S01-17
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **Everyday life:** recommendations, assistants, translation, authentication
-- **Business:** fraud detection, demand forecasting, customer service
-- **Industry:** visual inspection, logistics, predictive maintenance
-- The choice depends on the problem, data, and consequences of an error
+- Data: producers, visits, lots, weights, quality, and stock
+- Difficulties: incomplete records, manual reconciliation, unstable connectivity
+- Need: improve traceability and prepare collection
+- Official decisions remain under human responsibility
 
 ### Teaching Notes
 
-**Key takeaway:** The single label “AI” covers different techniques selected according to the problem.
+**Key takeaway:** A useful use case begins with an observable problem and information that is actually available.
 
-Ask participants which application they use most often. Briefly connect each example to a capability already discussed, such as classification, forecasting, language, or vision.
+Remind learners that the case is fictional. Do not add quality rules, thresholds, certifications, or procedures that have not been defined in the scenario.
 
-## Slide 18 — Cooperative case: data and operational problem
+## Slide 18 — Cooperative: match the task to an AI capability
 
 - **Identifier:** S01-18
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **Data:** producers, farms, visits, lots, weights, quality, and inventory
-- **Difficulties:** incomplete records, manual reconciliation, and unstable connectivity
-- **Goals:** improve traceability and prepare collection activities
-- Official decisions remain the responsibility of cooperative staff
+| Task                        | Possible capability |
+| --------------------------- | ------------------- |
+| Estimate volumes            | Forecasting         |
+| Flag unusual weights        | Anomaly detection   |
+| Extract items from a report | Language processing |
+| Read a label                | Vision              |
+| Prepare a daily report      | Generative AI       |
 
 ### Teaching Notes
 
-**Key takeaway:** A useful use case begins with available data and a measurable problem.
+**Key takeaway:** Select an AI capability according to the expected result, not according to hype.
 
-Ask which data is truly necessary for the two goals. Point out that collecting more data also increases responsibilities related to privacy and quality.
+Ask learners to identify the expected result for each row. Explain that the exact technique is secondary for a non-technical user when the capability, data, and human control are understood.
 
-## Slide 19 — Cooperative case: selecting AI techniques
+## Slide 19 — Cooperative: working with intermittent connectivity
 
 - **Identifier:** S01-19
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-| Task                            | Possible technique          |
-| ------------------------------- | --------------------------- |
-| Estimate collection volumes     | Supervised learning         |
-| Detect unusual weights          | Unsupervised learning       |
-| Extract details from a report   | Natural language processing |
-| Read a label or examine a photo | Computer vision             |
-| Draft a daily brief             | Generative AI               |
+1. Record essential information locally
+2. Check required fields
+3. Prepare or queue possible processing
+4. Have important items reviewed by a person
+5. Synchronize when connectivity returns
 
 ### Teaching Notes
 
-**Key takeaway:** Each task requires a technique suited to its expected result.
+**Key takeaway:** A useful solution must respect real operating constraints, including temporary loss of connectivity.
 
-Hide the second column at first if the presentation format allows it. Ask participants to propose the matches. Reveal the answers and remind them that a real system may combine several techniques.
+Introduce local processing, cloud, or edge terminology only when it helps explain this constraint. Do not turn the slide into a detailed technical architecture.
 
-## Slide 20 — Cooperative case: AI assistant and offline operation
+## Slide 20 — Cooperative: what AI may and may not decide
 
 - **Identifier:** S01-20
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-1. The agent records essential information locally
-2. The application checks that required fields are present
-3. The assistant prepares a summary and flags anomalies
-4. A supervisor reviews the proposed output
-5. Pending updates synchronize when connectivity returns
+- **The assistant may:** classify, flag an incomplete record, prepare a summary
+- **The team verifies:** data, anomalies, and proposed information
+- **The team decides:** official grade, lot rejection, payment
+- No official certificate is issued without validation
 
 ### Teaching Notes
 
-**Key takeaway:** The assistant supports the workflow even when continuous connectivity is unavailable.
+**Key takeaway:** The assistant's permissions must remain distinct from the organization's authority.
 
-Present this workflow as a design proposal. Distinguish deterministic local checks from AI functions that may require more resources. Continuity of essential work should not depend on constant access to the model.
+Ask why a task may be technically automatable without needing to be delegated to AI. Connect the answer to consequences and authority.
 
-## Slide 21 — Cooperative case: human decisions and assistant limits
+## Slide 21 — From an AI idea to a bounded use case
 
 - **Identifier:** S01-21
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- **The assistant can:** classify reports, flag an incomplete record, and draft a notice
-- **The team decides:** the quality grade, lot rejection, and producer payment
-- The assistant submits no official certificate without approval
+1. Define the need and expected result
+2. Identify authorized information
+3. Select a suitable capability
+4. Name the person who verifies or decides
+5. Test on a small scale and measure the result
 
 ### Teaching Notes
 
-**Key takeaway:** The assistant is useful only when its limits are explicit and human responsibility is identifiable.
+**Key takeaway:** A useful experiment narrows the problem before expanding automation.
 
-Return to the participants’ initial suggestions. Ask why each sensitive decision remains human. Highlight the financial, regulatory, and social consequences of an error.
+Take one suggestion from the beginning of the session and turn it into a bounded use case. Avoid vague projects such as “automate the whole company.”
 
-## Slide 22 — Transforming a business activity with AI
+## Slide 22 — Generative AI in everyday work
 
 - **Identifier:** S01-22
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-1. Business problem and objective
-2. Relevant tasks, decisions, and data
-3. Limited use case with an identified owner
-4. User trial with control rules
-5. Measurement of quality, time, and errors
+- Draft or rewrite
+- Summarize a supplied document
+- Organize notes
+- Explain information for another audience
+- Compare options using supplied criteria
 
 ### Teaching Notes
 
-**Key takeaway:** AI adoption begins with a precise problem and a measurable outcome.
+**Key takeaway:** Generative AI is especially useful for preparing, transforming, and organizing content.
 
-Illustrate the steps with the cooperative’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
+Emphasize “supplied document” and “supplied criteria.” The tool should not invent missing information. Prompting techniques will be developed in S03.
 
-## Slide 23 — Generative AI in everyday work
+## Slide 23 — Agents and automation
 
 - **Identifier:** S01-23
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Prepare or revise a document
-- Summarize lengthy information
-- Explain data in accessible language
-- Support communication, training, or software development
-- The user supplies context and verifies the result
+- **Traditional automation:** follows predefined steps
+- **AI agent:** may select among authorized actions based on context
+- A technically possible action is not automatically professionally authorized
+- Define controls, limits, and stopping conditions
 
 ### Teaching Notes
 
-**Key takeaway:** Generative AI provides the most value when the task, context, and quality criteria are explicit.
+**Key takeaway:** The more a system can act, the more explicit its permissions and stopping conditions must be.
 
-Give a professional example suited to the audience. Compare a vague request with one that includes the role, objective, audience, and constraints. Keep lists of brands and tools in the appendix.
+Keep this introductory. The objective is not to design an agent. Learners should understand that greater ability to act creates a greater need for governance and oversight.
 
-Show the capture of a real ChatGPT exchange about the fictional cocoa cooperative. Ask learners to check the word limit and whether the response invents a date, weight, or quantity. The draft is still subject to human review before use.
-
-## Slide 24 — AI agents and automation
+## Slide 24 — When AI needs approved documents
 
 - **Identifier:** S01-24
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- **Traditional automation:** follows a predefined process
-- **AI agent:** observes context, selects an authorized action, and acts
-- **Robot or cobot:** operates in the physical world
-- Permissions, controls, and stop conditions must be explicit
+1. Retrieve relevant information from approved sources
+2. Add that information to the context
+3. Generate an answer from that context
+
+- This approach is called Retrieval-Augmented Generation, or RAG
 
 ### Teaching Notes
 
-**Key takeaway:** An AI agent can select and perform actions within limits defined by a person.
+**Key takeaway:** An assistant can be better grounded for a task when it receives the approved sources needed to answer.
 
-Explain that a chatbot answering a question is not necessarily an agent. An agent has a goal, accesses tools, and may perform a sequence of actions. Mention multi-agent systems only as an advanced topic.
+Use an authorized internal procedure as the example. Explain that having a source can reduce some risks but does not remove the need to verify the answer.
 
-## Slide 25 — Retrieval-augmented generation
+## Slide 25 — Adoption requires people, data, and rules
 
 - **Identifier:** S01-25
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-1. Retrieve relevant passages
-2. Add those passages to the request context
-3. Generate an answer grounded in that context
-
-- Cooperative example: current internal procedures and document requirements
+- Measurable objective
+- Suitable data and access rights
+- Users trained on capabilities and limits
+- Clearly identified owner
+- Progressive rollout with quality measurement
 
 ### Teaching Notes
 
-**Key takeaway:** RAG grounds a generated answer in information retrieved from approved sources.
+**Key takeaway:** Useful technology alone is not enough to create sustainable professional use.
 
-Explain that RAG improves grounding and can show the sources used. It does not guarantee accuracy. The user must verify that retrieved passages are relevant and current.
+Explain that a project can fail even with a good model when data, responsibilities, or the method for measuring results are unclear.
 
-## Slide 26 — AI adoption and changing skills
+## Slide 26 — What information can I safely provide?
 
 - **Identifier:** S01-26
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Measurable objective and clearly assigned owner
-- Reliable data with appropriate access rights
-- Training in verification and confidentiality
-- Gradual deployment with monitoring after launch
-- AI literacy: capabilities, limits, and responsible use
+- Check organizational rules and the authorized tool
+- Use fictional or anonymized data for exercises
+- Do not share passwords or credentials
+- Protect personal and confidential information
+- Provide only what the task requires
 
 ### Teaching Notes
 
-**Key takeaway:** Sustainable adoption combines business goals, data readiness, and user skills.
+**Key takeaway:** Authorization comes before convenience.
 
-Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At the fictional cooperative, training field agents and supervisors matters as much as selecting the model.
+Mention personal, financial, medical, contractual, or commercially sensitive information as examples. S06 will address these questions in greater depth.
 
-## Slide 27 — Main generative AI risks
+## Slide 27 — Errors, hallucinations, and other risks
 
 - **Identifier:** S01-27
 - **Duration:** 1 minute
 
 ### On-Slide Content
 
-- Hallucinations and fabricated information
-- Exposure of confidential data
-- Copyright and content ownership
-- Deepfakes, fraud, and misinformation
-- Important information requires verification before use
+- Invented or unverified information
+- Omission of an important element
+- Misinterpretation of context
+- Exposure of sensitive information
+- Verify more when consequences increase
 
 ### Teaching Notes
 
-**Key takeaway:** Realistic output from generative AI may contain errors or create new risks.
+**Key takeaway:** Realistic output may contain an error that is difficult to notice.
 
-Define a hallucination as plausible but inaccurate or fabricated information. Give one brief example. Emphasize fact checking and protection of data entered into an external tool.
+Remind learners that confident-looking text is not evidence. Verification is a normal part of working with AI.
 
-## Slide 28 — Fairness, accountability, and human oversight
+## Slide 28 — Fairness, accountability, and oversight
 
 - **Identifier:** S01-28
 - **Duration:** 1 minute
 
 ### On-Slide Content
 
-- **Fairness:** test outcomes for affected groups
-- **Transparency:** explain the system’s role, data, and limits
-- **Accountability:** identify who owns decisions and corrections
-- **Oversight:** increase control as consequences increase
+- Evaluate effects on affected people
+- Make the role of AI visible
+- Identify who is accountable for decisions and corrections
+- Increase oversight as consequences increase
 
 ### Teaching Notes
 
-**Key takeaway:** An organization remains responsible for the effects of an AI system.
+**Key takeaway:** An organization remains responsible for the consequences of an AI system.
 
-Connect these principles to payments, quality decisions, and producer data at the fictional cooperative. An automated recommendation does not transfer responsibility to the model.
+Do not turn this minute into a legal lecture. The goal is to establish that using a system does not automatically transfer responsibility to the system.
 
-## Slide 29 — Practical AI governance
+## Slide 29 — Practical governance: who checks what?
 
 - **Identifier:** S01-29
 - **Duration:** 1 minute
 
 ### On-Slide Content
 
-- Collect only necessary data
-- Restrict access according to responsibilities
-- Document allowed and prohibited uses
-- Test before deployment
-- Monitor quality, bias, and incidents
+- **Before:** authorized tool, permitted information, defined objective
+- **During:** explicit limits and permissions
+- **After:** verified result, assigned decision, reported incident
 
 ### Teaching Notes
 
-**Key takeaway:** Governance turns responsible principles into rules applied throughout the lifecycle.
+**Key takeaway:** A useful rule states what AI may do and who controls the result.
 
-Explain that governance continues after launch. Mention escalation and stop mechanisms. Keep details about regulation and the NIST AI RMF in the supplementary resources.
+Connect these three moments to the cooperative case. Practical governance should be observable in everyday work.
 
-## Slide 30 — Knowledge check
+## Slide 30 — Learn → use → check
 
 - **Identifier:** S01-30
 - **Duration:** 1 minute
 
 ### On-Slide Content
 
-1. Which technique can flag unusual weights?
-2. What must be checked before using generated content?
-3. Which cooperative decision must remain human?
+1. What did I learn today?
+2. Where could I use this capability?
+3. What should I check before using the result?
 
 - Final idea: AI supports a person who retains responsibility
 
 ### Teaching Notes
 
-**Key takeaway:** A useful assessment connects the need, technique, risk, and human responsibility.
+**Key takeaway:** Understanding AI matters when that understanding improves a real decision.
 
-Collect quick answers. Expected answers are anomaly detection through unsupervised learning, verification of accuracy and sources, and a decision such as quality grading, lot rejection, or producer payment. Close by reminding participants that AI work begins with a defined problem.
-
-## Traceability to canonical modules
-
-| Source module                                          | Main slides                                        |
-| ------------------------------------------------------ | -------------------------------------------------- |
-| 01 — Introduction and applications of AI               | S01-03 to S01-08, S01-13, S01-17 to S01-21, S01-30 |
-| 02 — AI concepts, terminology, and application domains | S01-09 to S01-17, S01-19                           |
-| 03 — Business and career transformation through AI     | S01-21 to S01-26                                   |
-| 04 — Issues, concerns, and ethical considerations      | S01-21, S01-27 to S01-29                           |
-
-## Content reserved for supplementary resources
-
-- Training, validation, and test data
-- VAEs, GANs, and autoregressive models
-- Convolutional neural network details
-- Multi-agent systems
-- Vendor-specific framework comparisons
-- Detailed lists of commercial tools
-- Equitable access and environmental impact
-- NIST AI RMF, European Union regulation, and other regulatory frameworks
-- Detailed Coursera labs and quiz reviews
+Ask for a quick response to one or more questions. Conclude by explaining that later sessions will deepen generative-AI use, prompting, verification, workflows, and responsibility.

@@ -68,7 +68,7 @@ function createAnimationPlan(
         context: slide.items.slice(1).join(' '),
       };
     }
-    if (sessionId === 's01' && number === 19) {
+    if (sessionId === 's01' && number === 18) {
       if (!slide.table || slide.items.length)
         throw new Error('S01 table slide has an unexpected layout.');
       return { kind: 'table', number, title: slide.title, ...slide.table };

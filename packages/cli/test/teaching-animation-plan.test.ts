@@ -43,22 +43,22 @@ test('S01 animation plan follows both teaching sources without adding slides or 
       plan.slides.map((slide) => slide.number),
       Array.from({ length: 30 }, (_, index) => index + 1),
     );
-    assert.deepEqual(animationCounts(plan), { animatedSlides: 30, clicks: 90, effects: 267 });
+    assert.deepEqual(animationCounts(plan), { animatedSlides: 30, clicks: 93, effects: 276 });
     assert.equal(plan.slides[0]?.kind, 'cover');
-    assert.equal(plan.slides[18]?.kind, 'table');
+    assert.equal(plan.slides[17]?.kind, 'table');
     assert.deepEqual(
       [2, 3, 8].map((number) => {
         const slide = plan.slides[number - 1];
         return slide?.kind === 'rows' ? slide.rows.length : 0;
       }),
-      [4, 4, 5],
+      [5, 5, 4],
     );
     const steps = plan.slides[7];
     assert.equal(steps?.kind, 'rows');
     if (steps?.kind === 'rows')
       assert.deepEqual(
         steps.rows.map((row) => row.label),
-        ['01', '02', '03', '04', '•'],
+        ['01', '02', '03', '04'],
       );
     for (const slide of plan.slides) {
       const canonical = source[language].slides[slide.number - 1];

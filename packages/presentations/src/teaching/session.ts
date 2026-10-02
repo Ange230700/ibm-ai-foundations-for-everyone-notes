@@ -305,19 +305,19 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       fr: 'Modes d’apprentissage',
       name: 'learning',
     },
-    'S01-20': {
+    'S01-19': {
       kind: 'mermaid',
       en: 'Offline workflow',
       fr: 'Travail hors connexion',
       name: 'offline',
     },
-    'S01-21': {
+    'S01-20': {
       kind: 'simulation',
       en: 'Illustrative assistant alert',
       fr: 'Alerte simulée de l’assistant',
       name: 'alert',
     },
-    'S01-23': {
+    'S01-22': {
       kind: 'simulation',
       en: 'Illustrative prompt and draft',
       fr: 'Demande et réponse simulées',
@@ -331,7 +331,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
         caption: 'Échange réel avec ChatGPT · scénario de coopérative fictive',
       },
     },
-    'S01-25': {
+    'S01-24': {
       kind: 'mermaid',
       en: 'Retrieval then generation',
       fr: 'Recherche puis génération',

@@ -1,8 +1,5 @@
 flowchart LR
- A["Local entry"] --> B["Field checks"]
- B --> C{"Connected?"}
- C -->|No| D["Store locally"]
- C -->|Yes| E["Optional AI summary"]
- D --> F["Sync later"]
- E --> G["Human review"]
- F --> G
+ A["Local entry"] --> B["Required-field checks"]
+ B --> C["Prepare / queue processing"]
+ C --> D["Human review"]
+ D --> E["Sync when connected"]

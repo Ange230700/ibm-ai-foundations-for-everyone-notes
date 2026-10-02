@@ -1,8 +1,5 @@
 flowchart LR
- A["Saisie locale"] --> B["Champs vérifiés"]
- B --> C{"Connexion ?"}
- C -->|Non| D["Stockage local"]
- C -->|Oui| E["Résumé IA facultatif"]
- D --> F["Synchroniser"]
- E --> G["Validation humaine"]
- F --> G
+ A["Saisie locale"] --> B["Contrôle des champs requis"]
+ B --> C["Préparer / mettre en attente"]
+ C --> D["Examen humain"]
+ D --> E["Synchroniser à la reconnexion"]
