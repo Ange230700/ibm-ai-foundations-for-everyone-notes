@@ -2,27 +2,25 @@
 
 ## Informations de production
 
-- **Programme :** IBM AI Foundations for Everyone / Fondements de l’IA pour tous
-- **Session :** S02 : Generative AI — Introduction and Applications / IA générative : introduction et applications
+- **Programme :** AI for Everyone — Professional Curriculum
+- **Session :** S02 : Using Generative AI at Work / Utiliser l’IA générative au travail
 - **Durée totale :** 60 minutes
 - **Nombre de diapositives :** 26 en français et 26 en anglais
-- **Public :** professionnels et apprenants sans prérequis technique ; S01 peut être rappelée en deux minutes
-- **Cas fil rouge :** une coopérative cacaoyère fictive et sans nom près de Soubré
-- **Statut :** proposition de parcours pédagogique ; les adaptations françaises du cours 02 restent à réviser personnellement avant validation du contenu définitif
-- **Principe éditorial :** les trois modules canoniques en français et en anglais restent les documents de référence ; ce contrat sélectionne le parcours de la séance.
-
-## Objectifs observables
-
-À la fin de la séance, une personne peut :
-
-1. distinguer une sortie générée d’une classification ou d’une prévision ;
-2. relier un besoin à un format de sortie : texte, image, audio, vidéo, code ou données synthétiques ;
-3. examiner un brouillon généré et repérer un fait inventé ou une étape non autorisée ;
-4. proposer un usage métier limité, un contrôle humain et un critère d’évaluation.
+- **Public :** professionnels et apprenants sans prérequis technique
+- **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
+- **Contrat parent :** `docs/teaching/ai-for-everyone-professional-curriculum.md`
+- **Audit de fusion :** `docs/teaching/s02-professional-fusion-audit.md`
+- **Principe éditorial :** rendre l’utilité professionnelle de l’IA générative visible avant
+  d’approfondir la conception des prompts en S03.
+- **Statut :** contrat de fusion professionnel à implémenter dans les sources pédagogiques
+  bilingues.
 
 ## Attribution et transparence sur l’IA
 
-- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera.
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur
+  Coursera, notamment le cours _Generative AI: Introduction and Applications_.
+- **Apport professionnel complémentaire :** cadrage issu du matériel collaboratif documenté dans
+  le contrat parent et l’audit de fusion S02.
 - **Génération avec l’IA :** la session pédagogique est générée avec l’IA en tant qu’adaptation
   indépendante du dépôt.
 - **Exigence de couverture :** la première diapositive dans chaque langue doit afficher une
@@ -31,697 +29,1002 @@
 - Ces adaptations ne constituent pas du matériel pédagogique officiel d’IBM ou de Coursera et
   n’impliquent aucune approbation de leur part.
 
+## Objectifs observables
+
+À la fin de la séance, une personne peut :
+
+1. reconnaître des tâches professionnelles auxquelles l’IA générative peut apporter une aide
+   limitée ;
+2. choisir un type de sortie adapté à un besoin et à un public ;
+3. transformer des informations fournies sans présenter une invention comme un fait ;
+4. vérifier un brouillon avant utilisation et identifier la personne responsable de son
+   approbation ou de son usage.
+
 ## Règles communes aux deux langues
 
-1. Les diapositives FR et EN utilisent les mêmes identifiants S02-01 à S02-26, le même ordre, les mêmes durées et les mêmes interactions.
-2. Une diapositive développe une seule idée centrale ; le détail reste dans les notes.
-3. La coopérative, ses documents, ses données et ses outils sont fictifs. Les démonstrations simulées portent la mention « simulation pédagogique » ou « teaching simulation ».
-4. Une demande à un modèle ne l’entraîne pas de nouveau. Un texte plausible ne démontre ni exactitude ni autorisation de publication.
-5. Les décisions relatives aux lots, aux paiements, aux inspections et aux certifications restent entre les mains des personnes habilitées.
-6. Les exemples évitent les données réelles des membres et ne présentent aucun outil nommé, prix, quota, interface ou chiffre historique comme actuellement vérifié.
-7. S02 introduit les sorties et leur évaluation ; S03 abordera en détail les techniques de conception des prompts.
+1. Les versions française et anglaise utilisent les mêmes identifiants S02-01 à S02-26.
+2. Les deux langues conservent le même ordre, les mêmes durées et la même fonction pédagogique pour
+   chaque diapositive.
+3. Une diapositive développe une seule idée centrale ; les précisions restent dans les notes.
+4. Les exemples commencent par une tâche professionnelle et non par un catalogue d’outils.
+5. La coopérative de Soubré reste le cas fil rouge, mais la session montre également des usages
+   transférables à d’autres professions.
+6. Les sorties générées sont présentées comme des brouillons à examiner et non comme des documents
+   automatiquement approuvés.
+7. Une information absente de la source reste absente tant qu’elle n’est pas obtenue d’une source
+   autorisée.
+8. Réécrire, résumer ou reformater ne donne pas l’autorisation de modifier silencieusement les
+   faits.
+9. Les exercices utilisent des informations fictives, anonymisées, publiques ou explicitement
+   autorisées.
+10. Les décisions relatives aux lots, paiements, inspections, certifications, engagements et
+    publications restent entre les mains des personnes habilitées.
+11. Les bénéfices attendus sont distingués des résultats réellement mesurés.
+12. S02 montre des consignes simples, mais réserve la conception détaillée des prompts à S03.
+13. Les analyses approfondies de documents restent réservées à S04.
+14. Les workflows complets, la gouvernance de l’information et le projet de bout en bout restent
+    réservés aux sessions ultérieures.
 
 ## Répartition du temps
 
-| Séquence                                     | Diapositives    | Minutes |
-| -------------------------------------------- | --------------- | ------: |
-| Repères et besoin métier                     | S02-01 à S02-06 |      11 |
-| Capacités, applications et source de travail | S02-07 à S02-10 |       9 |
-| Démonstration textuelle et examen            | S02-11 à S02-15 |      14 |
-| Autres médias, code et agents                | S02-16 à S02-21 |      14 |
-| Mise en pratique et clôture                  | S02-22 à S02-26 |      12 |
-| **Total**                                    | **26**          |  **60** |
+| Séquence                                    | Diapositives    | Minutes |
+| ------------------------------------------- | --------------- | ------: |
+| Du besoin professionnel à la génération     | S02-01 à S02-06 |      11 |
+| Sorties et tâches professionnelles          | S02-07 à S02-10 |       9 |
+| Produire, examiner et corriger un brouillon | S02-11 à S02-15 |      14 |
+| Autres médias, code et actions              | S02-16 à S02-21 |      14 |
+| Transfert professionnel et clôture          | S02-22 à S02-26 |      12 |
+| **Total**                                   | **26**          |  **60** |
 
 ---
 
-## S02-01 : Ouverture / Opening
+## S02-01 : Couverture / Cover
 
 Durée : **1 minute**
 
 ### Français
 
-- **Titre :** IA générative : introduction et applications
-- **Message principal :** La session passe des notions d’IA à la production de contenus utiles et vérifiables.
+- **Titre :** L’IA générative au travail
+- **Sous-titre :** S02 : Utiliser l’IA générative au travail
+- **Message principal :** L’IA générative peut accélérer la préparation d’un travail, mais le
+  résultat reste un brouillon à examiner avant utilisation.
 - **Contenu visible :**
-  - S02 : session de 60 minutes
+  - Session de 60 minutes
+  - Aucun prérequis technique
   - Cas fictif : une coopérative cacaoyère près de Soubré
   - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
   - Adaptation pédagogique indépendante générée avec l’IA
-- **Notes du formateur :** Situer S02 après les fondements de S01. Expliquer que les exemples et captures de la séance sont des simulations pédagogiques, et que les notes complètes restent disponibles séparément.
+- **Notes du formateur :** Situer S02 après les fondements de S01. Annoncer que la session porte sur
+  des tâches professionnelles reconnaissables : rédiger, réécrire, organiser, résumer et préparer
+  différents types de contenus. Préciser que les exemples du dépôt sont des adaptations
+  pédagogiques indépendantes.
 
 ### English
 
-- **Title:** Generative AI: Introduction and Applications
-- **Key message:** This session moves from AI concepts to useful content that people can review.
+- **Title:** Generative AI at Work
+- **Subtitle:** S02: Using Generative AI at Work
+- **Key message:** Generative AI can accelerate preparation work, but the result remains a draft
+  that must be reviewed before use.
 - **On-slide content:**
-  - S02: 60-minute session
+  - 60-minute session
+  - No technical prerequisite
   - Fictional case: a cocoa cooperative near Soubré
   - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
   - Independent teaching adaptation generated with AI
-- **Facilitator notes:** Position S02 after the AI fundamentals session. Explain that the examples and screens are teaching simulations and that the full reference notes remain available separately.
+- **Facilitator notes:** Position S02 after the S01 foundations. Explain that the session focuses on
+  recognizable professional work: drafting, rewriting, organizing, summarizing, and preparing
+  different kinds of content. Clarify that repository examples are independent teaching
+  adaptations.
 
-## S02-02 : Objectifs / Objectives
+## S02-02 : Ce que vous saurez faire / What you will be able to do
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Quatre gestes pour utiliser la génération
-- **Message principal :** On choisit une sortie, on produit un brouillon, puis on vérifie son adéquation au besoin.
+- **Titre :** Ce que vous saurez faire
+- **Message principal :** L’objectif est de relier un besoin professionnel à une sortie générée et
+  à un contrôle humain.
 - **Contenu visible :**
-  - Distinguer générer, classer et prévoir
-  - Choisir une sortie adaptée au besoin
-  - Vérifier faits, droits et limites
-  - Définir la décision humaine
-- **Notes du formateur :** Présenter ces quatre gestes comme les critères de réussite de la séance. Préciser que l’objectif n’est pas de mémoriser une liste de marques ou de modèles.
+  - Reconnaître une tâche adaptée à l’IA générative
+  - Choisir une sortie adaptée au besoin et au public
+  - Préserver les faits fournis et repérer les ajouts non soutenus
+  - Définir ce qui doit être vérifié et par qui
+- **Notes du formateur :** Présenter les objectifs comme quatre gestes observables. La séance ne
+  demande pas de mémoriser des marques ou des modèles. Les techniques détaillées de prompting
+  viendront en S03.
 
 ### English
 
-- **Title:** Four steps for using generation
-- **Key message:** Choose an output, produce a draft, and check whether it meets the need.
+- **Title:** What you will be able to do
+- **Key message:** The goal is to connect a professional need to a generated output and a human
+  check.
 - **On-slide content:**
-  - Distinguish generating, classifying, and forecasting
-  - Choose an output that fits the need
-  - Check facts, rights, and limitations
-  - Define the human decision
-- **Facilitator notes:** Introduce these four steps as the session’s success criteria. Explain that memorizing product or model names is not the aim.
+  - Recognize a task suited to generative AI assistance
+  - Choose an output that fits the need and audience
+  - Preserve supplied facts and spot unsupported additions
+  - Define what must be checked and by whom
+- **Facilitator notes:** Present the objectives as four observable actions. Learners do not need to
+  memorize product or model names. Detailed prompting techniques come in S03.
 
-## S02-03 : Rappel de S01 / S01 recap
+## S02-03 : Partir du travail, pas de l’outil / Start with the work, not the tool
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Partir de la tâche, pas de l’outil
-- **Message principal :** Une classification, une prévision et une génération répondent à des questions différentes.
+- **Titre :** Partir du travail, pas de l’outil
+- **Message principal :** Une utilisation professionnelle commence par une tâche concrète et un
+  résultat attendu.
 - **Contenu visible :**
-  - Rapport incomplet ? → classer
-  - Volume de collecte à venir ? → estimer
-  - Avis aux agents ? → rédiger un brouillon
-- **Notes du formateur :** Demander aux participants quelle sortie est attendue dans chaque cas. Mentionner qu’un même système peut prendre en charge plusieurs types de tâches ; la distinction porte ici sur le besoin et la sortie, pas sur une frontière absolue entre produits.
+  - Service client : préparer une réponse
+  - Gestion de projet : organiser des notes de réunion
+  - Administration : structurer un document
+  - Opérations : préparer une consigne
+- **Notes du formateur :** Demander aux participants de nommer une tâche qu’ils réalisent souvent.
+  Insister sur le résultat attendu avant de parler d’outil. Ces exemples représentent des tâches
+  possibles, pas des recommandations d’automatisation.
 
 ### English
 
-- **Title:** Start with the task, not the tool
-- **Key message:** Classification, forecasting, and generation answer different questions.
+- **Title:** Start with the work, not the tool
+- **Key message:** Professional use starts with a concrete task and an expected result.
 - **On-slide content:**
-  - Incomplete report? → classify
-  - Future collection volume? → estimate
-  - Notice to staff? → draft text
-- **Facilitator notes:** Ask participants what output each task needs. A single system may perform several tasks; this distinction concerns the request and output, not an absolute division between products.
+  - Customer service: prepare a response
+  - Project management: organize meeting notes
+  - Administration: structure a document
+  - Operations: prepare an instruction
+- **Facilitator notes:** Ask participants to name a task they perform regularly. Focus on the
+  expected result before discussing any tool. These are possible assistance tasks, not
+  recommendations for automatic execution.
 
-## S02-04 : Situation de la coopérative / Cooperative situation
+## S02-04 : Un besoin professionnel limité / A bounded professional need
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Une consigne de réception à communiquer
-- **Message principal :** Le travail commence par un besoin opérationnel et une source définie pour l’exercice.
+- **Titre :** Un besoin professionnel limité
+- **Message principal :** Un cas d’usage utile peut commencer par une tâche simple, une source
+  définie et une personne responsable.
 - **Contenu visible :**
   - Coopérative fictive près de Soubré
   - Besoin : rappeler les champs d’un dossier de réception
-  - Public : agents de terrain, puis producteurs membres
-  - Point de départ : une consigne fictive fournie pour la démonstration
-- **Notes du formateur :** Reprendre le cas partagé avec S01. Ne pas présenter la consigne inventée de la séance comme une règle d’une coopérative réelle ou une obligation réglementaire. Aucune donnée de membre ou de lot réel n’est montrée.
+  - Public : agents de réception
+  - Source : une consigne fictive fournie pour la démonstration
+- **Notes du formateur :** Réintroduire le cas fil rouge. La consigne ne décrit aucune procédure
+  réglementaire ou coopérative réelle. Aucun dossier membre ou lot réel n’est utilisé.
 
 ### English
 
-- **Title:** Communicating a lot-intake instruction
-- **Key message:** The work begins with an operational need and an exercise source.
+- **Title:** A bounded professional need
+- **Key message:** A useful use case can begin with a simple task, a defined source, and a
+  responsible person.
 - **On-slide content:**
   - Fictional cooperative near Soubré
   - Need: remind staff of intake-record fields
-  - Audiences: field agents, then member producers
-  - Starting point: a fictional instruction supplied for this demonstration
-- **Facilitator notes:** Return to the case shared with S01. Do not present the invented instruction as a real cooperative rule or legal requirement. No real member or lot data is shown.
+  - Audience: intake staff
+  - Source: a fictional instruction supplied for the demonstration
+- **Facilitator notes:** Reintroduce the anchor case. The instruction does not represent a real
+  regulation or cooperative procedure. No real member or lot record is used.
 
-## S02-05 : Discriminer ou générer / Classify or generate
+## S02-05 : Générer, classer ou prévoir ? / Generate, classify, or forecast?
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Même dossier, deux sorties
-- **Message principal :** Détecter un champ manquant n’est pas la même tâche que rédiger un message.
+- **Titre :** Générer, classer ou prévoir ?
+- **Message principal :** Une tâche de génération produit du contenu ; elle n’est pas identique à
+  une classification ou une prévision.
 - **Contenu visible :**
-  - Entrée : un dossier de réception fictif
-  - Sortie A : « à compléter » → classement
-  - Sortie B : explication aux agents → génération
-- **Notes du formateur :** Montrer que la classification répond à une question définie, alors que la génération propose du contenu. Le statut automatique ne valide ni la qualité du lot ni une certification ; un agent vérifie le dossier.
+  - Dossier incomplet ? → classer
+  - Volume futur ? → prévoir
+  - Avis aux agents ? → générer un brouillon
+- **Notes du formateur :** Faire nommer la sortie attendue pour chaque tâche. Une même solution peut
+  prendre en charge plusieurs capacités ; la distinction sert ici à clarifier le travail demandé.
 
 ### English
 
-- **Title:** One record, two outputs
-- **Key message:** Flagging a missing field and drafting an explanation are different tasks.
+- **Title:** Generate, classify, or forecast?
+- **Key message:** A generation task produces content; it is not the same task as classification or
+  forecasting.
 - **On-slide content:**
-  - Input: a fictional intake record
-  - Output A: “needs completion” → classification
-  - Output B: explanation for staff → generation
-- **Facilitator notes:** Classification answers a defined question; generation proposes content. An automatic label does not approve a lot’s quality or certification. A staff member reviews the record.
+  - Incomplete record? → classify
+  - Future volume? → forecast
+  - Notice for staff? → generate a draft
+- **Facilitator notes:** Ask learners to identify the expected output for each task. A single system
+  may support multiple capabilities; the distinction clarifies the work being requested.
 
-## S02-06 : Entraînement et demande / Training and request
+## S02-06 : Comment un brouillon est produit / How a draft is produced
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Ce que fait le modèle pendant la séance
-- **Message principal :** Le modèle utilise des régularités déjà apprises et la demande fournie pour produire un brouillon.
+- **Titre :** Comment un brouillon est produit
+- **Message principal :** Le modèle combine des capacités acquises auparavant avec la demande et le
+  contexte disponibles pour proposer une sortie.
 - **Contenu visible :**
   - Entraînement antérieur → capacités du modèle
-  - Consigne de l’exercice → sortie proposée
-  - Examen humain → correction ou abandon
-- **Notes du formateur :** Utiliser un schéma en trois étapes. Une nouvelle demande ne réentraîne pas le modèle. Ne pas promettre que le système connaît les procédures internes s’il ne les reçoit pas dans un dispositif autorisé.
+  - Demande et contexte → sortie proposée
+  - Examen humain → corriger, utiliser ou abandonner
+- **Notes du formateur :** Utiliser le schéma en trois étapes. Une nouvelle demande ne réentraîne
+  pas automatiquement le modèle. Une sortie convaincante reste à examiner.
 
 ### English
 
-- **Title:** What the model does during the session
-- **Key message:** The model uses previously learned patterns and the supplied request to propose a draft.
+- **Title:** How a draft is produced
+- **Key message:** The model combines previously learned capabilities with the available request and
+  context to propose an output.
 - **On-slide content:**
-  - Earlier training → model capability
-  - Exercise request → proposed output
-  - Human review → correction or rejection
-- **Facilitator notes:** Use a three-step diagram. A new request does not retrain the model. Do not imply it knows internal procedures unless an authorized system supplies them.
+  - Earlier training → model capabilities
+  - Request and context → proposed output
+  - Human review → correct, use, or reject
+- **Facilitator notes:** Use the three-step diagram. A new request does not automatically retrain
+  the model. A convincing output still requires review.
 
-## S02-07 : Domaines de sortie / Output types
+## S02-07 : Ce que l’IA générative peut produire / What generative AI can produce
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Sept domaines, un critère : la sortie
-- **Message principal :** Le cours présente sept familles de contenus générés ; toutes ne demandent pas une démonstration en direct.
+- **Titre :** Ce que l’IA générative peut produire
+- **Message principal :** L’IA générative peut produire plusieurs types de contenus, mais le bon
+  format dépend du travail à accomplir.
 - **Contenu visible :**
-  - Texte, image, audio, vidéo, code
-  - Données synthétiques, mondes virtuels
-  - Pour chaque famille : quel résultat examiner ?
-- **Notes du formateur :** Donner un exemple bref par famille. Distinguer données synthétiques et données observées, univers virtuel et analyse d’un comportement existant. Réserver les détails des familles de modèles à la documentation de référence.
+  - Texte, image, audio, vidéo et code
+  - Données synthétiques et environnements virtuels
+  - Même principe : examiner le résultat avant usage
+- **Notes du formateur :** Présenter brièvement les sept familles de sorties du cours canonique sans
+  transformer la diapositive en catalogue. Distinguer données synthétiques et données observées.
+  Annoncer que la suite se concentre sur les usages professionnels.
 
 ### English
 
-- **Title:** Seven types of generated output
-- **Key message:** The course introduces seven content families; they do not all need a live demonstration.
+- **Title:** What generative AI can produce
+- **Key message:** Generative AI can produce several types of content, but the right format depends
+  on the work that needs to be done.
 - **On-slide content:**
-  - Text, images, audio, video, code
-  - Synthetic data, virtual worlds
-  - For each family: what result should we examine?
-- **Facilitator notes:** Give one short example per family. Distinguish synthetic from observed data, and a virtual world from analysis of existing behavior. Keep model-family details in the reference material.
+  - Text, images, audio, video, and code
+  - Synthetic data and virtual environments
+  - Same principle: review the result before use
+- **Facilitator notes:** Briefly introduce the seven output families from the canonical course
+  without turning the slide into a catalogue. Distinguish synthetic from observed data. Explain
+  that the rest of the session focuses on professional use.
 
-## S02-08 : Capacité et application / Capability and application
+## S02-08 : Des tâches professionnelles courantes / Everyday professional tasks
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Une capacité devient utile dans un processus
-- **Message principal :** Générer du texte est une capacité ; préparer un document revu par une équipe est une application.
+- **Titre :** Des tâches professionnelles courantes
+- **Message principal :** La génération devient utile lorsqu’elle aide à préparer un résultat
+  concret dans un travail réel.
 - **Contenu visible :**
-  - Éducation : brouillon de support → enseignant
-  - Développement : code proposé → tests
-  - Coopérative fictive : avis préparé → responsable
-- **Notes du formateur :** Relier besoin, sortie et contrôle. Les exemples sectoriels du cours illustrent des possibilités ; ils ne prouvent ni déploiement ni gain pour la coopérative.
+  - Rédiger un premier courriel ou message
+  - Réécrire un texte pour un autre public
+  - Organiser ou résumer des notes autorisées
+  - Structurer un rapport ou une présentation
+  - Préparer un visuel ou une aide technique simple
+- **Notes du formateur :** Donner un exemple très bref pour chaque famille de tâches. Expliquer que
+  le niveau de vérification dépend du contenu et de ses conséquences. Ne pas supposer qu’un outil
+  connaît les règles internes d’une organisation.
 
 ### English
 
-- **Title:** A capability becomes useful in a workflow
-- **Key message:** Generating text is a capability; preparing a team-reviewed document is an application.
+- **Title:** Everyday professional tasks
+- **Key message:** Generation becomes useful when it helps prepare a concrete result inside real
+  work.
 - **On-slide content:**
-  - Education: draft material → teacher
-  - Development: proposed code → tests
-  - Fictional cooperative: drafted notice → manager
-- **Facilitator notes:** Connect the need, output, and check. The course’s industry examples illustrate possibilities; they do not establish deployment or benefit for the cooperative.
+  - Draft a first email or message
+  - Rewrite text for another audience
+  - Organize or summarize authorized notes
+  - Structure a report or presentation
+  - Prepare a visual or simple technical aid
+- **Facilitator notes:** Give one very short example for each task family. Explain that the amount
+  of checking depends on the content and its consequences. Do not assume a tool knows an
+  organization's internal rules.
 
-## S02-09 : Choisir la sortie / Choose an output
+## S02-09 : Même information, différents livrables / Same information, different work products
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Une campagne, plusieurs formats
-- **Message principal :** Le format se choisit selon le public et la preuve nécessaire.
+- **Titre :** Même information, différents livrables
+- **Message principal :** Le public et l’usage attendu déterminent la forme du brouillon et les
+  contrôles nécessaires.
 - **Contenu visible :**
-  - Agent de terrain → avis textuel
-  - Formation interne → visuel ou briefing audio
-  - Équipe technique → guide HTML testé
-  - Même consigne fictive, contrôles différents
-- **Notes du formateur :** Présenter la matrice « public / sortie / vérification ». Un outil audio suppose langue, droits et conditions d’usage adéquats. Un guide HTML est un support statique, pas un système de traçabilité déployé.
+  - Client → courriel → vérifier faits, ton et engagements
+  - Équipe projet → compte rendu → vérifier décisions et éléments manquants
+  - Direction → plan de présentation → vérifier chaque affirmation
+  - Opérations → consigne → vérifier la procédure et l’autorité
+- **Notes du formateur :** Utiliser le schéma public, sortie et contrôle. Faire remarquer qu’un
+  changement de format ne crée pas de nouveaux faits. Un responsable ou une échéance absent des
+  notes ne doit pas apparaître comme s’il avait été fourni.
 
 ### English
 
-- **Title:** One campaign, several formats
-- **Key message:** Choose the output format for the audience and the evidence required.
+- **Title:** Same information, different work products
+- **Key message:** The audience and intended use determine the draft format and the checks it needs.
 - **On-slide content:**
-  - Field agent → text notice
-  - Internal training → visual or spoken briefing
-  - Technical team → tested HTML guide
-  - Same fictional instruction, different checks
-- **Facilitator notes:** Show the “audience / output / verification” matrix. Audio requires suitable language support, rights, and usage terms. An HTML guide is a static aid, not a deployed traceability system.
+  - Customer → email → check facts, tone, and commitments
+  - Project team → meeting summary → check decisions and missing information
+  - Management → presentation outline → check every claim
+  - Operations → instruction → check procedure and authority
+- **Facilitator notes:** Use the audience, output, and check diagram. Point out that changing the
+  format does not create new facts. A missing owner or deadline must not appear as if it had been
+  supplied.
 
-## S02-10 : Source de l’exercice / Exercise source
+## S02-10 : Une source limitée pour la démonstration / A limited source for the demonstration
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Une consigne fictive et limitée
-- **Message principal :** Une source courte permet de vérifier si le brouillon ajoute des faits absents.
+- **Titre :** Une source limitée pour la démonstration
+- **Message principal :** Une petite source permet de voir clairement si le brouillon ajoute une
+  information absente.
 - **Contenu visible :**
-  - Simulation pédagogique : relever identifiant du lot, date et poids
-  - Si un champ manque : dossier « à compléter » et vérification par un agent
-  - Aucune règle de paiement, de certification ou de qualité fournie
-- **Notes du formateur :** Lire la source à voix haute. Les champs servent uniquement à cet exercice ; ce ne sont ni des seuils réglementaires ni une procédure de coopérative existante. Les participants devront confronter toutes les sorties à ces trois lignes.
+  - Relever l’identifiant du lot, la date et le poids
+  - Si un champ manque : marquer le dossier « à compléter »
+  - Faire vérifier le dossier par un agent
+  - Aucune autre règle n’est fournie
+- **Notes du formateur :** Présenter ces quatre éléments comme la totalité de la source fictive.
+  Elle ne contient aucun seuil, délai, paiement, certification ou règle de qualité. Garder la
+  source visible mentalement pendant les diapositives suivantes.
 
 ### English
 
-- **Title:** A limited, fictional instruction
-- **Key message:** A short source makes it possible to detect facts added by a draft.
+- **Title:** A limited source for the demonstration
+- **Key message:** A small source makes it easy to see whether a draft adds information that was
+  never supplied.
 - **On-slide content:**
-  - Teaching simulation: record lot ID, date, and weight
-  - If a field is missing: mark “needs completion” and request staff review
-  - No payment, certification, or quality rule is supplied
-- **Facilitator notes:** Read the source aloud. These fields exist only for the exercise; they are neither regulatory thresholds nor an existing cooperative’s procedure. Participants will compare every output with these three lines.
+  - Record the lot ID, date, and weight
+  - If a field is missing: mark the record “needs completion”
+  - Have a staff member review the record
+  - No other rule is supplied
+- **Facilitator notes:** Present these four elements as the complete fictional source. It contains
+  no threshold, deadline, payment, certification, or quality rule. Keep the source in mind
+  throughout the next slides.
 
-## S02-11 : Première demande / First request
+## S02-11 : Préparer un avis aux agents / Draft a staff notice
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Demander un avis aux agents
-- **Message principal :** Le contexte et la source orientent la première version sans garantir sa justesse.
+- **Titre :** Préparer un avis aux agents
+- **Message principal :** Une demande simple peut préciser la tâche, le public et la source sans
+  garantir automatiquement la justesse du résultat.
 - **Contenu visible :**
-  - Simulation pédagogique : « Rédige un avis de 40 mots aux agents de réception. »
-  - « Utilise uniquement la consigne de la diapositive précédente. »
-  - « Si une règle manque, signale-le ; n’invente aucun seuil. »
-- **Notes du formateur :** Montrer une capture simulée du prompt, étiquetée comme telle. Expliquer simplement tâche, public et source ; les techniques avancées de formulation appartiendront à S03. Utiliser des données fictives, jamais de dossiers membres réels.
+  - Rédiger un court avis pour les agents de réception
+  - Utiliser uniquement la consigne fournie
+  - Ne pas inventer les informations manquantes
+- **Notes du formateur :** Montrer la capture du véritable échange ChatGPT préparé pour le scénario
+  fictif. Faire repérer tâche, public et source. Ne pas transformer cette observation en cours
+  détaillé de prompt engineering ; S03 approfondira la formulation.
 
 ### English
 
-- **Title:** Ask for a staff notice
-- **Key message:** Context and source material guide a first draft without guaranteeing accuracy.
+- **Title:** Draft a staff notice
+- **Key message:** A simple request can specify the task, audience, and source without automatically
+  guaranteeing an accurate result.
 - **On-slide content:**
-  - Teaching simulation: “Draft a 40-word notice for intake staff.”
-  - “Use only the instruction on the previous slide.”
-  - “If a rule is missing, say so; invent no thresholds.”
-- **Facilitator notes:** Show a clearly labelled simulated prompt screen. Explain task, audience, and source at an introductory level; detailed prompting techniques belong in S03. Use fictional data, never real member records.
+  - Draft a short notice for intake staff
+  - Use only the supplied instruction
+  - Do not invent missing information
+- **Facilitator notes:** Show the real ChatGPT exchange captured for the fictional scenario. Ask
+  learners to identify the task, audience, and source. Do not turn this observation into detailed
+  prompt engineering; S03 will cover formulation.
 
-## S02-12 : Réponse à examiner / Output to inspect
+## S02-12 : Fluide ne signifie pas fondé / Fluent does not mean supported
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Une phrase plausible peut être fausse
-- **Message principal :** La fluidité d’un texte ne prouve pas qu’il respecte la source.
+- **Titre :** Fluide ne signifie pas fondé
+- **Message principal :** Une phrase professionnelle et convaincante peut quand même ajouter un fait
+  inexistant.
 - **Contenu visible :**
-  - Sortie simulée, volontairement erronée : « Un lot incomplet sera certifié sous 24 heures. »
-  - Où cette règle figure-t-elle dans la consigne ?
-  - Ne pas publier ce brouillon.
-- **Notes du formateur :** Laisser quelques secondes pour repérer l’affirmation inventée. Pointer l’absence de délai et de certification dans la source. Ce texte est un contre-exemple fabriqué pour l’enseignement, pas une réponse réellement obtenue ni une consigne opérationnelle.
+  - Contre-exemple pédagogique : « Un lot incomplet sera certifié sous 24 heures. »
+  - Où la source fournit-elle cette règle ?
+  - Ne pas publier ce brouillon
+- **Notes du formateur :** Laisser quelques secondes pour identifier l’invention. La source ne
+  fournit ni certification ni délai. Le contre-exemple est volontairement fabriqué pour
+  l’enseignement et ne provient pas de la capture réelle de S02-11.
 
 ### English
 
-- **Title:** A plausible sentence can be wrong
-- **Key message:** Fluent wording does not prove that a draft follows its source.
+- **Title:** Fluent does not mean supported
+- **Key message:** Professional, convincing wording can still introduce a fact that does not exist
+  in the source.
 - **On-slide content:**
-  - Deliberately wrong simulated output: “An incomplete lot will be certified within 24 hours.”
-  - Where does the instruction state this rule?
-  - Do not publish this draft.
-- **Facilitator notes:** Give participants a few seconds to identify the invented claim. The source supplies neither a deadline nor a certification rule. This is a constructed teaching counterexample, not an observed model response or operational instruction.
+  - Teaching counterexample: “An incomplete lot will be certified within 24 hours.”
+  - Where does the source provide this rule?
+  - Do not publish this draft
+- **Facilitator notes:** Give learners a few seconds to identify the invention. The source contains
+  neither certification nor a deadline. The counterexample is deliberately constructed for
+  teaching and does not come from the real S02-11 capture.
 
-## S02-13 : Contrôle du brouillon / Draft review
+## S02-13 : Vérifier avant usage / Check before use
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Trois vérifications avant usage
-- **Message principal :** La vérification est une étape de travail, pas un geste facultatif après publication.
+- **Titre :** Vérifier avant usage
+- **Message principal :** La vérification fait partie du travail de génération ; elle ne commence
+  pas après la diffusion.
 - **Contenu visible :**
   - Faits : chaque affirmation vient-elle de la source ?
-  - Usage : le message répond-il au bon public ?
-  - Autorité : qui peut approuver et diffuser ?
-- **Notes du formateur :** Faire relever que la phrase de S02-12 échoue au contrôle des faits. Demander qui doit valider la version destinée aux agents. Rappeler qu’aucun dossier privé ne doit être copié dans un modèle public sans procédure approuvée.
+  - Usage : le contenu convient-il au public et au besoin ?
+  - Autorité : qui peut approuver, envoyer ou publier ?
+- **Notes du formateur :** Utiliser le schéma en trois contrôles. Faire identifier le contrôle que
+  la phrase de S02-12 échoue. Rappeler que plus les conséquences sont importantes, plus le contrôle
+  doit être rigoureux.
 
 ### English
 
-- **Title:** Three checks before use
-- **Key message:** Review is part of the workflow, not an optional step after publication.
+- **Title:** Check before use
+- **Key message:** Review is part of generation work; it does not begin after the content has been
+  shared.
 - **On-slide content:**
   - Facts: does every claim come from the source?
-  - Use: does the message fit the audience?
-  - Authority: who can approve and share it?
-- **Facilitator notes:** Point out that the sentence in S02-12 fails the factual check. Ask who should approve a staff notice. Remind participants that private records do not belong in a public model without an approved protection process.
+  - Use: does the content fit the audience and need?
+  - Authority: who may approve, send, or publish it?
+- **Facilitator notes:** Use the three-check diagram. Ask which check the S02-12 sentence fails.
+  Reinforce that greater consequences require stronger review.
 
-## S02-14 : Version corrigée / Revised draft
+## S02-14 : Revenir aux faits fournis / Return to the supplied facts
 
 Durée : **3 minutes**
 
 ### Français
 
 - **Titre :** Revenir aux faits fournis
-- **Message principal :** Corriger le brouillon exige de retirer les inventions, pas seulement d’améliorer le style.
+- **Message principal :** Corriger un brouillon exige de retirer les inventions, pas seulement
+  d’améliorer son style.
 - **Contenu visible :**
-  - Version d’exercice : « À la réception, relevez l’identifiant du lot, la date et le poids. »
-  - « Si un champ manque, marquez le dossier à compléter et demandez une vérification. »
-  - Validation par la personne chargée de la procédure avant diffusion
-- **Notes du formateur :** Comparer chaque proposition à la consigne fictive de S02-10. La version d’exercice ne fixe ni délai ni résultat de certification. Souligner qu’une correction du modèle demeure un brouillon tant qu’un responsable ne l’a pas approuvée.
+  - Relever identifiant du lot, date et poids
+  - Si un champ manque : marquer le dossier « à compléter »
+  - Faire vérifier le dossier par un agent
+  - Validation de la procédure avant diffusion
+- **Notes du formateur :** Comparer chaque élément avec S02-10. La certification et le délai
+  disparaissent. La dernière ligne décrit l’autorité de diffusion de l’exercice, pas une nouvelle
+  règle concernant le lot.
 
 ### English
 
 - **Title:** Return to the supplied facts
-- **Key message:** Revising a draft means removing inventions, not just improving its style.
+- **Key message:** Correcting a draft means removing inventions, not merely improving its style.
 - **On-slide content:**
-  - Exercise draft: “At intake, record the lot ID, date, and weight.”
-  - “If a field is missing, mark the record as needing completion and request review.”
-  - The procedure owner approves the notice before release
-- **Facilitator notes:** Compare each statement with the fictional instruction in S02-10. The exercise draft supplies no deadline or certification outcome. A corrected model output remains a draft until a responsible person approves it.
+  - Record the lot ID, date, and weight
+  - If a field is missing: mark the record “needs completion”
+  - Have a staff member review the record
+  - Procedure owner validates before distribution
+- **Facilitator notes:** Compare every element with S02-10. Certification and the deadline
+  disappear. The final line describes authority over distribution of the exercise output, not a
+  new lot rule.
 
-## S02-15 : Changer de public / Change the audience
+## S02-15 : Réécrire sans changer le sens / Rewrite without changing the meaning
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Même source, autre formulation
-- **Message principal :** Réécrire ou résumer adapte la forme sans ajouter de nouvelles règles.
+- **Titre :** Réécrire sans changer le sens
+- **Message principal :** L’IA peut transformer la forme d’un contenu sans recevoir l’autorisation
+  d’inventer les faits manquants.
 - **Contenu visible :**
-  - Agent : instruction de saisie
-  - Producteur membre : explication accessible du dossier incomplet
-  - Vérifier la fidélité dans les deux versions
-- **Notes du formateur :** Proposer oralement une reformulation pour les membres. Les langues effectivement prises en charge par un outil se vérifient avant usage ; une traduction ne dispense pas d’un contrôle humain. Ne pas ajouter de délai ou de conséquence financière.
+  - Notes → résumé
+  - Message long → message court
+  - Formulation interne → version adaptée au public
+  - Informations fournies → plan de présentation
+  - Les faits et les inconnues restent les mêmes
+- **Notes du formateur :** Relier ce principe au travail quotidien. Pour un compte rendu, un
+  responsable ou une échéance absente doit rester non précisé. Pour un courriel ou une
+  présentation, vérifier que la transformation n’introduit aucun engagement ou affirmation
+  nouvelle.
 
 ### English
 
-- **Title:** Same source, different wording
-- **Key message:** Rewriting or summarizing changes the form without adding new rules.
+- **Title:** Rewrite without changing the meaning
+- **Key message:** AI can transform the form of content without receiving permission to invent
+  missing facts.
 - **On-slide content:**
-  - Staff member: data-entry instruction
-  - Member producer: accessible explanation of an incomplete record
-  - Check both versions against the source
-- **Facilitator notes:** Invite a spoken rewording for members. Verify an actual tool’s language support before use; translated content still needs human review. Do not invent a deadline or financial consequence.
+  - Notes → summary
+  - Long message → short message
+  - Internal wording → audience-appropriate wording
+  - Supplied information → presentation outline
+  - Facts and unknowns stay the same
+- **Facilitator notes:** Connect the principle to everyday work. In meeting notes, a missing owner
+  or deadline must remain unspecified. In an email or presentation, check that the transformation
+  introduces no new commitment or claim.
 
-## S02-16 : Image et formation / Images for training
+## S02-16 : Un visuel reste un brouillon / Visual communication is still a draft
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Un visuel aide, mais peut induire en erreur
-- **Message principal :** Une image générée doit être examinée comme un brouillon de communication.
+- **Titre :** Un visuel reste un brouillon
+- **Message principal :** Une image convaincante doit être vérifiée comme tout autre contenu
+  généré.
 - **Contenu visible :**
-  - Demande fictive : une affiche sur les trois champs de réception
-  - Vérifier libellés, ordre, symboles et droits
-  - Aucun sceau officiel ni résultat d’inspection inventé
-- **Notes du formateur :** Distinguer texte-vers-image, modification d’une image et extension de ses bords sans détailler des produits. Une illustration pédagogique ne prouve pas qu’un processus a été exécuté dans le monde réel.
+  - Besoin fictif : rappeler les trois champs de réception
+  - Vérifier textes, symboles et implications
+  - Vérifier droits et provenance lorsque nécessaire
+  - Aucun sceau officiel ou résultat d’inspection inventé
+- **Notes du formateur :** Expliquer qu’un visuel peut sembler crédible tout en contenant un texte
+  ou un symbole trompeur. Le contrôle porte donc sur le sens autant que sur l’apparence.
 
 ### English
 
-- **Title:** A visual can help or mislead
-- **Key message:** Treat a generated image as a communication draft that needs review.
+- **Title:** Visual communication is still a draft
+- **Key message:** A convincing image must be reviewed like any other generated content.
 - **On-slide content:**
-  - Fictional request: a poster about three intake fields
-  - Check labels, order, symbols, and rights
-  - No invented official seal or inspection result
-- **Facilitator notes:** Distinguish text-to-image, image modification, and extending an image beyond its borders without discussing specific products. A teaching illustration is not evidence of a real-world process.
+  - Fictional need: remind staff of the three intake fields
+  - Check wording, symbols, and implications
+  - Check rights and provenance where required
+  - Invent no official seal or inspection result
+- **Facilitator notes:** Explain that a visual may look credible while containing misleading text
+  or symbols. Review therefore covers meaning as well as appearance.
 
-## S02-17 : Affiche simulée / Simulated poster
+## S02-17 : Examiner une affiche générée / Review a generated poster
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Que corrigeriez-vous sur cette affiche ?
-- **Message principal :** L’évaluation d’un visuel porte aussi sur les mots, les implications et le contexte.
+- **Titre :** Examiner une affiche générée
+- **Message principal :** L’évaluation d’un visuel porte sur ce qu’il affirme et suggère, pas
+  seulement sur son apparence.
 - **Contenu visible :**
   - Simulation pédagogique : affiche de réception fictive
-  - Vérifier : identifiant, date, poids
-  - Repérer : fausse certification ou information absente
-- **Notes du formateur :** Prévoir un visuel d’exercice créé pour la séance et marqué « simulation pédagogique ». Inviter une personne à identifier un élément à conserver et un élément à corriger. Ne pas utiliser une vraie photo de producteur, un logo tiers ou une fausse preuve de conformité.
+  - Vérifier : identifiant, date et poids
+  - Repérer : information absente ou fausse certification
+- **Notes du formateur :** Montrer l’affiche pédagogique existante. Demander un élément correct et
+  un élément à corriger. Ne pas utiliser de photo réelle de membre ou de preuve de conformité
+  inventée.
 
 ### English
 
-- **Title:** What would you change on this poster?
-- **Key message:** Reviewing a visual also means checking its wording, implications, and context.
+- **Title:** Review a generated poster
+- **Key message:** Reviewing a visual means checking what it states and implies, not merely how it
+  looks.
 - **On-slide content:**
   - Teaching simulation: fictional intake poster
-  - Check: lot ID, date, weight
-  - Spot: false certification or missing information
-- **Facilitator notes:** Prepare an exercise visual specifically for the session and label it “teaching simulation.” Invite one person to name something to keep and something to fix. Do not use a real producer’s photo, third-party logo, or false compliance evidence.
+  - Check: lot ID, date, and weight
+  - Spot: missing information or false certification
+- **Facilitator notes:** Show the existing teaching poster. Ask learners for one correct element and
+  one element to fix. Do not use a real member photograph or invented evidence of compliance.
 
-## S02-18 : Audio, vidéo et données / Audio, video, and data
+## S02-18 : D’autres médias demandent d’autres contrôles / Other media require different checks
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Certaines sorties demandent d’autres contrôles
-- **Message principal :** Le type de contenu détermine ce qu’il faut vérifier avant diffusion.
+- **Titre :** D’autres médias demandent d’autres contrôles
+- **Message principal :** Le format produit change certains contrôles, mais pas l’obligation de
+  vérifier avant diffusion.
 - **Contenu visible :**
   - Audio : langue, prononciation, consentement et droits
-  - Vidéo : séquence, cohérence et provenance
-  - Données synthétiques : utilité et risque de confusion avec des données réelles
-- **Notes du formateur :** Donner ces exemples à l’oral sans prétendre disposer d’une démonstration ou de résultats enregistrés. Mentionner brièvement les mondes virtuels comme septième domaine déjà vu en S02-07. Ne pas attribuer une langue ou un droit de réutilisation à un service particulier.
+  - Vidéo : contenu, cohérence et provenance
+  - Données synthétiques : les identifier comme telles
+- **Notes du formateur :** Donner un exemple oral rapide pour l’audio et la vidéo. Les données
+  synthétiques peuvent servir à certains usages, mais elles ne deviennent pas des observations
+  réelles parce qu’elles paraissent plausibles.
 
 ### English
 
-- **Title:** Some outputs need different checks
-- **Key message:** The content type determines what must be checked before release.
+- **Title:** Other media require different checks
+- **Key message:** The output format changes some checks, but not the obligation to review before
+  distribution.
 - **On-slide content:**
   - Audio: language, pronunciation, consent, and rights
-  - Video: sequence, consistency, and provenance
-  - Synthetic data: utility and the risk of confusing it with observed data
-- **Facilitator notes:** Give these examples verbally without claiming a completed demonstration or recorded results. Briefly mention virtual worlds as the seventh output type already seen in S02-07. Do not attribute language support or reuse rights to a specific service.
+  - Video: content, consistency, and provenance
+  - Synthetic data: identify it as synthetic
+- **Facilitator notes:** Give one quick spoken example for audio and video. Synthetic data may be
+  useful for some tasks, but it does not become observed data merely because it looks plausible.
 
-## S02-19 : Aide au code / Code assistance
+## S02-19 : Le code généré reste une proposition / Generated code is still a proposal
 
 Durée : **2 minutes**
 
 ### Français
 
 - **Titre :** Le code généré reste une proposition
-- **Message principal :** Un programme plausible doit être lu, exécuté et testé avant usage.
+- **Message principal :** Un programme plausible n’est pas automatiquement correct, sûr ou prêt à
+  être utilisé.
 - **Contenu visible :**
-  - Besoin fictif : afficher une liste de champs obligatoires
-  - Sortie possible : HTML statique ou aide au code
-  - Vérifier comportement, sécurité et accessibilité
-- **Notes du formateur :** Relier l’exemple aux activités de code du cours sans refaire leurs laboratoires ni inventer des résultats. Une suggestion de code ne remplace pas les tests ; un guide HTML n’attribue aucun statut de qualité ou de paiement.
+  - Besoin fictif : afficher les champs requis
+  - Sortie possible : page HTML ou aide au code
+  - Exécuter et tester le comportement
+  - Vérifier sécurité, accessibilité et adéquation au besoin
+- **Notes du formateur :** Rester au niveau du principe professionnel. S02 ne devient pas un cours
+  de programmation. Une personne techniquement responsable doit examiner le code selon le contexte.
 
 ### English
 
 - **Title:** Generated code is still a proposal
-- **Key message:** Plausible code must be read, run, and tested before use.
+- **Key message:** Plausible software is not automatically correct, safe, or ready for use.
 - **On-slide content:**
-  - Fictional need: display a list of required fields
-  - Possible output: static HTML or code assistance
-  - Check behavior, security, and accessibility
-- **Facilitator notes:** Connect the example to the course’s coding activities without recreating its labs or inventing their results. A code suggestion does not replace testing; an HTML guide assigns no quality or payment status.
+  - Fictional need: display the required fields
+  - Possible output: HTML page or coding assistance
+  - Run and test the behavior
+  - Check security, accessibility, and task fit
+- **Facilitator notes:** Keep the discussion at the professional-principle level. S02 does not
+  become a programming class. A technically responsible person must review code as appropriate to
+  the context.
 
-## S02-20 : Tester une page / Test a page
+## S02-20 : Test technique et test métier / Technical test and business test
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** La page s’affiche ; est-elle juste ?
-- **Message principal :** Une page qui s’ouvre dans le navigateur peut encore contenir une consigne erronée.
+- **Titre :** Test technique et test métier
+- **Message principal :** Un contenu peut fonctionner techniquement tout en restant incorrect pour
+  le travail demandé.
 - **Contenu visible :**
-  - Simulation pédagogique : un guide HTML des trois champs
-  - Test technique : le contenu s’affiche et reste lisible
-  - Test métier : chaque phrase correspond à la consigne fictive
-- **Notes du formateur :** Prévoir une capture simulée du guide, ou une démonstration locale préparée et testée séparément. Vérifier clavier et lisibilité si une vraie page est utilisée. L’affichage dans le navigateur ne valide ni les faits ni la publication.
+  - Guide HTML fictif des champs de réception
+  - Test technique : la page s’affiche et reste utilisable
+  - Test métier : chaque phrase correspond à la source
+  - Publication : personne autorisée
+- **Notes du formateur :** Montrer la capture du guide HTML local. Distinguer clairement « cela
+  s’affiche » de « cela dit la bonne chose ». Une page techniquement fonctionnelle ne reçoit pas
+  automatiquement l’autorisation d’être publiée.
 
 ### English
 
-- **Title:** The page loads; is it correct?
-- **Key message:** A page that opens in a browser can still contain a wrong instruction.
+- **Title:** Technical test and business test
+- **Key message:** Content may work technically while still being wrong for the intended work.
 - **On-slide content:**
-  - Teaching simulation: an HTML guide for three fields
-  - Technical check: the content displays and remains readable
-  - Business check: every sentence matches the fictional instruction
-- **Facilitator notes:** Prepare a simulated guide screen or a locally tested demonstration. Check keyboard access and readability if a real page is used. Browser display does not establish factual correctness or authorize publication.
+  - Fictional HTML guide for intake fields
+  - Technical test: the page displays and remains usable
+  - Business test: every statement matches the source
+  - Publication: authorized person
+- **Facilitator notes:** Show the local HTML-guide capture. Clearly separate “it displays” from “it
+  says the right thing.” A technically functional page does not automatically receive permission
+  to be published.
 
-## S02-21 : Génération et agent / Generation and agents
+## S02-21 : Génération ou action agentique ? / Generation or agentic action?
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Produire un contenu ou poursuivre un objectif
-- **Message principal :** Une interaction de génération et un enchaînement d’actions n’ont pas le même niveau d’autonomie.
+- **Titre :** Génération ou action agentique ?
+- **Message principal :** Produire un contenu et poursuivre un objectif en exécutant plusieurs
+  actions n’impliquent pas le même niveau d’autorisation.
 - **Contenu visible :**
-  - Génération : un brouillon à examiner
-  - Système agentique : plusieurs étapes et actions possibles
-  - Autorisations et supervision à définir avant toute action
-- **Notes du formateur :** Présenter une différence de processus, pas une architecture universelle. Dans la coopérative fictive, aucune automatisation ne peut approuver un lot, modifier un paiement ou transmettre une certification de sa propre initiative.
+  - Génération : proposer un brouillon
+  - Action agentique : enchaîner des étapes ou des actions
+  - Définir autorisations, limites et supervision avant l’action
+- **Notes du formateur :** Rester introductif. Un système agentique n’obtient aucune autorité
+  implicite sur un lot, un paiement, une certification, un engagement client ou une publication.
 
 ### English
 
-- **Title:** Produce content or pursue a goal
-- **Key message:** A generation request and a sequence of actions have different levels of autonomy.
+- **Title:** Generation or agentic action?
+- **Key message:** Producing content and pursuing a goal through multiple actions do not require the
+  same level of authorization.
 - **On-slide content:**
-  - Generation: a draft for review
-  - Agentic system: potentially several steps and actions
-  - Set permissions and oversight before any action
-- **Facilitator notes:** Describe a process distinction, not a universal architecture. In the fictional cooperative, no automation can approve a lot, change a payment, or submit a certificate on its own initiative.
+  - Generation: propose a draft
+  - Agentic action: execute a sequence of steps or actions
+  - Define permissions, limits, and supervision before action
+- **Facilitator notes:** Keep this introductory. An agentic system receives no implicit authority
+  over a lot, payment, certification, customer commitment, or publication.
 
-## S02-22 : Exercice en binôme / Pair exercise
+## S02-22 : Choisir une tâche professionnelle / Choose a professional task
 
 Durée : **4 minutes**
 
 ### Français
 
-- **Titre :** Concevoir un usage limité
-- **Message principal :** Un bon cas d’usage précise ce qui sera produit et comment une personne le vérifiera.
+- **Titre :** Choisir une tâche professionnelle
+- **Message principal :** Un bon exercice part d’un travail limité que l’on peut simuler et
+  contrôler.
 - **Contenu visible :**
-  - Choisir un public : agent, producteur membre ou équipe technique
-  - Choisir une sortie : texte, visuel ou guide statique
-  - Nommer une source fictive, un risque et un validateur humain
-- **Notes du formateur :** Donner deux minutes de discussion, puis deux minutes pour préparer une proposition. Garder la consigne fictive de S02-10 comme seule source métier ; ne pas demander l’usage d’un modèle en direct. Pour une personne seule, réaliser l’exercice individuellement.
+  - Courriel ou message professionnel
+  - Compte rendu ou résumé de notes
+  - Plan de rapport ou de présentation
+  - Consigne, visuel ou aide technique simple
+  - Utiliser uniquement des informations fictives ou autorisées
+- **Notes du formateur :** Laisser les participants choisir un type de tâche. En binôme ou en solo,
+  définir ce que l’IA devrait préparer sans encore rédiger un prompt sophistiqué. Les données
+  réelles confidentielles ne sont pas nécessaires.
 
 ### English
 
-- **Title:** Design a limited use case
-- **Key message:** A sound use case names its output and how a person will review it.
+- **Title:** Choose a professional task
+- **Key message:** A useful exercise starts with bounded work that can be simulated and checked.
 - **On-slide content:**
-  - Choose an audience: staff, member producers, or technical team
-  - Choose an output: text, visual, or static guide
-  - Name a fictional source, one risk, and a human reviewer
-- **Facilitator notes:** Allow two minutes to discuss and two minutes to prepare an answer. Use the fictional instruction in S02-10 as the only business source; do not require live model access. Solo participants may work individually.
+  - Professional email or message
+  - Meeting summary or note summary
+  - Report or presentation outline
+  - Instruction, visual, or simple technical aid
+  - Use only fictional or authorized information
+- **Facilitator notes:** Let learners choose a type of task. Individually or in pairs, define what
+  the AI should prepare without yet writing a sophisticated prompt. Real confidential data is not
+  required.
 
-## S02-23 : Mise en commun / Share and assess
+## S02-23 : Résultat, source, public, contrôle / Result, source, audience, check
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Besoin, sortie, contrôle
-- **Message principal :** Une proposition vaut par la clarté de son contrôle et de sa responsabilité.
+- **Titre :** Résultat, source, public, contrôle
+- **Message principal :** Une utilisation professionnelle limitée devient plus claire lorsque ces
+  quatre éléments sont explicités.
 - **Contenu visible :**
-  - Quel est le besoin ?
-  - Quelle sortie est adaptée ?
-  - Quel fait sera vérifié, par qui ?
-- **Notes du formateur :** Écouter deux réponses courtes, puis reformuler « besoin → sortie → vérification → autorisation ». Corriger toute promesse de certification automatique ou de gain chiffré inventé. Si le temps manque, prendre une réponse et garder l’autre pour la discussion finale.
+  - Quel résultat faut-il préparer ?
+  - Quelle information peut servir de source ?
+  - Qui utilisera le résultat ?
+  - Que faut-il vérifier, et par qui ?
+- **Notes du formateur :** Faire présenter rapidement une ou deux propositions. Ne pas introduire
+  encore le cadre complet de prompt de S03. L’objectif est de cadrer le travail, pas d’optimiser la
+  formulation.
 
 ### English
 
-- **Title:** Need, output, check
-- **Key message:** A proposal is only as sound as its review and accountability.
+- **Title:** Result, source, audience, check
+- **Key message:** A bounded professional use becomes clearer when these four elements are explicit.
 - **On-slide content:**
-  - What is the need?
-  - Which output fits?
-  - What fact will be checked, and by whom?
-- **Facilitator notes:** Hear two brief answers, then restate “need → output → review → authorization.” Correct any promise of automatic certification or invented quantitative gain. If time is short, take one answer and reserve the other for the closing discussion.
+  - What result needs to be prepared?
+  - What information may serve as the source?
+  - Who will use the result?
+  - What must be checked, and by whom?
+- **Facilitator notes:** Invite one or two quick examples. Do not introduce the full S03 prompt
+  framework yet. The purpose is to frame the work, not optimize wording.
 
-## S02-24 : Conditions d’usage / Conditions for use
+## S02-24 : Mesurer l’utilité sans inventer les bénéfices / Measure usefulness without inventing benefits
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Tester la valeur sans inventer des résultats
-- **Message principal :** Un essai mesuré permet d’évaluer un usage ; une hypothèse ne constitue pas un bénéfice observé.
+- **Titre :** Mesurer l’utilité sans inventer les bénéfices
+- **Message principal :** Une hypothèse de gain doit être testée avant d’être présentée comme un
+  résultat.
 - **Contenu visible :**
-  - Critères possibles : exactitude, corrections nécessaires, temps de préparation
-  - Données protégées et droits vérifiés avant l’essai
-  - Décision d’utilisation : équipe responsable
-- **Notes du formateur :** Proposer des indicateurs à mesurer lors d’un futur essai, sans leur attribuer de valeur obtenue. Ne pas reprendre les chiffres attribués à des entreprises tierces comme prévision pour la coopérative. Séparer la vérification du contenu de l’autorisation opérationnelle.
+  - Temps de préparation
+  - Exactitude et cohérence
+  - Nombre de corrections nécessaires
+  - Utilité pour le public
+  - Risques ou problèmes rencontrés
+- **Notes du formateur :** Faire distinguer un indicateur possible d’un résultat déjà mesuré. Un
+  gain de temps n’est utile que si la qualité et les règles applicables restent satisfaisantes.
 
 ### English
 
-- **Title:** Test value without inventing results
-- **Key message:** A measured trial can assess a use case; a hypothesis is not an observed benefit.
+- **Title:** Measure usefulness without inventing benefits
+- **Key message:** An expected benefit must be tested before it is presented as an observed result.
 - **On-slide content:**
-  - Possible measures: accuracy, required corrections, preparation time
-  - Protect data and check rights before a trial
-  - Responsible team decides whether to use the output
-- **Facilitator notes:** Suggest measures for a future trial without assigning achieved values. Do not turn numbers attributed to other companies into a forecast for the cooperative. Separate content review from operational authorization.
+  - Preparation time
+  - Accuracy and consistency
+  - Number of corrections required
+  - Usefulness to the audience
+  - Risks or problems encountered
+- **Facilitator notes:** Distinguish a possible metric from a result that has already been measured.
+  Time savings matter only when quality and applicable rules remain acceptable.
 
-## S02-25 : Vérification finale / Final check
+## S02-25 : Apprendre → utiliser → vérifier / Learn → use → check
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Trois questions pour repartir
-- **Message principal :** Une sortie produite par l’IA n’est utilisable qu’après un contrôle adapté.
+- **Titre :** Apprendre → utiliser → vérifier
+- **Message principal :** L’objectif est de transférer la méthode à son propre travail sans oublier
+  la vérification.
 - **Contenu visible :**
-  - Est-ce une classification, une prévision ou une génération ?
-  - Quelle source et quel format de sortie conviennent ?
-  - Quelle affirmation vérifier avant diffusion ?
-- **Notes du formateur :** Faire répondre à voix haute sur l’avis fictif : génération de texte, consigne de S02-10, validation des faits et du droit de diffusion. Réutiliser la phrase inventée de S02-12 comme contre-exemple.
+  - Qu’ai-je appris ?
+  - Où pourrais-je l’utiliser ?
+  - Que dois-je vérifier avant de l’utiliser ?
+- **Notes du formateur :** Demander aux participants de répondre avec une tâche autre que le cas de
+  la coopérative. Une bonne réponse identifie un travail limité, une sortie attendue et au moins un
+  contrôle avant usage.
 
 ### English
 
-- **Title:** Three questions to take away
-- **Key message:** AI-produced output is ready for use only after an appropriate review.
+- **Title:** Learn → use → check
+- **Key message:** The goal is to transfer the method to one's own work without forgetting review.
 - **On-slide content:**
-  - Is this classification, forecasting, or generation?
-  - Which source and output format fit?
-  - Which claim needs checking before release?
-- **Facilitator notes:** Invite spoken answers for the fictional notice: text generation, the instruction in S02-10, and checking facts and sharing rights. Reuse the invented statement in S02-12 as a counterexample.
+  - What did I learn?
+  - Where could I use it?
+  - What must I check before I use it?
+- **Facilitator notes:** Ask learners to answer using a task outside the cooperative case. A strong
+  answer identifies bounded work, an expected output, and at least one check before use.
 
-## S02-26 : Transition vers S03 / Transition to S03
+## S02-26 : Ensuite : concevoir de meilleurs prompts / Next: design better prompts
 
 Durée : **1 minute**
 
 ### Français
 
-- **Titre :** Prochaine session : concevoir les prompts
-- **Message principal :** Le choix d’une sortie précède le travail détaillé sur la formulation des demandes.
+- **Titre :** Ensuite : concevoir de meilleurs prompts
+- **Message principal :** Après avoir défini le travail, le résultat et les contrôles, S03
+  approfondira la manière de formuler la demande.
 - **Contenu visible :**
-  - S02 : besoins, formats, vérification
-  - S03 : structure, variantes et évaluation des prompts
-- **Notes du formateur :** Conclure sans promettre un résultat de modèle ou un outil particulier. Annoncer que S03 partira des brouillons et contrôles de cette séance pour approfondir la conception des demandes.
+  - S02 : besoin, sortie, transformation et contrôle
+  - S03 : structure, itération, exemples et évaluation des prompts
+- **Notes du formateur :** Résumer le parcours : besoin → brouillon → vérification → responsabilité
+  humaine. Annoncer que S03 ajoutera une méthode structurée de conception et d’amélioration des
+  prompts.
 
 ### English
 
-- **Title:** Next session: designing prompts
-- **Key message:** Choosing an output comes before detailed work on phrasing requests.
+- **Title:** Next: design better prompts
+- **Key message:** After defining the work, result, and checks, S03 will deepen how the request is
+  formulated.
 - **On-slide content:**
-  - S02: needs, formats, review
-  - S03: prompt structure, alternatives, and evaluation
-- **Facilitator notes:** Close without promising an output from a particular model or tool. Explain that S03 will use this session’s drafts and checks to explore how to design requests.
+  - S02: need, output, transformation, and review
+  - S03: prompt structure, iteration, examples, and evaluation
+- **Facilitator notes:** Summarize the path: need → draft → review → human responsibility. Explain
+  that S03 adds a structured method for designing and improving prompts.
 
----
+## Traçabilité vers les modules canoniques
 
-## Traçabilité vers les sources canoniques
+| Module source                          | Diapositives principales                 |
+| -------------------------------------- | ---------------------------------------- |
+| 01 — Introduction and Capabilities     | S02-05 à S02-07, S02-10 à S02-15         |
+| 02 — Applications and Tools            | S02-03 à S02-09, S02-15 à S02-24         |
+| 03 — Course Quiz, Project, and Wrap-up | S02-17, S02-19 à S02-20, S02-22 à S02-26 |
 
-| Module du cours 02                                                                                 | Diapositives principales                 |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 01 : Introduction et capacités de l’IA générative / Introduction and Capabilities of Generative AI | S02-03 à S02-07, S02-10 à S02-15, S02-25 |
-| 02 : Applications et outils de l’IA générative / Applications and Tools of Generative AI           | S02-08 à S02-09, S02-15 à S02-24         |
-| 03 : Quiz, projet et bilan du cours / Course Quiz, Project, and Wrap-up                            | S02-17, S02-19 à S02-20, S02-22 à S02-26 |
+La traçabilité indique les principales zones d’appui conceptuel. Elle ne signifie pas que les
+formulations, exemples professionnels, scénarios ou séquences pédagogiques du dépôt sont du
+matériel officiel IBM/Coursera.
 
-- **Sources françaises :** [module 01](../../courses/02-generative-ai-introduction-and-applications/fr/01-introduction-and-capabilities-of-generative-ai.md), [module 02](../../courses/02-generative-ai-introduction-and-applications/fr/02-applications-and-tools-of-generative-ai.md), [module 03](../../courses/02-generative-ai-introduction-and-applications/fr/03-course-quiz-project-and-wrap-up.md).
-- **English sources:** [module 01](../../courses/02-generative-ai-introduction-and-applications/en/01-introduction-and-capabilities-of-generative-ai.md), [module 02](../../courses/02-generative-ai-introduction-and-applications/en/02-applications-and-tools-of-generative-ai.md), [module 03](../../courses/02-generative-ai-introduction-and-applications/en/03-course-quiz-project-and-wrap-up.md).
-- **Cas fil rouge / Recurring case:** [coopérative fictive près de Soubré](../case-studies/cocoa-cooperative-near-soubre.md).
+## Apports professionnels complémentaires
 
-## Revue éditoriale préalable à la production
+Le matériel collaboratif documenté dans le contrat parent renforce notamment :
 
-- Les trois adaptations françaises sont rédigées, mais chacune garde la mention « révision personnelle non terminée ». Leur sens et les termes clés doivent être examinés par le responsable pédagogique avant de considérer ce contrat comme approuvé.
-- Les exemples d’interfaces, noms de modèles, tarifs, quotas, performances et projections décrivent des supports enregistrés ; aucun de ces éléments n’est requis pour la démonstration S02.
-- Les sorties individuelles des laboratoires et du projet final ne sont pas conservées dans les notes. Les phrases de S02-12 et S02-14, l’affiche S02-17 et la page S02-20 sont donc des **simulations pédagogiques nouvelles**, signalées comme telles dans les deux langues ; elles ne sont pas présentées comme des travaux Coursera exécutés.
-- Le projet final est décrit comme facultatif dans la vue d’ensemble du cours. S02-22 est une activité propre à la session, sans prétention de reproduire une évaluation officielle.
-- Les chiffres attribués à des entreprises tierces, les détails historiques discutables et les comparaisons de produits restent dans les notes de référence jusqu’à vérification indépendante de leurs sources et de leur période.
-- Les données des membres, paiements et inspections sont exclues des exemples destinés à des services publics sans procédure de protection approuvée.
+- les courriels et messages professionnels ;
+- les comptes rendus à partir de notes fournies ;
+- les rapports et présentations structurés à partir d’informations autorisées ;
+- la réécriture pour un autre public sans changement silencieux des faits ;
+- le signalement des informations absentes ;
+- la vérification de détails avant envoi ou publication ;
+- la responsabilité humaine sur le résultat final.
 
-## Contenus réservés aux notes ou à la documentation de référence
+Ces éléments sont utilisés comme cadrage professionnel complémentaire. Ils ne sont pas présentés
+comme des contenus officiels IBM/Coursera.
 
-- Chronologie détaillée des architectures et familles GAN, VAE, Transformers, diffusion et autorégression
-- Formalismes probabilistes `P(X)`, `P(X, Y)` et `P(Y|X)`
-- Catalogues de marques, interfaces enregistrées et affirmations sur leur disponibilité
-- Projections économiques, mesures attribuées à des tiers et chiffres sans période vérifiée
-- Quiz, scores, consignes de soumission et résultats de laboratoires manquants
-- Tutoriels détaillés d’image, audio, vidéo, code, ou construction de systèmes agentiques
+## Contrat des visuels existants
 
-## Critères d’acceptation du futur support
+La refonte S02 conserve autant que possible l’infrastructure visuelle existante.
 
-- 26 diapositives en FR et 26 en EN, dans le même ordre, pour **60 minutes** par langue
-- Chaque identifiant, durée, objectif, interaction et décision sensible possède un équivalent bilingue
-- Les textes visibles tiennent dans les diapositives ; les notes portent explications et transitions
-- Les écrans et réponses simulés sont lisibles et explicitement étiquetés dans les deux langues
-- Aucun délai, seuil, résultat mesuré, certification ou politique réelle n’est présenté comme fait établi pour la coopérative fictive
-- La mise en pratique comprend une source, un type de sortie, un contrôle des faits et un validateur humain
-- La présentation est relue visuellement et répétée avec chronomètre avant diffusion finale
+| Diapositive | Rôle visuel                                      | Traitement attendu |
+| ----------- | ------------------------------------------------ | ------------------ |
+| S02-06      | Entraînement → demande/contexte → examen humain  | Conserver          |
+| S02-09      | Public → sortie professionnelle → contrôle       | Adapter            |
+| S02-11      | Véritable échange ChatGPT sur le scénario fictif | Conserver          |
+| S02-12      | Contre-exemple volontairement erroné             | Conserver          |
+| S02-13      | Contrôles avant utilisation                      | Conserver          |
+| S02-14      | Version corrigée                                 | Adapter si besoin  |
+| S02-17      | Affiche pédagogique                              | Conserver          |
+| S02-20      | Capture du guide HTML local                      | Conserver          |
+| S02-21      | Génération versus actions agentiques             | Conserver          |
+
+Un visuel n’est régénéré que si sa signification ne correspond plus au contrat approuvé.
+
+## Contenus réservés aux notes ou ressources complémentaires
+
+Les éléments suivants ne structurent pas la séance projetée :
+
+- historique détaillé et architectures des familles de modèles ;
+- catalogue de produits, fournisseurs, prix, quotas ou classements ;
+- tutoriels détaillés de génération audio ou vidéo ;
+- procédures avancées de génération de code ;
+- conception détaillée de systèmes agentiques ;
+- laboratoires Coursera dont aucune sortie personnelle n’est nécessaire à la session ;
+- techniques avancées de prompt engineering ;
+- méthodes complètes d’analyse documentaire ;
+- workflow professionnel de bout en bout.
+
+## Limites de portée de S02
+
+S02 enseigne :
+
+```text
+BESOIN PROFESSIONNEL
+        ↓
+SORTIE À PRÉPARER
+        ↓
+SOURCE / CONTEXTE AUTORISÉ
+        ↓
+BROUILLON GÉNÉRÉ
+        ↓
+VÉRIFICATION
+        ↓
+UTILISATION OU APPROBATION HUMAINE
+```
+
+S02 n’enseigne pas encore :
+
+- une méthode complète de conception des prompts ;
+- l’analyse détaillée de documents et de sources ;
+- la construction complète d’un workflow assisté par l’IA ;
+- la gouvernance formelle de sécurité et de confidentialité ;
+- la conception d’agents autonomes ;
+- le développement logiciel ;
+- le projet professionnel de bout en bout.
+
+## Séquence de transfert professionnel
+
+La séance doit progressivement amener le participant à répondre à :
+
+```text
+QUEL TRAVAIL DOIS-JE ACCOMPLIR ?
+        ↓
+QUE DOIT PRODUIRE L’IA ?
+        ↓
+QUELLES INFORMATIONS PEUT-ELLE UTILISER ?
+        ↓
+QUE DOIT PRÉSERVER LE RÉSULTAT ?
+        ↓
+QUE DOIS-JE VÉRIFIER ?
+        ↓
+QUI PEUT UTILISER OU APPROUVER LE RÉSULTAT ?
+```
+
+Cette séquence prépare le cadre transversal du programme sans enseigner prématurément le cadre
+complet de conception des prompts de S03.
+
+## Critères d’acceptation de l’implémentation
+
+La refonte S02 est acceptable lorsque :
+
+1. les deux langues comportent exactement 26 diapositives et 60 minutes ;
+2. les identifiants et durées restent alignés ;
+3. le titre de session devient _Using Generative AI at Work / Utiliser l’IA générative au travail_ ;
+4. les tâches professionnelles courantes sont visibles avant les démonstrations spécialisées ;
+5. les courriels, comptes rendus, documents et présentations apparaissent comme cas de transfert ;
+6. la démonstration de Soubré reste source-grounded et clairement fictive ;
+7. l’affirmation volontairement inventée reste identifiable comme contre-exemple pédagogique ;
+8. les sorties sont présentées comme des brouillons à vérifier ;
+9. les décisions et autorisations humaines restent explicites ;
+10. les données confidentielles réelles ne sont jamais nécessaires ;
+11. le détail du prompting reste réservé à S03 ;
+12. les visuels existants ne sont modifiés que lorsque leur sens doit changer ;
+13. les PDF et PPTX sont régénérés et vérifiés après modification des sources ;
+14. les versions animées sont régénérées après validation des PPTX statiques ;
+15. la session reçoit une revue humaine bilingue et une répétition chronométrée avant diffusion.
+
+## Ordre d’implémentation
+
+```text
+AUDIT DE FUSION S02
+        ↓
+CONTRAT DE CONTENU S02
+        ↓
+SOURCES EN / FR
+        ↓
+VISUELS AFFECTÉS
+        ↓
+TESTS
+        ↓
+VALIDATION COMPLÈTE
+        ↓
+PDF / PPTX
+        ↓
+QA VISUELLE
+        ↓
+PPTX ANIMÉS
+        ↓
+REVUE HUMAINE
+        ↓
+RÉPÉTITION
+```
+
+Les Markdown pédagogiques et ce contrat restent les sources faisant autorité.
+
+Les PDF et PPTX générés restent des dérivés.
