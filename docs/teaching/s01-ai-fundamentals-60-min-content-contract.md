@@ -2,17 +2,23 @@
 
 ## Informations de production
 
-- **Programme :** IBM AI Foundations for Everyone / Fondements de l’IA pour tous
-- **Session :** S01 : AI Fundamentals / Fondamentaux de l’IA
+- **Programme :** AI for Everyone — Professional Curriculum
+- **Session :** S01 : Understanding AI / Comprendre l’IA
 - **Durée totale :** 60 minutes
 - **Nombre de diapositives :** 30 en français et 30 en anglais
 - **Public :** professionnels et apprenants sans prérequis technique
 - **Cas fil rouge :** une coopérative cacaoyère fictive près de Soubré
-- **Principe éditorial :** les sources détaillées restent des documents de référence. Ce contrat définit uniquement le parcours présenté en direct.
+- **Contrat parent :** `docs/teaching/ai-for-everyone-professional-curriculum.md`
+- **Audit de fusion :** `docs/teaching/s01-professional-fusion-audit.md`
+- **Principe éditorial :** comprendre suffisamment l’IA pour évaluer un usage professionnel sans
+  transformer la session en cours technique.
 
 ## Attribution et transparence sur l’IA
 
-- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera.
+- **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur
+  Coursera.
+- **Apport professionnel complémentaire :** cadrage issu du matériel collaboratif documenté dans
+  le contrat parent.
 - **Génération avec l’IA :** la session pédagogique est générée avec l’IA en tant qu’adaptation
   indépendante du dépôt.
 - **Exigence de couverture :** la première diapositive dans chaque langue doit afficher une
@@ -26,9 +32,17 @@
 1. Les versions française et anglaise utilisent les mêmes identifiants de diapositives.
 2. Chaque diapositive remplit la même fonction pédagogique dans les deux langues.
 3. Une diapositive développe une seule idée centrale.
-4. Le texte visible reste bref. Les précisions, exemples secondaires et transitions figurent dans les notes.
-5. L’IA soutient le travail humain. Les décisions importantes restent attribuées à des personnes clairement identifiées.
-6. Le cas de la coopérative illustre les notions sans présenter le système fictif comme un produit existant.
+4. Le texte visible reste bref. Les précisions, exemples secondaires et transitions figurent
+   dans les notes.
+5. Les notions techniques répondent d’abord à une question pratique avant d’être nommées.
+6. Les exemples professionnels restent compréhensibles sans expertise sectorielle.
+7. La coopérative de Soubré reste le cas fil rouge, mais elle n’est pas le seul contexte
+   professionnel présenté.
+8. Une réponse plausible ou fluide n’est jamais présentée comme une preuve de justesse.
+9. L’IA peut assister, proposer, résumer, classer ou signaler. Une personne identifiée reste
+   responsable des décisions qui l’exigent.
+10. Les données réelles confidentielles ne sont jamais nécessaires pour participer aux
+    exercices.
 
 ---
 
@@ -39,154 +53,192 @@ Durée : **1 minute**
 ### Français
 
 - **Titre :** Fondements de l’IA pour tous
-- **Sous-titre :** S01 : Fondamentaux de l’IA
-- **Message principal :** La session présente les notions indispensables pour comprendre les capacités, les usages et les limites de l’intelligence artificielle.
+- **Sous-titre :** S01 : Comprendre l’IA
+- **Message principal :** Comprendre l’IA permet de mieux décider où elle peut aider, où elle peut
+  échouer et où une personne doit garder le contrôle.
 - **Contenu visible :**
   - Session de 60 minutes
+  - Aucun prérequis technique
   - Cas fictif : une coopérative cacaoyère près de Soubré
   - Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
   - Adaptation pédagogique indépendante générée avec l’IA
-- **Notes du formateur :** Accueillir les participants. Expliquer que la session donne une vue d’ensemble pratique. Préciser que les détails techniques restent disponibles dans les supports de référence.
+- **Notes du formateur :** Présenter la session comme une introduction pratique à l’IA. Préciser
+  que l’objectif n’est pas de former des ingénieurs en IA, mais de donner aux participants un
+  modèle mental suffisant pour analyser un usage professionnel.
 
 ### English
 
 - **Title:** AI Foundations for Everyone
-- **Subtitle:** S01: AI Fundamentals
-- **Key message:** The session introduces the essential concepts needed to understand artificial intelligence capabilities, uses, and limitations.
+- **Subtitle:** S01: Understanding AI
+- **Key message:** Understanding AI helps people decide where it can help, where it can fail, and
+  where a person must remain in control.
 - **On-slide content:**
   - 60-minute session
+  - No technical prerequisite
   - Fictional case: a cocoa cooperative near Soubré
   - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
   - Independent teaching adaptation generated with AI
-- **Facilitator notes:** Welcome participants. Explain that the session provides a practical overview. Mention that detailed technical material remains available in the reference resources.
+- **Facilitator notes:** Present the session as a practical introduction to AI. Explain that the
+  goal is not to train AI engineers, but to give participants a sufficient mental model for
+  assessing professional uses.
 
-## S01-02 : Objectifs de la session / Session objectives
+## S01-02 : Ce que vous saurez faire / What you will be able to do
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Objectifs de la session
-- **Message principal :** Les participants construiront un modèle mental simple pour analyser un usage de l’IA.
+- **Titre :** Ce que vous saurez faire
+- **Message principal :** La session doit permettre d’évaluer un usage simple de l’IA plutôt que
+  seulement mémoriser du vocabulaire.
 - **Contenu visible :**
-  - Définir l’IA et distinguer ses niveaux de capacité
-  - Relier apprentissage automatique, apprentissage profond et IA générative
-  - Associer une technique d’IA à un besoin concret
-  - Reconnaître les risques et les responsabilités humaines
-- **Notes du formateur :** Présenter les objectifs comme des capacités à utiliser pendant la séance. Annoncer que le cas de la coopérative servira à vérifier chaque notion dans un contexte professionnel.
+  - Expliquer simplement ce qu’est l’IA
+  - Distinguer IA prédictive et IA générative
+  - Relier une capacité d’IA à un besoin professionnel
+  - Reconnaître les limites et les informations à vérifier
+  - Identifier les décisions qui restent humaines
+- **Notes du formateur :** Présenter les objectifs comme des capacités observables. Annoncer que
+  chaque notion technique sera reliée à une situation professionnelle.
 
 ### English
 
-- **Title:** Session objectives
-- **Key message:** Participants will build a simple mental model for assessing an AI use case.
+- **Title:** What you will be able to do
+- **Key message:** The session should enable learners to assess a simple AI use case rather than
+  only memorize terminology.
 - **On-slide content:**
-  - Define AI and distinguish levels of capability
-  - Connect machine learning, deep learning, and generative AI
-  - Match an AI technique to a concrete need
-  - Recognize risks and human responsibilities
-- **Facilitator notes:** Present the objectives as abilities participants will use during the session. Explain that the cooperative case will help test each concept in a professional setting.
+  - Explain AI in simple terms
+  - Distinguish predictive and generative AI
+  - Match an AI capability to a professional need
+  - Recognize limitations and information that must be checked
+  - Identify decisions that remain human
+- **Facilitator notes:** Present the objectives as observable abilities. Explain that every
+  technical concept will be connected to a professional situation.
 
-## S01-03 : Situation de départ / Starting situation
+## S01-03 : Où l’IA pourrait-elle aider au travail ? / Where could AI help at work?
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Une coopérative cacaoyère près de Soubré
-- **Message principal :** Un besoin opérationnel clair permet d’évaluer l’utilité réelle de l’IA.
+- **Titre :** Où l’IA pourrait-elle aider au travail ?
+- **Message principal :** On commence par le travail à accomplir, pas par l’outil.
 - **Contenu visible :**
-  - Cas fictif : des producteurs livrent leurs lots de cacao à la coopérative
-  - Les équipes enregistrent les visites, les pesées, la qualité et les mouvements de stock
-  - La connexion internet reste intermittente sur certains sites
-  - Question : où l’IA pourrait-elle aider sans prendre la décision finale ?
-- **Notes du formateur :** Présenter la coopérative comme une organisation fictive située près de Soubré. Demander aux participants de proposer un ou deux usages. Ne pas corriger immédiatement. Les propositions seront reprises plus tard.
+  - Administration : organiser ou résumer des informations
+  - Service client : préparer une réponse
+  - Gestion de projet : structurer des notes de réunion
+  - Opérations : signaler des dossiers incomplets
+  - Cas fil rouge : une coopérative cacaoyère fictive près de Soubré
+- **Notes du formateur :** Demander aux participants de citer une tâche de leur quotidien
+  professionnel ou d’apprentissage qui pourrait bénéficier d’une assistance. Introduire ensuite
+  la coopérative comme cas commun utilisé pour tester les idées pendant la session.
 
 ### English
 
-- **Title:** A cocoa cooperative near Soubré
-- **Key message:** A clearly defined operational need makes it possible to assess the real value of AI.
+- **Title:** Where could AI help at work?
+- **Key message:** Start with the work that needs to be done, not with the tool.
 - **On-slide content:**
-  - Fictional case: producers deliver cocoa lots to the cooperative
-  - Teams record field visits, weights, quality results, and warehouse movements
-  - Internet access remains intermittent at some sites
-  - Question: where could AI help without making the final decision?
-- **Facilitator notes:** Introduce the cooperative as a fictional organization near Soubré. Ask participants to suggest one or two possible uses. Do not evaluate the answers yet. Return to them later in the session.
+  - Administration: organize or summarize information
+  - Customer service: prepare a response
+  - Project management: structure meeting notes
+  - Operations: flag incomplete records
+  - Anchor case: a fictional cocoa cooperative near Soubré
+- **Facilitator notes:** Ask participants to name one work or learning task that might benefit from
+  assistance. Then introduce the cooperative as the shared case used to test ideas throughout the
+  session.
 
-## S01-04 : Définition de l’intelligence artificielle / Definition of artificial intelligence
+## S01-04 : Qu’est-ce que l’intelligence artificielle ? / What is artificial intelligence?
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** L’intelligence artificielle
-- **Message principal :** L’IA regroupe des systèmes capables d’exécuter des tâches associées à l’intelligence humaine.
+- **Titre :** Qu’est-ce que l’intelligence artificielle ?
+- **Message principal :** L’IA regroupe des systèmes capables d’exécuter des tâches associées à
+  certaines formes d’intelligence humaine.
 - **Contenu visible :**
   - Comprendre du langage ou des images
   - Reconnaître des régularités dans des données
-  - Produire des prédictions ou des recommandations
+  - Classer, prévoir ou recommander
   - Générer de nouveaux contenus
-- **Notes du formateur :** Expliquer que l’IA constitue un domaine large et non un outil unique. Relier chaque capacité à un exemple familier, comme la traduction, la détection de fraude ou un assistant conversationnel.
+- **Notes du formateur :** Expliquer que l’IA est un domaine large et non un produit unique.
+  Relier chaque capacité à un exemple simple. Éviter de présenter le système comme s’il
+  « pensait » nécessairement comme une personne.
 
 ### English
 
-- **Title:** Artificial intelligence
-- **Key message:** AI includes systems that perform tasks associated with human intelligence.
+- **Title:** What is artificial intelligence?
+- **Key message:** AI includes systems that perform tasks associated with some forms of human
+  intelligence.
 - **On-slide content:**
   - Understand language or images
   - Recognize patterns in data
-  - Produce predictions or recommendations
+  - Classify, forecast, or recommend
   - Generate new content
-- **Facilitator notes:** Explain that AI is a broad field rather than a single tool. Connect each capability to a familiar example such as translation, fraud detection, or a conversational assistant.
+- **Facilitator notes:** Explain that AI is a broad field rather than a single product. Connect
+  each capability to a simple example. Avoid implying that the system necessarily thinks like a
+  person.
 
-## S01-05 : Intelligence augmentée / Augmented intelligence
-
-Durée : **2 minutes**
-
-### Français
-
-- **Titre :** Intelligence artificielle et intelligence augmentée
-- **Message principal :** L’intelligence augmentée utilise l’IA pour améliorer le travail humain tout en maintenant une responsabilité humaine claire.
-- **Contenu visible :**
-  - **L’IA peut :** analyser, signaler, résumer ou proposer
-  - **La personne doit :** définir l’objectif, vérifier les éléments et décider
-  - Plus les conséquences sont importantes, plus la supervision doit être forte
-- **Notes du formateur :** Utiliser l’exemple d’un technicien qualité au sein de la coopérative fictive. Le système peut signaler une anomalie dans un dossier. Le technicien examine les preuves et décide de la suite.
-
-### English
-
-- **Title:** Artificial intelligence and augmented intelligence
-- **Key message:** Augmented intelligence uses AI to improve human work while keeping human responsibility clear.
-- **On-slide content:**
-  - **AI can:** analyze, flag, summarize, or propose
-  - **A person must:** define the goal, verify the evidence, and decide
-  - Stronger consequences require stronger oversight
-- **Facilitator notes:** Use the example of a quality technician at the fictional cooperative. The system can flag an anomaly in a record. The technician examines the evidence and decides what happens next.
-
-## S01-06 : ANI, AGI et ASI / ANI, AGI, and ASI
+## S01-05 : L’IA soutient le travail humain / AI supports human work
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Niveaux de capacité de l’IA
-- **Message principal :** Les systèmes actuellement disponibles accomplissent des tâches limitées, même lorsqu’ils paraissent polyvalents.
+- **Titre :** L’IA soutient le travail humain
+- **Message principal :** Une IA utile peut augmenter le travail humain sans recevoir
+  automatiquement l’autorité de décider.
 - **Contenu visible :**
-  - **ANI :** IA spécialisée dans une tâche ou un domaine
-  - **AGI :** capacité générale comparable à celle d’un humain, encore hypothétique
-  - **ASI :** intelligence dépassant largement les capacités humaines, hypothétique
-  - Les systèmes actuels relèvent de l’ANI
-- **Notes du formateur :** Insister sur la différence entre aisance conversationnelle et intelligence générale. Un modèle capable de discuter de nombreux sujets reste dépendant de ses données, de son contexte et des outils auxquels il accède.
+  - **L’IA peut :** analyser, signaler, résumer, classer ou proposer
+  - **La personne peut devoir :** vérifier, approuver, autoriser ou décider
+  - Plus les conséquences sont importantes, plus le contrôle doit être fort
+- **Notes du formateur :** Utiliser un exemple simple : un système peut signaler un dossier
+  incomplet, mais un agent responsable examine les éléments avant d’agir. Introduire le principe
+  de responsabilité humaine qui reviendra dans toute la formation.
 
 ### English
 
-- **Title:** Levels of AI capability
-- **Key message:** Current AI systems perform limited tasks even when they appear versatile.
+- **Title:** AI supports human work
+- **Key message:** Useful AI can augment human work without automatically receiving authority to
+  make decisions.
 - **On-slide content:**
-  - **ANI:** AI specialized in a task or domain
-  - **AGI:** general capability comparable to a human, still hypothetical
-  - **ASI:** intelligence far beyond human capability, hypothetical
-  - Current systems fall under ANI
-- **Facilitator notes:** Emphasize the difference between conversational fluency and general intelligence. A model that discusses many subjects still depends on its data, context, and available tools.
+  - **AI can:** analyze, flag, summarize, classify, or suggest
+  - **A person may need to:** verify, approve, authorize, or decide
+  - Greater consequences require stronger controls
+- **Facilitator notes:** Use a simple example: a system may flag an incomplete record, but a
+  responsible staff member reviews the evidence before acting. Introduce human responsibility as
+  a principle that will return throughout the program.
+
+## S01-06 : Ce que l’IA peut faire — et où elle peut échouer / What AI can do — and where it can fail
+
+Durée : **2 minutes**
+
+### Français
+
+- **Titre :** Ce que l’IA peut faire — et où elle peut échouer
+- **Message principal :** Une réponse convaincante peut rester inexacte, incomplète ou mal adaptée
+  au contexte.
+- **Contenu visible :**
+  - **Utile pour :** rédiger, résumer, organiser, expliquer, comparer ou classer
+  - **Peut échouer :** erreur factuelle, information inventée, contexte mal compris
+  - Les réponses peuvent être génériques ou refléter des biais
+  - Plausible ne signifie pas exact
+- **Notes du formateur :** Donner un exemple de compte rendu dans lequel l’IA invente le nom de la
+  personne responsable d’une action. Expliquer que les informations importantes doivent être
+  comparées à la source ou vérifiées par une personne compétente.
+
+### English
+
+- **Title:** What AI can do — and where it can fail
+- **Key message:** A convincing response may still be inaccurate, incomplete, or unsuitable for
+  the context.
+- **On-slide content:**
+  - **Useful for:** drafting, summarizing, organizing, explaining, comparing, or classifying
+  - **Can fail through:** factual errors, invented information, misunderstood context
+  - Responses may be generic or reflect bias
+  - Plausible does not mean accurate
+- **Facilitator notes:** Use the example of meeting notes in which AI invents the person
+  responsible for an action. Explain that important information must be compared with the source
+  or checked by a competent person.
 
 ## S01-07 : IA prédictive et IA générative / Predictive and generative AI
 
@@ -195,50 +247,57 @@ Durée : **2 minutes**
 ### Français
 
 - **Titre :** IA prédictive et IA générative
-- **Message principal :** Les systèmes prédictifs analysent des données existantes, tandis que les systèmes génératifs produisent un nouveau résultat.
+- **Message principal :** L’IA prédictive estime ou classe à partir de données existantes ; l’IA
+  générative produit un nouveau contenu.
 - **Contenu visible :**
-  - **IA prédictive :** classer, prévoir, recommander, détecter une anomalie
-  - **IA générative :** produire du texte, une image, du son, une vidéo ou du code
-  - Une même solution peut combiner les deux approches
-- **Notes du formateur :** Comparer la prévision d’un volume de collecte avec la rédaction automatique d’un compte rendu. Préciser que l’IA générative ne remplace pas les modèles de classification ou de prévision.
+  - **Prédictive :** classer, prévoir, recommander, détecter une anomalie
+  - **Générative :** produire du texte, une image, du son, une vidéo ou du code
+  - Une même solution peut combiner plusieurs approches
+- **Notes du formateur :** Comparer la prévision d’un volume de collecte avec la rédaction d’un
+  compte rendu. Expliquer que « générative » ne signifie pas automatiquement plus avancée ou plus
+  adaptée au problème.
 
 ### English
 
 - **Title:** Predictive and generative AI
-- **Key message:** Predictive systems analyze existing data, while generative systems produce a new output.
+- **Key message:** Predictive AI estimates or classifies from existing data; generative AI
+  produces new content.
 - **On-slide content:**
-  - **Predictive AI:** classify, forecast, recommend, or detect an anomaly
-  - **Generative AI:** produce text, images, audio, video, or code
-  - One solution can combine both approaches
-- **Facilitator notes:** Compare forecasting collection volumes with drafting a report. Explain that generative AI does not replace classification or forecasting models.
+  - **Predictive:** classify, forecast, recommend, detect an anomaly
+  - **Generative:** produce text, images, audio, video, or code
+  - One solution may combine several approaches
+- **Facilitator notes:** Compare forecasting collection volume with drafting a report. Explain
+  that “generative” does not automatically mean more advanced or more suitable for the problem.
 
-## S01-08 : Évolution des systèmes d’IA / Evolution of AI systems
+## S01-08 : Des règles aux modèles appris / From rules to learned models
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Évolution des systèmes d’IA
-- **Message principal :** Les nouvelles approches élargissent les tâches possibles sans rendre les approches précédentes inutiles.
+- **Titre :** Des règles aux modèles appris
+- **Message principal :** Différentes approches coexistent parce qu’elles répondent à des besoins
+  différents.
 - **Contenu visible :**
-  1. Règles écrites par des spécialistes
-  2. Apprentissage de régularités à partir de données
+  1. Règles écrites explicitement
+  2. Modèles qui apprennent des régularités
   3. Réseaux profonds pour des données complexes
-  4. Grands modèles capables de générer du contenu
-  - Ces approches continuent de coexister
-- **Notes du formateur :** Donner un exemple pour chaque étape. Un calcul réglementaire peut rester fondé sur des règles. Une prévision repose souvent sur l’apprentissage automatique. La vision utilise fréquemment l’apprentissage profond. Un assistant rédactionnel utilise un modèle génératif.
+  4. Modèles de fondation capables de générer du contenu
+- **Notes du formateur :** Présenter cette progression comme un modèle mental et non comme une
+  chronologie exhaustive. Une règle simple peut rester préférable lorsqu’elle répond clairement
+  au besoin.
 
 ### English
 
-- **Title:** Evolution of AI systems
-- **Key message:** New approaches expand the range of possible tasks without making earlier approaches obsolete.
+- **Title:** From rules to learned models
+- **Key message:** Different approaches coexist because they solve different kinds of problems.
 - **On-slide content:**
-  1. Rules written by specialists
-  2. Patterns learned from data
+  1. Explicitly written rules
+  2. Models that learn patterns
   3. Deep networks for complex data
-  4. Large models that generate content
-  - These approaches continue to coexist
-- **Facilitator notes:** Give one example for each stage. A regulatory calculation may remain rule based. Forecasting often uses machine learning. Vision frequently uses deep learning. A writing assistant uses a generative model.
+  4. Foundation models capable of generating content
+- **Facilitator notes:** Present this as a mental model rather than a complete history. A simple
+  rule may remain preferable when it clearly solves the problem.
 
 ## S01-09 : Apprentissage automatique / Machine learning
 
@@ -247,510 +306,601 @@ Durée : **2 minutes**
 ### Français
 
 - **Titre :** Apprentissage automatique
-- **Message principal :** L’apprentissage automatique permet à un système d’apprendre des régularités à partir d’exemples.
+- **Message principal :** L’apprentissage automatique permet à un système d’apprendre des
+  régularités à partir d’exemples.
 - **Contenu visible :**
-  - Les données fournissent des exemples du problème
+  - Les données décrivent des exemples du problème
   - L’algorithme recherche des relations utiles
-  - Le modèle applique les relations apprises à de nouvelles données
+  - Le modèle applique ces relations à de nouvelles données
   - La qualité dépend des données et de l’évaluation
-- **Notes du formateur :** Expliquer la différence avec un programme contenant une règle écrite pour chaque situation. Préciser que le modèle apprend des relations statistiques et ne comprend pas le domaine comme un spécialiste humain.
+- **Notes du formateur :** Contraster avec un programme dans lequel chaque règle est écrite à la
+  main. Préciser que le modèle apprend des relations statistiques et ne remplace pas la
+  connaissance métier.
 
 ### English
 
 - **Title:** Machine learning
 - **Key message:** Machine learning enables a system to learn patterns from examples.
 - **On-slide content:**
-  - Data provides examples of the problem
+  - Data describes examples of the problem
   - An algorithm searches for useful relationships
-  - A model applies learned relationships to new data
-  - Quality depends on the data and evaluation
-- **Facilitator notes:** Contrast this approach with a program containing an explicit rule for every situation. Explain that the model learns statistical relationships and does not understand the domain like a human specialist.
+  - The model applies those relationships to new data
+  - Quality depends on data and evaluation
+- **Facilitator notes:** Contrast this with a program in which every rule is written manually.
+  Explain that the model learns statistical relationships and does not replace domain knowledge.
 
-## S01-10 : Types d’apprentissage automatique / Types of machine learning
+## S01-10 : Comment une machine apprend à partir d’exemples / How machines learn from examples
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Trois modes d’apprentissage
-- **Message principal :** Le type d’apprentissage dépend des données disponibles et de la décision attendue.
+- **Titre :** Comment une machine apprend à partir d’exemples
+- **Message principal :** La méthode d’apprentissage dépend des données disponibles et du résultat
+  recherché.
 - **Contenu visible :**
-  - **Supervisé :** apprend à partir d’exemples étiquetés
-  - **Non supervisé :** découvre des groupes ou des anomalies
-  - **Par renforcement :** améliore une suite d’actions grâce à un retour
-  - Dans la coopérative fictive : prévision des volumes ou détection de pesées inhabituelles
-- **Notes du formateur :** Demander aux participants d’associer la prévision des volumes à l’apprentissage supervisé et la détection de pesées inhabituelles à l’apprentissage non supervisé. Présenter le renforcement comme une approche adaptée aux décisions successives dans un environnement contrôlé.
+  - **Supervisé :** apprendre à partir d’exemples avec une réponse connue
+  - **Non supervisé :** repérer des groupes ou anomalies sans réponse fournie
+  - **Renforcement :** ajuster une suite d’actions grâce à un retour
+  - Le besoin professionnel détermine l’approche utile
+- **Notes du formateur :** Éviter les détails algorithmiques. Utiliser la prévision d’un volume,
+  la détection de pesées inhabituelles et un système qui améliore une séquence d’actions comme
+  illustrations. Les termes servent à comprendre les possibilités, pas à former des spécialistes.
 
 ### English
 
-- **Title:** Three learning approaches
-- **Key message:** The learning approach depends on the available data and the expected decision.
+- **Title:** How machines learn from examples
+- **Key message:** The learning approach depends on the available data and the desired outcome.
 - **On-slide content:**
-  - **Supervised:** learns from labeled examples
-  - **Unsupervised:** discovers groups or anomalies
-  - **Reinforcement:** improves a sequence of actions through feedback
-  - At the fictional cooperative: collection forecasting or unusual weight detection
-- **Facilitator notes:** Ask participants to match collection forecasting with supervised learning and unusual weight detection with unsupervised learning. Present reinforcement learning as an approach for sequential decisions in a controlled environment.
+  - **Supervised:** learn from examples with a known answer
+  - **Unsupervised:** identify groups or anomalies without a supplied answer
+  - **Reinforcement:** adjust a sequence of actions from feedback
+  - The professional need determines the useful approach
+- **Facilitator notes:** Avoid algorithmic detail. Use volume forecasting, unusual-weight
+  detection, and a system improving a sequence of actions as illustrations. The terms support
+  understanding rather than specialist training.
 
-## S01-11 : Réseaux de neurones et apprentissage profond / Neural networks and deep learning
+## S01-11 : Comprendre l’apprentissage profond sans mathématiques / Deep learning without the mathematics
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Réseaux de neurones et apprentissage profond
-- **Message principal :** L’apprentissage profond utilise plusieurs couches de calcul pour apprendre des représentations complexes.
+- **Titre :** Comprendre l’apprentissage profond sans mathématiques
+- **Message principal :** L’apprentissage profond utilise plusieurs couches pour apprendre des
+  représentations complexes.
 - **Contenu visible :**
-  - Un réseau de neurones relie des unités de calcul organisées en couches
+  - Des réseaux de neurones organisent des calculs en couches
   - Les couches apprennent progressivement des caractéristiques utiles
-  - Les usages fréquents concernent l’image, la parole et le langage
-  - La complexité du modèle ne garantit pas la fiabilité du résultat
-- **Notes du formateur :** Éviter les détails mathématiques. Utiliser l’exemple d’une image dans laquelle les premières couches détectent des formes simples et les couches suivantes combinent ces informations. Rappeler que l’évaluation reste nécessaire.
+  - Usages fréquents : image, parole et langage
+  - Un modèle complexe n’est pas automatiquement fiable
+- **Notes du formateur :** Utiliser une image comme analogie : certaines couches repèrent des
+  formes simples puis les combinent. Ne pas entrer dans les calculs. Insister sur le fait que la
+  complexité ne remplace pas l’évaluation.
 
 ### English
 
-- **Title:** Neural networks and deep learning
-- **Key message:** Deep learning uses multiple computational layers to learn complex representations.
+- **Title:** Deep learning without the mathematics
+- **Key message:** Deep learning uses multiple layers to learn complex representations.
 - **On-slide content:**
-  - A neural network connects computational units arranged in layers
+  - Neural networks organize computations in layers
   - Layers progressively learn useful features
-  - Common uses involve images, speech, and language
-  - Model complexity does not guarantee reliable results
-- **Facilitator notes:** Avoid mathematical detail. Use an image example in which early layers detect simple shapes and later layers combine that information. Remind participants that evaluation remains necessary.
+  - Common uses: images, speech, and language
+  - A complex model is not automatically reliable
+- **Facilitator notes:** Use an image analogy: some layers detect simple shapes and later layers
+  combine them. Avoid mathematical detail. Emphasize that complexity does not replace evaluation.
 
-## S01-12 : Modèles de fondation et LLM / Foundation models and LLMs
+## S01-12 : Modèles de fondation et grands modèles de langage / Foundation models and large language models
 
 Durée : **3 minutes**
 
 ### Français
 
 - **Titre :** Modèles de fondation et grands modèles de langage
-- **Message principal :** Un modèle de fondation sert de base réutilisable, tandis qu’un LLM se spécialise dans le traitement et la génération du langage.
+- **Message principal :** Un modèle de fondation fournit une base réutilisable ; un LLM applique
+  cette logique au langage.
 - **Contenu visible :**
-  - Entraînement sur de grandes quantités de données générales
-  - Adaptation par instructions, exemples ou entraînement complémentaire
-  - Production de texte selon le contexte fourni
-  - Vérification nécessaire avant tout usage professionnel
-- **Notes du formateur :** Expliquer qu’un LLM prédit des unités de langage à partir du contexte. Distinguer les connaissances apprises pendant l’entraînement des documents fournis au moment de la demande. Annoncer que la génération augmentée par récupération sera présentée plus tard.
+  - Préentraînement sur de grandes quantités de données
+  - Réutilisation pour de nombreuses tâches
+  - Un LLM génère du langage selon le contexte fourni
+  - Le résultat généré doit être vérifié avant un usage professionnel
+- **Notes du formateur :** Expliquer qu’un LLM produit une suite probable d’unités de langage à
+  partir du contexte. Distinguer ce comportement d’une base de données qui restitue simplement un
+  enregistrement exact.
 
 ### English
 
 - **Title:** Foundation models and large language models
-- **Key message:** A foundation model provides a reusable base, while an LLM specializes in processing and generating language.
+- **Key message:** A foundation model provides a reusable base; an LLM applies that approach to
+  language.
 - **On-slide content:**
-  - Trained on large amounts of general data
-  - Adapted through instructions, examples, or additional training
-  - Produces text from the supplied context
-  - Requires verification before professional use
-- **Facilitator notes:** Explain that an LLM predicts language units from context. Distinguish knowledge learned during training from documents supplied with a request. Mention that retrieval-augmented generation will appear later.
+  - Pretraining on large amounts of data
+  - Reuse across many tasks
+  - An LLM generates language from the supplied context
+  - Generated output must be checked before professional use
+- **Facilitator notes:** Explain that an LLM produces probable sequences of language units from
+  context. Distinguish this behavior from a database that simply retrieves an exact stored record.
 
-## S01-13 : IA générative et IA multimodale / Generative and multimodal AI
+## S01-13 : Texte, images, audio et IA multimodale / Text, images, audio, and multimodal AI
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** IA générative et IA multimodale
-- **Message principal :** La génération décrit la production d’un contenu, tandis que la multimodalité décrit les types d’informations traités ensemble.
+- **Titre :** Texte, images, audio et IA multimodale
+- **Message principal :** Les systèmes d’IA peuvent traiter différentes formes d’information,
+  seules ou combinées.
 - **Contenu visible :**
-  - L’IA générative produit du texte, des images, du son, de la vidéo ou du code
-  - Un modèle unimodal traite un seul type d’information
-  - Un modèle multimodal combine plusieurs types d’information
-  - Exemple de la coopérative : photo d’une étiquette associée à un rapport écrit
-- **Notes du formateur :** Corriger la confusion fréquente entre génération et multimodalité. Un système peut générer uniquement du texte. Un autre peut analyser une image et un texte sans produire plusieurs formats de sortie.
+  - Texte : analyser, résumer ou générer
+  - Voix : transcrire ou produire de la parole
+  - Image : lire, classer ou signaler une caractéristique
+  - Multimodal : combiner plusieurs types d’information
+- **Notes du formateur :** Relier le vocabulaire aux capacités. Exemple : une photo d’étiquette
+  accompagnée d’une note écrite. La présence de plusieurs modalités n’augmente pas automatiquement
+  la fiabilité.
 
 ### English
 
-- **Title:** Generative and multimodal AI
-- **Key message:** Generation describes the production of content, while multimodality describes the types of information processed together.
+- **Title:** Text, images, audio, and multimodal AI
+- **Key message:** AI systems can process different forms of information separately or together.
 - **On-slide content:**
-  - Generative AI produces text, images, audio, video, or code
-  - A unimodal model processes one type of information
-  - A multimodal model combines several types of information
-  - Cooperative example: a label photo combined with a written report
-- **Facilitator notes:** Address the common confusion between generation and multimodality. A system may generate only text. Another system may analyze an image and text without producing several output formats.
+  - Text: analyze, summarize, or generate
+  - Voice: transcribe or produce speech
+  - Image: read, classify, or flag a feature
+  - Multimodal: combine several information types
+- **Facilitator notes:** Connect terminology to capabilities. Example: a label photograph paired
+  with a written note. Multiple modalities do not automatically make a result more reliable.
 
-## S01-14 : Langage et technologies vocales / Language and speech technologies
+## S01-14 : Que sait réellement un assistant conversationnel ? / What does conversational AI actually know?
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Traitement du langage et technologies vocales
-- **Message principal :** Le traitement du langage permet aux systèmes d’exploiter les communications écrites et orales.
+- **Titre :** Que sait réellement un assistant conversationnel ?
+- **Message principal :** Une réponse dépend de ce que le modèle a appris, du contexte fourni et
+  des sources ou outils auxquels il a réellement accès.
 - **Contenu visible :**
-  - Le traitement automatique du langage analyse ou produit du texte
-  - La reconnaissance vocale transforme la parole en texte
-  - La synthèse vocale transforme le texte en parole
-  - Exemple de la coopérative : transcription d’une note vocale envoyée depuis le terrain
-- **Notes du formateur :** Décrire un agent de terrain qui enregistre une observation. Le système transcrit le message et extrait le lieu ou l’action demandée. L’agent vérifie ensuite la transcription avant son enregistrement.
+  - Le modèle utilise des régularités apprises pendant son entraînement
+  - La demande fournit un contexte supplémentaire
+  - Des documents ou outils peuvent parfois ajouter des informations
+  - L’accès à une information récente, privée ou interne ne doit pas être supposé
+- **Notes du formateur :** Demander : « Si l’assistant n’a pas reçu notre procédure interne,
+  comment pourrait-il connaître sa version actuelle ? » Préparer ainsi le concept de sources
+  approuvées présenté plus tard.
 
 ### English
 
-- **Title:** Language and speech technologies
-- **Key message:** Language processing enables systems to use written and spoken communication.
+- **Title:** What does conversational AI actually know?
+- **Key message:** A response depends on what the model learned, the supplied context, and the
+  sources or tools it can actually access.
 - **On-slide content:**
-  - Natural language processing analyzes or produces text
-  - Speech recognition converts speech into text
-  - Speech synthesis converts text into speech
-  - Cooperative example: transcription of a field voice note
-- **Facilitator notes:** Describe a field agent recording an observation. The system transcribes the message and extracts the location or requested action. The agent then verifies the transcription before saving it.
+  - The model uses patterns learned during training
+  - The request supplies additional context
+  - Documents or tools may sometimes add information
+  - Access to recent, private, or internal information must not be assumed
+- **Facilitator notes:** Ask: “If the assistant has not received our internal procedure, how could
+  it know the current version?” Use this to prepare the later concept of approved sources.
 
-## S01-15 : Vision par ordinateur / Computer vision
+## S01-15 : Choisir un outil d’IA adapté au travail / Choosing an AI tool for the job
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Vision par ordinateur
-- **Message principal :** La vision par ordinateur extrait des informations utiles à partir d’images ou de vidéos.
+- **Titre :** Choisir un outil d’IA adapté au travail
+- **Message principal :** Un outil est adapté seulement si sa capacité, ses accès et ses règles
+  correspondent au besoin.
 - **Contenu visible :**
-  - Repérer des objets ou du texte dans une image
-  - Classer une image selon des catégories définies
-  - Signaler une caractéristique inhabituelle pour examen
-  - Dans la coopérative fictive, le technicien conserve la décision sur la qualité du lot
-- **Notes du formateur :** Utiliser l’exemple d’une photo de fèves ou d’une étiquette de lot. Le système peut attirer l’attention sur une irrégularité. Il ne diagnostique pas une maladie et n’attribue pas seul une note de qualité.
+  - Quelle tâche faut-il accomplir ?
+  - Faut-il seulement rédiger ou aussi consulter des documents ?
+  - Quelles informations devront être fournies ?
+  - L’outil est-il autorisé pour ces informations ?
+  - Qui vérifiera ou approuvera le résultat ?
+- **Notes du formateur :** Comparer un assistant généraliste utilisé pour reformuler un texte
+  fictif avec un outil autorisé à consulter des documents internes. Ne pas recommander de produit
+  particulier.
 
 ### English
 
-- **Title:** Computer vision
-- **Key message:** Computer vision extracts useful information from images or video.
+- **Title:** Choosing an AI tool for the job
+- **Key message:** A tool is suitable only when its capability, access, and rules match the need.
 - **On-slide content:**
-  - Locate objects or text in an image
-  - Classify an image using defined categories
-  - Flag an unusual feature for review
-  - At the fictional cooperative, the technician retains the quality decision
-- **Facilitator notes:** Use the example of a cocoa bean photo or lot label. The system may draw attention to an irregularity. It does not diagnose crop disease or assign a quality grade by itself.
+  - What task must be completed?
+  - Does the tool only need to draft, or also consult documents?
+  - What information must be provided?
+  - Is the tool authorized for that information?
+  - Who will verify or approve the result?
+- **Facilitator notes:** Compare a general assistant rewriting fictional text with an authorized
+  tool that can access internal documents. Do not recommend a particular product.
 
-## S01-16 : IoT, cloud et périphérie / IoT, cloud, and edge computing
+## S01-16 : L’IA dans différents métiers / AI across everyday professions
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Objets connectés, cloud et informatique en périphérie
-- **Message principal :** Le lieu de collecte et de traitement des données influence la disponibilité, le délai et la confidentialité d’une solution d’IA.
+- **Titre :** L’IA dans différents métiers
+- **Message principal :** Les mêmes capacités peuvent soutenir des tâches différentes selon le
+  contexte professionnel.
 - **Contenu visible :**
-  - **Objets connectés :** appareils qui collectent et échangent des données
-  - **Cloud :** calcul et stockage accessibles à distance
-  - **Périphérie ou local :** traitement effectué près de la source
-  - Dans la coopérative fictive, les événements essentiels restent enregistrables hors connexion
-- **Notes du formateur :** Expliquer que l’application fictive peut enregistrer localement les opérations essentielles, conserver les mises à jour en attente et les synchroniser au retour de la connexion. Ne pas présenter ce scénario comme une architecture déjà déployée.
+  - Administration : résumer une procédure
+  - Service client : préparer une réponse
+  - RH : structurer une description de poste
+  - Projet : organiser des notes de réunion
+  - Opérations : repérer des informations manquantes
+- **Notes du formateur :** Ajouter oralement un exemple lié au public présent : vente, finance,
+  entrepreneuriat ou autre. Pour chaque exemple, rappeler que l’IA prépare ou assiste ; le rôle
+  humain dépend des conséquences.
 
 ### English
 
-- **Title:** Internet of Things, cloud, and edge computing
-- **Key message:** Where data is collected and processed affects availability, latency, and privacy in an AI solution.
+- **Title:** AI across everyday professions
+- **Key message:** The same capabilities can support different tasks in different professional
+  contexts.
 - **On-slide content:**
-  - **Internet of Things:** devices that collect and exchange data
-  - **Cloud:** remotely available computing and storage
-  - **Edge or local:** processing performed near the source
-  - At the fictional cooperative, essential events remain recordable offline
-- **Facilitator notes:** Explain that the fictional application could record essential operations locally, keep pending updates, and synchronize them when connectivity returns. Do not present this scenario as an already deployed architecture.
+  - Administration: summarize a procedure
+  - Customer service: prepare a response
+  - HR: structure a job description
+  - Projects: organize meeting notes
+  - Operations: identify missing information
+- **Facilitator notes:** Add one spoken example relevant to the audience, such as sales, finance,
+  entrepreneurship, or another field. For each example, remind learners that AI prepares or
+  assists; the human role depends on the consequences.
 
-## S01-17 : Applications de l’IA / AI applications
+## S01-17 : Coopérative : problème et données disponibles / Cooperative: problem and available data
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Applications personnelles et professionnelles
-- **Message principal :** Une même appellation, « IA », recouvre des techniques différentes choisies selon le problème.
+- **Titre :** Coopérative : problème et données disponibles
+- **Message principal :** Un cas d’usage utile part d’un problème observable et d’informations
+  réellement disponibles.
 - **Contenu visible :**
-  - **Au quotidien :** recommandations, assistants, traduction, authentification
-  - **En entreprise :** détection de fraude, prévision de la demande, service client
-  - **Dans l’industrie :** inspection visuelle, logistique, maintenance prédictive
-  - Le choix dépend du problème, des données et des conséquences d’une erreur
-- **Notes du formateur :** Demander aux participants d’identifier l’application qu’ils utilisent le plus souvent. Relier brièvement chaque exemple à une capacité étudiée, comme la classification, la prévision, le langage ou la vision.
+  - Données : producteurs, visites, lots, pesées, qualité et stock
+  - Difficultés : dossiers incomplets, rapprochements manuels, connexion instable
+  - Besoin : améliorer la traçabilité et préparer les collectes
+  - Les décisions officielles restent sous responsabilité humaine
+- **Notes du formateur :** Rappeler que le cas est fictif. Ne pas ajouter de règles de qualité,
+  seuils, certifications ou procédures qui n’ont pas été définis dans le scénario.
 
 ### English
 
-- **Title:** Personal and professional applications
-- **Key message:** The single label “AI” covers different techniques selected according to the problem.
+- **Title:** Cooperative: problem and available data
+- **Key message:** A useful use case begins with an observable problem and information that is
+  actually available.
 - **On-slide content:**
-  - **Everyday life:** recommendations, assistants, translation, authentication
-  - **Business:** fraud detection, demand forecasting, customer service
-  - **Industry:** visual inspection, logistics, predictive maintenance
-  - The choice depends on the problem, data, and consequences of an error
-- **Facilitator notes:** Ask participants which application they use most often. Briefly connect each example to a capability already discussed, such as classification, forecasting, language, or vision.
+  - Data: producers, visits, lots, weights, quality, and stock
+  - Difficulties: incomplete records, manual reconciliation, unstable connectivity
+  - Need: improve traceability and prepare collection
+  - Official decisions remain under human responsibility
+- **Facilitator notes:** Remind learners that the case is fictional. Do not add quality rules,
+  thresholds, certifications, or procedures that have not been defined in the scenario.
 
-## S01-18 : Données et problème opérationnel / Data and operational problem
+## S01-18 : Coopérative : relier la tâche à la capacité d’IA / Cooperative: match the task to an AI capability
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Coopérative : données et problème opérationnel
-- **Message principal :** Un cas d’usage utile part de données disponibles et d’un problème mesurable.
+- **Titre :** Coopérative : relier la tâche à la capacité d’IA
+- **Message principal :** On choisit la capacité d’IA selon le résultat attendu, pas selon l’effet
+  de mode.
 - **Contenu visible :**
-  - **Données :** producteurs, parcelles, visites, lots, pesées, qualité et stock
-  - **Difficultés :** dossiers incomplets, rapprochements manuels et connexion instable
-  - **Objectifs :** améliorer la traçabilité et préparer les collectes
-  - Les décisions officielles restent sous la responsabilité des équipes
-- **Notes du formateur :** Demander quelles données sont réellement nécessaires pour les deux objectifs. Faire remarquer que la collecte de données supplémentaires augmente aussi les responsabilités liées à la confidentialité et à la qualité.
+
+  | Tâche                              | Capacité possible     |
+  | ---------------------------------- | --------------------- |
+  | Estimer les volumes                | Prévision             |
+  | Repérer des pesées inhabituelles   | Détection d’anomalies |
+  | Extraire des éléments d’un rapport | Traitement du langage |
+  | Lire une étiquette                 | Vision                |
+  | Préparer un compte rendu           | IA générative         |
+
+- **Notes du formateur :** Faire identifier le résultat attendu pour chaque ligne. Expliquer que
+  la technique précise est secondaire pour un utilisateur non technique tant que la capacité, les
+  données et le contrôle humain sont compris.
 
 ### English
 
-- **Title:** Cooperative case: data and operational problem
-- **Key message:** A useful use case begins with available data and a measurable problem.
+- **Title:** Cooperative: match the task to an AI capability
+- **Key message:** Select an AI capability according to the expected result, not according to
+  hype.
 - **On-slide content:**
-  - **Data:** producers, farms, visits, lots, weights, quality, and inventory
-  - **Difficulties:** incomplete records, manual reconciliation, and unstable connectivity
-  - **Goals:** improve traceability and prepare collection activities
-  - Official decisions remain the responsibility of cooperative staff
-- **Facilitator notes:** Ask which data is truly necessary for the two goals. Point out that collecting more data also increases responsibilities related to privacy and quality.
 
-## S01-19 : Choix des techniques / Selecting AI techniques
+  | Task                        | Possible capability |
+  | --------------------------- | ------------------- |
+  | Estimate volumes            | Forecasting         |
+  | Flag unusual weights        | Anomaly detection   |
+  | Extract items from a report | Language processing |
+  | Read a label                | Vision              |
+  | Prepare a daily report      | Generative AI       |
+
+- **Facilitator notes:** Ask learners to identify the expected result for each row. Explain that
+  the exact technique is secondary for a non-technical user when the capability, data, and human
+  control are understood.
+
+## S01-19 : Coopérative : travailler avec une connexion intermittente / Cooperative: working with intermittent connectivity
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Coopérative : choix des techniques d’IA
-- **Message principal :** Chaque tâche appelle une technique adaptée à son résultat attendu.
+- **Titre :** Coopérative : travailler avec une connexion intermittente
+- **Message principal :** Une solution utile doit respecter les contraintes réelles du terrain,
+  y compris l’absence temporaire de connexion.
 - **Contenu visible :**
-
-  | Tâche                                    | Technique possible          |
-  | ---------------------------------------- | --------------------------- |
-  | Estimer les volumes de collecte          | Apprentissage supervisé     |
-  | Repérer des pesées inhabituelles         | Apprentissage non supervisé |
-  | Extraire les éléments d’un rapport       | Traitement du langage       |
-  | Lire une étiquette ou examiner une photo | Vision par ordinateur       |
-  | Rédiger un compte rendu quotidien        | IA générative               |
-
-- **Notes du formateur :** Masquer d’abord la deuxième colonne si le support le permet. Demander aux participants de proposer les correspondances. Révéler les réponses et rappeler qu’un système réel peut combiner plusieurs techniques.
+  1. Saisir les informations essentielles localement
+  2. Vérifier les champs requis
+  3. Préparer ou mettre en attente les traitements possibles
+  4. Faire examiner les éléments importants par une personne
+  5. Synchroniser lorsque la connexion revient
+- **Notes du formateur :** Introduire les notions de traitement local, cloud ou edge uniquement
+  si elles aident à comprendre cette contrainte. Ne pas transformer la diapositive en architecture
+  technique détaillée.
 
 ### English
 
-- **Title:** Cooperative case: selecting AI techniques
-- **Key message:** Each task requires a technique suited to its expected result.
+- **Title:** Cooperative: working with intermittent connectivity
+- **Key message:** A useful solution must respect real operating constraints, including temporary
+  loss of connectivity.
 - **On-slide content:**
+  1. Record essential information locally
+  2. Check required fields
+  3. Prepare or queue possible processing
+  4. Have important items reviewed by a person
+  5. Synchronize when connectivity returns
+- **Facilitator notes:** Introduce local processing, cloud, or edge terminology only when it helps
+  explain this constraint. Do not turn the slide into a detailed technical architecture.
 
-  | Task                            | Possible technique          |
-  | ------------------------------- | --------------------------- |
-  | Estimate collection volumes     | Supervised learning         |
-  | Detect unusual weights          | Unsupervised learning       |
-  | Extract details from a report   | Natural language processing |
-  | Read a label or examine a photo | Computer vision             |
-  | Draft a daily brief             | Generative AI               |
-
-- **Facilitator notes:** Hide the second column at first if the presentation format allows it. Ask participants to propose the matches. Reveal the answers and remind them that a real system may combine several techniques.
-
-## S01-20 : Assistant IA et fonctionnement hors connexion / AI assistant and offline operation
+## S01-20 : Coopérative : ce que l’IA peut et ne peut pas décider / Cooperative: what AI may and may not decide
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Coopérative : assistant IA et fonctionnement hors connexion
-- **Message principal :** L’assistant soutient le processus même lorsque la connexion n’est pas disponible en permanence.
+- **Titre :** Coopérative : ce que l’IA peut et ne peut pas décider
+- **Message principal :** Les permissions de l’assistant doivent être distinctes de l’autorité de
+  l’organisation.
 - **Contenu visible :**
-  1. L’agent enregistre les informations essentielles localement
-  2. L’application vérifie la présence des champs requis
-  3. L’assistant prépare un résumé et signale les anomalies
-  4. Un responsable examine les éléments proposés
-  5. Les mises à jour en attente sont synchronisées au retour de la connexion
-- **Notes du formateur :** Présenter ce fonctionnement comme une proposition de conception. Distinguer les contrôles locaux déterministes des fonctions d’IA qui peuvent nécessiter davantage de ressources. La continuité du travail essentiel ne doit pas dépendre d’un accès constant au modèle.
+  - **L’assistant peut :** classer, signaler un dossier incomplet, préparer un résumé
+  - **L’équipe vérifie :** les données, les anomalies et les éléments proposés
+  - **L’équipe décide :** note officielle, rejet d’un lot, paiement
+  - Aucun certificat officiel n’est émis sans validation
+- **Notes du formateur :** Demander aux participants pourquoi une tâche peut être automatisable
+  techniquement sans devoir être déléguée à l’IA. Relier la réponse aux conséquences et à
+  l’autorité.
 
 ### English
 
-- **Title:** Cooperative case: AI assistant and offline operation
-- **Key message:** The assistant supports the workflow even when continuous connectivity is unavailable.
+- **Title:** Cooperative: what AI may and may not decide
+- **Key message:** The assistant's permissions must remain distinct from the organization's
+  authority.
 - **On-slide content:**
-  1. The agent records essential information locally
-  2. The application checks that required fields are present
-  3. The assistant prepares a summary and flags anomalies
-  4. A supervisor reviews the proposed output
-  5. Pending updates synchronize when connectivity returns
-- **Facilitator notes:** Present this workflow as a design proposal. Distinguish deterministic local checks from AI functions that may require more resources. Continuity of essential work should not depend on constant access to the model.
+  - **The assistant may:** classify, flag an incomplete record, prepare a summary
+  - **The team verifies:** data, anomalies, and proposed information
+  - **The team decides:** official grade, lot rejection, payment
+  - No official certificate is issued without validation
+- **Facilitator notes:** Ask why a task may be technically automatable without needing to be
+  delegated to AI. Connect the answer to consequences and authority.
 
-## S01-21 : Décisions humaines et limites / Human decisions and limits
+## S01-21 : D’une idée d’IA à un cas d’usage limité / From an AI idea to a bounded use case
 
 Durée : **3 minutes**
 
 ### Français
 
-- **Titre :** Coopérative : décisions humaines et limites de l’assistant
-- **Message principal :** L’utilité de l’assistant dépend de limites explicites et d’une responsabilité humaine identifiable.
+- **Titre :** D’une idée d’IA à un cas d’usage limité
+- **Message principal :** Une expérimentation utile réduit le problème avant d’élargir
+  l’automatisation.
 - **Contenu visible :**
-  - **L’assistant peut :** classer des rapports, signaler un dossier incomplet et préparer un avis
-  - **L’équipe décide :** de la note de qualité, du rejet d’un lot et du paiement au producteur
-  - L’assistant ne transmet aucun certificat officiel sans validation
-- **Notes du formateur :** Reprendre les premières propositions des participants. Leur demander pourquoi chaque décision sensible reste humaine. Faire ressortir les conséquences financières, réglementaires et sociales d’une erreur.
+  1. Définir le besoin et le résultat attendu
+  2. Identifier les informations autorisées
+  3. Choisir une capacité adaptée
+  4. Désigner la personne qui vérifie ou décide
+  5. Tester à petite échelle et mesurer le résultat
+- **Notes du formateur :** Reprendre une suggestion donnée au début de la session et la transformer
+  oralement en cas d’usage limité. Éviter les projets vagues tels que « automatiser toute
+  l’entreprise ».
 
 ### English
 
-- **Title:** Cooperative case: human decisions and assistant limits
-- **Key message:** The assistant is useful only when its limits are explicit and human responsibility is identifiable.
+- **Title:** From an AI idea to a bounded use case
+- **Key message:** A useful experiment narrows the problem before expanding automation.
 - **On-slide content:**
-  - **The assistant can:** classify reports, flag an incomplete record, and draft a notice
-  - **The team decides:** the quality grade, lot rejection, and producer payment
-  - The assistant submits no official certificate without approval
-- **Facilitator notes:** Return to the participants’ initial suggestions. Ask why each sensitive decision remains human. Highlight the financial, regulatory, and social consequences of an error.
+  1. Define the need and expected result
+  2. Identify authorized information
+  3. Select a suitable capability
+  4. Name the person who verifies or decides
+  5. Test on a small scale and measure the result
+- **Facilitator notes:** Take one suggestion from the beginning of the session and turn it into a
+  bounded use case. Avoid vague projects such as “automate the whole company.”
 
-## S01-22 : Transformation d’une activité / Transforming a business activity
-
-Durée : **2 minutes**
-
-### Français
-
-- **Titre :** Transformation d’une activité par l’IA
-- **Message principal :** L’adoption de l’IA commence par un problème précis et un résultat mesurable.
-- **Contenu visible :**
-  1. Problème et objectif métier
-  2. Tâches, décisions et données concernées
-  3. Cas d’usage limité avec un responsable identifié
-  4. Essai auprès des utilisateurs avec des règles de contrôle
-  5. Mesure de la qualité, du délai et des erreurs
-- **Notes du formateur :** Illustrer les étapes avec les objectifs de la coopérative : améliorer la complétude des dossiers et réduire les rapprochements manuels. Expliquer qu’un projet commence avec une portée limitée avant une extension éventuelle.
-
-### English
-
-- **Title:** Transforming a business activity with AI
-- **Key message:** AI adoption begins with a precise problem and a measurable outcome.
-- **On-slide content:**
-  1. Business problem and objective
-  2. Relevant tasks, decisions, and data
-  3. Limited use case with an identified owner
-  4. User trial with control rules
-  5. Measurement of quality, time, and errors
-- **Facilitator notes:** Illustrate the steps with the cooperative’s goals: improve record completeness and reduce manual reconciliation. Explain that a project begins with a limited scope before any broader rollout.
-
-## S01-23 : IA générative au travail / Generative AI at work
+## S01-22 : IA générative dans le travail quotidien / Generative AI in everyday work
 
 Durée : **2 minutes**
 
 ### Français
 
 - **Titre :** IA générative dans le travail quotidien
-- **Message principal :** L’IA générative apporte le plus de valeur lorsque la tâche, le contexte et les critères de qualité sont explicites.
+- **Message principal :** L’IA générative est surtout utile comme outil de préparation,
+  transformation et organisation de contenu.
 - **Contenu visible :**
-  - Préparer ou réviser un document
-  - Résumer des informations longues
-  - Expliquer des données dans un langage accessible
-  - Soutenir la communication, la formation ou le développement logiciel
-  - L’utilisateur fournit le contexte et vérifie le résultat
-- **Notes du formateur :** Donner un exemple professionnel adapté au public. Comparer une demande vague avec une demande contenant le rôle, l’objectif, le public et les contraintes. Garder les listes de marques et d’outils dans l’annexe.
+  - Rédiger ou reformuler
+  - Résumer un document fourni
+  - Organiser des notes
+  - Expliquer une information à un autre public
+  - Comparer des options à partir de critères fournis
+- **Notes du formateur :** Insister sur « document fourni » et « critères fournis ». L’outil ne
+  doit pas inventer les informations absentes. Les techniques de prompt seront développées en S03.
 
 ### English
 
 - **Title:** Generative AI in everyday work
-- **Key message:** Generative AI provides the most value when the task, context, and quality criteria are explicit.
+- **Key message:** Generative AI is especially useful for preparing, transforming, and organizing
+  content.
 - **On-slide content:**
-  - Prepare or revise a document
-  - Summarize lengthy information
-  - Explain data in accessible language
-  - Support communication, training, or software development
-  - The user supplies context and verifies the result
-- **Facilitator notes:** Give a professional example suited to the audience. Compare a vague request with one that includes the role, objective, audience, and constraints. Keep lists of brands and tools in the appendix.
+  - Draft or rewrite
+  - Summarize a supplied document
+  - Organize notes
+  - Explain information for another audience
+  - Compare options using supplied criteria
+- **Facilitator notes:** Emphasize “supplied document” and “supplied criteria.” The tool should not
+  invent missing information. Prompting techniques will be developed in S03.
 
-## S01-24 : Agents et automatisation / Agents and automation
+## S01-23 : Agents et automatisation / Agents and automation
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Agents d’IA et automatisation
-- **Message principal :** Un agent d’IA peut choisir et exécuter des actions dans les limites définies par une personne.
+- **Titre :** Agents et automatisation
+- **Message principal :** Plus un système peut agir, plus ses permissions et ses conditions
+  d’arrêt doivent être explicites.
 - **Contenu visible :**
-  - **Automatisation classique :** suit un processus prédéfini
-  - **Agent d’IA :** observe le contexte, choisit une action autorisée et agit
-  - **Robot ou cobot :** intervient dans le monde physique
-  - Les permissions, contrôles et conditions d’arrêt doivent être explicites
-- **Notes du formateur :** Expliquer qu’un chatbot qui répond uniquement à une question n’est pas nécessairement un agent. Un agent possède un objectif, accède à des outils et peut accomplir une suite d’actions. Mentionner les systèmes multiagents uniquement comme approfondissement.
+  - **Automatisation classique :** suit des étapes prédéfinies
+  - **Agent d’IA :** peut choisir parmi des actions autorisées selon le contexte
+  - Une action permise techniquement n’est pas automatiquement autorisée professionnellement
+  - Prévoir contrôles, limites et arrêt
+- **Notes du formateur :** Rester introductif. L’objectif n’est pas de concevoir un agent. Faire
+  comprendre que la capacité d’action augmente le besoin de gouvernance et de supervision.
 
 ### English
 
-- **Title:** AI agents and automation
-- **Key message:** An AI agent can select and perform actions within limits defined by a person.
+- **Title:** Agents and automation
+- **Key message:** The more a system can act, the more explicit its permissions and stopping
+  conditions must be.
 - **On-slide content:**
-  - **Traditional automation:** follows a predefined process
-  - **AI agent:** observes context, selects an authorized action, and acts
-  - **Robot or cobot:** operates in the physical world
-  - Permissions, controls, and stop conditions must be explicit
-- **Facilitator notes:** Explain that a chatbot answering a question is not necessarily an agent. An agent has a goal, accesses tools, and may perform a sequence of actions. Mention multi-agent systems only as an advanced topic.
+  - **Traditional automation:** follows predefined steps
+  - **AI agent:** may select among authorized actions based on context
+  - A technically possible action is not automatically professionally authorized
+  - Define controls, limits, and stopping conditions
+- **Facilitator notes:** Keep this introductory. The objective is not to design an agent. Learners
+  should understand that greater ability to act creates a greater need for governance and
+  oversight.
 
-## S01-25 : Génération augmentée par récupération / Retrieval-augmented generation
+## S01-24 : Quand l’IA doit travailler avec des documents approuvés / When AI needs approved documents
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Génération augmentée par récupération
-- **Message principal :** La RAG fonde une réponse générée sur des informations récupérées dans des sources approuvées.
+- **Titre :** Quand l’IA doit travailler avec des documents approuvés
+- **Message principal :** Un assistant peut être mieux ancré dans une tâche lorsqu’il reçoit les
+  sources autorisées nécessaires à la réponse.
 - **Contenu visible :**
-  1. Rechercher les passages pertinents
-  2. Ajouter ces passages au contexte de la demande
-  3. Générer une réponse fondée sur ce contexte
-  - Exemple de la coopérative : procédures internes et exigences documentaires en vigueur
-- **Notes du formateur :** Expliquer que la RAG améliore l’ancrage de la réponse et permet d’afficher les sources consultées. Elle ne garantit pas l’exactitude. L’utilisateur doit vérifier que les passages récupérés sont pertinents et à jour.
+  1. Rechercher l’information pertinente dans des sources approuvées
+  2. Ajouter cette information au contexte
+  3. Générer une réponse à partir de ce contexte
+  - Cette approche est appelée génération augmentée par récupération, ou RAG
+- **Notes du formateur :** Utiliser l’exemple d’une procédure interne autorisée. Préciser que la
+  présence d’une source réduit certains risques mais ne supprime pas la nécessité de vérifier la
+  réponse.
 
 ### English
 
-- **Title:** Retrieval-augmented generation
-- **Key message:** RAG grounds a generated answer in information retrieved from approved sources.
+- **Title:** When AI needs approved documents
+- **Key message:** An assistant can be better grounded for a task when it receives the approved
+  sources needed to answer.
 - **On-slide content:**
-  1. Retrieve relevant passages
-  2. Add those passages to the request context
-  3. Generate an answer grounded in that context
-  - Cooperative example: current internal procedures and document requirements
-- **Facilitator notes:** Explain that RAG improves grounding and can show the sources used. It does not guarantee accuracy. The user must verify that retrieved passages are relevant and current.
+  1. Retrieve relevant information from approved sources
+  2. Add that information to the context
+  3. Generate an answer from that context
+  - This approach is called Retrieval-Augmented Generation, or RAG
+- **Facilitator notes:** Use an authorized internal procedure as the example. Explain that having
+  a source can reduce some risks but does not remove the need to verify the answer.
 
-## S01-26 : Adoption et compétences / Adoption and skills
+## S01-25 : L’adoption exige des personnes, des données et des règles / Adoption requires people, data, and rules
 
 Durée : **2 minutes**
 
 ### Français
 
-- **Titre :** Adoption de l’IA et évolution des compétences
-- **Message principal :** Une adoption durable associe objectifs métier, préparation des données et compétences des utilisateurs.
+- **Titre :** L’adoption exige des personnes, des données et des règles
+- **Message principal :** Une technologie utile ne suffit pas à créer un usage professionnel
+  durable.
 - **Contenu visible :**
-  - Objectif mesurable et responsable clairement désigné
-  - Données fiables avec des droits d’accès adaptés
-  - Formation à la vérification et à la confidentialité
-  - Déploiement progressif avec suivi après le lancement
-  - Culture de l’IA : capacités, limites et usage responsable
-- **Notes du formateur :** Éviter les cadres propres à une marque. Présenter la culture de l’IA comme une compétence professionnelle générale. Dans la coopérative fictive, former les agents et les responsables compte autant que choisir le modèle.
+  - Objectif mesurable
+  - Données adaptées et droits d’accès
+  - Utilisateurs formés aux capacités et limites
+  - Responsable clairement identifié
+  - Déploiement progressif avec mesure de la qualité
+- **Notes du formateur :** Expliquer qu’un projet peut échouer même avec un bon modèle si les
+  données, les responsabilités ou la façon de mesurer le résultat ne sont pas définies.
 
 ### English
 
-- **Title:** AI adoption and changing skills
-- **Key message:** Sustainable adoption combines business goals, data readiness, and user skills.
+- **Title:** Adoption requires people, data, and rules
+- **Key message:** Useful technology alone is not enough to create sustainable professional use.
 - **On-slide content:**
-  - Measurable objective and clearly assigned owner
-  - Reliable data with appropriate access rights
-  - Training in verification and confidentiality
-  - Gradual deployment with monitoring after launch
-  - AI literacy: capabilities, limits, and responsible use
-- **Facilitator notes:** Avoid vendor-specific frameworks. Present AI literacy as a general professional skill. At the fictional cooperative, training field agents and supervisors matters as much as selecting the model.
+  - Measurable objective
+  - Suitable data and access rights
+  - Users trained on capabilities and limits
+  - Clearly identified owner
+  - Progressive rollout with quality measurement
+- **Facilitator notes:** Explain that a project can fail even with a good model when data,
+  responsibilities, or the method for measuring results are unclear.
 
-## S01-27 : Risques de l’IA générative / Generative AI risks
+## S01-26 : Quelles informations puis-je partager ? / What information can I safely provide?
+
+Durée : **2 minutes**
+
+### Français
+
+- **Titre :** Quelles informations puis-je partager ?
+- **Message principal :** La question de l’autorisation vient avant la commodité.
+- **Contenu visible :**
+  - Vérifier les règles de l’organisation et l’outil autorisé
+  - Utiliser des données fictives ou anonymisées pour les exercices
+  - Ne pas partager mots de passe ou identifiants
+  - Protéger les données personnelles et informations confidentielles
+  - Fournir uniquement ce qui est nécessaire à la tâche
+- **Notes du formateur :** Citer comme exemples sensibles les informations personnelles,
+  financières, médicales, contractuelles ou commerciales. La S06 traitera ces questions plus en
+  profondeur.
+
+### English
+
+- **Title:** What information can I safely provide?
+- **Key message:** Authorization comes before convenience.
+- **On-slide content:**
+  - Check organizational rules and the authorized tool
+  - Use fictional or anonymized data for exercises
+  - Do not share passwords or credentials
+  - Protect personal and confidential information
+  - Provide only what the task requires
+- **Facilitator notes:** Mention personal, financial, medical, contractual, or commercially
+  sensitive information as examples. S06 will address these questions in greater depth.
+
+## S01-27 : Erreurs, hallucinations et autres risques / Errors, hallucinations, and other risks
 
 Durée : **1 minute**
 
 ### Français
 
-- **Titre :** Principaux risques de l’IA générative
-- **Message principal :** Les résultats réalistes produits par l’IA générative peuvent contenir des erreurs ou créer de nouveaux risques.
+- **Titre :** Erreurs, hallucinations et autres risques
+- **Message principal :** Une sortie réaliste peut contenir une erreur difficile à remarquer.
 - **Contenu visible :**
-  - Hallucinations et informations fabriquées
-  - Exposition de données confidentielles
-  - Droit d’auteur et propriété des contenus
-  - Hypertrucages, fraude et désinformation
-  - Toute information importante doit être vérifiée avant utilisation
-- **Notes du formateur :** Définir une hallucination comme une information plausible mais inexacte ou inventée. Donner un exemple bref. Insister sur la vérification des faits et la protection des données saisies dans un outil externe.
+  - Informations inventées ou non vérifiées
+  - Omission d’un élément important
+  - Mauvaise interprétation du contexte
+  - Exposition de données sensibles
+  - Vérifier davantage lorsque les conséquences augmentent
+- **Notes du formateur :** Rappeler que la confiance apparente du texte ne constitue pas une
+  preuve. La vérification fait partie du travail normal avec l’IA.
 
 ### English
 
-- **Title:** Main generative AI risks
-- **Key message:** Realistic output from generative AI may contain errors or create new risks.
+- **Title:** Errors, hallucinations, and other risks
+- **Key message:** Realistic output may contain an error that is difficult to notice.
 - **On-slide content:**
-  - Hallucinations and fabricated information
-  - Exposure of confidential data
-  - Copyright and content ownership
-  - Deepfakes, fraud, and misinformation
-  - Important information requires verification before use
-- **Facilitator notes:** Define a hallucination as plausible but inaccurate or fabricated information. Give one brief example. Emphasize fact checking and protection of data entered into an external tool.
+  - Invented or unverified information
+  - Omission of an important element
+  - Misinterpretation of context
+  - Exposure of sensitive information
+  - Verify more when consequences increase
+- **Facilitator notes:** Remind learners that confident-looking text is not evidence. Verification
+  is a normal part of working with AI.
 
 ## S01-28 : Équité, responsabilité et supervision / Fairness, accountability, and oversight
 
@@ -758,109 +908,83 @@ Durée : **1 minute**
 
 ### Français
 
-- **Titre :** Équité, responsabilité et supervision humaine
-- **Message principal :** Une organisation reste responsable des effets d’un système d’IA.
+- **Titre :** Équité, responsabilité et supervision
+- **Message principal :** Une organisation reste responsable des conséquences d’un système d’IA.
 - **Contenu visible :**
-  - **Équité :** tester les résultats pour les groupes concernés
-  - **Transparence :** expliquer le rôle, les données et les limites du système
-  - **Responsabilité :** désigner la personne qui répond des décisions et corrections
-  - **Supervision :** renforcer le contrôle lorsque les conséquences augmentent
-- **Notes du formateur :** Relier ces principes aux paiements, aux décisions de qualité et aux données des producteurs au sein de la coopérative fictive. Une recommandation automatisée ne transfère pas la responsabilité au modèle.
+  - Évaluer les effets sur les personnes concernées
+  - Rendre le rôle de l’IA visible
+  - Désigner qui répond des décisions et corrections
+  - Renforcer la supervision lorsque les conséquences augmentent
+- **Notes du formateur :** Ne pas transformer cette minute en cours juridique. L’objectif est de
+  faire retenir que l’usage d’un système ne transfère pas automatiquement la responsabilité au
+  système.
 
 ### English
 
-- **Title:** Fairness, accountability, and human oversight
-- **Key message:** An organization remains responsible for the effects of an AI system.
+- **Title:** Fairness, accountability, and oversight
+- **Key message:** An organization remains responsible for the consequences of an AI system.
 - **On-slide content:**
-  - **Fairness:** test outcomes for affected groups
-  - **Transparency:** explain the system’s role, data, and limits
-  - **Accountability:** identify who owns decisions and corrections
-  - **Oversight:** increase control as consequences increase
-- **Facilitator notes:** Connect these principles to payments, quality decisions, and producer data at the fictional cooperative. An automated recommendation does not transfer responsibility to the model.
+  - Evaluate effects on affected people
+  - Make the role of AI visible
+  - Identify who is accountable for decisions and corrections
+  - Increase oversight as consequences increase
+- **Facilitator notes:** Do not turn this minute into a legal lecture. The goal is to establish
+  that using a system does not automatically transfer responsibility to the system.
 
-## S01-29 : Gouvernance pratique / Practical governance
+## S01-29 : Gouvernance pratique : qui vérifie quoi ? / Practical governance: who checks what?
 
 Durée : **1 minute**
 
 ### Français
 
-- **Titre :** Gouvernance pratique de l’IA
-- **Message principal :** La gouvernance transforme les principes responsables en règles appliquées pendant tout le cycle de vie.
+- **Titre :** Gouvernance pratique : qui vérifie quoi ?
+- **Message principal :** Une règle utile précise ce que l’IA peut faire et qui contrôle le
+  résultat.
 - **Contenu visible :**
-  - Collecter uniquement les données nécessaires
-  - Limiter les accès selon les responsabilités
-  - Documenter les usages autorisés et interdits
-  - Tester avant le déploiement
-  - Surveiller la qualité, les biais et les incidents
-- **Notes du formateur :** Expliquer que la gouvernance continue après le lancement. Mentionner les mécanismes d’escalade et d’arrêt. Conserver les détails sur les cadres réglementaires et le NIST AI RMF dans les ressources complémentaires.
+  - **Avant :** outil autorisé, informations permises, objectif défini
+  - **Pendant :** limites et permissions explicites
+  - **Après :** résultat vérifié, décision attribuée, incident signalé
+- **Notes du formateur :** Relier ces trois moments au cas de la coopérative. Une gouvernance
+  pratique doit être observable dans le processus quotidien.
 
 ### English
 
-- **Title:** Practical AI governance
-- **Key message:** Governance turns responsible principles into rules applied throughout the lifecycle.
+- **Title:** Practical governance: who checks what?
+- **Key message:** A useful rule states what AI may do and who controls the result.
 - **On-slide content:**
-  - Collect only necessary data
-  - Restrict access according to responsibilities
-  - Document allowed and prohibited uses
-  - Test before deployment
-  - Monitor quality, bias, and incidents
-- **Facilitator notes:** Explain that governance continues after launch. Mention escalation and stop mechanisms. Keep details about regulation and the NIST AI RMF in the supplementary resources.
+  - **Before:** authorized tool, permitted information, defined objective
+  - **During:** explicit limits and permissions
+  - **After:** verified result, assigned decision, reported incident
+- **Facilitator notes:** Connect these three moments to the cooperative case. Practical governance
+  should be observable in everyday work.
 
-## S01-30 : Vérification des acquis / Knowledge check
+## S01-30 : Comprendre → utiliser → vérifier / Learn → use → check
 
 Durée : **1 minute**
 
 ### Français
 
-- **Titre :** Vérification des acquis
-- **Message principal :** Une analyse utile relie le besoin, la technique, le risque et la responsabilité humaine.
+- **Titre :** Comprendre → utiliser → vérifier
+- **Message principal :** Comprendre l’IA est utile lorsque cette compréhension améliore une
+  décision réelle.
 - **Contenu visible :**
-  1. Quelle technique peut signaler des pesées inhabituelles ?
-  2. Que faut-il vérifier avant d’utiliser un contenu généré ?
-  3. Quelle décision de la coopérative doit rester humaine ?
+  1. Qu’ai-je compris aujourd’hui ?
+  2. Où pourrais-je utiliser cette capacité ?
+  3. Que devrais-je vérifier avant d’utiliser le résultat ?
   - Idée finale : l’IA soutient une personne qui conserve la responsabilité
-- **Notes du formateur :** Recueillir des réponses rapides. Réponses attendues : détection d’anomalies par apprentissage non supervisé, exactitude et sources du contenu, puis une décision comme la note de qualité, le rejet d’un lot ou le paiement. Conclure en rappelant que l’IA part d’un problème défini.
+- **Notes du formateur :** Demander une réponse rapide à une ou plusieurs questions. Conclure que
+  les prochaines sessions approfondiront l’usage de l’IA générative, les prompts, la vérification,
+  les workflows et la responsabilité.
 
 ### English
 
-- **Title:** Knowledge check
-- **Key message:** A useful assessment connects the need, technique, risk, and human responsibility.
+- **Title:** Learn → use → check
+- **Key message:** Understanding AI matters when that understanding improves a real decision.
 - **On-slide content:**
-  1. Which technique can flag unusual weights?
-  2. What must be checked before using generated content?
-  3. Which cooperative decision must remain human?
+  1. What did I learn today?
+  2. Where could I use this capability?
+  3. What should I check before using the result?
   - Final idea: AI supports a person who retains responsibility
-- **Facilitator notes:** Collect quick answers. Expected answers are anomaly detection through unsupervised learning, verification of accuracy and sources, and a decision such as quality grading, lot rejection, or producer payment. Close by reminding participants that AI work begins with a defined problem.
-
----
-
-## Traçabilité vers les quatre modules sources
-
-| Module source                                          | Diapositives principales                         |
-| ------------------------------------------------------ | ------------------------------------------------ |
-| 01 : Introduction et applications de l’IA              | S01-03 à S01-08, S01-13, S01-17 à S01-21, S01-30 |
-| 02 : Concepts, terminologie et domaines d’application  | S01-09 à S01-17, S01-19                          |
-| 03 : Transformation des entreprises et des carrières   | S01-21 à S01-26                                  |
-| 04 : Enjeux, préoccupations et considérations éthiques | S01-21, S01-27 à S01-29                          |
-
-## Contenus réservés aux notes ou à l’annexe
-
-- Données d’entraînement, de validation et de test
-- VAE, GAN et modèles autorégressifs
-- Détails des réseaux convolutifs
-- Systèmes multiagents
-- Comparaisons des cadres propres aux fournisseurs
-- Listes détaillées d’outils commerciaux
-- Accès équitable et impact environnemental
-- NIST AI RMF, règlement européen et autres cadres réglementaires
-- Travaux pratiques et révisions détaillées des quiz Coursera
-
-## Critères d’acceptation du futur support
-
-- 30 diapositives exactement dans chaque langue
-- 60 minutes de durée totale
-- Identifiants, ordre et objectifs pédagogiques identiques en français et en anglais
-- Aucun texte tronqué ou superposé dans les rendus PPTX et PDF
-- Une seule étude de cas cohérente utilisée pendant toute la session
-- Distinction explicite entre capacités de l’IA, décisions humaines et limites du système
-- Sources détaillées conservées séparément comme documentation de référence
+- **Facilitator notes:** Ask for a quick response to one or more questions. Conclude by explaining
+  that later sessions will deepen generative-AI use, prompting, verification, workflows, and
+  responsibility.
