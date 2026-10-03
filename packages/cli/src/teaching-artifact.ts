@@ -3,7 +3,11 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 import { atomicWrite, canonicalJson, repositoryRoot, sha256 } from '@coursera-notes/core';
-import { readManifest, type TeachingSession } from '@coursera-notes/manifest';
+import {
+  readManifest,
+  resolveTeachingSessionSources,
+  type TeachingSession,
+} from '@coursera-notes/manifest';
 import {
   parseTeachingSession,
   createPdfContactSheets,
@@ -180,13 +184,7 @@ async function main(): Promise<void> {
     throw new Error(`No teaching session matched ${args.session ?? 'manifest'}.`);
 
   for (const session of sessions) {
-    const course = manifest.courses.find((candidate) => candidate.id === session.courseId);
-    if (!course) throw new Error(`Unknown teaching course: ${session.courseId}.`);
-    const pair = await readPair(session, root, {
-      canonicalModuleIds: course.modules.map((module) => module.id),
-      en: course.modules.map((module) => module.source.en),
-      fr: course.modules.map((module) => module.source.fr),
-    });
+    const pair = await readPair(session, root, resolveTeachingSessionSources(manifest, session));
     for (const language of (args.language ? [args.language] : ['en', 'fr']) as Language[]) {
       const content = pair[language];
       const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);

@@ -2,7 +2,11 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { basename, dirname, relative, resolve } from 'node:path';
 
 import { canonicalJson, fromRoot, padOrdinal } from '@coursera-notes/core';
-import { manifestJsonSchema, readManifest } from '@coursera-notes/manifest';
+import {
+  manifestJsonSchema,
+  readManifest,
+  resolveTeachingSessionSources,
+} from '@coursera-notes/manifest';
 import { parseTeachingSession, validateTeachingPair } from '@coursera-notes/presentations';
 
 import { analyzeArtifactImpact } from './artifact-impact.js';
@@ -79,8 +83,7 @@ async function teachingSessions(): Promise<TaskResult> {
   try {
     const manifest = await readManifest();
     for (const session of manifest.teachingSessions ?? []) {
-      const course = manifest.courses.find((candidate) => candidate.id === session.courseId);
-      if (!course) throw new Error(`Unknown teaching course: ${session.courseId}.`);
+      const canonicalSources = resolveTeachingSessionSources(manifest, session);
       const parse = async (language: 'en' | 'fr') => {
         const sourcePath = session.source[language];
         const absolutePath = fromRoot(sourcePath);
@@ -92,12 +95,12 @@ async function teachingSessions(): Promise<TaskResult> {
         }
         return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
           id: session.id,
-          canonicalModuleIds: course.modules.map((module) => module.id),
+          canonicalModuleIds: canonicalSources.canonicalModuleIds,
           language,
           sourcePath,
           durationMinutes: session.durationMinutes,
           slideCount: session.slideCount,
-          canonicalSources: course.modules.map((module) => module.source[language]),
+          canonicalSources: canonicalSources[language],
         });
       };
       validateTeachingPair(await parse('en'), await parse('fr'));

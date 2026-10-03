@@ -5,7 +5,7 @@ import test from 'node:test';
 import JSZip from 'jszip';
 
 import { repositoryRoot, sha256 } from '@coursera-notes/core';
-import { readManifest } from '@coursera-notes/manifest';
+import { readManifest, resolveTeachingSessionSources } from '@coursera-notes/manifest';
 
 import {
   parseTeachingSession,
@@ -19,8 +19,7 @@ async function fixture() {
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's01');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const markdown = {} as Record<'en' | 'fr', string>;
   const content = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
   for (const language of ['en', 'fr'] as const) {
@@ -30,15 +29,15 @@ async function fixture() {
     );
     content[language] = parseTeachingSession(markdown[language], {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
-  return { session, course, markdown, content };
+  return { session, canonicalSources, markdown, content };
 }
 
 test('all registered teaching sessions disclose source attribution and AI generation', async () => {
@@ -47,8 +46,7 @@ test('all registered teaching sessions disclose source attribution and AI genera
   assert.ok(sessions.length > 0);
 
   for (const session of sessions) {
-    const course = manifest.courses.find((entry) => entry.id === session.courseId);
-    assert.ok(course);
+    const canonicalSources = resolveTeachingSessionSources(manifest, session);
 
     for (const language of ['en', 'fr'] as const) {
       const sourcePath = session.source[language];
@@ -56,12 +54,12 @@ test('all registered teaching sessions disclose source attribution and AI genera
 
       const content = parseTeachingSession(markdown, {
         id: session.id,
-        canonicalModuleIds: course.modules.map((module) => module.id),
+        canonicalModuleIds: canonicalSources.canonicalModuleIds,
         language,
         sourcePath,
         slideCount: session.slideCount,
         durationMinutes: session.durationMinutes,
-        canonicalSources: course.modules.map((module) => module.source[language]),
+        canonicalSources: canonicalSources[language],
       });
 
       const canonicalHeading = language === 'en' ? '## Canonical sources' : '## Sources canoniques';
@@ -215,18 +213,18 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
 });
 
 test('S01 parser rejects changed timing and bilingual divergence', async () => {
-  const { session, course, markdown, content } = await fixture();
+  const { session, canonicalSources, markdown, content } = await fixture();
   const changed = markdown.en.replace('**Duration:** 1 minute', '**Duration:** 2 minutes');
   assert.throws(
     () =>
       parseTeachingSession(changed, {
         id: session.id,
-        canonicalModuleIds: course.modules.map((module) => module.id),
+        canonicalModuleIds: canonicalSources.canonicalModuleIds,
         language: 'en',
         sourcePath: session.source.en,
         slideCount: session.slideCount,
         durationMinutes: session.durationMinutes,
-        canonicalSources: course.modules.map((module) => module.source.en),
+        canonicalSources: canonicalSources.en,
       }),
     /expected 60 minutes/,
   );
@@ -269,19 +267,18 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's02');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const content = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
   for (const language of ['en', 'fr'] as const) {
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
   validateTeachingPair(content.en, content.fr);
@@ -395,19 +392,18 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's03');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const content = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
   for (const language of ['en', 'fr'] as const) {
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
   validateTeachingPair(content.en, content.fr);

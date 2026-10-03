@@ -50,7 +50,12 @@ export const CourseSchema = z.strictObject({
 
 export const TeachingSessionSchema = z.strictObject({
   id: z.string().regex(/^s\d{2}$/),
-  courseId: prefixedUuid('course'),
+  slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  title: z.strictObject({
+    en: z.string().min(1),
+    fr: z.string().min(1),
+  }),
+  canonicalModuleIds: z.array(prefixedUuid('module')).min(1),
   durationMinutes: z.int().positive(),
   slideCount: z.int().positive(),
   source: z.strictObject({
@@ -60,7 +65,7 @@ export const TeachingSessionSchema = z.strictObject({
 });
 
 const ManifestObjectSchema = z.strictObject({
-  schemaVersion: z.literal(1),
+  schemaVersion: z.literal(2),
   templateVersion: z.string().regex(/^\d+\.\d+\.\d+$/),
   repository: z.strictObject({
     status: z.enum(['template', 'configured']),
@@ -198,22 +203,58 @@ function configuredRepositoryIssues(manifest: ManifestInput): ManifestValidation
 export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, context) => {
   const issues = [...uniquenessIssues(manifest), ...configuredRepositoryIssues(manifest)];
 
-  const ids = new Set<string>();
+  const sessionIds = new Set<string>();
+  const sessionSlugs = new Set<string>();
+  const canonicalModuleIds = new Set<string>();
+
+  manifest.courses.forEach((course, courseIndex) => {
+    course.modules.forEach((module, moduleIndex) => {
+      if (canonicalModuleIds.has(module.id)) {
+        issues.push({
+          path: ['courses', courseIndex, 'modules', moduleIndex, 'id'],
+          message: `Duplicate module id across manifest: ${module.id}.`,
+        });
+      }
+
+      canonicalModuleIds.add(module.id);
+    });
+  });
 
   manifest.teachingSessions?.forEach((session, index) => {
-    if (ids.has(session.id)) {
+    if (sessionIds.has(session.id)) {
       issues.push({
         path: ['teachingSessions', index, 'id'],
         message: `Duplicate session ${session.id}.`,
       });
     }
-    ids.add(session.id);
-    if (!manifest.courses.some((course) => course.id === session.courseId)) {
+    sessionIds.add(session.id);
+
+    if (sessionSlugs.has(session.slug)) {
       issues.push({
-        path: ['teachingSessions', index, 'courseId'],
-        message: `Unknown course ${session.courseId}.`,
+        path: ['teachingSessions', index, 'slug'],
+        message: `Duplicate session slug ${session.slug}.`,
       });
     }
+    sessionSlugs.add(session.slug);
+
+    const sessionModuleIds = new Set<string>();
+
+    session.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
+      if (sessionModuleIds.has(moduleId)) {
+        issues.push({
+          path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
+          message: `Duplicate canonical module ${moduleId} in session ${session.id}.`,
+        });
+      }
+      sessionModuleIds.add(moduleId);
+
+      if (!canonicalModuleIds.has(moduleId)) {
+        issues.push({
+          path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
+          message: `Unknown canonical module ${moduleId}.`,
+        });
+      }
+    });
   });
 
   for (const issue of issues) {

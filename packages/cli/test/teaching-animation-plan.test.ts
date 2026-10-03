@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import test from 'node:test';
 
 import { repositoryRoot } from '@coursera-notes/core';
-import { readManifest } from '@coursera-notes/manifest';
+import { readManifest, resolveTeachingSessionSources } from '@coursera-notes/manifest';
 import { parseTeachingSession, validateTeachingPair } from '@coursera-notes/presentations';
 
 import {
@@ -18,20 +18,19 @@ test('S01 animation plan follows both teaching sources without adding slides or 
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's01');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const source = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
 
   for (const language of ['en', 'fr'] as const) {
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
   validateTeachingPair(source.en, source.fr);
@@ -84,20 +83,19 @@ test('S02 animation plan covers 26 bilingual slides without changing content or 
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's02');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const source = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
 
   for (const language of ['en', 'fr'] as const) {
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
   validateTeachingPair(source.en, source.fr);
@@ -138,20 +136,19 @@ test('S03 animation plan covers 25 bilingual slides without changing content or 
   const manifest = await readManifest();
   const session = manifest.teachingSessions?.find((entry) => entry.id === 's03');
   assert.ok(session);
-  const course = manifest.courses.find((entry) => entry.id === session.courseId);
-  assert.ok(course);
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
   const source = {} as Record<'en' | 'fr', ReturnType<typeof parseTeachingSession>>;
 
   for (const language of ['en', 'fr'] as const) {
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      canonicalModuleIds: course.modules.map((module) => module.id),
+      canonicalModuleIds: canonicalSources.canonicalModuleIds,
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
       durationMinutes: session.durationMinutes,
-      canonicalSources: course.modules.map((module) => module.source[language]),
+      canonicalSources: canonicalSources[language],
     });
   }
   validateTeachingPair(source.en, source.fr);
