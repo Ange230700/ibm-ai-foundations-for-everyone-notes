@@ -1,7 +1,8 @@
 flowchart LR
- A["Training"] --> B["Model"]
- B --> C["Draft"]
- D["Task"] --> C
- C --> E{"Human review"}
- E --> F["Revise or stop"]
- E --> G["Reviewed notice"]
+ A["Earlier training"] --> B["Model capabilities"]
+ B --> D["Proposed output"]
+ C["Request + context"] --> D
+ D --> E{"Human review"}
+ E --> F["Correct"]
+ E --> G["Use"]
+ E --> H["Reject"]

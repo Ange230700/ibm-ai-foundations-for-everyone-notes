@@ -1,7 +1,8 @@
 flowchart LR
- A["Entraînement"] --> B["Modèle"]
- B --> C["Brouillon"]
- D["Consigne"] --> C
- C --> E{"Contrôle humain"}
- E --> F["Corriger ou arrêter"]
- E --> G["Avis relu"]
+ A["Entraînement antérieur"] --> B["Capacités du modèle"]
+ B --> D["Sortie proposée"]
+ C["Demande + contexte"] --> D
+ D --> E{"Examen humain"}
+ E --> F["Corriger"]
+ E --> G["Utiliser"]
+ E --> H["Rejeter"]
