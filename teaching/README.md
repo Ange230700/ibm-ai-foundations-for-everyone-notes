@@ -53,13 +53,15 @@ and explicit human responsibility for consequential decisions.
   - English teaching source: available
   - Bilingual structural alignment: verified
 - Course 02 — Generative AI: Introduction and Applications
-  - S02 — Introduction to Generative AI / Introduction à l’IA générative
+  - S02 — Using Generative AI at Work / Utiliser l’IA générative au travail
   - Duration: 60 minutes; 26 slides in each language
-  - French teaching source: draft available
-  - English teaching source: draft available
+  - French teaching source: professional-fusion implementation available
+  - English teaching source: professional-fusion implementation available
   - Bilingual structural and contract alignment: verified at the source level
+  - Teaching visuals: aligned with the professional-fusion contract
+  - Animation plan: 26 slides, 68 clicks, and 203 shape effects per language
   - The Course 02 French canonical adaptations still await personal review.
-  - S02 is declared in `manifest.json`; draft PDF and native PPTX generation is available.
+  - S02 is declared in `manifest.json`; PDF and native PPTX generation is available.
 - Course 03 — Generative AI: Prompt Engineering Basics
   - S03 — Principes de base de la conception des prompts
   - Duration: 60 minutes; 25 slides in each language
@@ -121,11 +123,13 @@ wrong response on S02-12 remains a separate, deliberately invented teaching exam
 simulation sources are in `teaching/visuals/s02/`. Regenerate SVG and simulated PNG assets with
 `node --import tsx scripts/generate-s02-visuals.mjs` before rebuilding S02 PPTX; the script does
 not overwrite the original captures. On Windows with
-desktop PowerPoint, run `pnpm teaching:artifact animate --session=s02` after building the PPTX to
-create `session-animated.pptx` for both languages. The plan covers all 26 slides, including 53
-clicks and 158 shape effects per language; diagrams and images are visible when the
-slide opens, while text rows reveal one by one. The Course 02 French adaptations still need
-personal review, and the draft decks need visual inspection and a timed rehearsal before release.
+desktop PowerPoint, run `pnpm teaching:artifact animate --session=s02` after building and
+verifying the PPTX to create `session-animated.pptx` for both languages. The current plan covers
+all 26 slides, including 68 clicks and 203 shape effects per language; diagrams and images are
+visible when the slide opens, while text rows reveal one by one. The professional-fusion sources
+and teaching visuals are structurally validated. The Course 02 French canonical adaptations still
+need personal review, and the regenerated decks still require visual inspection, bilingual
+PowerPoint review, and a timed rehearsal before release.
 
 For S03, run `pnpm teaching:artifact plan --session=s03`, then
 `pnpm teaching:artifact build --session=s03` and

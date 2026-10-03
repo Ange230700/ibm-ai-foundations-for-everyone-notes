@@ -35,11 +35,16 @@ session without the required metadata and Slide 01 disclosures must fail validat
 
 - `s01-ai-fundamentals-60-min-content-contract.md` defines the aligned French and English
   content contract for the 60-minute Understanding AI / Comprendre l’IA professional-curriculum session.
-- `s02-generative-ai-60-min-content-contract.md` proposes the aligned French and English
-  60-minute introduction to generative AI. The canonical Course 02 French adaptations still await
-  personal review. The bilingual S02 teaching sources are drafts under
-  `teaching/courses/02-generative-ai-introduction-and-applications/`. S02 PDF and PPTX drafts,
-  teaching visuals, and animated PPTX copies can be generated. Visual inspection and a timed
+- `s02-generative-ai-60-min-content-contract.md` defines the aligned French and English
+  60-minute Using Generative AI at Work / Utiliser l’IA générative au travail
+  professional-curriculum session. The bilingual S02 teaching sources implement the approved
+  professional-fusion contract under
+  `teaching/courses/02-generative-ai-introduction-and-applications/`. The session preserves the
+  fictional Soubré anchor while adding transferable professional tasks, source-preserving
+  transformations, explicit verification, and human responsibility. Its teaching visuals are
+  aligned with the revised semantics, and its animation plan covers 26 slides, 68 clicks, and 203
+  shape effects per language. The canonical Course 02 French adaptations still await personal
+  review. PDF/PPTX regeneration, visual inspection, bilingual PowerPoint review, and a timed
   rehearsal are still required before release.
 - `s03-prompt-engineering-60-min-content-contract.md` proposes a bilingual 25-slide,
   60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
