@@ -1,6 +1,6 @@
 flowchart LR
- A["Task + source"] --> B["Grounded prompt"]
- B --> C["Draft"]
- C --> D{"Check facts + format"}
- D -->|No| E["Revise request"]
- D -->|Yes| F["Human approval"]
+ A["Result needed"] --> B["Task + context + input"]
+ B --> C["Output requirements"]
+ C --> D["Draft"]
+ D --> E{"Check"}
+ E --> F["Refine or approve"]

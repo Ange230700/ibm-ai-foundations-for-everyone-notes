@@ -1,6 +1,6 @@
 flowchart LR
- A["Tâche + source"] --> B["Demande fondée"]
- B --> C["Brouillon"]
- C --> D{"Faits + format vérifiés ?"}
- D -->|Non| E["Réviser la demande"]
- D -->|Oui| F["Validation humaine"]
+ A["Résultat attendu"] --> B["Tâche + contexte + entrée"]
+ B --> C["Exigences de sortie"]
+ C --> D["Brouillon"]
+ D --> E{"Contrôler"}
+ E --> F["Corriger ou valider"]
