@@ -6,6 +6,7 @@ import { atomicWrite, canonicalJson, repositoryRoot, sha256 } from '@coursera-no
 import {
   readManifest,
   resolveTeachingSessionSources,
+  teachingSessionSourcePath,
   type TeachingSession,
 } from '@coursera-notes/manifest';
 import {
@@ -71,15 +72,16 @@ function parseArguments(args: string[]): Arguments {
     command !== 'animate'
   ) {
     throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=s01|s02|s03] [--lang=en|fr] [--format=pdf|pptx]',
+      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=sNN] [--lang=en|fr] [--format=pdf|pptx]',
     );
   }
   const result: Arguments = { command };
   for (const option of options) {
     const [key, value, extra] = option.split('=');
     if (!value || extra) throw new Error(`Invalid teaching option: ${option}.`);
-    if (key === '--session' && !result.session) result.session = value;
-    else if (key === '--lang' && !result.language && (value === 'en' || value === 'fr'))
+    if (key === '--session' && !result.session && /^s\d{2}$/u.test(value)) {
+      result.session = value;
+    } else if (key === '--lang' && !result.language && (value === 'en' || value === 'fr'))
       result.language = value;
     else if (key === '--format' && !result.format && (value === 'pdf' || value === 'pptx'))
       result.format = value;
@@ -88,10 +90,16 @@ function parseArguments(args: string[]): Arguments {
   return result;
 }
 
-function safePath(root: string, source: string): string {
-  if (!/^(?:teaching|courses)\/[a-z0-9/_-]+\.md$/u.test(source) || source.includes('..')) {
-    throw new Error(`Unsafe teaching source path: ${source}.`);
+function teachingSourcePath(root: string, session: TeachingSession, language: Language): string {
+  const source = session.source[language];
+  const expected = teachingSessionSourcePath(session, language);
+
+  if (source !== expected) {
+    throw new Error(
+      `Teaching session ${session.id} ${language} source must be ${expected}; received ${source}.`,
+    );
   }
+
   return resolve(root, source);
 }
 
@@ -107,7 +115,7 @@ async function readPair(
   const content = {} as Record<Language, TeachingSessionContent>;
   for (const language of ['en', 'fr'] as const) {
     const sourcePath = session.source[language];
-    const markdown = await readFile(safePath(root, sourcePath), 'utf8');
+    const markdown = await readFile(teachingSourcePath(root, session, language), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
       canonicalModuleIds: courseSources.canonicalModuleIds,
@@ -262,7 +270,7 @@ async function main(): Promise<void> {
         );
         continue;
       }
-      const sourceNow = await readFile(safePath(root, content.sourcePath), 'utf8');
+      const sourceNow = await readFile(teachingSourcePath(root, session, language), 'utf8');
       if (sha256(sourceNow) !== content.sourceSha256)
         throw new Error(`${content.sourcePath} changed during build.`);
       for (const format of formats) {

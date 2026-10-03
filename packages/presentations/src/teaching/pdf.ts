@@ -64,8 +64,7 @@ function relativePath(root: string, path: string): string {
   return value;
 }
 
-const TEACHING_VISUAL_PATH =
-  /^teaching\/visuals\/(?:s01|s02|s03)\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u;
+const TEACHING_VISUAL_PATH = /^teaching\/visuals\/s\d{2}\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u;
 
 export async function resolveTeachingPdfVisuals(
   content: TeachingSessionContent,

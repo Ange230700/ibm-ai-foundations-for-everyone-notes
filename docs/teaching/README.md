@@ -30,6 +30,8 @@ session without the required metadata and Slide 01 disclosures must fail validat
 - Files in `docs/teaching/` define a curated delivery plan for a specific teaching session.
 - Teaching specifications do not replace canonical modules; maintained session sources are
   declared separately in `manifest.json` under `teachingSessions`.
+- Each maintained session source path is derived from its manifest identity:
+  `teaching/sessions/<id>-<slug>/<language>/session.md`.
 
 ## Current specification
 

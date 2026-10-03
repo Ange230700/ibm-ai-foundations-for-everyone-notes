@@ -1,5 +1,7 @@
 import * as z from 'zod';
 
+import { teachingSessionSourcePath } from './teaching-path.js';
+
 const prefixedUuid = (prefix: string) =>
   z
     .string()
@@ -236,6 +238,17 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
       });
     }
     sessionSlugs.add(session.slug);
+
+    for (const language of ['en', 'fr'] as const) {
+      const expectedSource = teachingSessionSourcePath(session, language);
+
+      if (session.source[language] !== expectedSource) {
+        issues.push({
+          path: ['teachingSessions', index, 'source', language],
+          message: `Teaching session ${session.id} ${language} source must be ${expectedSource}.`,
+        });
+      }
+    }
 
     const sessionModuleIds = new Set<string>();
 

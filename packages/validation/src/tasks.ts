@@ -6,6 +6,7 @@ import {
   manifestJsonSchema,
   readManifest,
   resolveTeachingSessionSources,
+  teachingSessionSourcePath,
 } from '@coursera-notes/manifest';
 import { parseTeachingSession, validateTeachingPair } from '@coursera-notes/presentations';
 
@@ -86,13 +87,15 @@ async function teachingSessions(): Promise<TaskResult> {
       const canonicalSources = resolveTeachingSessionSources(manifest, session);
       const parse = async (language: 'en' | 'fr') => {
         const sourcePath = session.source[language];
-        const absolutePath = fromRoot(sourcePath);
-        if (
-          !sourcePath.startsWith('teaching/') ||
-          relative(fromRoot('teaching'), absolutePath).startsWith('..')
-        ) {
-          throw new Error(`Teaching source outside teaching/: ${sourcePath}.`);
+        const expectedSource = teachingSessionSourcePath(session, language);
+
+        if (sourcePath !== expectedSource) {
+          throw new Error(
+            `Teaching session ${session.id} ${language} source must be ${expectedSource}; received ${sourcePath}.`,
+          );
         }
+
+        const absolutePath = fromRoot(sourcePath);
         return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
           id: session.id,
           canonicalModuleIds: canonicalSources.canonicalModuleIds,
