@@ -63,10 +63,15 @@ and explicit human responsibility for consequential decisions.
   - The Course 02 French canonical adaptations still await personal review.
   - S02 is declared in `manifest.json`; PDF and native PPTX generation is available.
 - Course 03 — Generative AI: Prompt Engineering Basics
-  - S03 — Principes de base de la conception des prompts
+  - S03 — Designing Effective Prompts / Concevoir de bons prompts
   - Duration: 60 minutes; 25 slides in each language
-  - French and English teaching sources: drafts available and structurally aligned with the S03 content contract
-  - S03 is declared in `manifest.json`; draft PDF and PPTX generation is available
+  - French teaching source: professional-fusion implementation available
+  - English teaching source: professional-fusion implementation available
+  - Bilingual structural and contract alignment: verified at the source level
+  - Teaching visuals: aligned with the professional-fusion contract
+  - Animation plan: 25 slides, 75 clicks, and 224 shape effects per language
+  - S03 is declared in `manifest.json`; PDF and native PPTX generation is available.
+  - Bilingual artifact regeneration and production QA remain pending for this cycle.
   - The Course 03 French canonical adaptations still await personal review.
 
 ## Session artifacts
@@ -134,23 +139,30 @@ review.
 
 For S03, run `pnpm teaching:artifact plan --session=s03`, then
 `pnpm teaching:artifact build --session=s03` and
-`pnpm teaching:artifact verify --session=s03`. The four draft files are generated under
+`pnpm teaching:artifact verify --session=s03`. The four generated files live under
 `.artifacts/teaching-sessions/s03/<language>/`. Run
 `pnpm teaching:artifact visual-qa --session=s03 --format=pdf` to create PDF page images and
-contact sheets for review. These 25-slide decks include speaker notes and slide numbering.
-The S03 PPTX includes four Mermaid diagrams per language. Each language has three labelled
-fictional teaching screens, a real ChatGPT exchange about the fictional source on S03-08, and a
-capture of ChatGPT's opening interview question on S03-16. The unknown reply is a spoken teaching
-cue; it is not present in the screenshot.
-The invented error on S03-19 is a separate teaching example. Editable
-simulation sources live in `teaching/visuals/s03/`; regenerate SVG and simulated PNG files with
-`node --import tsx scripts/generate-s03-visuals.mjs` before building S03 PPTX. The script does
-not overwrite the original captures at `teaching/visuals/s03/<language>/chat-capture.png` or
-`interview-capture.png`. On Windows with desktop
-PowerPoint, run `pnpm teaching:artifact animate --session=s03` after building and verifying
-the PPTX to create `session-animated.pptx` for both languages. The plan covers 25 slides,
-52 clicks and 155 shape effects per language: the images remain visible on arrival, and the
-text rows reveal one by one. The command reopens both saved decks to verify every animated
-shape and trigger. A timed rehearsal and visual review remain necessary before release.
-The canonical Course 03 French adaptations still need personal review; the bilingual drafts
-need visual inspection and a timed rehearsal before release.
+contact sheets for review. These 25-slide professional-fusion decks include speaker notes and slide
+numbering. The S03 PPTX includes four Mermaid diagrams per language. Each language has three
+labelled fictional teaching screens, a real ChatGPT exchange about the fictional source on S03-08,
+and a capture of ChatGPT's opening interview question on S03-16. The unknown reply is a spoken
+teaching cue; it is not present in the screenshot. The deliberately unsupported output on S03-19
+remains a separate teaching example.
+
+Editable simulation sources live in `teaching/visuals/s03/`; regenerate SVG and simulated PNG
+files with `node --import tsx scripts/generate-s03-visuals.mjs` before rebuilding S03 PPTX when
+those sources change. The script does not overwrite the original captures at
+`teaching/visuals/s03/<language>/chat-capture.png` or
+`interview-capture.png`.
+
+On Windows with desktop PowerPoint, run
+`pnpm teaching:artifact animate --session=s03` after building and verifying the PPTX files to
+create `session-animated.pptx` for both languages. The current professional-fusion animation plan
+covers 25 slides, 75 clicks, and 224 shape effects per language. Diagrams and images remain visible
+when the slide opens while projected text rows reveal progressively. The animation verifier reopens
+the saved decks to verify the planned animated shapes and triggers.
+
+The professional-fusion sources and revised teaching visuals are structurally validated. Bilingual
+PDF/PPTX regeneration, PDF visual QA, animated-PowerPoint human review, and the timed rehearsal
+remain pending for this production cycle. The canonical Course 03 French adaptations still need
+personal review.

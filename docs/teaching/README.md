@@ -47,12 +47,18 @@ session without the required metadata and Slide 01 disclosures must fail validat
   and verified. PDF visual QA, bilingual animated-PowerPoint human review, and the timed rehearsal
   have passed for this production cycle. The canonical Course 02 French adaptations still await
   personal review.
-- `s03-prompt-engineering-60-min-content-contract.md` proposes a bilingual 25-slide,
-  60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
-  canonical Course 03 French adaptations await personal review. French and English
-  teaching-source drafts are available and structurally aligned; draft PDF and PPTX derivatives
-  can be generated and verified from the registered S03 session. PPTX diagrams and teaching
-  simulations are authored under `teaching/visuals/s03/` and remain fictional examples.
+- `s03-prompt-engineering-60-min-content-contract.md` defines the aligned
+  25-slide, 60-minute Designing Effective Prompts / Concevoir de bons prompts
+  professional-curriculum session. The bilingual S03 teaching sources implement the approved
+  professional-fusion contract under
+  `teaching/courses/03-generative-ai-prompt-engineering-basics/`. The session preserves the
+  fictional Soubré source-constrained exercise while introducing the seven-element practical
+  prompt framework, purposeful technique selection, targeted iteration, reusable prompt
+  templates, professional transfer, output evaluation, and explicit human responsibility.
+  Its teaching visuals are aligned with the revised semantics, and its animation plan covers
+  25 slides, 75 clicks, and 224 shape effects per language. Bilingual PDF and PPTX regeneration,
+  PDF visual QA, animated-PowerPoint human review, and timed rehearsal remain pending for this
+  production cycle. The canonical Course 03 French adaptations still await personal review.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 
