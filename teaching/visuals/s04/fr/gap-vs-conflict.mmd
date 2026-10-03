@@ -1,0 +1,6 @@
+flowchart LR
+ A["Problème de preuve"] --> B{"Que fournit la source ?"}
+ B -- "Aucune valeur" --> C["Manquant"]
+ B -- "Valeurs fournies différentes" --> D["Contradictoire"]
+ C --> E["Garder le manque visible"]
+ D --> F["Garder les deux valeurs visibles"]
