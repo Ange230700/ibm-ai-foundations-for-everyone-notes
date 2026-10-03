@@ -56,8 +56,8 @@ session without the required metadata and Slide 01 disclosures must fail validat
   prompt framework, purposeful technique selection, targeted iteration, reusable prompt
   templates, professional transfer, output evaluation, and explicit human responsibility.
   Its teaching visuals are aligned with the revised semantics, and its animation plan covers
-  25 slides, 75 clicks, and 224 shape effects per language. Bilingual PDF and PPTX regeneration,
-  PDF visual QA, animated-PowerPoint human review, and timed rehearsal remain pending for this
+  25 slides, 75 clicks, and 224 shape effects per language. The current bilingual PDF and PPTX artifacts have been regenerated and verified. PDF visual
+  QA, bilingual animated-PowerPoint human review, and the timed rehearsal have passed for this
   production cycle. The canonical Course 03 French adaptations still await personal review.
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.

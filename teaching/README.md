@@ -71,7 +71,10 @@ and explicit human responsibility for consequential decisions.
   - Teaching visuals: aligned with the professional-fusion contract
   - Animation plan: 25 slides, 75 clicks, and 224 shape effects per language
   - S03 is declared in `manifest.json`; PDF and native PPTX generation is available.
-  - Bilingual artifact regeneration and production QA remain pending for this cycle.
+  - Bilingual PDF and PPTX artifacts: regenerated and verified
+  - PDF visual QA: passed in both languages
+  - Animated PowerPoint human review: passed in both languages
+  - Timed rehearsal: passed
   - The Course 03 French canonical adaptations still await personal review.
 
 ## Session artifacts
@@ -162,7 +165,7 @@ covers 25 slides, 75 clicks, and 224 shape effects per language. Diagrams and im
 when the slide opens while projected text rows reveal progressively. The animation verifier reopens
 the saved decks to verify the planned animated shapes and triggers.
 
-The professional-fusion sources and revised teaching visuals are structurally validated. Bilingual
-PDF/PPTX regeneration, PDF visual QA, animated-PowerPoint human review, and the timed rehearsal
-remain pending for this production cycle. The canonical Course 03 French adaptations still need
+The professional-fusion sources and revised teaching visuals are structurally validated. The bilingual PDF and PPTX artifacts have been regenerated and verified. PDF visual QA,
+animated-PowerPoint human review in both languages, and the timed rehearsal have passed for this
+production cycle. The canonical Course 03 French adaptations still need
 personal review.
