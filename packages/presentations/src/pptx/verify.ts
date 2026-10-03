@@ -31,11 +31,10 @@ export interface PptxSlideVerification {
 }
 
 export interface NativePptxVerification {
-  schemaVersion: 1;
+  schemaVersion: 2;
   verifierVersion: number;
   deckId: string;
-  courseId: string;
-  moduleId: string;
+  scope: DeckSpec['scope'];
   language: 'en' | 'fr';
   sourcePath: string;
   sourceSha256: string;
@@ -465,12 +464,16 @@ export async function verifyNativePptx(
     if (!sourceNotesPresent) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
     }
-    if (/^s\d{2}$/u.test(spec.moduleId) && slideSpec.teachingNotes && !notesData?.formatted) {
+    if (
+      spec.scope.kind === 'teaching-session' &&
+      slideSpec.teachingNotes &&
+      !notesData?.formatted
+    ) {
       throw new Error(`PPTX slide ${slideSpec.slideId} is missing formatted presenter cues.`);
     }
     const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
     const expectedNotes = slideSpec.teachingNotes
-      ? /^s\d{2}$/u.test(spec.moduleId)
+      ? spec.scope.kind === 'teaching-session'
         ? (() => {
             const { label, takeaway, cues } = teachingNoteParts(slideSpec.teachingNotes);
             return [label, takeaway, ...cues];
@@ -510,11 +513,10 @@ export async function verifyNativePptx(
   }
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     verifierVersion: PPTX_VERIFIER_VERSION,
     deckId: spec.deckId,
-    courseId: spec.courseId,
-    moduleId: spec.moduleId,
+    scope: spec.scope,
     language: spec.language,
     sourcePath: spec.sourcePath,
     sourceSha256: spec.sourceSha256,

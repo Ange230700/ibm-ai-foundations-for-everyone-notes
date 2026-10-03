@@ -47,11 +47,14 @@ interface DeckFixtureOptions {
 
 export function createDeckSpec(options: DeckFixtureOptions): DeckSpec {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: 'accepted',
     deckId: options.deckId,
-    courseId: 'course_test',
-    moduleId: 'module_test',
+    scope: {
+      kind: 'canonical-module',
+      courseId: 'course_test',
+      moduleId: 'module_test',
+    },
     language: 'en',
     title: options.title,
     audience: 'Learners reviewing the module',

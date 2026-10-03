@@ -86,9 +86,7 @@ test(
 
       assert.equal(verification.slideCount, spec.slides.length);
 
-      assert.equal(verification.courseId, spec.courseId);
-
-      assert.equal(verification.moduleId, spec.moduleId);
+      assert.deepEqual(verification.scope, spec.scope);
 
       assert.equal(verification.language, spec.language);
 

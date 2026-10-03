@@ -376,8 +376,7 @@ export function validateDeckSpec(input: unknown, content: ModuleContent): DeckSp
       'schemaVersion',
       'status',
       'deckId',
-      'courseId',
-      'moduleId',
+      'scope',
       'language',
       'title',
       'audience',
@@ -391,11 +390,19 @@ export function validateDeckSpec(input: unknown, content: ModuleContent): DeckSp
     'deck spec',
   );
 
+  assertObject(input.scope, 'deck spec scope');
+  assertExactKeys(
+    input.scope,
+    ['kind', 'courseId', 'moduleId'],
+    'deck spec canonical-module scope',
+  );
+
   if (
-    input.schemaVersion !== 1 ||
+    input.schemaVersion !== 2 ||
     input.status !== 'accepted' ||
-    input.courseId !== content.courseId ||
-    input.moduleId !== content.moduleId ||
+    input.scope.kind !== 'canonical-module' ||
+    input.scope.courseId !== content.courseId ||
+    input.scope.moduleId !== content.moduleId ||
     input.language !== content.language ||
     input.sourcePath !== content.sourcePath ||
     input.sourceSha256 !== content.sourceSha256 ||

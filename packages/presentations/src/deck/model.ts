@@ -87,12 +87,22 @@ export type SlideSpec =
   | CodeSlideSpec
   | SummarySlideSpec;
 
+export type DeckScope =
+  | {
+      kind: 'canonical-module';
+      courseId: string;
+      moduleId: string;
+    }
+  | {
+      kind: 'teaching-session';
+      sessionId: string;
+    };
+
 export interface DeckSpec {
-  schemaVersion: 1;
+  schemaVersion: 2;
   status: 'accepted';
   deckId: string;
-  courseId: string;
-  moduleId: string;
+  scope: DeckScope;
   language: 'en' | 'fr';
   title: string;
   audience: string;

@@ -159,10 +159,9 @@ export interface RenderNativePptxOptions {
 }
 
 export interface NativePptxArtifactRecord {
-  schemaVersion: 1;
+  schemaVersion: 2;
   deckId: string;
-  courseId: string;
-  moduleId: string;
+  scope: DeckSpec['scope'];
   language: 'en' | 'fr';
   sourcePath: string;
   sourceSha256: string;
@@ -1414,7 +1413,7 @@ export async function renderNativePptx(
     fileName: outputPath,
   });
 
-  if (/^s\d{2}$/u.test(spec.moduleId)) {
+  if (spec.scope.kind === 'teaching-session') {
     await writeFile(outputPath, await formatTeachingNotes(await readFile(outputPath), spec));
   }
 
@@ -1423,10 +1422,9 @@ export async function renderNativePptx(
   validatePptxBytes(bytes, relativeOutputPath);
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     deckId: spec.deckId,
-    courseId: spec.courseId,
-    moduleId: spec.moduleId,
+    scope: spec.scope,
     language: spec.language,
     sourcePath: spec.sourcePath,
     sourceSha256: spec.sourceSha256,

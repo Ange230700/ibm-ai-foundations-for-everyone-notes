@@ -539,11 +539,13 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
     };
   });
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: 'accepted',
     deckId: `${content.id.toUpperCase()}.${content.language.toUpperCase()}`,
-    courseId: content.courseId,
-    moduleId: content.id,
+    scope: {
+      kind: 'teaching-session',
+      sessionId: content.id,
+    },
     language: content.language,
     title: content.title,
     audience:

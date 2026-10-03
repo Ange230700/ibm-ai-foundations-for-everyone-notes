@@ -88,11 +88,14 @@ function fixture() {
   const [headers = [], ...rows] = table.rows;
 
   const spec: DeckSpec = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: 'accepted',
     deckId: 'course_test-module_test-en',
-    courseId: content.courseId,
-    moduleId: content.moduleId,
+    scope: {
+      kind: 'canonical-module',
+      courseId: content.courseId,
+      moduleId: content.moduleId,
+    },
     language: content.language,
     title: content.title,
     audience: 'Learners reviewing the module',

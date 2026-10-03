@@ -618,11 +618,14 @@ export function synthesizeDeckSpec(
   }
 
   const candidate: DeckSpec = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: 'accepted',
     deckId: `${content.courseId}-${content.moduleId}-${content.language}`,
-    courseId: content.courseId,
-    moduleId: content.moduleId,
+    scope: {
+      kind: 'canonical-module',
+      courseId: content.courseId,
+      moduleId: content.moduleId,
+    },
     language: content.language,
     title: content.title,
     audience: options.audience ?? text.audience,

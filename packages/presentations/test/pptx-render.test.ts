@@ -139,9 +139,7 @@ test(
 
       assert.equal(artifact.language, 'en');
 
-      assert.equal(artifact.courseId, spec.courseId);
-
-      assert.equal(artifact.moduleId, spec.moduleId);
+      assert.deepEqual(artifact.scope, spec.scope);
 
       assert.equal(artifact.sourcePath, spec.sourcePath);
 
