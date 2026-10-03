@@ -92,7 +92,7 @@ async function teachingSessions(): Promise<TaskResult> {
         }
         return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
           id: session.id,
-          courseId: session.courseId,
+          canonicalModuleIds: course.modules.map((module) => module.id),
           language,
           sourcePath,
           durationMinutes: session.durationMinutes,

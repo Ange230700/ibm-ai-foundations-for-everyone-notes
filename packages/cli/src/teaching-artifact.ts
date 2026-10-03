@@ -95,6 +95,7 @@ async function readPair(
   session: TeachingSession,
   root: string,
   courseSources: {
+    canonicalModuleIds: string[];
     en: string[];
     fr: string[];
   },
@@ -105,7 +106,7 @@ async function readPair(
     const markdown = await readFile(safePath(root, sourcePath), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: courseSources.canonicalModuleIds,
       language,
       sourcePath,
       durationMinutes: session.durationMinutes,
@@ -182,6 +183,7 @@ async function main(): Promise<void> {
     const course = manifest.courses.find((candidate) => candidate.id === session.courseId);
     if (!course) throw new Error(`Unknown teaching course: ${session.courseId}.`);
     const pair = await readPair(session, root, {
+      canonicalModuleIds: course.modules.map((module) => module.id),
       en: course.modules.map((module) => module.source.en),
       fr: course.modules.map((module) => module.source.fr),
     });

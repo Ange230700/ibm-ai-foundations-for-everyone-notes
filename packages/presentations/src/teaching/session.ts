@@ -23,7 +23,7 @@ export interface TeachingSlide {
 
 export interface TeachingSessionContent {
   id: string;
-  courseId: string;
+  canonicalModuleIds: string[];
   language: 'en' | 'fr';
   title: string;
   sourcePath: string;
@@ -35,7 +35,7 @@ export interface TeachingSessionContent {
 
 export interface TeachingSourceOptions {
   id: string;
-  courseId: string;
+  canonicalModuleIds: string[];
   language: 'en' | 'fr';
   sourcePath: string;
   slideCount: number;
@@ -190,6 +190,15 @@ export function parseTeachingSession(
   markdown: string,
   options: TeachingSourceOptions,
 ): TeachingSessionContent {
+  if (
+    options.canonicalModuleIds.length === 0 ||
+    new Set(options.canonicalModuleIds).size !== options.canonicalModuleIds.length
+  ) {
+    throw new Error(
+      `${options.sourcePath}: canonical module provenance must be non-empty and unique.`,
+    );
+  }
+
   const root = fromMarkdown(markdown, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
@@ -242,7 +251,7 @@ export function parseTeachingSession(
   }
   const identity = {
     id: options.id,
-    courseId: options.courseId,
+    canonicalModuleIds: [...options.canonicalModuleIds],
     language: options.language,
     title: plainText(title),
     sourcePath: options.sourcePath,
@@ -258,7 +267,8 @@ export function validateTeachingPair(en: TeachingSessionContent, fr: TeachingSes
     en.language !== 'en' ||
     fr.language !== 'fr' ||
     en.id !== fr.id ||
-    en.courseId !== fr.courseId ||
+    en.canonicalModuleIds.length !== fr.canonicalModuleIds.length ||
+    en.canonicalModuleIds.some((moduleId, index) => moduleId !== fr.canonicalModuleIds[index]) ||
     en.slides.length !== fr.slides.length ||
     en.durationMinutes !== fr.durationMinutes
   ) {
@@ -545,6 +555,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
     scope: {
       kind: 'teaching-session',
       sessionId: content.id,
+      canonicalModuleIds: [...content.canonicalModuleIds],
     },
     language: content.language,
     title: content.title,

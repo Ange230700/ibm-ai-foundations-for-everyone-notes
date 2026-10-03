@@ -30,7 +30,7 @@ async function fixture() {
     );
     content[language] = parseTeachingSession(markdown[language], {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
@@ -56,7 +56,7 @@ test('all registered teaching sessions disclose source attribution and AI genera
 
       const content = parseTeachingSession(markdown, {
         id: session.id,
-        courseId: session.courseId,
+        canonicalModuleIds: course.modules.map((module) => module.id),
         language,
         sourcePath,
         slideCount: session.slideCount,
@@ -221,7 +221,7 @@ test('S01 parser rejects changed timing and bilingual divergence', async () => {
     () =>
       parseTeachingSession(changed, {
         id: session.id,
-        courseId: session.courseId,
+        canonicalModuleIds: course.modules.map((module) => module.id),
         language: 'en',
         sourcePath: session.source.en,
         slideCount: session.slideCount,
@@ -276,7 +276,7 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
@@ -402,7 +402,7 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     content[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,

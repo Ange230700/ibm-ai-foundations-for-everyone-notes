@@ -9,9 +9,9 @@ import { validatePdfBytes } from '../document/render-pdf.js';
 import { teachingDeckSpec, type TeachingSessionContent, type TeachingSlide } from './session.js';
 
 export interface TeachingPdfRecord {
-  schemaVersion: 1;
+  schemaVersion: 2;
   sessionId: string;
-  courseId: string;
+  canonicalModuleIds: string[];
   language: 'en' | 'fr';
   sourcePath: string;
   sourceSha256: string;
@@ -26,8 +26,9 @@ export interface TeachingPdfRecord {
 }
 
 export interface TeachingPdfVerification {
-  schemaVersion: 1;
+  schemaVersion: 2;
   sessionId: string;
+  canonicalModuleIds: string[];
   language: 'en' | 'fr';
   sourceSha256: string;
   contentSha256: string;
@@ -283,9 +284,9 @@ export async function renderTeachingPdf(
     const bytes = await readFile(outputPath);
     validatePdfBytes(bytes, pdfPath);
     return {
-      schemaVersion: 1,
+      schemaVersion: 2,
       sessionId: content.id,
-      courseId: content.courseId,
+      canonicalModuleIds: [...content.canonicalModuleIds],
       language: content.language,
       sourcePath: content.sourcePath,
       sourceSha256: content.sourceSha256,
@@ -345,8 +346,9 @@ export async function verifyTeachingPdf(
     await loadingTask.destroy();
   }
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     sessionId: content.id,
+    canonicalModuleIds: [...content.canonicalModuleIds],
     language: content.language,
     sourceSha256: content.sourceSha256,
     contentSha256: content.contentSha256,

@@ -96,6 +96,7 @@ export type DeckScope =
   | {
       kind: 'teaching-session';
       sessionId: string;
+      canonicalModuleIds: string[];
     };
 
 export interface DeckSpec {

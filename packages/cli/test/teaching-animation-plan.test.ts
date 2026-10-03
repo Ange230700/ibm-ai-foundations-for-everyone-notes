@@ -26,7 +26,7 @@ test('S01 animation plan follows both teaching sources without adding slides or 
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
@@ -92,7 +92,7 @@ test('S02 animation plan covers 26 bilingual slides without changing content or 
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
@@ -146,7 +146,7 @@ test('S03 animation plan covers 25 bilingual slides without changing content or 
     const markdown = await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8');
     source[language] = parseTeachingSession(markdown, {
       id: session.id,
-      courseId: session.courseId,
+      canonicalModuleIds: course.modules.map((module) => module.id),
       language,
       sourcePath: session.source[language],
       slideCount: session.slideCount,
