@@ -127,9 +127,10 @@ desktop PowerPoint, run `pnpm teaching:artifact animate --session=s02` after bui
 verifying the PPTX to create `session-animated.pptx` for both languages. The current plan covers
 all 26 slides, including 68 clicks and 203 shape effects per language; diagrams and images are
 visible when the slide opens, while text rows reveal one by one. The professional-fusion sources
-and teaching visuals are structurally validated. The Course 02 French canonical adaptations still
-need personal review, and the regenerated decks still require visual inspection, bilingual
-PowerPoint review, and a timed rehearsal before release.
+and teaching visuals are structurally validated. The regenerated bilingual PDFs passed visual QA,
+both animated PowerPoint decks passed human slide-show review, and the timed rehearsal passed
+without requiring a pacing change. The Course 02 French canonical adaptations still need personal
+review.
 
 For S03, run `pnpm teaching:artifact plan --session=s03`, then
 `pnpm teaching:artifact build --session=s03` and

@@ -43,9 +43,10 @@ session without the required metadata and Slide 01 disclosures must fail validat
   fictional Soubré anchor while adding transferable professional tasks, source-preserving
   transformations, explicit verification, and human responsibility. Its teaching visuals are
   aligned with the revised semantics, and its animation plan covers 26 slides, 68 clicks, and 203
-  shape effects per language. The canonical Course 02 French adaptations still await personal
-  review. PDF/PPTX regeneration, visual inspection, bilingual PowerPoint review, and a timed
-  rehearsal are still required before release.
+  shape effects per language. The current bilingual PDF and PPTX artifacts have been regenerated
+  and verified. PDF visual QA, bilingual animated-PowerPoint human review, and the timed rehearsal
+  have passed for this production cycle. The canonical Course 02 French adaptations still await
+  personal review.
 - `s03-prompt-engineering-60-min-content-contract.md` proposes a bilingual 25-slide,
   60-minute prompt-design session using the same fictional lot-intake instruction as S02. The
   canonical Course 03 French adaptations await personal review. French and English
