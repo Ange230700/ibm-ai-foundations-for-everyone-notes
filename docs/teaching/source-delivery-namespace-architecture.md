@@ -12,15 +12,32 @@ The repository contains two different ordered structures:
 
 Their numbering is independent.
 
+### Implementation status
+
+This architecture is implemented.
+
+The repository now uses:
+
+- manifest schema version 2;
+- independent teaching-session IDs, slugs, and bilingual titles;
+- explicit `canonicalModuleIds` provenance;
+- centralized canonical-module source resolution;
+- maintained source paths derived as
+  `teaching/sessions/<id>-<slug>/<language>/session.md`;
+- session-based artifact identity;
+- no validation rule coupling a professional session ordinal to a canonical course ordinal.
+
+S01-S03 were migrated without changing their maintained instructional source content.
+
 A teaching-session identifier such as `s04` must never imply that the session corresponds to
 canonical Course 04.
 
-## 2. Current problem
+## 2. Problem addressed
 
-The current repository model couples each registered teaching session to exactly one canonical
-course through `teachingSessions[].courseId`.
+Before this refactor, the repository model coupled each registered teaching session to exactly
+one canonical course through `teachingSessions[].courseId`.
 
-The maintained teaching sources also live beneath course-shaped paths such as:
+The maintained teaching sources also lived beneath course-shaped paths such as:
 
 ```text
 teaching/courses/03-generative-ai-prompt-engineering-basics/...
@@ -160,7 +177,7 @@ courses.
 
 `canonicalModuleIds` provides precise provenance.
 
-For S01-S03, the migration will preserve their current canonical source coverage by registering the
+For S01-S03, the migration preserved their canonical source coverage by registering the
 same modules already used by their maintained teaching sources.
 
 For S04-S07, module provenance will be selected from the actual source material used by each
@@ -192,9 +209,9 @@ canonical IBM material.
 
 ## 7. Teaching-source path layout
 
-Maintained teaching sessions will no longer live under `teaching/courses/`.
+Maintained teaching sessions no longer live under `teaching/courses/`.
 
-The target structure is:
+The enforced structure is:
 
 ```text
 teaching/
@@ -306,15 +323,15 @@ Such ordinal correspondence is explicitly not part of the architecture.
 Removing `courseId` and introducing explicit module provenance changes the meaning and structure of
 registered teaching sessions.
 
-The manifest schema must therefore move from schema version 1 to schema version 2.
+The manifest schema therefore uses schema version 2.
 
 The generated JSON Schema must be regenerated from the TypeScript/Zod authority.
 
-No compatibility shim is required inside this configured repository once the migration is complete.
+No compatibility shim is required inside this configured repository.
 
 ## 13. Migration of S01-S03
 
-The migration must preserve behavior.
+The migration preserved behavior.
 
 For each existing session:
 
@@ -324,7 +341,7 @@ For each existing session:
 - retain 30 slides;
 - retain 60 minutes;
 - retain its current canonical Course 01 module provenance;
-- move maintained teaching sources to `teaching/sessions/s01-understanding-ai/`.
+- maintained teaching sources now live under `teaching/sessions/s01-understanding-ai/`.
 
 ### S02
 
@@ -332,7 +349,7 @@ For each existing session:
 - retain 26 slides;
 - retain 60 minutes;
 - retain its current canonical Course 02 module provenance;
-- move maintained teaching sources to `teaching/sessions/s02-using-generative-ai-at-work/`.
+- maintained teaching sources now live under `teaching/sessions/s02-using-generative-ai-at-work/`.
 
 ### S03
 
@@ -340,10 +357,10 @@ For each existing session:
 - retain 25 slides;
 - retain 60 minutes;
 - retain its current canonical Course 03 module provenance;
-- move maintained teaching sources to `teaching/sessions/s03-designing-effective-prompts/`.
+- maintained teaching sources now live under `teaching/sessions/s03-designing-effective-prompts/`.
 
-The migration must not alter instructional content merely because paths and manifest relationships
-change.
+The migration did not alter instructional content merely because paths and manifest relationships
+changed. The six bilingual maintained session files were preserved as 100% Git renames.
 
 ## 14. S04 consequence
 
@@ -353,10 +370,10 @@ The next professional session is:
 S04 — Working with Documents and Information
 ```
 
-Its identity will be independent of canonical Course 04.
+Its identity is independent of canonical Course 04.
 
-When S04 is designed, its `canonicalModuleIds` will be selected from the canonical modules actually
-used by the session.
+When S04 is implemented, its `canonicalModuleIds` will be selected from the canonical modules
+actually used by the session.
 
 If chatbot material from canonical Course 04 is not used, S04 will contain no Course 04 module ID.
 
@@ -367,9 +384,10 @@ This is expected behavior.
 
 ## 15. Tooling consequences
 
-The migration will require updates to code that currently reads `session.courseId`.
+The migration removed teaching-domain reads of `session.courseId` and replaced them with explicit
+canonical-module provenance resolution.
 
-Affected areas must be identified before implementation and may include:
+Updated areas include:
 
 - manifest schema and validation;
 - generated `manifest.schema.json`;
@@ -422,7 +440,7 @@ This architecture change does not:
 
 ## 18. Implementation order
 
-The implementation sequence is:
+The namespace refactor completed the following sequence:
 
 ```text
 Architecture decision
@@ -444,15 +462,15 @@ Documentation alignment
 Full repository validation
         ↓
 Artifact regression check
-        ↓
-Begin S04 contract
 ```
+
+The next step after this completed refactor is to begin the S04 content contract.
 
 The repository must remain internally consistent at every committed checkpoint.
 
 ## 19. Acceptance criteria
 
-The namespace migration is complete when:
+The namespace migration is complete. The following acceptance criteria are satisfied:
 
 1. `manifest.json` uses schema version 2.
 2. Registered teaching sessions no longer contain `courseId`.
@@ -470,6 +488,23 @@ The namespace migration is complete when:
 13. S01-S03 artifact plans still resolve correctly.
 14. Documentation clearly distinguishes canonical courses from professional sessions.
 15. S04 can be created without assigning it to canonical Course 04.
+
+### Final S01-S03 artifact regression
+
+After the namespace refactor, all three existing professional sessions were rebuilt and independently
+verified through the new source namespace.
+
+| Session | Slides | Planned duration | PDF/PPTX build + verify | PDF visual QA | Native PowerPoint animation per language |
+| ------- | -----: | ---------------: | ----------------------- | ------------- | ---------------------------------------- |
+| S01     |     30 |           60 min | Pass                    | Pass          | 30 slides, 93 clicks, 276 effects        |
+| S02     |     26 |           60 min | Pass                    | Pass          | 26 slides, 68 clicks, 203 effects        |
+| S03     |     25 |           60 min | Pass                    | Pass          | 25 slides, 75 clicks, 224 effects        |
+
+English and French results matched for every session.
+
+Artifact generation remained under
+`.artifacts/teaching-sessions/<session-id>/<language>/`, and the regression produced no tracked
+repository changes.
 
 ## 20. Governing rule
 

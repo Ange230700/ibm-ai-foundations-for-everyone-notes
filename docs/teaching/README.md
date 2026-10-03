@@ -64,8 +64,14 @@ session without the required metadata and Slide 01 disclosures must fail validat
 - `docs/case-studies/cocoa-cooperative-near-soubre.md` defines the unnamed, fictional case shared
   with the course examples.
 
-Session PDF and PPTX are generated from the maintained sources in `teaching/`. Run
-`pnpm teaching:artifact build --session=s01`, `pnpm teaching:artifact build --session=s02`, or
-`pnpm teaching:artifact build --session=s03`
-to select one session, then replace `build` with `verify` to check its projected text and
-notes. Actual pacing needs an instructor rehearsal.
+Session PDF and PPTX artifacts are generated from maintained sources under
+`teaching/sessions/`. Use:
+
+```text
+pnpm teaching:artifact build --session=sNN
+pnpm teaching:artifact verify --session=sNN
+```
+
+The currently registered sessions are S01-S03. Session source paths are derived from each
+manifest entry's ID and slug, so future sessions use the same namespace without being assigned to a
+same-numbered canonical course. Actual pacing needs an instructor rehearsal.
