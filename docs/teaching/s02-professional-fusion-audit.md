@@ -11,7 +11,7 @@
 - **Parent contract:** `docs/teaching/ai-for-everyone-professional-curriculum.md`
 - **Current content contract:** `docs/teaching/s02-generative-ai-60-min-content-contract.md`
 - **Current teaching sources:** bilingual S02 sources under
-  `teaching/courses/02-generative-ai-introduction-and-applications/`
+  `teaching/sessions/s02-using-generative-ai-at-work/`
 - **Purpose of this audit:** identify what should be preserved, strengthened, compressed, or
   deferred before the S02 bilingual content contract is refactored.
 

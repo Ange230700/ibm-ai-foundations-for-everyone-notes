@@ -39,7 +39,7 @@ session without the required metadata and Slide 01 disclosures must fail validat
   60-minute Using Generative AI at Work / Utiliser l’IA générative au travail
   professional-curriculum session. The bilingual S02 teaching sources implement the approved
   professional-fusion contract under
-  `teaching/courses/02-generative-ai-introduction-and-applications/`. The session preserves the
+  `teaching/sessions/s02-using-generative-ai-at-work/`. The session preserves the
   fictional Soubré anchor while adding transferable professional tasks, source-preserving
   transformations, explicit verification, and human responsibility. Its teaching visuals are
   aligned with the revised semantics, and its animation plan covers 26 slides, 68 clicks, and 203
@@ -51,7 +51,7 @@ session without the required metadata and Slide 01 disclosures must fail validat
   25-slide, 60-minute Designing Effective Prompts / Concevoir de bons prompts
   professional-curriculum session. The bilingual S03 teaching sources implement the approved
   professional-fusion contract under
-  `teaching/courses/03-generative-ai-prompt-engineering-basics/`. The session preserves the
+  `teaching/sessions/s03-designing-effective-prompts/`. The session preserves the
   fictional Soubré source-constrained exercise while introducing the seven-element practical
   prompt framework, purposeful technique selection, targeted iteration, reusable prompt
   templates, professional transfer, output evaluation, and explicit human responsibility.

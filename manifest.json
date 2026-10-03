@@ -303,8 +303,8 @@
       "slideCount": 30,
       "slug": "understanding-ai",
       "source": {
-        "en": "teaching/courses/01-introduction-to-artificial-intelligence-ai/en/sessions/s01-ai-fundamentals.md",
-        "fr": "teaching/courses/01-introduction-to-artificial-intelligence-ai/fr/sessions/s01-fondamentaux-de-l-ia.md"
+        "en": "teaching/sessions/s01-understanding-ai/en/session.md",
+        "fr": "teaching/sessions/s01-understanding-ai/fr/session.md"
       },
       "title": {
         "en": "Understanding AI",
@@ -322,8 +322,8 @@
       "slideCount": 26,
       "slug": "using-generative-ai-at-work",
       "source": {
-        "en": "teaching/courses/02-generative-ai-introduction-and-applications/en/sessions/s02-generative-ai-introduction.md",
-        "fr": "teaching/courses/02-generative-ai-introduction-and-applications/fr/sessions/s02-introduction-a-l-ia-generative.md"
+        "en": "teaching/sessions/s02-using-generative-ai-at-work/en/session.md",
+        "fr": "teaching/sessions/s02-using-generative-ai-at-work/fr/session.md"
       },
       "title": {
         "en": "Using Generative AI at Work",
@@ -341,8 +341,8 @@
       "slideCount": 25,
       "slug": "designing-effective-prompts",
       "source": {
-        "en": "teaching/courses/03-generative-ai-prompt-engineering-basics/en/sessions/s03-prompt-engineering-basics.md",
-        "fr": "teaching/courses/03-generative-ai-prompt-engineering-basics/fr/sessions/s03-conception-des-prompts.md"
+        "en": "teaching/sessions/s03-designing-effective-prompts/en/session.md",
+        "fr": "teaching/sessions/s03-designing-effective-prompts/fr/session.md"
       },
       "title": {
         "en": "Designing Effective Prompts",

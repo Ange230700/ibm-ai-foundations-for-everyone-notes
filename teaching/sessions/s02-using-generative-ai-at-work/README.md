@@ -13,9 +13,9 @@ sans nom d’organisation ni résultats réels attribués au cas.
 
 ## Sources pédagogiques
 
-- Français : `fr/sessions/s02-introduction-a-l-ia-generative.md` — **version de travail**, 26
+- Français : `fr/session.md` — **version de travail**, 26
   diapositives, 60 minutes.
-- Anglais : `en/sessions/s02-generative-ai-introduction.md` — **version de travail**, 26
+- Anglais : `en/session.md` — **version de travail**, 26
   diapositives, 60 minutes.
 
 Les deux sources conservent les mêmes identifiants S02-01 à S02-26, l’ordre, les durées, les

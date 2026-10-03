@@ -13,9 +13,9 @@ champs et le traitement des dossiers incomplets déjà présentés en S02.
 
 ## Sources pédagogiques
 
-- Français : `fr/sessions/s03-conception-des-prompts.md` — version de travail, 25 diapositives et
+- Français : `fr/session.md` — version de travail, 25 diapositives et
   60 minutes, avec notes de présentation.
-- Anglais : `en/sessions/s03-prompt-engineering-basics.md` — version de travail, 25 diapositives et
+- Anglais : `en/session.md` — version de travail, 25 diapositives et
   60 minutes, avec notes de présentation.
 
 Le fichier français conserve une idée principale par diapositive. Les éléments projetés restent

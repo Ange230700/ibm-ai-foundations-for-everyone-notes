@@ -11,7 +11,7 @@
 - **Parent contract:** `docs/teaching/ai-for-everyone-professional-curriculum.md`
 - **Current content contract:** `docs/teaching/s03-prompt-engineering-60-min-content-contract.md`
 - **Current teaching sources:** bilingual S03 sources under
-  `teaching/courses/03-generative-ai-prompt-engineering-basics/`
+  `teaching/sessions/s03-designing-effective-prompts/`
 - **Purpose of this audit:** identify what should be preserved, strengthened, compressed, or
   deferred before the S03 bilingual content contract is refactored.
 

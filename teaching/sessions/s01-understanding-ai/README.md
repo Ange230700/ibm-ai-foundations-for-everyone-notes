@@ -22,13 +22,11 @@ to a real cooperative.
 Each language uses a dedicated session source:
 
 ```text
-teaching/courses/01-introduction-to-artificial-intelligence-ai/
+teaching/sessions/s01-understanding-ai/
 ├── en/
-│   └── sessions/
-│       └── s01-ai-fundamentals.md
+│   └── session.md
 └── fr/
-    └── sessions/
-        └── s01-fondamentaux-de-l-ia.md
+    └── session.md
 ```
 
 The English and French sources preserve the same 30 identifiers, order, durations, learning
