@@ -1,18 +1,21 @@
-# S03 — Principes de base de la conception des prompts
+# S03 — Concevoir de bons prompts
 
 ## Métadonnées pédagogiques
 
-- **Programme :** Fondements de l’IA pour tous
-- **Session :** S03 — Principes de base de la conception des prompts
+- **Programme :** AI for Everyone — Professional Curriculum
+- **Session :** S03 — Concevoir de bons prompts
 - **Langue :** Français
 - **Public :** Professionnels et apprenants sans prérequis technique
 - **Durée :** 60 minutes
 - **Nombre de diapositives :** 25
 - **Cas fil rouge :** une coopérative cacaoyère fictive et sans nom près de Soubré
-- **Statut :** source pédagogique française de travail ; révision personnelle des adaptations canoniques du cours 03 encore ouverte
+- **Position dans le parcours :** PROMPT
+- **Statut :** source pédagogique de fusion professionnelle ; la révision personnelle des adaptations canoniques françaises du cours 03 reste ouverte
 - **Source pédagogique d’origine :** spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
-- **Déclaration sur l’IA :** cette session pédagogique est générée avec l’IA en tant qu’adaptation indépendante du dépôt.
+- **Apport de pratique professionnelle :** curriculum professionnel collaboratif documenté par le contrat de fusion et l’audit
+- **Déclaration sur l’IA :** Cette session pédagogique est générée avec l’IA en tant qu’adaptation indépendante du dépôt.
 - **Contrat bilingue :** `docs/teaching/s03-prompt-engineering-60-min-content-contract.md`
+- **Audit de fusion :** `docs/teaching/s03-professional-fusion-audit.md`
 
 ## Sources canoniques
 
@@ -22,23 +25,28 @@
 
 ## Objectif de la session
 
-Concevoir une demande à partir d’une source définie, choisir une technique adaptée au contexte,
-vérifier une proposition par rapport aux faits fournis et confier la validation à une personne
-habilitée. La séance peut se dérouler entièrement sans compte de modèle ni connexion.
+Transformer un besoin professionnel délimité en consigne claire, choisir une technique de prompting
+pour une raison explicite, évaluer la réponse proposée, corriger un écart observé et préserver la
+vérification ainsi que la responsabilité humaine avant tout usage professionnel.
 
 ## Principes d’animation
 
-1. Montrer une seule idée principale par diapositive ; garder l’explication et les relances dans les notes.
-2. Présenter la coopérative, la consigne et toutes les réponses fabriquées comme des simulations pédagogiques.
-3. Conserver sous les yeux la source S03-04 pendant les exercices ; ne pas en déduire de délai, seuil, certification ou paiement.
-4. Prévoir de courtes réponses orales et un exercice en binôme dans les 60 minutes, sans démonstration de service obligatoire.
-5. Faire distinguer précision du prompt et véracité de la réponse : le contrôle humain reste nécessaire.
-6. Réviser l’adaptation française du cours 03 et répéter la séance au chronomètre avant diffusion finale.
+1. Partir du résultat professionnel attendu plutôt que de la terminologie du prompting.
+2. Présenter rôle, tâche, contexte, public, format, contraintes et critères de qualité comme une
+   grille pratique et non comme une syntaxe obligatoire.
+3. Garder la source fictive S03-04 visible et conserver toute information inconnue comme inconnue.
+4. Distinguer qualité du prompt, fiabilité factuelle et autorisation professionnelle.
+5. Utiliser uniquement des informations fictives, anonymisées, publiques ou explicitement
+   autorisées dans les activités.
+6. Garder les explications et cas limites dans les notes afin que les diapositives restent lisibles.
+7. Présenter l’itération comme la correction ciblée d’un écart observé plutôt que comme une
+   régénération répétée.
+8. Réviser les adaptations canoniques françaises du cours 03 et répéter la séance avant diffusion.
 
-## Diapositive 01 — S03 : concevoir un prompt qui se vérifie
+## Diapositive 01 — Concevoir de bons prompts
 
-- **Identifiant :** S03-01
-- **Durée :** 1 minute
+- **Identifiant:** S03-01
+- **Durée:** 1 minute
 
 ### Rôle de la diapositive
 
@@ -46,23 +54,23 @@ course-title
 
 ### Contenu de la diapositive
 
-S03 : session de 60 minutes
+S03 · séance de 60 minutes
 
-- Cas fictif : une coopérative cacaoyère près de Soubré
-- Fil conducteur : un message aux agents de réception
-- Basé sur la spécialisation _AI Foundations for Everyone_ d’IBM sur Coursera
+- Du résultat attendu à une consigne vérifiable
+- Coopérative cacaoyère fictive près de Soubré
+- Basé sur la spécialisation _AI Foundations for Everyone_ d'IBM sur Coursera
 - Adaptation pédagogique indépendante générée avec l’IA
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une demande précise prépare un brouillon vérifiable, jamais une décision automatique.
+**Message à faire retenir:** Un prompt professionnel transforme un besoin de travail en consigne que l'on peut contrôler et améliorer.
 
-Accueillir et relier S03 aux brouillons de S02. Dire que la coopérative, les captures éventuelles et les réponses d’exercice sont fictives. Annoncer que l’avis aux agents ne sera jamais publié sans validation.
+Relier directement à S02. S02 montrait ce que l'IA générative peut aider à produire ; S03 se concentre sur la manière de formuler le besoin de travail. Préciser qu'une meilleure consigne ne supprime ni la vérification ni la responsabilité humaine.
 
-## Diapositive 02 — Quatre gestes pour la séance
+## Diapositive 02 — Ce que vous saurez faire
 
-- **Identifiant :** S03-02
-- **Durée :** 2 minutes
+- **Identifiant:** S03-02
+- **Durée:** 2 minutes
 
 ### Rôle de la diapositive
 
@@ -70,406 +78,429 @@ course-objectives
 
 ### Contenu de la diapositive
 
-- Cadrer la demande et sa source
-- Choisir : direct, exemple ou questions
-- Contrôler les faits et les inconnues
-- Corriger puis faire valider
+1. Structurer un prompt professionnel
+2. Choisir une technique pour une raison
+3. Évaluer la réponse proposée
+4. Corriger un écart observé
+5. Réutiliser un point de départ validé
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Concevoir, choisir une technique, vérifier et corriger sont les quatre gestes de la séance.
+**Message à faire retenir:** Structurer, choisir, évaluer, corriger et réutiliser.
 
-Lire rapidement les quatre objectifs. Demander quel geste manque quand un texte est diffusé immédiatement après sa génération. Rappeler qu’un exercice papier suffit et qu’aucun accès à un service d’IA n’est requis.
+Présenter la progression complète. Un « point de départ validé » ne signifie pas une approbation permanente : lors de la réutilisation, il faut encore contrôler la source, le public, les contraintes et le contexte.
 
-## Diapositive 03 — Une phrase plausible, un fait absent
+## Diapositive 03 — Un meilleur prompt ne garantit pas une réponse vraie
 
-- **Identifiant :** S03-03
-- **Durée :** 2 minutes
+- **Identifiant:** S03-03
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- S02 : « certifié sous 24 heures » était une phrase fabriquée pour l’exercice
-- Aucune source ne confirmait cette promesse
-- Où retrouver la preuve avant de reprendre un brouillon ?
+- S02 montrait volontairement « certifié sous 24 heures »
+- La source fictive ne donnait ni certification ni délai
+- Une meilleure consigne peut réduire l'ambiguïté
+- La réponse proposée reste à contrôler
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une réponse fluide peut ajouter un fait sans preuve.
+**Message à faire retenir:** La qualité du prompt et la fiabilité factuelle sont deux questions différentes.
 
-Rappeler la phrase erronée de S02-12 et laisser les participants dire ce qui manque. Le délai et la certification étaient une simulation pédagogique, pas un résultat observé ni une règle réelle. Une meilleure formulation peut réduire l’ambiguïté sans empêcher toute erreur.
+Rappeler S02-12. La phrase non fondée était construite pour l'apprentissage. Ne pas laisser entendre qu'un prompt suffisamment détaillé peut empêcher toute erreur.
 
-## Diapositive 04 — Une consigne brève, des limites nettes
+## Diapositive 04 — Garder la source visible
 
-- **Identifiant :** S03-04
-- **Durée :** 2 minutes
+- **Identifiant:** S03-04
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- Simulation pédagogique : relever identifiant du lot, date et poids
-- Champ manquant : dossier « à compléter », puis vérification par un agent
-- Aucune autre règle fournie
+- Relever l'identifiant du lot, la date et le poids
+- Champ manquant → marquer « à compléter »
+- Puis faire vérifier le dossier par un agent
+- Aucune autre règle n'est fournie
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Cette consigne fictive est l’unique source de faits pour le message aux agents.
+**Message à faire retenir:** La source détermine quelles affirmations peuvent être contrôlées.
 
-Lire les trois lignes et les garder accessibles pour la suite de l’exercice. Ce sont les mêmes faits inventés pour S02-10 ; ils ne décrivent aucune procédure réelle. Souligner l’absence de seuil, délai, paiement, grade ou certification.
+Garder cette consigne fictive accessible pendant tout l'exercice. Il ne s'agit ni d'une procédure réelle de coopérative ni d'une réglementation. Une information inconnue reste inconnue.
 
-## Diapositive 05 — De la tâche à la réponse
+## Diapositive 05 — Un prompt est une consigne de travail
 
-- **Identifiant :** S03-05
-- **Durée :** 3 minutes
+- **Identifiant:** S03-05
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Tâche et contexte
-- Données d’entrée et sortie attendue
-- Proposition → évaluation → affinage
+- Résultat attendu
+- Tâche + contexte + entrée
+- Exigences de sortie
+- Brouillon → contrôle → correction ou validation
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un prompt fournit une demande et les informations nécessaires pour en examiner le résultat.
+**Message à faire retenir:** Un prompt relie le résultat attendu aux informations et exigences nécessaires pour produire un brouillon.
 
-Relier ces trois lignes aux quatre composantes du module 03.01 : instruction, contexte, données et indicateurs de sortie. Demander ce qui, dans S03-04, constitue une donnée d’entrée. Une nouvelle demande ne réentraîne pas le modèle ; elle change les indications fournies pour cette génération.
+Relier la diapositive aux composantes canoniques du prompt : instruction, contexte, données d'entrée et indicateurs de sortie. Un nouveau prompt modifie le contexte de la génération en cours ; il ne réentraîne pas le modèle.
 
-## Diapositive 06 — « Rédige un message » laisse des trous
+## Diapositive 06 — Une demande faible laisse des choix implicites
 
-- **Identifiant :** S03-06
-- **Durée :** 2 minutes
+- **Identifiant:** S03-06
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
 - Prompt de départ : « Rédige un message sur la réception des lots. »
-- Public, source et format absents
-- Que faudrait-il préciser avant de rédiger ?
+- Quel résultat faut-il réellement obtenir ?
+- Quels faits peut-on utiliser ?
+- Qui va le lire et sous quelle forme ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une demande vague laisse ouverts les faits et le destinataire.
+**Message à faire retenir:** « Rédige un message » ne définit pas suffisamment le besoin professionnel.
 
-Faire nommer oralement les trois absences, sans produire de réponse imaginaire du modèle. Il s’agit d’un prompt construit pour la séance. Introduire les six repères pratiques de la diapositive suivante.
+Faire identifier ce qui manque avant d'afficher le cadre en sept éléments. Ne pas fabriquer une réponse imaginaire au prompt faible.
 
-## Diapositive 07 — Six éléments pour cadrer la demande
+## Diapositive 07 — Sept éléments pour un prompt utile
 
-- **Identifiant :** S03-07
-- **Durée :** 3 minutes
+- **Identifiant:** S03-07
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Tâche et public
-- Source et contraintes
-- Format et vérification humaine
+- Rôle + tâche
+- Contexte + public
+- Format + contraintes
+- Critères de qualité
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un cadrage explicite rend la future réponse plus facile à contrôler.
+**Message à faire retenir:** Utiliser les éléments qui rendent la consigne plus claire et plus facile à évaluer.
 
-Faire relier les six repères aux quatre composantes vues sur S03-05. Demander où placer la règle « si un champ manque ». Cette liste est une grille pédagogique pour l’exercice, pas une formule valable pour tout modèle et tout métier.
+Nommer explicitement les sept éléments : rôle, tâche, contexte, public, format, contraintes et critères de qualité. Expliquer qu'il s'agit d'une grille, pas d'une syntaxe obligatoire. Une tâche simple peut ne pas nécessiter de rôle ni tous les autres éléments.
 
-## Diapositive 08 — Une demande ancrée dans la source
+## Diapositive 08 — Construire un prompt structuré
 
-- **Identifiant :** S03-08
-- **Durée :** 2 minutes
+- **Identifiant:** S03-08
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- « Rédige en français un avis bref pour les agents. »
-- « Utilise seulement S03-04 : les trois champs et la vérification. »
-- « N’invente ni seuil ni certification. »
+- Tâche : rédiger un avis bref
+- Contexte : utiliser uniquement la consigne S03-04
+- Public + format : agents de réception, avis court
+- Contrainte + qualité : aucune règle ajoutée ; faits fournis préservés
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un prompt structuré fixe la tâche, le public, la source et les limites.
+**Message à faire retenir:** Fournir les informations nécessaires à la tâche et limiter explicitement les ajouts non fondés.
 
-Montrer la capture d’un véritable échange avec ChatGPT sur la consigne fictive S03-04. Lire les trois lignes comme un seul prompt de démonstration, puis demander quelle partie limite les faits. Vérifier dans la réponse les trois champs, le statut « à compléter » et le contrôle par un agent ; aucune autre règle ne doit apparaître. Le prompt est une adaptation pédagogique nouvelle, pas une citation littérale du cours ni la garantie d’un texte fidèle. Avant usage, le brouillon devra encore être vérifié.
+Utiliser la capture réelle de ChatGPT fondée sur la source fictive de la coopérative. Identifier les éléments du cadre présents. Signaler qu'un rôle explicite n'est pas nécessaire ici. La capture reste un brouillon à vérifier et ne prouve pas que le prompt garantit le respect de la consigne.
 
-## Diapositive 09 — Un avis destiné à être lu
+## Diapositive 09 — Même cadre, autre travail professionnel
 
-- **Identifiant :** S03-09
-- **Durée :** 3 minutes
+- **Identifiant:** S03-09
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Public : agents de réception
-- Ton : français simple et respectueux
-- Format : deux phrases, dont l’action si un champ manque
+- Courriel → destinataire, objectif, ton
+- Compte rendu → notes, décisions, informations manquantes
+- Rapport → public, longueur, sources autorisées
+- Plan de présentation → objectif, structure, justification des affirmations
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le format et le destinataire rendent le message plus utile et sa lecture plus rapide.
+**Message à faire retenir:** Le cadre reste utile tandis que le contexte, le public, le format et les critères changent.
 
-Faire reformuler un mot trop technique pour un public différent, sans changer la consigne. Comparer brièvement un avis interne à une explication aux producteurs membres. Deux phrases correctes en apparence peuvent encore contenir une information inventée.
+Il s'agit d'exemples de transfert, pas de nouvelles règles factuelles. Demander quels éléments du prompt changent selon la tâche. La coopérative reste le cas principal de l'exercice sans être le seul contexte professionnel.
 
-## Diapositive 10 — Le rôle oriente, il ne certifie rien
+## Diapositive 10 — Un rôle oriente ; il ne donne pas d'autorité
 
-- **Identifiant :** S03-10
-- **Durée :** 2 minutes
+- **Identifiant:** S03-10
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- Persona suggérée : aide à la rédaction
-- Mission réelle : préparer un brouillon
-- Décision réelle : équipe et responsable habilités
+- Rôle : « aider l'équipe de rédaction »
+- Utile pour la perspective, le vocabulaire ou le ton
+- Ne crée ni faits manquants ni droits d'accès
+- La responsabilité humaine ne change pas
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Attribuer un rôle au modèle change la perspective demandée, pas son autorité.
+**Message à faire retenir:** Un rôle peut guider la perspective ou le ton sans créer d'autorité professionnelle.
 
-Expliquer pourquoi « tu aides l’équipe » ne donne ni compétence réglementaire ni accès aux vrais dossiers. Ne lui confier ni diagnostic de culture, ni acceptation d’un lot, ni décision de paiement. Passer à l’évaluation d’un brouillon, quelle que soit la persona choisie.
+Distinguer persona et délégation. Ne pas demander au modèle d'accepter un lot, décider un paiement, certifier une qualité, diagnostiquer une culture ou publier une règle opérationnelle.
 
-## Diapositive 11 — Évaluer avant de réécrire
+## Diapositive 11 — Améliorer à partir d'un écart observé
 
-- **Identifiant :** S03-11
-- **Durée :** 3 minutes
+- **Identifiant:** S03-11
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Prompt → brouillon
-- Contrôle : faits, public et format
-- Écart constaté → correction ciblée → nouveau contrôle
+- Contrôler le brouillon
+- Nommer l'écart
+- Modifier la consigne
+- Générer de nouveau puis recontrôler
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** L’itération corrige un écart observé avec la source ou le besoin.
+**Message à faire retenir:** L'itération est utile lorsque la nouvelle consigne répond à un problème précis.
 
-Prendre la certification inventée de S02 comme écart précis. Demander ce qu’il faut retirer, puis ce qu’il faut vérifier à la nouvelle lecture. Retester un prompt ne remplace pas l’approbation du message par le responsable.
+Utiliser l'affirmation non fondée sur la certification comme exemple. Opposer une correction ciblée à la répétition de « améliore le texte ». La deuxième sortie doit encore être vérifiée.
 
-## Diapositive 12 — Zero-shot : la tâche sans démonstration
+## Diapositive 12 — Demande directe : zero-shot
 
-- **Identifiant :** S03-12
-- **Durée :** 2 minutes
+- **Identifiant:** S03-12
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
 - « À partir de S03-04, énumère les champs du dossier. »
-- Aucun exemple entrée → sortie dans le prompt
-- Réponse à vérifier dans S03-04
+- Aucun exemple entrée → sortie fourni
+- Les faits attendus viennent de la source
+- Le contrôle reste nécessaire
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Zero-shot signifie que le prompt courant ne fournit aucun exemple de réponse.
+**Message à faire retenir:** Utiliser une demande directe lorsque la tâche peut être précisée sans montrer de réponse.
 
-Nommer les trois champs attendus avant de dévoiler la réponse des participants. Ce terme ne signifie pas qu’un modèle n’a jamais été entraîné. La demande directe reste adaptée à une tâche simple, sous réserve de vérification.
+Zero-shot décrit le prompt courant, pas l'historique d'entraînement du modèle. Faire identifier les trois champs attendus dans S03-04 avant de discuter de la réponse.
 
-## Diapositive 13 — Few-shot : montrer le format
+## Diapositive 13 — One-shot et few-shot : montrer un exemple
 
-- **Identifiant :** S03-13
-- **Durée :** 2 minutes
+- **Identifiant:** S03-13
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- EX-01, date absente → « à compléter : date »
-- EX-02, poids absent → « à compléter : poids »
-- EX-03, identifiant absent → ?
+- EX-01 : date absente → « à compléter : date »
+- EX-02 : poids absent → « à compléter : poids »
+- EX-03 : identifiant du lot absent → ?
+- Vérifier chaque exemple avant de l'utiliser
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Quelques exemples fictifs montrent la structure de réponse souhaitée.
+**Message à faire retenir:** Des exemples peuvent montrer une structure souhaitée lorsque le format reste difficile à décrire uniquement avec des mots.
 
-Montrer les deux premières paires, puis demander aux participants de compléter EX-03 : « à compléter : identifiant du lot ». Tous les lots EX sont fabriqués pour l’exercice ; ils ne prouvent rien sur une réception réelle. Les exemples ajoutés au prompt ne modifient pas les poids du modèle.
+Un exemple correspond au one-shot ; plusieurs exemples au few-shot. Les dossiers EX sont fictifs. La formulation attendue pour EX-03 est « à compléter : identifiant du lot ». Les exemples orientent le prompt courant ; ils ne modifient pas les poids du modèle et ne créent pas de règle métier.
 
-## Diapositive 14 — Ajouter un exemple pour une raison
+## Diapositive 14 — Choisir la technique selon le problème
 
-- **Identifiant :** S03-14
-- **Durée :** 3 minutes
+- **Identifiant:** S03-14
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
 - Tâche claire → demande directe
-- Format difficile à décrire → exemple fictif vérifié
-- Faits absents → questions avant la rédaction
+- Format difficile à décrire → exemple vérifié
+- Contexte important manquant → questionner d'abord
+- Chaque chemin se termine par un contrôle
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Le choix de la technique dépend de ce qui manque à la tâche.
+**Message à faire retenir:** Utiliser une technique de prompting parce qu'elle répond à une incertitude précise.
 
-Faire choisir une approche pour l’avis aux agents, puis pour un dossier sans indication du champ manquant. Si un exemple contient une règle inventée, le modèle risque de la reprendre. Les questions préalables servent à lever cette seconde incertitude.
+Utiliser le diagramme de décision existant. Demander quelle approche convient à l'avis aux agents et laquelle convient à un dossier fictif dont le champ manquant n'a pas encore été identifié.
 
-## Diapositive 15 — Entretien : demander avant d’inventer
+## Diapositive 15 — Demander avant d'inventer
 
-- **Identifiant :** S03-15
-- **Durée :** 2 minutes
+- **Identifiant:** S03-15
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
 - Quel est le public ?
-- Quel champ manque dans le dossier fictif ?
-- Quelle consigne approuvée puis-je utiliser ?
+- Quel champ manque ?
+- Quelle consigne approuvée peut être utilisée ?
+- « Je ne sais pas » reste une inconnue
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Poser des questions ciblées permet de recueillir les informations manquantes avant un brouillon.
+**Message à faire retenir:** Un contexte manquant peut déclencher des questions ciblées plutôt qu'un ajout non fondé.
 
-Mettre les trois questions en scène avec un participant volontaire. Si une réponse est inconnue, elle reste inconnue ; ne pas la déduire d’un exemple. Ne demander aucune donnée personnelle réelle de membre pendant cet échange.
+Présenter le prompting en entretien comme une méthode de collecte de contexte, pas comme un moyen de rendre vraie une information incertaine. N'utiliser aucune donnée réelle de membre ou de client.
 
-## Diapositive 16 — Construire une demande d’entretien
+## Diapositive 16 — Recueillir le contexte une question à la fois
 
-- **Identifiant :** S03-16
-- **Durée :** 2 minutes
+- **Identifiant:** S03-16
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- « Pose une question à la fois. »
-- « Marque toute réponse indisponible comme inconnue. »
-- « Résume les faits confirmés avant de rédiger. »
+- Poser une question à la fois
+- Marquer l'information indisponible comme inconnue
+- Résumer les faits confirmés
+- Rédiger seulement à partir de ce qui est confirmé
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** L’entretien sépare les réponses confirmées des informations absentes.
+**Message à faire retenir:** Séparer les informations confirmées de celles qui manquent encore.
 
-La capture montre la consigne et la première question de ChatGPT, pas une réponse. À l’oral, répondre « je ne sais pas », puis distinguer les faits confirmés du champ inconnu. Dire que la rédaction doit alors rester générale ou attendre une vérification, sans inventer le champ manquant. L’entretien améliore la collecte de contexte, pas la fiabilité intrinsèque du modèle.
+Utiliser la capture de la première question réelle de ChatGPT dans l'exercice fictif. La capture montre la première question, pas la preuve d'une réponse finale correcte. Si la réponse n'est pas disponible, la conserver comme inconnue.
 
-## Diapositive 17 — Décomposer les contrôles observables
+## Diapositive 17 — Décomposer en opérations observables
 
-- **Identifiant :** S03-17
-- **Durée :** 2 minutes
+- **Identifiant:** S03-17
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
 1. Relever les champs fournis
-2. Marquer les absences
-3. Rédiger l’avis provisoire
-4. Soumettre à l’agent responsable
+2. Signaler les informations manquantes
+3. Rédiger l'avis provisoire
+4. Le soumettre à un agent pour contrôle
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une tâche complexe devient plus vérifiable lorsque ses étapes de travail sont explicites.
+**Message à faire retenir:** Une tâche en plusieurs étapes est plus facile à contrôler lorsque les résultats intermédiaires sont explicites.
 
-Demander à quel moment intervient la personne responsable. Les étapes portent sur des opérations et résultats observables ; elles ne révèlent aucun raisonnement interne privé du modèle. Chaque étape peut échouer et demande un contrôle.
+Il s'agit d'étapes de travail observables, pas du raisonnement interne caché du modèle. Chaque étape peut être comparée à la source et peut encore échouer. La décision humaine reste hors du modèle.
 
-## Diapositive 18 — Deux formulations, mêmes faits
+## Diapositive 18 — Comparer avant de réutiliser
 
-- **Identifiant :** S03-18
-- **Durée :** 3 minutes
+- **Identifiant:** S03-18
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Option A : note pour agents
-- Option B : rappel très bref
-- Comparer : exactitude, clarté, ton, longueur
+- Comparer le fondement factuel
+- Comparer la clarté et l'adaptation au public
+- Comparer le format et les contraintes
+- Une version utile peut devenir un modèle réutilisable
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Plusieurs versions se comparent selon des critères annoncés avant le choix.
+**Message à faire retenir:** Définir les critères avant de choisir une version à conserver comme point de départ.
 
-Demander quel critère est éliminatoire si une option ajoute un délai non fourni. Une comparaison de branches ou un classement produit par le même modèle n’est pas un avis indépendant. Un agent peut préférer une version plus claire seulement si les faits restent corrects.
+Le classement de ses propres sorties par un modèle n'est pas une vérification indépendante. Une version peut devenir un point de départ réutilisable seulement après contrôle humain. La réutilisation doit encore tenir compte d'une nouvelle source, d'un nouveau public ou d'une nouvelle contrainte.
 
-## Diapositive 19 — Repérer l’invention
+## Diapositive 19 — Repérer l'affirmation non fondée
 
-- **Identifiant :** S03-19
-- **Durée :** 4 minutes
+- **Identifiant:** S03-19
+- **Durée:** 4 minutes
 
 ### Contenu de la diapositive
 
 - Simulation pédagogique : « Saisissez le lot, la date et le poids. »
 - « Les lots incomplets sont certifiés sous 24 heures. »
-- Quelle partie ne figure pas dans S03-04 ?
+- Quelles affirmations ne sont pas fondées sur S03-04 ?
+- Comment préciser la première phrase ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Toute affirmation doit pouvoir être rapprochée de la consigne fictive.
+**Message à faire retenir:** Chaque affirmation opérationnelle du brouillon doit pouvoir être reliée à la source fournie.
 
-Laisser une minute de lecture puis une minute d’échange en binôme. La seconde phrase invente certification et délai ; la première devrait préciser « identifiant du lot ». Faire proposer une correction orale avant de passer au prompt de révision. Ce contre-exemple construit pour l’exercice ne provient ni de la capture ChatGPT montrée en S03-08 ni d’un service utilisé en direct.
+Prévoir un temps de lecture et d'échange en binôme. La certification et le délai ne sont pas fondés. « Le lot » doit être précisé en « identifiant du lot ». Cette simulation volontairement erronée n'est pas la vraie réponse ChatGPT montrée plus tôt.
 
-## Diapositive 20 — Corriger l’écart précis
+## Diapositive 20 — Corriger l'écart précis
 
-- **Identifiant :** S03-20
-- **Durée :** 3 minutes
+- **Identifiant:** S03-20
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- « Supprime délai et certification : absents de S03-04. »
-- « N’ajoute aucune règle. Cite les trois champs. »
-- « Si un champ manque, demande la vérification par un agent. »
+- Supprimer délai et certification
+- N'ajouter aucune règle absente de S03-04
+- Citer identifiant du lot, date et poids
+- Conserver « à compléter » et la vérification par un agent
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Une révision utile nomme les erreurs et demande une nouvelle comparaison à la source.
+**Message à faire retenir:** Une relance utile nomme ce qui a échoué et demande une nouvelle version vérifiable.
 
-Faire reformuler le nouveau message avec les trois champs et le statut « à compléter ». Lire le résultat à la lumière de S03-04, même si la consigne de correction semble suffisante. Ce texte demeure un brouillon tant que la personne habilitée ne l’a pas validé.
+Comparer la simulation révisée à S03-04 ligne par ligne. Le résultat corrigé reste un brouillon jusqu'au contrôle d'une personne habilitée.
 
-## Diapositive 21 — Écrire un prompt révisable
+## Diapositive 21 — Construire un prompt professionnel réutilisable
 
-- **Identifiant :** S03-21
-- **Durée :** 4 minutes
+- **Identifiant:** S03-21
+- **Durée:** 4 minutes
 
 ### Contenu de la diapositive
 
-- 2 min : écrire tâche, public, source, format et limite
-- 1 min : choisir direct, exemple ou entretien
-- 1 min : échanger et relever une inconnue
+- 2 min : remplir les éléments utiles du cadre
+- Utiliser des variables pour les informations qui changent
+- 1 min : choisir direct, exemple, entretien ou décomposition
+- 1 min : échanger, relever une inconnue et nommer un contrôle
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Chaque binôme construit une demande que quelqu’un d’autre peut contrôler.
+**Message à faire retenir:** Transformer le cadre en modèle contrôlable pour une tâche répétée.
 
-Distribuer ou afficher S03-04 et la grille de S03-23 avant de lancer le chronomètre. Si aucun modèle n’est disponible, le binôme rédige lui-même une réponse fictive à critiquer. Circuler pour vérifier l’absence de dossiers réels, de nouveaux délais et de certification.
+Les participants peuvent partir de S03-04 ou d'une autre tâche professionnelle fictive et sûre. Le modèle peut inclure rôle, tâche, contexte, public, format, contraintes et critères de qualité. Tous les champs ne sont pas obligatoires. N'exiger aucune donnée confidentielle réelle.
 
-## Diapositive 22 — Critiquer une demande utilement
+## Diapositive 22 — Critiquer le prompt d'un autre binôme
 
-- **Identifiant :** S03-22
-- **Durée :** 3 minutes
+- **Identifiant:** S03-22
+- **Durée:** 3 minutes
 
 ### Contenu de la diapositive
 
-- Source citée ?
-- Action si un champ manque ?
-- Format adapté aux agents ?
-- Responsable de validation identifié ?
+- La tâche est-elle claire ?
+- Le contexte fourni est-il suffisant ?
+- Public, format et contraintes sont-ils exploitables ?
+- Les critères de qualité sont-ils vérifiables ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un retour utile identifie l’élément absent et propose une correction ciblée.
+**Message à faire retenir:** Un retour utile identifie une faiblesse concrète et propose une correction ciblée.
 
-Inviter deux binômes à partager un seul ajustement chacun. Leur demander de montrer où cet ajustement s’insère dans le prompt, sans analyser de dossier réel. Réserver les dernières secondes aux contrôles applicables à la réponse.
+Demander aux binômes de proposer une amélioration précise. Critiquer le prompt, pas la personne. Si la validation ou la vérification manque dans le processus global, la nommer séparément sans en faire un huitième élément du prompt.
 
-## Diapositive 23 — La réponse doit passer quatre contrôles
+## Diapositive 23 — Évaluer la réponse séparément
 
-- **Identifiant :** S03-23
-- **Durée :** 2 minutes
+- **Identifiant:** S03-23
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- Faits tirés de S03-04 ?
-- Public et format adaptés ?
-- Inconnues visibles ?
-- Responsable de validation identifié ?
+- Faits fondés sur la source ?
+- Public, format et contraintes respectés ?
+- Inconnues toujours visibles ?
+- Critères de qualité satisfaits ?
+- Responsable humain de la validation identifié ?
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Un prompt bien rédigé et une réponse fluide exigent deux contrôles distincts.
+**Message à faire retenir:** Un prompt bien cadré et une réponse acceptable exigent deux contrôles distincts.
 
-Faire nommer le contrôle qui échoue si le texte promet une certification sous 24 heures. Le responsable de la procédure valide le message après vérification ; le modèle ne signe ni l’avis ni une décision sur un lot. Montrer que la grille sert aussi à examiner une réponse humaine simulée.
+Demander quel contrôle échoue pour la promesse de certification inventée. Un modèle peut aider à inspecter un texte, mais son auto-évaluation n'est pas une vérification indépendante. La personne responsable valide l'usage professionnel.
 
-## Diapositive 24 — Même méthode, autre entrée
+## Diapositive 24 — Même méthode avec une image ou un document
 
-- **Identifiant :** S03-24
-- **Durée :** 2 minutes
+- **Identifiant:** S03-24
+- **Durée:** 2 minutes
 
 ### Contenu de la diapositive
 
-- Photo ou document fourni : relever les champs lisibles
-- Illisible → « inconnu »
-- Une personne vérifie avant usage
+- Image ou document fourni → relever seulement ce qui est lisible
+- Illisible ou absent → marquer comme inconnu
+- Appliquer tâche, contexte, format, contraintes et critères
+- Contrôle humain avant usage professionnel
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Ajouter une image ou un document ajoute une source à examiner, pas une preuve automatique.
+**Message à faire retenir:** Un nouveau type d'entrée change la source, pas le besoin d'une consigne précise et d'une vérification.
 
-Mentionner brièvement le prompt multimodal du module 03.02 et les images du module 03.03. Une belle image ne prouve ni authenticité de l’étiquette ni traçabilité du lot. La démonstration complète des outils reste hors de la séance d’une heure.
+Relier brièvement au prompting multimodal canonique. Une image convaincante ne prouve pas son authenticité et le texte extrait n'est pas automatiquement exact.
 
-## Diapositive 25 — La source avant la formulation
+## Diapositive 25 — Le prompting fait partie de la méthode professionnelle
 
-- **Identifiant :** S03-25
-- **Durée :** 1 minute
+- **Identifiant:** S03-25
+- **Durée:** 1 minute
 
 ### Contenu de la diapositive
 
-- Besoin → source → prompt
-- Contrôle → correction → décision humaine
+- RÉSULTAT → CONTEXTE → INSTRUCTION
+- SÉCURITÉ → VÉRIFICATION
+- Structurer → évaluer → corriger → réutiliser si pertinent
+- Ensuite : travailler avec des documents et des informations
 
 ### Notes pédagogiques
 
-**Message à faire retenir :** Choisir une technique, observer la sortie et corriger précèdent toujours la validation humaine.
+**Message à faire retenir:** Une bonne conception de la consigne aide le travail professionnel seulement si elle reste reliée au contexte, à la sécurité, à la vérification et à la responsabilité humaine.
 
-Demander : « Quels faits puis-je utiliser ? » Recueillir une réponse courte, puis conclure sans promettre de comportement universel d’un modèle. Noter que l’allocation de 60 minutes doit encore être confirmée par répétition chronométrée.
+Rappeler que S03 approfondit la couche « instruction ». Faire la transition vers S04 : travailler avec des documents et des informations demande la même discipline de prompting avec un ancrage dans les sources et une vérification plus poussés.

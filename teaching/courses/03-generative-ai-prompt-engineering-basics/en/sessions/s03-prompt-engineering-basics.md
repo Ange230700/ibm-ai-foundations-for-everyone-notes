@@ -1,18 +1,21 @@
-# S03 — Prompt Engineering Basics
+# S03 — Designing Effective Prompts
 
 ## Teaching metadata
 
-- **Program:** AI Foundations for Everyone
-- **Session:** S03 — Prompt Engineering Basics
+- **Program:** AI for Everyone — Professional Curriculum
+- **Session:** S03 — Designing Effective Prompts
 - **Language:** English
 - **Audience:** Professionals and learners with no technical prerequisite
 - **Duration:** 60 minutes
 - **Number of slides:** 25
 - **Case study:** an unnamed, fictional cocoa cooperative near Soubré
-- **Status:** English teaching draft; the Course 03 French canonical adaptations still await personal review
+- **Curriculum position:** PROMPT
+- **Status:** professional-fusion teaching source; the Course 03 French canonical adaptations still await personal review
 - **Original learning source:** IBM's _AI Foundations for Everyone_ Specialization on Coursera
+- **Professional-practice input:** collaborative professional curriculum documented by the fusion contract and audit
 - **AI disclosure:** This teaching session is generated with AI as an independent repository adaptation.
 - **Bilingual contract:** `docs/teaching/s03-prompt-engineering-60-min-content-contract.md`
+- **Fusion audit:** `docs/teaching/s03-professional-fusion-audit.md`
 
 ## Canonical sources
 
@@ -22,20 +25,23 @@
 
 ## Session objective
 
-Design a request from a defined source, choose a method that fits the available context, review
-a draft against the supplied facts, and refer approval to an authorized person. This session can
-be delivered without a model account or a live connection.
+Translate a bounded professional need into a clear instruction, choose a prompting technique for a
+stated reason, evaluate the proposed answer, refine an observed gap, and preserve verification and
+human responsibility before professional use.
 
 ## Facilitation principles
 
-1. Project one main idea per slide; keep explanations and questions in the teaching notes.
-2. Identify the cooperative, exercise instruction, and constructed responses as teaching simulations.
-3. Keep the S03-04 source available; infer no deadline, threshold, certification, or payment rule.
-4. Fit short oral exchanges and the pair exercise into 60 minutes without requiring a live model.
-5. Distinguish a more specific prompt from a factual answer; human review remains essential.
-6. Rehearse with a timer, and review the Course 03 French adaptations before final release.
+1. Start from the professional result needed rather than from prompting terminology.
+2. Introduce role, task, context, audience, format, constraints, and quality criteria as a practical
+   checklist, not mandatory syntax.
+3. Keep the fictional S03-04 source visible and preserve unknown information as unknown.
+4. Distinguish prompt quality from factual reliability and professional authorization.
+5. Use only fictional, anonymized, public, or explicitly authorized information in activities.
+6. Keep explanations and edge cases in teaching notes so projected slides remain readable.
+7. Treat iteration as targeted correction of an observed gap rather than repeated regeneration.
+8. Review the Course 03 French canonical adaptations and rehearse the final session before release.
 
-## Slide 01 — S03: designing a prompt that can be checked
+## Slide 01 — Designing Effective Prompts
 
 - **Identifier:** S03-01
 - **Duration:** 1 minute
@@ -46,20 +52,20 @@ course-title
 
 ### On-Slide Content
 
-S03: 60-minute session
+S03 · 60-minute session
 
-- Fictional case: a cocoa cooperative near Soubré
-- Common task: a notice for intake staff
+- From work result to reviewable instruction
+- Fictional cocoa cooperative near Soubré
 - Based on IBM's _AI Foundations for Everyone_ Specialization on Coursera
 - Independent teaching adaptation generated with AI
 
 ### Teaching Notes
 
-**Key takeaway:** A precise request prepares a reviewable draft, never an automatic decision.
+**Key takeaway:** A professional prompt translates a work need into an instruction that can be checked and improved.
 
-Welcome learners and connect S03 to the drafts from S02. Say that the cooperative, any screens, and the exercise responses are fictional. A staff notice will still need approval before anyone shares it.
+Connect directly to S02. S02 showed what generative AI can help produce; S03 focuses on how to communicate the work requirement. State that a better instruction does not remove verification or human responsibility.
 
-## Slide 02 — Four moves for this session
+## Slide 02 — What you will be able to do
 
 - **Identifier:** S03-02
 - **Duration:** 2 minutes
@@ -70,69 +76,73 @@ course-objectives
 
 ### On-Slide Content
 
-- Frame the request and its source
-- Choose: direct, example, or questions
-- Check facts and unknowns
-- Revise and submit for approval
+1. Structure a professional prompt
+2. Choose a technique for a reason
+3. Evaluate the proposed answer
+4. Refine an observed gap
+5. Reuse a validated starting point
 
 ### Teaching Notes
 
-**Key takeaway:** Frame, choose a method, check, and revise: these are the four moves for today.
+**Key takeaway:** Structure, choose, evaluate, refine, and reuse.
 
-Introduce the outcomes as actions participants will practice. Ask which move is lost when a draft is shared immediately after generation. Explain that the exercise works on paper without a model service.
+Preview the complete learning progression. “Validated starting point” does not mean permanent approval: the source, audience, constraints, and context must still be checked when a prompt is reused.
 
-## Slide 03 — A plausible sentence, an unsupported claim
+## Slide 03 — A better prompt does not mean a true answer
 
 - **Identifier:** S03-03
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- S02: “certified within 24 hours” was written for a teaching exercise
-- The supplied source did not support that promise
-- Where should we look for evidence before reusing a draft?
+- S02 deliberately showed “certified within 24 hours”
+- The fictional source supplied no certification or deadline
+- Better instructions can reduce ambiguity
+- The proposed answer still requires checking
 
 ### Teaching Notes
 
-**Key takeaway:** A fluent response may still add an unsupported claim.
+**Key takeaway:** Prompt quality and factual reliability are different questions.
 
-Recall the deliberately wrong line in S02-12 and invite learners to identify the gap. The deadline and certification claim were a constructed counterexample, not a real policy or an observed model output. A better prompt can reduce ambiguity but cannot guarantee accuracy.
+Recall S02-12. The unsupported sentence was constructed for teaching. Do not suggest that a sufficiently detailed prompt can prevent every error.
 
-## Slide 04 — A short instruction with clear boundaries
+## Slide 04 — Keep the source visible
 
 - **Identifier:** S03-04
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Teaching simulation: record lot ID, date, and weight
-- Missing field: mark “needs completion,” then request staff review
+- Record lot ID, date, and weight
+- Missing field → mark “needs completion”
+- Then have a staff member review the record
 - No other rule is supplied
 
 ### Teaching Notes
 
-**Key takeaway:** This fictional instruction is the only factual source for the staff notice.
+**Key takeaway:** The source defines which claims can be checked.
 
-Read all three lines and keep them visible or accessible for the exercise. These are the same invented facts used in S02-10, not a real cooperative procedure. Point out that no threshold, deadline, payment, grade, or certification rule has been supplied.
+Keep this fictional instruction available throughout the exercise. It is not a real cooperative procedure or regulation. Unknown information remains unknown.
 
-## Slide 05 — From task to proposed response
+## Slide 05 — A prompt is a work instruction
 
 - **Identifier:** S03-05
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Task and context
-- Input data and output requirements
-- Proposal → review → refinement
+- Result needed
+- Task + context + input
+- Output requirements
+- Draft → check → refine or approve
 
 ### Teaching Notes
 
-**Key takeaway:** A prompt supplies a request and enough information to review what comes back.
+**Key takeaway:** A prompt connects an expected result with the information and requirements needed to produce a draft.
 
-Connect the rows to module 03.01: instruction, context, input data, and output indicators. Ask which part of S03-04 counts as input data. A new prompt changes the context for this generation; it does not retrain the model.
+Connect the slide to the canonical prompt components: instruction, context, input data, and output indicators. A new prompt changes the current generation context; it does not retrain the model.
 
-## Slide 06 — “Write a message” leaves gaps
+## Slide 06 — A weak request leaves decisions unstated
 
 - **Identifier:** S03-06
 - **Duration:** 2 minutes
@@ -140,101 +150,107 @@ Connect the rows to module 03.01: instruction, context, input data, and output i
 ### On-Slide Content
 
 - Starting prompt: “Write a message about lot intake.”
-- Missing: audience, source, and format
-- What needs clarifying before drafting?
+- What result is actually needed?
+- Which facts may be used?
+- Who will read it and in what form?
 
 ### Teaching Notes
 
-**Key takeaway:** A vague request leaves both the facts and the audience unspecified.
+**Key takeaway:** “Write a message” does not define enough of the professional need.
 
-Ask the group to name the three gaps without imagining a model output. This prompt was constructed for the session. Use their answers to introduce the six practical cues on the next slide.
+Ask learners what is missing before showing the seven-element framework. Do not generate an imaginary answer to the weak prompt.
 
-## Slide 07 — Six elements to frame the request
+## Slide 07 — Seven elements for a useful prompt
 
 - **Identifier:** S03-07
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Task and audience
-- Source and constraints
-- Format and human review
+- Role + task
+- Context + audience
+- Format + constraints
+- Quality criteria
 
 ### Teaching Notes
 
-**Key takeaway:** An explicit frame makes the proposed answer easier to check.
+**Key takeaway:** Use the elements that make the instruction clearer and easier to evaluate.
 
-Map these six cues back to the four prompt components on S03-05. Ask where to place the rule about a missing field. This is a teaching checklist for our example, not a formula that works for every model and task.
+Name all seven elements explicitly: role, task, context, audience, format, constraints, and quality criteria. Explain that this is a checklist, not mandatory syntax. A simple task may not need a role or every other element.
 
-## Slide 08 — A request grounded in the source
+## Slide 08 — Build one structured prompt
 
 - **Identifier:** S03-08
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- “Write a short notice for intake staff.”
-- “Use only S03-04: the three fields and staff review.”
-- “Invent no threshold or certification rule.”
+- Task: draft a short staff notice
+- Context: use only the S03-04 instruction
+- Audience + format: intake staff, short notice
+- Constraint + quality: add no rule; preserve the supplied facts
 
 ### Teaching Notes
 
-**Key takeaway:** A structured prompt names the task, audience, source, and boundaries.
+**Key takeaway:** Supply the information needed for the task and explicitly limit unsupported additions.
 
-Show the capture of a real ChatGPT exchange using the fictional S03-04 instruction. Read the three lines as one example prompt and ask which line restricts the facts. Check that the reply includes the three fields, “needs completion” status, and staff review without adding another rule. This is a new teaching adaptation, not a verbatim quotation from the recorded course or a guarantee of compliance. A person must still compare the draft with the source before use.
+Use the real ChatGPT capture based on the fictional cooperative source. Identify which framework elements are present. Point out that an explicit role is unnecessary in this example. The capture remains a draft to verify, not proof that the prompt guarantees compliance.
 
-## Slide 09 — A notice people can read
+## Slide 09 — Same framework, different professional work
 
 - **Identifier:** S03-09
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Audience: intake staff
-- Tone: plain, respectful English
-- Format: two sentences, including what to do if a field is missing
+- Email → recipient, purpose, tone
+- Meeting summary → notes, decisions, missing information
+- Report → audience, length, approved sources
+- Presentation outline → objective, structure, support for claims
 
 ### Teaching Notes
 
-**Key takeaway:** A defined audience and short format make a notice easier to use and review.
+**Key takeaway:** The framework stays useful while the context, audience, format, and criteria change.
 
-Ask learners to simplify one term for a different audience without changing the instruction. Briefly compare an internal staff notice with an explanation for member producers. Two well-shaped sentences could still contain an invented rule.
+These are transfer examples, not new factual rules. Ask which prompt elements change from one task to another. The cooperative remains the exercise anchor but is not the only professional context.
 
-## Slide 10 — A role guides; it does not certify
+## Slide 10 — A role guides; it does not grant authority
 
 - **Identifier:** S03-10
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Suggested persona: drafting assistant
-- Actual task: prepare a draft
-- Actual decision: authorized staff and procedure owner
+- Role: “assist the drafting team”
+- Useful for perspective, vocabulary, or tone
+- Does not create missing facts or access rights
+- Human responsibility remains unchanged
 
 ### Teaching Notes
 
-**Key takeaway:** Assigning a role can frame a response; it does not grant authority.
+**Key takeaway:** A role can guide perspective or tone without creating professional authority.
 
-Explain why “assist the team” grants neither regulatory competence nor access to actual records. Do not delegate crop diagnosis, lot acceptance, or payment decisions. A draft needs the same review regardless of the persona used.
+Distinguish persona from delegation. Do not ask the model to accept a lot, decide payment, certify quality, diagnose crops, or publish an operational rule.
 
-## Slide 11 — Review before rewriting
+## Slide 11 — Improve from an observed gap
 
 - **Identifier:** S03-11
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Prompt → draft
-- Review: facts, audience, and format
-- Found gap → targeted change → new review
+- Check the draft
+- Name the gap
+- Change the instruction
+- Generate again and recheck
 
 ### Teaching Notes
 
-**Key takeaway:** Iteration should address a gap found against the source or intended use.
+**Key takeaway:** Iteration is useful when the next instruction responds to a specific problem.
 
-Use the invented certification claim from S02 as a specific gap. Ask what to remove and what to check when reading the next version. Retesting the request is not the same as approval by the procedure owner.
+Use the unsupported certification claim as an example. Contrast targeted refinement with repeatedly asking “make it better.” The second output still requires review.
 
-## Slide 12 — Zero-shot: the task without a demonstration
+## Slide 12 — Direct request: zero-shot
 
 - **Identifier:** S03-12
 - **Duration:** 2 minutes
@@ -242,33 +258,35 @@ Use the invented certification claim from S02 as a specific gap. Ask what to rem
 ### On-Slide Content
 
 - “Using S03-04, list the intake-record fields.”
-- No input → output example in this prompt
-- Check the answer against S03-04
+- No input → output example supplied
+- Expected facts come from the source
+- Review still applies
 
 ### Teaching Notes
 
-**Key takeaway:** Zero-shot means the current prompt supplies no sample answer.
+**Key takeaway:** Use a direct request when the task can be specified without demonstrating an answer.
 
-Ask learners to name the three expected fields before showing their answers. This term does not mean the model has never been trained. A direct request may fit a simple task, but its result still needs checking.
+Zero-shot describes the current prompt, not the model's training history. Have learners identify the three expected fields from S03-04 before discussing the response.
 
-## Slide 13 — Few-shot: show the format
+## Slide 13 — One-shot and few-shot: show an example
 
 - **Identifier:** S03-13
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- EX-01, date missing → “needs completion: date”
-- EX-02, weight missing → “needs completion: weight”
-- EX-03, ID missing → ?
+- EX-01: date missing → “needs completion: date”
+- EX-02: weight missing → “needs completion: weight”
+- EX-03: lot ID missing → ?
+- Check every example before using it
 
 ### Teaching Notes
 
-**Key takeaway:** A few fictional examples can illustrate the desired output structure.
+**Key takeaway:** Examples can demonstrate a desired structure when words alone leave the format ambiguous.
 
-Show the first two pairs and ask learners to complete EX-03: “needs completion: lot ID.” The EX records were made for this exercise and prove nothing about an actual delivery. Examples in a prompt do not update model weights.
+One example is one-shot; several examples are few-shot. The EX records are fictional. Expected EX-03 wording is “needs completion: lot ID.” Examples guide the current prompt; they do not alter model weights or create business rules.
 
-## Slide 14 — Add an example for a reason
+## Slide 14 — Choose the technique for the problem
 
 - **Identifier:** S03-14
 - **Duration:** 3 minutes
@@ -276,16 +294,17 @@ Show the first two pairs and ask learners to complete EX-03: “needs completion
 ### On-Slide Content
 
 - Clear task → direct request
-- Hard-to-describe format → verified fictional example
-- Missing facts → questions before drafting
+- Hard-to-describe format → checked example
+- Missing important context → ask first
+- Every path still ends in review
 
 ### Teaching Notes
 
-**Key takeaway:** Choose a prompting method to address what is missing from the task.
+**Key takeaway:** Use a prompting technique because it addresses a specific uncertainty.
 
-Ask which method fits the staff notice and which fits a record that does not identify the missing field. A flawed example can pass an invented rule into a new answer. Questions help reveal the information gap in the second situation.
+Use the existing decision diagram. Ask learners which approach fits the staff notice and which fits a fictional record where the missing field has not been identified.
 
-## Slide 15 — Interview: ask before inventing
+## Slide 15 — Ask before inventing
 
 - **Identifier:** S03-15
 - **Duration:** 2 minutes
@@ -293,68 +312,71 @@ Ask which method fits the staff notice and which fits a record that does not ide
 ### On-Slide Content
 
 - Who is the audience?
-- Which field is missing from the fictional record?
-- Which approved instruction may I use?
+- Which field is missing?
+- Which approved instruction may be used?
+- “I don't know” remains unknown
 
 ### Teaching Notes
 
-**Key takeaway:** Focused questions gather missing context before a notice is drafted.
+**Key takeaway:** Missing context can trigger focused questions instead of unsupported completion.
 
-Role-play these questions with a volunteer. An answer of “I do not know” remains unknown; do not infer a value from an example. Ask for no actual member data during the role-play.
+Explain interview prompting as a way to collect context, not as a way to make uncertain information true. Use no real member or customer data.
 
-## Slide 16 — Build an interview request
+## Slide 16 — Gather context one question at a time
 
 - **Identifier:** S03-16
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- “Ask one question at a time.”
-- “Mark unavailable answers as unknown.”
-- “Summarize confirmed facts before drafting.”
+- Ask one question at a time
+- Mark unavailable information as unknown
+- Summarize confirmed facts
+- Draft only from what is confirmed
 
 ### Teaching Notes
 
-**Key takeaway:** An interview separates confirmed answers from missing information.
+**Key takeaway:** Separate confirmed information from information that is still missing.
 
-The capture shows the request and ChatGPT’s first question, not an answer. Reply “I do not know” aloud, then separate confirmed facts from the unknown field. The notice should stay general or await verification instead of naming a specific missing field. An interview collects context; it does not make a model inherently reliable.
+Use the real ChatGPT opening-question capture from the fictional exercise. The capture demonstrates the first question, not proof of a correct final answer. If the answer is unavailable, keep it unknown.
 
-## Slide 17 — Split the observable checks
+## Slide 17 — Decompose into observable operations
 
 - **Identifier:** S03-17
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-1. List supplied fields
-2. Flag missing ones
-3. Draft a provisional notice
-4. Send it to authorized staff for review
+1. Record supplied fields
+2. Flag missing information
+3. Draft the provisional notice
+4. Submit it for staff review
 
 ### Teaching Notes
 
-**Key takeaway:** Explicit workflow steps make a complex task easier to inspect.
+**Key takeaway:** A multi-step task is easier to inspect when the work products are explicit.
 
-Ask when the authorized staff member intervenes. These are observable tasks and results, not a request for a model's private reasoning. Each step can fail and requires a check against available evidence.
+These are observable work steps, not hidden model reasoning. Each step can be compared with the source and may still fail. Human decision-making remains outside the model.
 
-## Slide 18 — Two phrasings, the same facts
+## Slide 18 — Compare before you reuse
 
 - **Identifier:** S03-18
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Option A: note for staff
-- Option B: very short reminder
-- Compare: accuracy, clarity, tone, length
+- Compare factual support
+- Compare clarity and audience fit
+- Compare format and constraints
+- A useful version may become a reusable template
 
 ### Teaching Notes
 
-**Key takeaway:** Compare alternatives using criteria stated before choosing a version.
+**Key takeaway:** Define the criteria before choosing a version to keep as a starting point.
 
-Ask which criterion rules out a draft that adds an unsupported deadline. A model ranking its own branches or candidate texts is not an independent reviewer. Staff may prefer clearer wording only after the facts check out.
+A model ranking its own outputs is not independent verification. A version can become a reusable starting point only after human review. Reuse must still account for a new source, audience, or constraint.
 
-## Slide 19 — Spot the invented claim
+## Slide 19 — Detect the unsupported claim
 
 - **Identifier:** S03-19
 - **Duration:** 4 minutes
@@ -363,113 +385,120 @@ Ask which criterion rules out a draft that adds an unsupported deadline. A model
 
 - Teaching simulation: “Enter the lot, date, and weight.”
 - “Incomplete lots are certified within 24 hours.”
-- Which part is absent from S03-04?
+- Which claims are not supported by S03-04?
+- What should the first sentence say more precisely?
 
 ### Teaching Notes
 
-**Key takeaway:** Every claim should be traceable to the fictional instruction.
+**Key takeaway:** Every operational claim in the draft should be traceable to the supplied source.
 
-Allow one minute of reading and one minute of pair discussion. The second sentence invents certification and a deadline; the first should say “lot ID.” Ask for a spoken correction before moving to the revision prompt. Do not attribute this constructed counterexample to a live AI service.
+Allow reading and pair discussion. Certification and the deadline are unsupported. “The lot” should be “lot ID.” This deliberately wrong simulation is not the real ChatGPT response shown earlier.
 
-## Slide 20 — Revise the specific gap
+## Slide 20 — Correct the specific failure
 
 - **Identifier:** S03-20
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- “Remove deadline and certification: neither is in S03-04.”
-- “Add no new rules. Name the three fields.”
-- “If a field is missing, request staff review.”
+- Remove deadline and certification
+- Add no rule absent from S03-04
+- Name lot ID, date, and weight
+- Preserve “needs completion” and staff review
 
 ### Teaching Notes
 
-**Key takeaway:** A useful revision names unsupported facts and asks for another source check.
+**Key takeaway:** A useful follow-up names what failed and requests a new checkable version.
 
-Have participants propose a new message with the three fields and “needs completion” status. Compare it with S03-04 even when the revision request sounds strict enough. The new text remains a draft until an authorized person approves it.
+Compare the revised simulation with S03-04 line by line. The corrected result remains a draft until an authorized person reviews it.
 
-## Slide 21 — Write a prompt people can revise
+## Slide 21 — Build a reusable professional prompt
 
 - **Identifier:** S03-21
 - **Duration:** 4 minutes
 
 ### On-Slide Content
 
-- 2 min: write task, audience, source, format, and limits
-- 1 min: choose direct, example, or interview
-- 1 min: exchange and flag an unknown
+- 2 min: fill the relevant framework elements
+- Use placeholders for information that will change
+- 1 min: choose direct, example, interview, or decomposition
+- 1 min: exchange, flag one unknown, and name one verification step
 
 ### Teaching Notes
 
-**Key takeaway:** Each pair writes a request another person can inspect.
+**Key takeaway:** Turn the framework into a checkable template for a repeated task.
 
-Display or hand out S03-04 and the S03-23 checklist before starting the timer. If no model is available, have pairs write a human-created simulated response for critique. Circulate to catch actual records, invented deadlines, and certification claims.
+Learners may work from S03-04 or another safe fictional professional task. The template may include role, task, context, audience, format, constraints, and quality criteria. Not every field must be filled. Require no real confidential data.
 
-## Slide 22 — Give useful feedback on a prompt
+## Slide 22 — Critique another prompt
 
 - **Identifier:** S03-22
 - **Duration:** 3 minutes
 
 ### On-Slide Content
 
-- Is the source named?
-- What happens when a field is missing?
-- Does the format fit staff?
-- Who approves the notice?
+- Is the task clear?
+- Is enough context supplied?
+- Are audience, format, and constraints usable?
+- Can the quality criteria be checked?
 
 ### Teaching Notes
 
-**Key takeaway:** Useful feedback identifies a missing element and a targeted improvement.
+**Key takeaway:** Useful feedback identifies a concrete weakness and proposes a targeted change.
 
-Invite two pairs to share one change each. Ask them where they would place it in the prompt; avoid assessing any real intake record. Use the final seconds to introduce the checks that apply to the response itself.
+Have pairs suggest one specific improvement. Review the prompt, not the person. If approval or verification is missing from the broader process, name that separately rather than pretending it is an eighth prompt element.
 
-## Slide 23 — The response must pass four checks
+## Slide 23 — Evaluate the answer separately
 
 - **Identifier:** S03-23
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Are the facts in S03-04?
-- Do audience and format fit?
-- Are unknowns visible?
-- Is the human reviewer identified?
+- Facts supported by the source?
+- Audience, format, and constraints respected?
+- Unknowns still visible?
+- Quality criteria satisfied?
+- Responsible human reviewer identified?
 
 ### Teaching Notes
 
-**Key takeaway:** Review a well-written prompt and a fluent answer separately.
+**Key takeaway:** A well-framed prompt and an acceptable answer require separate checks.
 
-Ask which check fails when the text promises certification within 24 hours. The procedure owner can approve a notice after review; a model cannot sign off on a lot decision. This checklist also works for a human-written simulated response.
+Ask which check fails for the invented certification promise. A model may help inspect text, but self-evaluation is not independent verification. The responsible person approves professional use.
 
-## Slide 24 — Same method, another input
+## Slide 24 — Same method with an image or document
 
 - **Identifier:** S03-24
 - **Duration:** 2 minutes
 
 ### On-Slide Content
 
-- Supplied photo or document: extract legible fields
-- Unreadable → “unknown”
-- A person checks before use
+- Supplied image or document → extract only what is readable
+- Unreadable or absent → mark unknown
+- Apply task, context, format, constraints, and criteria
+- Human review before professional use
 
 ### Teaching Notes
 
-**Key takeaway:** A photo or document provides another source to inspect, not automatic evidence.
+**Key takeaway:** A new input type changes the source, not the need for careful prompting and verification.
 
-Briefly connect module 03.02 multimodal prompts and module 03.03 image prompting. A convincing image does not prove that a label is authentic or that a lot is traceable. A full tool demonstration sits outside this hour.
+Briefly connect to canonical multimodal prompting. A convincing image does not prove authenticity, and extracted text is not automatically accurate.
 
-## Slide 25 — Source before phrasing
+## Slide 25 — Prompting is part of the professional method
 
 - **Identifier:** S03-25
 - **Duration:** 1 minute
 
 ### On-Slide Content
 
-- Need → source → prompt
-- Check → correction → human decision
+- RESULT → CONTEXT → INSTRUCTION
+- SAFETY → VERIFICATION
+- Structure → evaluate → refine → reuse when appropriate
+- Next: work with documents and information
 
 ### Teaching Notes
 
-**Key takeaway:** Choose a method, inspect the output, and revise before a person approves anything.
+**Key takeaway:** Good instruction design supports professional work only when it remains connected to context, safety, verification, and human responsibility.
 
-Ask: “Which facts may I use?” Take one short answer, then close without promising universal behavior from a model. A timed rehearsal is still needed to confirm the 60-minute allocation.
+Reinforce that S03 develops the instruction layer in depth. Transition to S04: working with documents and information requires the same prompt discipline plus stronger source-grounding and verification.

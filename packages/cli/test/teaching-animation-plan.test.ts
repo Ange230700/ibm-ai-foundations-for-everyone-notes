@@ -162,7 +162,7 @@ test('S03 animation plan covers 25 bilingual slides without changing content or 
     assert.equal(plan.sourceSha256, current.sourceSha256);
     assert.equal(plan.sessionId, 's03');
     assert.equal(plan.slideCount, 25);
-    assert.deepEqual(animationCounts(plan), { animatedSlides: 25, clicks: 52, effects: 155 });
+    assert.deepEqual(animationCounts(plan), { animatedSlides: 25, clicks: 75, effects: 224 });
     assert.deepEqual(
       plan.slides.map((slide) => slide.number),
       Array.from({ length: 25 }, (_, index) => index + 1),
