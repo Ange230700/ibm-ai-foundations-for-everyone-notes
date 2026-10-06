@@ -1,0 +1,10 @@
+{
+  "all": true,
+  "include": ["packages/*/src/**/*.ts"],
+  "exclude": ["packages/*/test/**/*.ts"],
+  "extension": [".ts"],
+  "exclude-after-remap": true,
+  "reporter": ["text", "lcov", "json-summary"],
+  "reports-dir": "coverage",
+  "clean": true
+}

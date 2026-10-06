@@ -27,13 +27,15 @@
     "check:semantic": "tsx packages/cli/src/check.ts",
     "test": "pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
     "artifact": "tsx packages/cli/src/artifact.ts",
-    "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts"
+    "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts",
+    "coverage": "c8 pnpm test"
   },
   "devDependencies": {
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@eslint/js": "10.0.1",
     "@types/node": "26.1.1",
+    "c8": "^12.0.0",
     "eslint": "10.8.0",
     "globals": "17.8.0",
     "husky": "9.1.7",
