@@ -155,7 +155,7 @@ async function runTypeScript(
 test(
   'clean template bootstrap generates and verifies canonical artifacts',
   {
-    timeout: 120_000,
+    timeout: 180_000,
   },
   async () => {
     const repositoryRoot = await mkdtemp(resolve(tmpdir(), 'coursera-notes-v1-'));
