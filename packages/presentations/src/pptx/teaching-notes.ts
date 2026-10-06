@@ -8,12 +8,19 @@ export function teachingNoteParts(markdown: string): {
   takeaway: string;
   cues: string[];
 } {
-  const match = markdown.trim().match(/^\*\*(.+?)\*\*\s*(.+?)(?:\n\s*\n|$)([\s\S]*)$/u);
-  if (!match?.[1] || !match[2]) throw new Error('Teaching notes require a bold key takeaway.');
+  const match = markdown
+    .trim()
+    .match(/^\*\*(.+?)\*\*[ \t]*([\s\S]+?)(?:\r?\n[ \t]*\r?\n|$)([\s\S]*)$/u);
+
+  if (!match?.[1] || !match[2]) {
+    throw new Error('Teaching notes require a bold key takeaway.');
+  }
+
+  const takeaway = match[2].replace(/\s+/gu, ' ').trim();
   const rest = (match[3] ?? '').replace(/\s+/gu, ' ').trim();
   // Keep the exact source sentences; visual grouping adds no new claims.
   const cues = rest ? rest.split(/(?<=[.!?])\s+(?=[A-ZÀ-ÖØ-Þ])/u).filter(Boolean) : [];
-  return { label: match[1], takeaway: match[2], cues };
+  return { label: match[1], takeaway, cues };
 }
 
 function appendParagraph(

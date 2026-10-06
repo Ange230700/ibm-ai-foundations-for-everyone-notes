@@ -1247,7 +1247,7 @@ export async function renderNativePptx(
   for (const slide of spec.slides) {
     if (!slide.visual) continue;
     const { path, kind, caption } = slide.visual;
-    if (!/^teaching\/visuals\/(?:s01|s02|s03)\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u.test(path)) {
+    if (!/^teaching\/visuals\/s\d{2}\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u.test(path)) {
       throw new Error(`Unsafe teaching visual path: ${path}`);
     }
     const absolutePath = resolve(repositoryRoot, path);

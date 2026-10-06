@@ -81,7 +81,13 @@ function executableCandidates(): string[] {
     process.env.LIBREOFFICE_PATH,
     process.env.SOFFICE_PATH,
     process.env.ProgramFiles
+      ? join(process.env.ProgramFiles, 'LibreOffice', 'program', 'soffice.com')
+      : undefined,
+    process.env.ProgramFiles
       ? join(process.env.ProgramFiles, 'LibreOffice', 'program', 'soffice.exe')
+      : undefined,
+    process.env['ProgramFiles(x86)']
+      ? join(process.env['ProgramFiles(x86)'], 'LibreOffice', 'program', 'soffice.com')
       : undefined,
     process.env['ProgramFiles(x86)']
       ? join(process.env['ProgramFiles(x86)'], 'LibreOffice', 'program', 'soffice.exe')
