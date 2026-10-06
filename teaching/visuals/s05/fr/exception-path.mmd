@@ -1,0 +1,6 @@
+flowchart LR
+ A{"Entrée complète ?"} -- "Oui" --> B["Tâche IA"]
+ A -- "Non" --> C["Marquer le manque / revue"]
+ B --> D{"Résultat étayé ?"}
+ D -- "Oui" --> E["Continuer"]
+ D -- "Non" --> F["Corriger / escalader"]

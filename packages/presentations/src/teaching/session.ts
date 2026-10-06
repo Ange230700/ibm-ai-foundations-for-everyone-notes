@@ -487,6 +487,37 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       fr: 'Contrôles avant validation humaine',
       name: 'checks',
     },
+
+    'S05-05': {
+      kind: 'mermaid',
+      en: 'Workflow Canvas',
+      fr: 'Workflow Canvas',
+      name: 'workflow-canvas',
+    },
+    'S05-15': {
+      kind: 'mermaid',
+      en: 'Manual and AI-assisted workflow',
+      fr: 'Workflow manuel et assisté par l’IA',
+      name: 'manual-vs-ai',
+    },
+    'S05-16': {
+      kind: 'mermaid',
+      en: 'Human and AI responsibilities',
+      fr: 'Responsabilités humaines et de l’IA',
+      name: 'responsibility-model',
+    },
+    'S05-18': {
+      kind: 'mermaid',
+      en: 'Exception paths',
+      fr: 'Chemins d’exception',
+      name: 'exception-path',
+    },
+    'S05-22': {
+      kind: 'mermaid',
+      en: 'Workflow improvement loop',
+      fr: 'Boucle d’amélioration du workflow',
+      name: 'improvement-loop',
+    },
   };
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];

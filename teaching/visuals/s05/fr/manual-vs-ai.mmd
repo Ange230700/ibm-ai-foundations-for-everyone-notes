@@ -1,0 +1,9 @@
+flowchart TB
+ subgraph M["Référence manuelle"]
+  direction LR
+  A["Sources"] --> B["Lire"] --> C["Rédiger"] --> D["Vérifier"] --> E["Utiliser"]
+ end
+ subgraph I["Workflow assisté par l’IA"]
+  direction LR
+  F["Sources"] --> G["Contrôler"] --> H["Brouillon IA"] --> J["Vérifier"] --> K["Action humaine"] --> L["Utiliser"]
+ end

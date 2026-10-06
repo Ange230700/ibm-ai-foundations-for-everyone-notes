@@ -1,0 +1,9 @@
+flowchart TB
+ subgraph M["Manual baseline"]
+  direction LR
+  A["Sources"] --> B["Read"] --> C["Draft"] --> D["Verify"] --> E["Use"]
+ end
+ subgraph I["AI-assisted workflow"]
+  direction LR
+  F["Sources"] --> G["Check"] --> H["AI draft"] --> J["Verify"] --> K["Human action"] --> L["Use"]
+ end

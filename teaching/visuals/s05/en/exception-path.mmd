@@ -1,0 +1,6 @@
+flowchart LR
+ A{"Input complete?"} -- "Yes" --> B["AI task"]
+ A -- "No" --> C["Mark gap / review"]
+ B --> D{"Output supported?"}
+ D -- "Yes" --> E["Continue"]
+ D -- "No" --> F["Correct / escalate"]
