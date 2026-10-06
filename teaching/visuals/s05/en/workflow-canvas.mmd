@@ -1,10 +1,8 @@
-flowchart TB
- subgraph D["Design the work"]
-  direction LR
-  A["Result"] --> B["Inputs"] --> C["Safety"] --> E["AI task"]
- end
- subgraph R["Control and improve"]
-  direction LR
-  F["Verify"] --> G["Human action"] --> H["Reuse"] --> I["Measure"]
- end
- E --> F
+flowchart LR
+ A["Result"] --> B["Inputs"]
+ B --> C["Safety"]
+ C --> D["AI task"]
+ D --> E["Verify"]
+ E --> F["Human action"]
+ F --> G["Reuse"]
+ G --> H["Measure"]
