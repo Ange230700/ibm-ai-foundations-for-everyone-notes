@@ -25,7 +25,7 @@
     "lint": "eslint .",
     "prepare": "husky",
     "check:semantic": "tsx packages/cli/src/check.ts",
-    "test": "pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
+    "test": "pnpm --filter @coursera-notes/artifacts test && pnpm --filter @coursera-notes/manifest test && pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
     "artifact": "tsx packages/cli/src/artifact.ts",
     "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts",
     "coverage": "c8 pnpm test"
