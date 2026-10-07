@@ -1,5 +1,6 @@
-import { readFile, writeFile } from 'node:fs/promises';
 /* global document */
+
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import process from 'node:process';
 
@@ -14,7 +15,15 @@ import { teachingMermaidConfiguration } from '../teaching-mermaid-config.mjs';
 const LANGUAGES = ['en', 'fr'];
 const SCREEN_CSS_MARKER = '/* SCREEN_CSS */';
 
-async function collectSources({ visualRoot, sessionId, diagrams, screens, diagramsOnly }) {
+async function collectSources({
+  visualRoot,
+  sessionId,
+  diagrams,
+  screens,
+  diagramsOnly,
+  screenCss,
+  requireSimulationLabel,
+}) {
   const sources = [];
 
   for (const language of LANGUAGES) {
@@ -39,7 +48,13 @@ async function collectSources({ visualRoot, sessionId, diagrams, screens, diagra
       const html = await readFile(`${stem}.html`, 'utf8');
       const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
 
-      if (!html.includes(SCREEN_CSS_MARKER) || !html.includes(label)) {
+      if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
+        throw new Error(
+          `Missing screen CSS marker in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`,
+        );
+      }
+
+      if (requireSimulationLabel && !html.includes(label)) {
         throw new Error(`Unlabelled ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
       }
 
@@ -56,7 +71,7 @@ async function collectSources({ visualRoot, sessionId, diagrams, screens, diagra
   return sources;
 }
 
-async function renderMermaid({ browser, configuration, sessionId, source }) {
+async function renderMermaid({ browser, configuration, mermaidIdentityPrefix, source }) {
   await run(`${source.stem}.mmd`, `${source.stem}.svg`, {
     browser,
     quiet: true,
@@ -70,30 +85,40 @@ async function renderMermaid({ browser, configuration, sessionId, source }) {
     `${source.stem}.svg`,
     normalizeMermaidSvgForOffice(
       await readFile(`${source.stem}.svg`, 'utf8'),
-      `${sessionId}-${source.language}-${source.name}`,
+      mermaidIdentityPrefix
+        ? `${mermaidIdentityPrefix}-${source.language}-${source.name}`
+        : `${source.language}-${source.name}`,
     ),
   );
 }
 
-async function renderSimulation({ browser, css, sessionId, source }) {
+async function renderSimulation({
+  browser,
+  css,
+  sessionId,
+  screenCss,
+  screenWidth,
+  screenHeight,
+  source,
+}) {
   const page = await browser.newPage();
 
   try {
     await page.setViewport({
-      width: 860,
-      height: 640,
+      width: screenWidth,
+      height: screenHeight,
       deviceScaleFactor: 1,
     });
 
-    await page.setContent(source.html.replace(SCREEN_CSS_MARKER, css));
+    await page.setContent(screenCss ? source.html.replace(SCREEN_CSS_MARKER, css) : source.html);
 
     const height = await page.evaluate(() =>
       Math.max(document.documentElement.scrollHeight, document.body.scrollHeight),
     );
 
-    if (height > 640) {
+    if (height > screenHeight) {
       throw new Error(
-        `${sessionId.toUpperCase()} ${source.language}/${source.name} exceeds its 640px canvas: ${height}px`,
+        `${sessionId.toUpperCase()} ${source.language}/${source.name} exceeds its ${screenHeight}px canvas: ${height}px`,
       );
     }
 
@@ -111,6 +136,11 @@ export async function generateTeachingVisuals({
   screens = [],
   diagramsOnly = false,
   checkSources = false,
+  screenCss = true,
+  screenWidth = 860,
+  screenHeight = 640,
+  requireSimulationLabel = true,
+  mermaidIdentityPrefix = sessionId,
 }) {
   const root = resolve(import.meta.dirname, '../..');
   const visualRoot = resolve(root, 'teaching/visuals', sessionId);
@@ -121,6 +151,8 @@ export async function generateTeachingVisuals({
     diagrams,
     screens,
     diagramsOnly,
+    screenCss,
+    requireSimulationLabel,
   });
 
   if (checkSources) {
@@ -133,7 +165,7 @@ export async function generateTeachingVisuals({
   }
 
   const css =
-    screens.length > 0 && !diagramsOnly
+    screenCss && screens.length > 0 && !diagramsOnly
       ? await readFile(resolve(visualRoot, 'screen.css'), 'utf8')
       : '';
 
@@ -147,7 +179,7 @@ export async function generateTeachingVisuals({
         await renderMermaid({
           browser,
           configuration,
-          sessionId,
+          mermaidIdentityPrefix,
           source,
         });
       } else {
@@ -155,6 +187,9 @@ export async function generateTeachingVisuals({
           browser,
           css,
           sessionId,
+          screenCss,
+          screenWidth,
+          screenHeight,
           source,
         });
       }
