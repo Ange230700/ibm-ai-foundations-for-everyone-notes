@@ -38,57 +38,11 @@ import {
   createS03AnimationPlan,
 } from './teaching-animation-plan.js';
 import { animatedOutputFile } from './teaching-animation-output.js';
-
-type Format = 'pdf' | 'pptx';
-type Language = 'en' | 'fr';
-
-async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, root: string) {
-  return Promise.all(
-    spec.slides
-      .flatMap((slide) =>
-        slide.visual ? [{ slideId: slide.slideId, path: slide.visual.path }] : [],
-      )
-      .map(async (visual) => ({
-        ...visual,
-        sha256: sha256(await readFile(resolve(root, visual.path))),
-      })),
-  );
-}
-
-interface Arguments {
-  command: 'plan' | 'build' | 'verify' | 'visual-qa' | 'animate';
-  session?: string;
-  language?: Language;
-  format?: Format;
-}
-
-function parseArguments(args: string[]): Arguments {
-  const [command, ...options] = args;
-  if (
-    command !== 'plan' &&
-    command !== 'build' &&
-    command !== 'verify' &&
-    command !== 'visual-qa' &&
-    command !== 'animate'
-  ) {
-    throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=sNN] [--lang=en|fr] [--format=pdf|pptx]',
-    );
-  }
-  const result: Arguments = { command };
-  for (const option of options) {
-    const [key, value, extra] = option.split('=');
-    if (!value || extra) throw new Error(`Invalid teaching option: ${option}.`);
-    if (key === '--session' && !result.session && /^s\d{2}$/u.test(value)) {
-      result.session = value;
-    } else if (key === '--lang' && !result.language && (value === 'en' || value === 'fr'))
-      result.language = value;
-    else if (key === '--format' && !result.format && (value === 'pdf' || value === 'pptx'))
-      result.format = value;
-    else throw new Error(`Unknown or duplicate teaching option: ${option}.`);
-  }
-  return result;
-}
+import {
+  parseTeachingArtifactArguments,
+  type TeachingArtifactFormat as Format,
+  type TeachingArtifactLanguage as Language,
+} from './teaching-artifact-arguments.js';
 
 function teachingSourcePath(root: string, session: TeachingSession, language: Language): string {
   const source = session.source[language];
@@ -128,6 +82,26 @@ async function readPair(
   }
   validateTeachingPair(content.en, content.fr);
   return content;
+}
+
+async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, root: string) {
+  return Promise.all(
+    spec.slides
+      .flatMap((slide) =>
+        slide.visual
+          ? [
+              {
+                slideId: slide.slideId,
+                path: slide.visual.path,
+              },
+            ]
+          : [],
+      )
+      .map(async (visual) => ({
+        ...visual,
+        sha256: sha256(await readFile(resolve(root, visual.path))),
+      })),
+  );
 }
 
 async function animateWithPowerPoint(
@@ -180,7 +154,7 @@ async function animateWithPowerPoint(
 }
 
 async function main(): Promise<void> {
-  const args = parseArguments(process.argv.slice(2));
+  const args = parseTeachingArtifactArguments(process.argv.slice(2));
   const manifest = await readManifest();
   const root = repositoryRoot();
   const requestedSession = args.session ?? (args.command === 'animate' ? 's01' : undefined);

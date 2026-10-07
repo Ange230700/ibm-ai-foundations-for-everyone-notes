@@ -20,13 +20,12 @@ await withPrompts(async (ask) => {
     .join(', ');
   const courseText = await ask(
     `Course number (${choices})`,
-    padOrdinal(manifest.courses.at(-1)?.ordinal ?? 1),
+    padOrdinal(manifest.courses.at(-1)!.ordinal),
   );
   const courseOrdinal = Number(courseText);
   const courseIndex = manifest.courses.findIndex((course) => course.ordinal === courseOrdinal);
   if (courseIndex < 0) throw new Error(`Unknown course number: ${courseText}`);
-  const course = manifest.courses[courseIndex];
-  if (!course) throw new Error('Course selection failed.');
+  const course = manifest.courses[courseIndex]!;
 
   const titleEn = await ask('Module title (English)');
   const titleFr = await ask('Module title (French)');

@@ -1,4 +1,4 @@
-import type { Code, Definition, List, ListItem, Nodes, Root, Table, TableRow } from 'mdast';
+import type { Code, Definition, List, ListItem, Nodes, Parent, Root, Table, TableRow } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { gfm } from 'micromark-extension-gfm';
@@ -66,7 +66,7 @@ function plainText(node: Nodes): string {
   }
 }
 
-type RenderChildren = (node: Nodes, separator?: string) => string;
+type RenderChildren = (node: Parent) => string;
 
 function renderList(node: List, render: (node: Nodes) => string): string {
   const tag = node.ordered ? 'ol' : 'ul';
@@ -160,7 +160,7 @@ export function renderMarkdownDocument(markdown: string, options: MarkdownDocume
   const text = labels[options.language];
 
   const uniqueHeadingId = (node: Nodes): string => {
-    const base = slugify(plainText(node)) || 'section';
+    const base = slugify(plainText(node));
 
     const occurrence = (headingIds.get(base) ?? 0) + 1;
 
@@ -169,8 +169,8 @@ export function renderMarkdownDocument(markdown: string, options: MarkdownDocume
     return occurrence === 1 ? base : `${base}-${occurrence}`;
   };
 
-  const renderChildren = (node: Nodes, separator = ''): string =>
-    'children' in node ? node.children.map(render).filter(Boolean).join(separator) : '';
+  const renderChildren = (node: Parent): string =>
+    node.children.map(render).filter(Boolean).join('');
 
   const renderLink = (label: string, url: string, title?: string | null): string => {
     const titleAttribute = title ? ` title="${escapeHtml(title)}"` : '';
@@ -319,9 +319,7 @@ export function renderMarkdownDocument(markdown: string, options: MarkdownDocume
       currentSection.push(child);
     }
 
-    if (currentSection.length > 0) {
-      sections.push(currentSection);
-    }
+    sections.push(currentSection);
 
     const renderedSections = sections
       .map((section, index) => {

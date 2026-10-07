@@ -95,8 +95,7 @@ function slideContent(
 }
 
 function slideNodes(root: Root, index: number): Nodes[] {
-  const start = root.children[index];
-  if (!start) throw new Error('Missing slide heading.');
+  // Called only for a slide heading discovered in root.children.
   let end = index + 1;
   while (end < root.children.length) {
     const node = root.children[end];
@@ -126,8 +125,8 @@ function parseSlide(
   const headingText = plainText(heading);
   const match = headingText.match(/^(?:Slide|Diapositive)\s+(\d{2})\s+—\s+(.+)$/u);
   if (!match) throw new Error(`Invalid teaching slide heading: ${headingText}.`);
-  const [, ordinal, title] = match;
-  if (!ordinal || !title) throw new Error(`Incomplete slide heading: ${headingText}.`);
+  const ordinal = match[1]!;
+  const title = match[2]!;
   const label = `${sessionId.toUpperCase()}-${ordinal}`;
   const metadata = nodes
     .filter((node) => node.type !== 'heading')

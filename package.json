@@ -19,16 +19,16 @@
     "manifest:schema": "tsx packages/manifest/src/generate-schema.ts",
     "manifest:schema:check": "tsx packages/manifest/src/generate-schema.ts --check",
     "artifacts:txt": "tsx packages/artifacts/src/export-txt.ts",
-    "typecheck": "tsc -b packages/core packages/manifest packages/validation packages/cli packages/artifacts packages/presentations",
+    "typecheck": "tsc6 -b packages/core packages/manifest packages/validation packages/cli packages/artifacts packages/presentations",
     "format": "prettier --write . --ignore-unknown",
     "format:check": "prettier --check . --ignore-unknown",
     "lint": "eslint .",
     "prepare": "husky",
     "check:semantic": "tsx packages/cli/src/check.ts",
-    "test": "pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
+    "test": "pnpm --filter @coursera-notes/core test && pnpm --filter @coursera-notes/artifacts test && pnpm --filter @coursera-notes/manifest test && pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
     "artifact": "tsx packages/cli/src/artifact.ts",
     "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts",
-    "coverage": "c8 pnpm test"
+    "coverage": "node scripts/coverage.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "20.5.3",

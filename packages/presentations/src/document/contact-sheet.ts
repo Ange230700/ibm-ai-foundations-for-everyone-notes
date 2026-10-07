@@ -164,13 +164,7 @@ export async function createPdfContactSheets(
 
       context.textBaseline = 'middle';
 
-      for (let index = 0; index < loaded.length; index += 1) {
-        const entry = loaded[index];
-
-        if (!entry) {
-          continue;
-        }
-
+      for (const [index, entry] of loaded.entries()) {
         const column = index % columns;
 
         const row = Math.floor(index / columns);
@@ -196,13 +190,9 @@ export async function createPdfContactSheets(
         context.drawImage(entry.image, x, imageY, thumbnailWidth, entry.thumbnailHeight);
       }
 
-      const first = group[0];
+      const first = group[0]!;
 
-      const last = group.at(-1);
-
-      if (!first || !last) {
-        throw new Error('Unexpected empty PDF contact-sheet group.');
-      }
+      const last = group.at(-1)!;
 
       const filename = [
         options.documentId,

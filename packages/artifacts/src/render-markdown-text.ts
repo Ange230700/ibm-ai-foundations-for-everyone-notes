@@ -1,4 +1,4 @@
-import type { Code, Definition, List, Nodes, Root, Table } from 'mdast';
+import type { Code, Definition, List, Nodes, Parent, Root, Table } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { gfm } from 'micromark-extension-gfm';
@@ -133,8 +133,8 @@ export function renderMarkdownText(
     mdastExtensions: [gfmFromMarkdown()],
   });
   const refs = definitions(root);
-  const renderChildren = (node: Nodes, separator = ''): string =>
-    'children' in node ? node.children.map(render).filter(Boolean).join(separator) : '';
+  const renderChildren = (node: Parent, separator = ''): string =>
+    node.children.map(render).filter(Boolean).join(separator);
   const link = (label: string, url: string, title?: string | null): string => {
     if (options.includeLinkDestinations === false) return label;
     return (label === url ? url : `${label}: ${url}`) + (title ? ` (${title})` : '');

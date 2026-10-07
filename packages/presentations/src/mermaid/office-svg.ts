@@ -3,11 +3,11 @@ import { DOMParser, XMLSerializer } from '@xmldom/xmldom';
 import { DEFAULT_MERMAID_THEME, type MermaidThemeTokens } from './config.js';
 
 function localName(element: Element): string {
-  return element.localName ?? element.nodeName.split(':').at(-1) ?? '';
+  return element.localName;
 }
 
 function classNames(element: Element): Set<string> {
-  return new Set((element.getAttribute('class') ?? '').split(/\s+/u).filter(Boolean));
+  return new Set((element.getAttribute('class') || '').split(/\s+/u).filter(Boolean));
 }
 
 function hasAncestorClass(element: Element, className: string): boolean {
@@ -57,7 +57,7 @@ function descendantElements(element: Element): Element[] {
 }
 
 function normalizedText(value: string | null): string {
-  return (value ?? '').replace(/\s+/gu, ' ').trim();
+  return (value || '').replace(/\s+/gu, ' ').trim();
 }
 
 function labelLines(element: Element): string[] {
@@ -231,7 +231,7 @@ function parseSvgDocument(svg: string, diagramId: string): Document {
 }
 
 function expandViewBox(root: Element): void {
-  const viewBox = (root.getAttribute('viewBox') ?? '').trim().split(/\s+/u).map(Number);
+  const viewBox = (root.getAttribute('viewBox') || '').trim().split(/\s+/u).map(Number);
 
   if (viewBox.length !== 4 || !viewBox.every(Number.isFinite)) {
     return;

@@ -12,15 +12,15 @@ export function teachingNoteParts(markdown: string): {
     .trim()
     .match(/^\*\*(.+?)\*\*[ \t]*([\s\S]+?)(?:\r?\n[ \t]*\r?\n|$)([\s\S]*)$/u);
 
-  if (!match?.[1] || !match[2]) {
+  if (!match) {
     throw new Error('Teaching notes require a bold key takeaway.');
   }
 
-  const takeaway = match[2].replace(/\s+/gu, ' ').trim();
-  const rest = (match[3] ?? '').replace(/\s+/gu, ' ').trim();
+  const takeaway = match[2]!.replace(/\s+/gu, ' ').trim();
+  const rest = match[3]!.replace(/\s+/gu, ' ').trim();
   // Keep the exact source sentences; visual grouping adds no new claims.
   const cues = rest ? rest.split(/(?<=[.!?])\s+(?=[A-ZÀ-ÖØ-Þ])/u).filter(Boolean) : [];
-  return { label: match[1], takeaway, cues };
+  return { label: match[1]!, takeaway, cues };
 }
 
 function appendParagraph(
@@ -31,11 +31,11 @@ function appendParagraph(
     bold?: boolean;
     italic?: boolean;
     underline?: boolean;
-    size?: number;
+    size: number;
     color?: string;
     bullet?: boolean;
-    lang?: string;
-  } = {},
+    lang: string;
+  },
 ): void {
   const paragraph = document.createElement('a:p');
   if (style.bullet) {
@@ -49,8 +49,8 @@ function appendParagraph(
   }
   const run = document.createElement('a:r');
   const properties = document.createElement('a:rPr');
-  properties.setAttribute('lang', style.lang ?? 'en-US');
-  properties.setAttribute('sz', String((style.size ?? 13) * 100));
+  properties.setAttribute('lang', style.lang);
+  properties.setAttribute('sz', String(style.size * 100));
   if (style.bold) properties.setAttribute('b', '1');
   if (style.italic) properties.setAttribute('i', '1');
   if (style.underline) properties.setAttribute('u', 'sng');
@@ -91,7 +91,10 @@ export async function formatTeachingNotes(bytes: Uint8Array, spec: DeckSpec): Pr
     for (const paragraph of Array.from(body.getElementsByTagName('a:p')))
       body.removeChild(paragraph);
     const { label, takeaway, cues } = teachingNoteParts(slide.teachingNotes);
-    const append = (value: string, style: Parameters<typeof appendParagraph>[3]): void =>
+    const append = (
+      value: string,
+      style: Omit<Parameters<typeof appendParagraph>[3], 'lang'>,
+    ): void =>
       appendParagraph(document, body, value, {
         ...style,
         lang: spec.language === 'fr' ? 'fr-FR' : 'en-US',
