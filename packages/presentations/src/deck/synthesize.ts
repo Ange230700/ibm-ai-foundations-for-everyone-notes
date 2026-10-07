@@ -195,18 +195,9 @@ function findContainingSection(sections: Section[], blockId: string): Section | 
 }
 
 function nearbyExplanation(content: ModuleContent, blockId: string, fallback: string): string {
-  const section = findContainingSection(content.sections, blockId);
-
-  if (!section) {
-    return fallback;
-  }
-
-  const index = section.blocks.findIndex(
-    (block) =>
-      block.id === blockId ||
-      (block.kind === 'diagram' && block.diagramId === blockId) ||
-      (block.kind === 'code' && block.codeExampleId === blockId),
-  );
+  // Resources are collected from these sections before this helper is called.
+  const section = findContainingSection(content.sections, blockId)!;
+  const index = section.blocks.findIndex((block) => block.id === blockId);
 
   const adjacent = [section.blocks[index - 1], section.blocks[index + 1]].find(
     (block) => block?.kind === 'paragraph' && Boolean(block.text),
@@ -244,7 +235,7 @@ function balancedWeightedGroups<T>(items: readonly T[], options: WeightedGroupOp
   let currentWeight = 0;
 
   items.forEach((item, index) => {
-    const weight = weights[index] ?? 1;
+    const weight = weights[index]!;
 
     if (
       current.length > 0 &&
@@ -259,9 +250,7 @@ function balancedWeightedGroups<T>(items: readonly T[], options: WeightedGroupOp
     currentWeight += weight;
   });
 
-  if (current.length > 0) {
-    groups.push(current);
-  }
+  groups.push(current);
 
   const uniformWeight = weights.every((weight) => weight === weights[0]);
 
@@ -354,7 +343,7 @@ function conceptSlide(sections: Section[], slideId: string, language: 'en' | 'fr
     slideId,
     title:
       sections.length === 1
-        ? (sections[0]?.title ?? text.summary)
+        ? sections[0]!.title
         : sections.map((section) => section.title).join(' · '),
     concepts: sections.map((section) => ({
       title: section.title,
@@ -488,7 +477,7 @@ function emitResource(
   });
 
   state.slides.push(
-    ...rowGroups.map((rows, index) => ({
+    ...(rowGroups.length ? rowGroups : [[]]).map((rows, index) => ({
       ...slide,
       slideId:
         index === 0 ? slide.slideId : `${slide.slideId}-${String(index + 1).padStart(2, '0')}`,
@@ -528,10 +517,6 @@ function appendSectionSlides(
   const childGroups = conceptGroups(section.children);
 
   childGroups.forEach((group, groupIndex) => {
-    if (group.length === 0) {
-      return;
-    }
-
     state.slides.push(
       conceptSlide(
         group,

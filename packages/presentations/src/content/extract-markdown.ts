@@ -49,12 +49,10 @@ function textFromNode(node: Nodes): string {
     return '';
   }
 
-  const separator = node.type === 'listItem' || node.type === 'blockquote' ? ' ' : '';
-
   return children
     .map((child) => textFromNode(child))
     .filter(Boolean)
-    .join(separator)
+    .join('')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -282,15 +280,9 @@ function attachBlockExplanations(
       );
     }
 
-    const diagram = diagramById.get(block.diagramId);
-
-    if (diagram) {
-      diagram.explanation = explanation.text;
-
-      if (explanation.inlines) {
-        diagram.explanationInlines = explanation.inlines;
-      }
-    }
+    const diagram = diagramById.get(block.diagramId)!;
+    diagram.explanation = explanation.text;
+    diagram.explanationInlines = explanation.inlines!;
   });
 }
 
@@ -314,7 +306,7 @@ function appendSection(
     return;
   }
 
-  while (stack.length > 0 && (stack.at(-1)?.depth ?? 0) >= node.depth) {
+  while (stack.length > 0 && stack.at(-1)!.depth >= node.depth) {
     stack.pop();
   }
 
@@ -358,13 +350,7 @@ function moduleTitle(tree: Root, sourcePath: string): Heading {
     throw new Error(`${sourcePath} must contain exactly one H1; found ${headings.length}.`);
   }
 
-  const heading = headings[0];
-
-  if (!heading) {
-    throw new Error(`${sourcePath} has no H1.`);
-  }
-
-  return heading;
+  return headings[0]!;
 }
 
 export function parseCanonicalModule(source: string, options: ExtractOptions): ModuleContent {

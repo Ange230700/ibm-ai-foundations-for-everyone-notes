@@ -9,6 +9,6 @@
     "zod": "4.6.5"
   },
   "scripts": {
-    "test": "tsx --test test/*.test.ts"
+    "test": "node --import tsx --experimental-test-module-mocks --test test/*.test.ts"
   }
 }

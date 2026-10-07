@@ -13,6 +13,6 @@
     "micromark-extension-gfm": "3.0.0"
   },
   "scripts": {
-    "test": "tsx --test test/*.test.ts"
+    "test": "node --import tsx --experimental-test-module-mocks --test test/*.test.ts"
   }
 }

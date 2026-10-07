@@ -69,6 +69,14 @@ test('artifact impact is empty for a clean working tree', () => {
   assert.equal(report.targets.length, 0);
 });
 
+test('unrelated and archived-course changes have no active artifact impact', () => {
+  const report = analyzeArtifactImpact(manifest, [
+    'README.md',
+    'courses/02-archived/en/01-archived.md',
+  ]);
+  assert.deepEqual(report, { scope: 'none', targets: [], reasons: [] });
+});
+
 test('artifact impact selects only the changed canonical module language', () => {
   const report = analyzeArtifactImpact(manifest, ['courses/01-active/en/01-one.md']);
 
@@ -142,4 +150,36 @@ test('unrelated CLI validation changes do not select artifact impact', () => {
   const ids = plan.map(({ task }) => task.id);
 
   assert.ok(!ids.includes('artifacts.impact'));
+});
+
+test('artifact impact reasons have a stable sorted order regardless of input order', () => {
+  const files = ['courses/01-active/fr/02-two.md', 'courses/01-active/en/01-one.md'];
+  const forward = analyzeArtifactImpact(manifest, files);
+  const reverse = analyzeArtifactImpact(manifest, [...files].reverse());
+  assert.equal(forward.reasons.length, 2);
+  assert.deepEqual(forward, reverse);
+  assert.deepEqual(forward.reasons, [...forward.reasons].sort());
+});
+
+test('multiple artifact engine changes produce sorted reasons without duplicate targets', () => {
+  const files = ['packages/presentations/src/pptx/render.ts', 'manifest.json', 'pnpm-lock.yaml'];
+  const forward = analyzeArtifactImpact(manifest, files);
+  const reverse = analyzeArtifactImpact(manifest, [...files].reverse());
+  assert.equal(forward.scope, 'all');
+  assert.equal(forward.targets.length, 4);
+  assert.deepEqual(forward, reverse);
+  assert.deepEqual(
+    forward.reasons,
+    [...files].sort().map((file) => `artifact engine input changed: ${file}`),
+  );
+});
+
+test('planner selects every task for an unchanged working tree', () => {
+  const automatic = planTasks([]);
+  const full = planTasks([], true);
+  assert.deepEqual(
+    automatic.map((entry) => entry.task.id),
+    full.map((entry) => entry.task.id),
+  );
+  assert.ok(automatic.every((entry) => entry.reasons.includes('no working-tree changes detected')));
 });

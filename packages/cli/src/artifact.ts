@@ -299,18 +299,16 @@ if (parsed.command === 'pptx') {
 }
 
 if (parsed.command === 'verify') {
-  if (!parsed.format) {
-    throw new Error('Artifact verification requires --format=pdf or --format=pptx.');
-  }
+  const format = parsed.format!; // The argument parser requires a format for this command.
 
   if (targets.length === 0 && !parsed.json) {
-    console.log(`Verified ${parsed.format.toUpperCase()} artifacts: 0 target(s)`);
+    console.log(`Verified ${format.toUpperCase()} artifacts: 0 target(s)`);
   }
 
   const results = [];
 
   for (const target of targets) {
-    const result = await verifyArtifactTarget(target, parsed.format);
+    const result = await verifyArtifactTarget(target, format);
 
     results.push(result);
 
@@ -372,18 +370,16 @@ if (parsed.command === 'verify') {
 }
 
 if (parsed.command === 'visual-qa') {
-  if (!parsed.format) {
-    throw new Error('Artifact visual QA requires --format=pdf or --format=pptx.');
-  }
+  const format = parsed.format!; // The argument parser requires a format for this command.
 
   if (targets.length === 0 && !parsed.json) {
-    console.log(`Visual QA ${parsed.format.toUpperCase()}: 0 target(s)`);
+    console.log(`Visual QA ${format.toUpperCase()}: 0 target(s)`);
   }
 
   const results = [];
 
   for (const target of targets) {
-    const result = await executeVisualQaTarget(target, parsed.format);
+    const result = await executeVisualQaTarget(target, format);
 
     results.push(result);
 

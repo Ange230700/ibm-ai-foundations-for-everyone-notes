@@ -31,7 +31,7 @@ function repositoryRelativePath(repositoryRoot: string, absolutePath: string): s
 function svgAspectRatio(bytes: Uint8Array, label: string): number {
   const xml = Buffer.from(bytes).toString('utf8');
 
-  if (!/<svg[\s>]/u.test(xml)) {
+  if (!/<svg[\s/>]/u.test(xml)) {
     throw new Error(`Diagram asset is not SVG: ${label}`);
   }
 
@@ -39,28 +39,21 @@ function svgAspectRatio(bytes: Uint8Array, label: string): number {
 
   const root = document.documentElement;
 
-  const viewBox = (root.getAttribute('viewBox') ?? '').trim().split(/\s+/u).map(Number);
+  const viewBox = (root.getAttribute('viewBox') || '').trim().split(/\s+/u).map(Number);
 
   if (viewBox.length === 4) {
-    const width = viewBox[2];
+    const width = viewBox[2]!;
 
-    const height = viewBox[3];
+    const height = viewBox[3]!;
 
-    if (
-      Number.isFinite(width) &&
-      Number.isFinite(height) &&
-      width !== undefined &&
-      height !== undefined &&
-      width > 0 &&
-      height > 0
-    ) {
+    if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
       return width / height;
     }
   }
 
-  const width = Number.parseFloat(root.getAttribute('width') ?? '');
+  const width = Number.parseFloat(root.getAttribute('width') || '');
 
-  const height = Number.parseFloat(root.getAttribute('height') ?? '');
+  const height = Number.parseFloat(root.getAttribute('height') || '');
 
   if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
     return width / height;

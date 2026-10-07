@@ -5,7 +5,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "scripts": {
-    "test": "tsx --test test/*.test.ts"
+    "test": "node --import tsx --experimental-test-module-mocks --test --test-concurrency=1 test/*.test.ts"
   },
   "dependencies": {
     "@coursera-notes/core": "workspace:*",

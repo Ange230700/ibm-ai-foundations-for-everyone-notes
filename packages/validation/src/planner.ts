@@ -19,7 +19,7 @@ function gitExecutable(): string {
 
 function changedPath(line: string): string {
   const path = line.slice(3).trim();
-  return path.includes(' -> ') ? (path.split(' -> ').at(-1) ?? path) : path;
+  return path.includes(' -> ') ? path.split(' -> ').at(-1)! : path;
 }
 
 export function changedFiles(): string[] {
@@ -137,7 +137,7 @@ function visitTask(
   visited.add(id);
   ordered.push({
     task,
-    reasons: [...(reasons.get(id) ?? [])].sort((left, right) => left.localeCompare(right)),
+    reasons: [...reasons.get(id)!].sort((left, right) => left.localeCompare(right)),
   });
 }
 

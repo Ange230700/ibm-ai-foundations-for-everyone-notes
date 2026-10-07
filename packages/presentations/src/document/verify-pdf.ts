@@ -40,6 +40,7 @@ interface PositionedText {
   x: number;
   y: number;
   height: number;
+  width: number;
 }
 
 function repositoryRelativePath(repositoryRoot: string, absolutePath: string): string {
@@ -175,6 +176,7 @@ function positionedText(item: unknown): PositionedText | undefined {
     str?: unknown;
     transform?: unknown;
     height?: unknown;
+    width?: unknown;
   };
 
   if (
@@ -200,10 +202,11 @@ function positionedText(item: unknown): PositionedText | undefined {
     x,
     y,
     height: Number.isFinite(height) ? Math.abs(height) : 0,
+    width: Number(candidate.width),
   };
 }
 
-function pageTextInReadingOrder(items: unknown[]): string {
+export function pageTextInReadingOrder(items: unknown[]): string {
   const positioned: PositionedText[] = [];
 
   for (const item of items) {
@@ -214,7 +217,20 @@ function pageTextInReadingOrder(items: unknown[]): string {
     }
   }
 
-  return positioned.map((item) => item.str).join('\n');
+  let text = '';
+  let previous: PositionedText | undefined;
+  for (const item of positioned) {
+    // PDF.js may emit a ligature or a styled word as several adjacent glyph runs.
+    // Join only runs that touch on the same baseline; preserve gaps and line breaks.
+    const touchesPrevious =
+      previous !== undefined &&
+      Number.isFinite(previous.width) &&
+      Math.abs(item.y - previous.y) <= 0.1 &&
+      Math.abs(item.x - previous.x - previous.width) <= 0.1;
+    text += `${text && !touchesPrevious ? '\n' : ''}${item.str}`;
+    previous = item;
+  }
+  return text;
 }
 
 async function extractPdfText(bytes: Uint8Array): Promise<{

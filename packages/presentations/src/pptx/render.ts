@@ -48,10 +48,6 @@ function proportionalHeights(
   availableHeight: number,
   minimumHeight: number,
 ): number[] {
-  if (weights.length === 0) {
-    return [];
-  }
-
   const minimumTotal = minimumHeight * weights.length;
 
   if (minimumTotal >= availableHeight) {
@@ -120,7 +116,7 @@ function wrapCodeLine(line: string, maximumLength: number): string[] {
     return [line];
   }
 
-  const indentation = line.match(/^\s*/u)?.[0] ?? '';
+  const indentation = line.match(/^\s*/u)![0]!;
   const words = line.trim().split(/\s+/u);
   const wrapped: string[] = [];
   let current = indentation;
@@ -722,7 +718,7 @@ function renderListSlide(
   let y = rowTop;
 
   slideSpec.items.forEach((item, index) => {
-    const rowHeight = rowHeights[index] ?? availableHeight / slideSpec.items.length;
+    const rowHeight = rowHeights[index]!;
 
     slide.addShape('rect', {
       x: SLIDE.left,
@@ -904,11 +900,7 @@ function renderDiagram(
   brand: ResolvedNativePptxBrand,
   assets: Map<string, ResolvedNativePptxDiagramAsset>,
 ): void {
-  const asset = assets.get(slideSpec.diagramId);
-
-  if (!asset) {
-    throw new Error(`Missing resolved diagram asset for ${slideSpec.diagramId}.`);
-  }
+  const asset = assets.get(slideSpec.diagramId)!;
 
   const slide = pptx.addSlide();
 
@@ -1244,7 +1236,8 @@ export async function renderNativePptx(
       caption: string;
     }
   >();
-  for (const slide of spec.slides) {
+  for (const [index, slide] of spec.slides.entries()) {
+    if (!slide) throw new Error(`Missing native slide at index ${index}.`);
     if (!slide.visual) continue;
     const { path, kind, caption } = slide.visual;
     if (!/^teaching\/visuals\/s\d{2}\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u.test(path)) {
@@ -1313,11 +1306,7 @@ export async function renderNativePptx(
   };
 
   for (let index = 0; index < spec.slides.length; index += 1) {
-    const slideSpec = spec.slides[index];
-
-    if (!slideSpec) {
-      continue;
-    }
+    const slideSpec = spec.slides[index]!;
 
     const pageNumber = index + 1;
 
@@ -1369,11 +1358,7 @@ export async function renderNativePptx(
   const diagramIdentity = spec.slides
     .filter((slide) => slide.kind === 'diagram')
     .map((slide) => {
-      const asset = diagramAssets.get(slide.diagramId);
-
-      if (!asset) {
-        throw new Error(`Missing resolved diagram identity for ${slide.diagramId}.`);
-      }
+      const asset = diagramAssets.get(slide.diagramId)!;
 
       return {
         diagramId: slide.diagramId,

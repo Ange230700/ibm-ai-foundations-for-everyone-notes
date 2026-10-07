@@ -185,7 +185,7 @@ function normalizePartPath(ownerPart: string, target: string): string {
 
 function slideText(document: Document): string[] {
   return elements(document, 't')
-    .map((node) => node.textContent ?? '')
+    .map((node) => node.textContent!)
     .map((value) => value.normalize('NFKC').replace(/\s+/gu, ' ').trim())
     .filter(Boolean);
 }
@@ -298,7 +298,7 @@ function isOutOfBounds(bounds: Bounds): boolean {
 }
 
 function relationshipId(element: Element): string | undefined {
-  return element.getAttribute('r:id') ?? element.getAttribute('id') ?? undefined;
+  return element.getAttribute('r:id') || element.getAttribute('id') || undefined;
 }
 
 async function orderedSlideParts(zip: JSZip): Promise<string[]> {
@@ -337,11 +337,8 @@ async function notesForSlide(
   zip: JSZip,
   slidePart: string,
 ): Promise<{ text: string; formatted: boolean } | undefined> {
-  const filename = slidePart.split('/').at(-1);
-
-  if (!filename) {
-    return undefined;
-  }
+  // slidePart already names a required slide XML entry in the package.
+  const filename = slidePart.split('/').at(-1)!;
 
   const relationshipPart = `ppt/slides/_rels/${filename}.rels`;
 
