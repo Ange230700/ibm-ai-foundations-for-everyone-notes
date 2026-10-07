@@ -84,6 +84,26 @@ async function readPair(
   return content;
 }
 
+async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, root: string) {
+  return Promise.all(
+    spec.slides
+      .flatMap((slide) =>
+        slide.visual
+          ? [
+              {
+                slideId: slide.slideId,
+                path: slide.visual.path,
+              },
+            ]
+          : [],
+      )
+      .map(async (visual) => ({
+        ...visual,
+        sha256: sha256(await readFile(resolve(root, visual.path))),
+      })),
+  );
+}
+
 async function animateWithPowerPoint(
   root: string,
   sessionId: 's01' | 's02' | 's03',
