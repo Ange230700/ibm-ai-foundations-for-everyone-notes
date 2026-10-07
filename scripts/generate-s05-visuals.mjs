@@ -1,8 +1,8 @@
 import process from 'node:process';
 
-import { generateMermaidTeachingVisuals } from './lib/generate-mermaid-teaching-visuals.mjs';
+import { generateTeachingVisuals } from './lib/generate-teaching-visuals.mjs';
 
-await generateMermaidTeachingVisuals({
+await generateTeachingVisuals({
   sessionId: 's05',
   diagrams: [
     'workflow-canvas',
