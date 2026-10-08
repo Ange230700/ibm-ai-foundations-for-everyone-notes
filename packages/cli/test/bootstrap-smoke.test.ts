@@ -155,7 +155,9 @@ async function runTypeScript(
 test(
   'clean template bootstrap generates and verifies canonical artifacts',
   {
-    timeout: 180_000,
+    // PDF and PPTX generation run as child processes under c8. On a busy
+    // Windows runner their combined cold start can exceed three minutes.
+    timeout: 300_000,
   },
   async () => {
     const repositoryRoot = await mkdtemp(resolve(tmpdir(), 'coursera-notes-v1-'));

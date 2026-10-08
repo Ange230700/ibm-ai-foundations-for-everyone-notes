@@ -165,7 +165,7 @@ test('native rendering validates branding files, teaching visuals and the runtim
     namedExports: {
       ...fs,
       readFile: async (path: string) => {
-        if (path.includes('teaching/visuals')) return visualBytes;
+        if (path.replaceAll('\\', '/').includes('teaching/visuals')) return visualBytes;
         if (failure !== undefined) throw failure;
         return bytes;
       },

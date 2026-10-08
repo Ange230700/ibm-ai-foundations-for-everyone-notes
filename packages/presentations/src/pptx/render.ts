@@ -1249,7 +1249,8 @@ export async function renderNativePptx(
       throw new Error(`Invalid teaching SVG: ${path}`);
     if (
       kind !== 'mermaid' &&
-      !Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+      (bytes.length < 24 ||
+        !Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])))
     )
       throw new Error(`Invalid teaching PNG: ${path}`);
     const ratio =

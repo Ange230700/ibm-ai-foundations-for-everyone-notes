@@ -8,6 +8,7 @@ coverage/
 .artifacts/
 .env
 .env.*
+!.env.example
 .DS_Store
 .setup-state.json
 
