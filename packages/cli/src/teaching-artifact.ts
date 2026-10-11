@@ -113,10 +113,13 @@ async function animateWithPowerPoint(
   if (process.platform !== 'win32') {
     throw new Error('Native teaching animations require desktop PowerPoint on Windows.');
   }
+  const systemRoot = process.env.SystemRoot;
+  if (!systemRoot) throw new Error('SystemRoot is required to locate Windows PowerShell.');
+  const powershell = resolve(systemRoot, 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');
   return new Promise<string>((resolvePromise, rejectPromise) => {
     let stdout = '';
     const child = spawn(
-      'powershell.exe',
+      powershell,
       [
         '-NoProfile',
         '-ExecutionPolicy',
@@ -153,6 +156,297 @@ async function animateWithPowerPoint(
   });
 }
 
+type TeachingArgs = ReturnType<typeof parseTeachingArtifactArguments>;
+type AnimationSessionId = 's01' | 's02' | 's03';
+type PptxRecord = {
+  pptxSha256: string;
+  sourceSha256: string;
+  moduleContentSha256: string;
+  deckSpecSha256: string;
+  visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
+};
+
+function animationPlan(sessionId: AnimationSessionId, content: TeachingSessionContent) {
+  if (sessionId === 's01') return createS01AnimationPlan(content);
+  if (sessionId === 's02') return createS02AnimationPlan(content);
+  return createS03AnimationPlan(content);
+}
+
+async function assertCurrentPptx(
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+  staleMessage?: string,
+) {
+  const spec = teachingDeckSpec(content);
+  const record = JSON.parse(
+    await readFile(resolve(outputRoot, 'pptx-artifact.json'), 'utf8'),
+  ) as PptxRecord;
+  const verification = await verifyNativePptx(spec, root, resolve(outputRoot, 'session.pptx'));
+  const expectedVisuals = await currentVisualAssets(spec, root);
+  if (
+    record.pptxSha256 !== verification.pptxSha256 ||
+    record.sourceSha256 !== content.sourceSha256 ||
+    record.moduleContentSha256 !== content.contentSha256 ||
+    record.deckSpecSha256 !== verification.deckSpecSha256 ||
+    canonicalJson(record.visualAssets) !== canonicalJson(expectedVisuals)
+  ) {
+    throw new Error(staleMessage ?? `Stale teaching PPTX: ${session.id}/${language}.`);
+  }
+  return { spec, verification };
+}
+
+async function animateSession(
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+  format: Format | undefined,
+): Promise<void> {
+  if (
+    (session.id !== 's01' && session.id !== 's02' && session.id !== 's03') ||
+    (format && format !== 'pptx')
+  ) {
+    throw new Error('Native animations currently support S01/S02/S03 PPTX only.');
+  }
+  const { spec, verification: source } = await assertCurrentPptx(
+    session,
+    language,
+    content,
+    root,
+    outputRoot,
+    `Stale ${session.id.toUpperCase()} PPTX: rebuild ${language} before animating.`,
+  );
+  const plan = animationPlan(session.id, content);
+  const counts = animationCounts(plan);
+  const planPath = resolve(outputRoot, 'animation-plan.json');
+  await atomicWrite(planPath, canonicalJson(plan));
+  const animatedFile = await animateWithPowerPoint(root, session.id, language, planPath);
+  const animated = await verifyNativePptx(spec, root, resolve(outputRoot, animatedFile));
+  await atomicWrite(
+    resolve(outputRoot, 'pptx-animation.json'),
+    canonicalJson({
+      schemaVersion: 2,
+      sessionId: session.id,
+      language,
+      sourceSha256: content.sourceSha256,
+      deckSpecSha256: source.deckSpecSha256,
+      inputPptxSha256: source.pptxSha256,
+      outputPptxSha256: animated.pptxSha256,
+      outputFile: animatedFile,
+      animationPlanSha256: sha256(canonicalJson(plan)),
+      animatedSlideIds: plan.slides.map(
+        (slide) => `${session.id.toUpperCase()}-${String(slide.number).padStart(2, '0')}`,
+      ),
+      slideCount: animated.slideCount,
+      ...counts,
+    }),
+  );
+  console.log(
+    `ANIMATED ${session.id}/${language}/pptx slides=${counts.animatedSlides} clicks=${counts.clicks} effects=${counts.effects} file=${animatedFile}`,
+  );
+}
+
+async function createPdfVisualQa(
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+  visualRoot: string,
+): Promise<void> {
+  const pdfPath = resolve(outputRoot, 'session.pdf');
+  const verification = await verifyTeachingPdf(content, pdfPath);
+  const pageRender = await renderPdfPages({
+    repositoryRoot: root,
+    pdfPath,
+    outputRoot: resolve(visualRoot, 'pages'),
+    dpi: 150,
+  });
+  if (verification.pdfSha256 !== pageRender.pdfSha256) {
+    throw new Error('PDF visual-QA checksum mismatch.');
+  }
+  const contactSheets = await createPdfContactSheets(pageRender, {
+    repositoryRoot: root,
+    outputRoot: resolve(visualRoot, 'contact-sheets'),
+    documentId: `${session.id}.${language}`,
+    columns: 3,
+    pagesPerSheet: 12,
+    thumbnailWidth: 400,
+  });
+  await atomicWrite(resolve(visualRoot, 'pages.json'), serializePdfPageRenderManifest(pageRender));
+  await atomicWrite(
+    resolve(visualRoot, 'contact-sheets.json'),
+    serializePdfContactSheetManifest(contactSheets),
+  );
+}
+
+async function createPptxVisualQa(
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+  visualRoot: string,
+): Promise<void> {
+  const visualQa = await renderNativePptxVisualQa(teachingDeckSpec(content), {
+    repositoryRoot: root,
+    pptxPath: resolve(outputRoot, 'session.pptx'),
+    outputRoot: visualRoot,
+    documentId: `${session.id}.${language}`,
+    columns: 3,
+    pagesPerSheet: 12,
+    thumbnailWidth: 400,
+    dpi: 150,
+  });
+  await atomicWrite(
+    resolve(visualRoot, 'visual-qa.json'),
+    serializeNativePptxVisualQaManifest(visualQa),
+  );
+}
+
+async function createVisualQa(
+  format: Format,
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+): Promise<void> {
+  const visualRoot = resolve(outputRoot, 'visual-qa', format);
+  if (format === 'pdf') {
+    await createPdfVisualQa(session, language, content, root, outputRoot, visualRoot);
+  } else {
+    await createPptxVisualQa(session, language, content, root, outputRoot, visualRoot);
+  }
+  console.log(`VISUAL-QA ${session.id}/${language}/${format} slides=${content.slides.length}`);
+}
+
+async function buildPdf(content: TeachingSessionContent, root: string, outputRoot: string) {
+  const path = resolve(outputRoot, 'session.pdf');
+  const artifact = await renderTeachingPdf(content, root, path);
+  const verification = await verifyTeachingPdf(content, path);
+  if (artifact.pdfSha256 !== verification.pdfSha256) {
+    throw new Error('Teaching PDF checksum mismatch.');
+  }
+  await atomicWrite(resolve(outputRoot, 'pdf-artifact.json'), serializeTeachingPdfRecord(artifact));
+  await atomicWrite(
+    resolve(outputRoot, 'pdf-verification.json'),
+    serializeTeachingPdfRecord(verification),
+  );
+}
+
+async function verifyPdf(
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+) {
+  const record = JSON.parse(await readFile(resolve(outputRoot, 'pdf-artifact.json'), 'utf8')) as {
+    pdfSha256: string;
+    sourceSha256: string;
+    contentSha256: string;
+    brandLogoSha256: string;
+    htmlSha256: string;
+  };
+  const verification = await verifyTeachingPdf(content, resolve(outputRoot, 'session.pdf'));
+  const logo = await readFile(
+    resolve(root, 'packages/presentations/assets/brand/kraak/kraak-logo.png'),
+  );
+  const visuals = await resolveTeachingPdfVisuals(content, root);
+  const logoUrl = `data:image/png;base64,${logo.toString('base64')}`;
+  const html = renderTeachingPdfHtml(content, logoUrl, visuals);
+  if (
+    record.pdfSha256 !== verification.pdfSha256 ||
+    record.sourceSha256 !== content.sourceSha256 ||
+    record.contentSha256 !== content.contentSha256 ||
+    record.brandLogoSha256 !== sha256(logo) ||
+    record.htmlSha256 !== sha256(html)
+  ) {
+    throw new Error(`Stale teaching PDF: ${session.id}/${language}.`);
+  }
+}
+
+async function buildPptx(content: TeachingSessionContent, root: string, outputRoot: string) {
+  const path = resolve(outputRoot, 'session.pptx');
+  const spec = teachingDeckSpec(content);
+  const artifact = await renderNativePptx(spec, { repositoryRoot: root, outputPath: path });
+  const verification = await verifyNativePptx(spec, root, path);
+  if (
+    artifact.pptxSha256 !== verification.pptxSha256 ||
+    artifact.deckSpecSha256 !== verification.deckSpecSha256
+  ) {
+    throw new Error('Teaching PPTX checksum mismatch.');
+  }
+  await atomicWrite(
+    resolve(outputRoot, 'pptx-artifact.json'),
+    serializeNativePptxArtifactRecord(artifact),
+  );
+  await atomicWrite(
+    resolve(outputRoot, 'pptx-verification.json'),
+    serializeNativePptxVerification(verification),
+  );
+}
+
+async function processFormat(
+  args: TeachingArgs,
+  format: Format,
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+) {
+  if (args.command === 'visual-qa') {
+    await createVisualQa(format, session, language, content, root, outputRoot);
+    return;
+  }
+  if (format === 'pdf') {
+    if (args.command === 'build') await buildPdf(content, root, outputRoot);
+    else await verifyPdf(session, language, content, root, outputRoot);
+  } else if (args.command === 'build') {
+    await buildPptx(content, root, outputRoot);
+  } else {
+    await assertCurrentPptx(session, language, content, root, outputRoot);
+  }
+  const action = args.command === 'build' ? 'WROTE' : 'VERIFIED';
+  console.log(
+    `${action} ${session.id}/${language}/${format} slides=${content.slides.length} minutes=${content.durationMinutes}`,
+  );
+}
+
+async function processLanguage(
+  args: TeachingArgs,
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+): Promise<void> {
+  const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
+  if (args.command === 'animate') {
+    await animateSession(session, language, content, root, outputRoot, args.format);
+    return;
+  }
+  const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];
+  if (args.command === 'plan') {
+    console.log(
+      `PLAN ${session.id}/${language} slides=${content.slides.length} minutes=${content.durationMinutes} formats=${formats.join(',')} source=${content.sourcePath}`,
+    );
+    return;
+  }
+  const sourceNow = await readFile(teachingSourcePath(root, session, language), 'utf8');
+  if (sha256(sourceNow) !== content.sourceSha256) {
+    throw new Error(`${content.sourcePath} changed during build.`);
+  }
+  for (const format of formats) {
+    await processFormat(args, format, session, language, content, root, outputRoot);
+  }
+}
+
 async function main(): Promise<void> {
   const args = parseTeachingArtifactArguments(process.argv.slice(2));
   const manifest = await readManifest();
@@ -162,238 +456,15 @@ async function main(): Promise<void> {
     manifest.teachingSessions?.filter(
       (session) => !requestedSession || session.id === requestedSession,
     ) ?? [];
-  if (sessions.length === 0)
+  if (sessions.length === 0) {
     throw new Error(`No teaching session matched ${args.session ?? 'manifest'}.`);
-
+  }
+  const languages = (args.language ? [args.language] : ['en', 'fr']) as Language[];
   for (const session of sessions) {
-    const pair = await readPair(session, root, resolveTeachingSessionSources(manifest, session));
-    for (const language of (args.language ? [args.language] : ['en', 'fr']) as Language[]) {
-      const content = pair[language];
-      const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
-      if (args.command === 'animate') {
-        if (
-          (session.id !== 's01' && session.id !== 's02' && session.id !== 's03') ||
-          (args.format && args.format !== 'pptx')
-        ) {
-          throw new Error('Native animations currently support S01/S02/S03 PPTX only.');
-        }
-        const path = resolve(outputRoot, 'session.pptx');
-        const spec = teachingDeckSpec(content);
-        const record = JSON.parse(
-          await readFile(resolve(outputRoot, 'pptx-artifact.json'), 'utf8'),
-        ) as {
-          pptxSha256: string;
-          sourceSha256: string;
-          moduleContentSha256: string;
-          deckSpecSha256: string;
-          visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
-        };
-        const source = await verifyNativePptx(spec, root, path);
-        if (
-          record.pptxSha256 !== source.pptxSha256 ||
-          record.sourceSha256 !== content.sourceSha256 ||
-          record.moduleContentSha256 !== content.contentSha256 ||
-          record.deckSpecSha256 !== source.deckSpecSha256 ||
-          canonicalJson(record.visualAssets) !==
-            canonicalJson(await currentVisualAssets(spec, root))
-        ) {
-          throw new Error(
-            `Stale ${session.id.toUpperCase()} PPTX: rebuild ${language} before animating.`,
-          );
-        }
-        const plan =
-          session.id === 's01'
-            ? createS01AnimationPlan(content)
-            : session.id === 's02'
-              ? createS02AnimationPlan(content)
-              : createS03AnimationPlan(content);
-        const counts = animationCounts(plan);
-        const planPath = resolve(outputRoot, 'animation-plan.json');
-        await atomicWrite(planPath, canonicalJson(plan));
-        const animatedFile = await animateWithPowerPoint(root, session.id, language, planPath);
-        const animatedPath = resolve(outputRoot, animatedFile);
-        const animated = await verifyNativePptx(spec, root, animatedPath);
-        await atomicWrite(
-          resolve(outputRoot, 'pptx-animation.json'),
-          canonicalJson({
-            schemaVersion: 2,
-            sessionId: session.id,
-            language,
-            sourceSha256: content.sourceSha256,
-            deckSpecSha256: source.deckSpecSha256,
-            inputPptxSha256: source.pptxSha256,
-            outputPptxSha256: animated.pptxSha256,
-            outputFile: animatedFile,
-            animationPlanSha256: sha256(canonicalJson(plan)),
-            animatedSlideIds: plan.slides.map(
-              (slide) => `${session.id.toUpperCase()}-${String(slide.number).padStart(2, '0')}`,
-            ),
-            slideCount: animated.slideCount,
-            ...counts,
-          }),
-        );
-        console.log(
-          `ANIMATED ${session.id}/${language}/pptx slides=${counts.animatedSlides} clicks=${counts.clicks} effects=${counts.effects} file=${animatedFile}`,
-        );
-        continue;
-      }
-      const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];
-      if (args.command === 'plan') {
-        console.log(
-          `PLAN ${session.id}/${language} slides=${content.slides.length} minutes=${content.durationMinutes} formats=${formats.join(',')} source=${content.sourcePath}`,
-        );
-        continue;
-      }
-      const sourceNow = await readFile(teachingSourcePath(root, session, language), 'utf8');
-      if (sha256(sourceNow) !== content.sourceSha256)
-        throw new Error(`${content.sourcePath} changed during build.`);
-      for (const format of formats) {
-        if (args.command === 'visual-qa') {
-          const visualRoot = resolve(outputRoot, 'visual-qa', format);
-          if (format === 'pdf') {
-            const pdfPath = resolve(outputRoot, 'session.pdf');
-            const verification = await verifyTeachingPdf(content, pdfPath);
-            const pageRender = await renderPdfPages({
-              repositoryRoot: root,
-              pdfPath,
-              outputRoot: resolve(visualRoot, 'pages'),
-              dpi: 150,
-            });
-            if (verification.pdfSha256 !== pageRender.pdfSha256)
-              throw new Error('PDF visual-QA checksum mismatch.');
-            const contactSheets = await createPdfContactSheets(pageRender, {
-              repositoryRoot: root,
-              outputRoot: resolve(visualRoot, 'contact-sheets'),
-              documentId: `${session.id}.${language}`,
-              columns: 3,
-              pagesPerSheet: 12,
-              thumbnailWidth: 400,
-            });
-            await atomicWrite(
-              resolve(visualRoot, 'pages.json'),
-              serializePdfPageRenderManifest(pageRender),
-            );
-            await atomicWrite(
-              resolve(visualRoot, 'contact-sheets.json'),
-              serializePdfContactSheetManifest(contactSheets),
-            );
-          } else {
-            const spec = teachingDeckSpec(content);
-            const visualQa = await renderNativePptxVisualQa(spec, {
-              repositoryRoot: root,
-              pptxPath: resolve(outputRoot, 'session.pptx'),
-              outputRoot: visualRoot,
-              documentId: `${session.id}.${language}`,
-              columns: 3,
-              pagesPerSheet: 12,
-              thumbnailWidth: 400,
-              dpi: 150,
-            });
-            await atomicWrite(
-              resolve(visualRoot, 'visual-qa.json'),
-              serializeNativePptxVisualQaManifest(visualQa),
-            );
-          }
-          console.log(
-            `VISUAL-QA ${session.id}/${language}/${format} slides=${content.slides.length}`,
-          );
-          continue;
-        }
-        if (format === 'pdf') {
-          const path = resolve(outputRoot, 'session.pdf');
-          if (args.command === 'build') {
-            const artifact = await renderTeachingPdf(content, root, path);
-            const verification = await verifyTeachingPdf(content, path);
-            if (artifact.pdfSha256 !== verification.pdfSha256)
-              throw new Error('Teaching PDF checksum mismatch.');
-            await atomicWrite(
-              resolve(outputRoot, 'pdf-artifact.json'),
-              serializeTeachingPdfRecord(artifact),
-            );
-            await atomicWrite(
-              resolve(outputRoot, 'pdf-verification.json'),
-              serializeTeachingPdfRecord(verification),
-            );
-          } else {
-            const record = JSON.parse(
-              await readFile(resolve(outputRoot, 'pdf-artifact.json'), 'utf8'),
-            ) as {
-              pdfSha256: string;
-              sourceSha256: string;
-              contentSha256: string;
-              brandLogoSha256: string;
-              htmlSha256: string;
-            };
-            const verification = await verifyTeachingPdf(content, path);
-            const logo = await readFile(
-              resolve(root, 'packages/presentations/assets/brand/kraak/kraak-logo.png'),
-            );
-            const visuals = await resolveTeachingPdfVisuals(content, root);
-            const html = renderTeachingPdfHtml(
-              content,
-              `data:image/png;base64,${logo.toString('base64')}`,
-              visuals,
-            );
-            if (
-              record.pdfSha256 !== verification.pdfSha256 ||
-              record.sourceSha256 !== content.sourceSha256 ||
-              record.contentSha256 !== content.contentSha256 ||
-              record.brandLogoSha256 !== sha256(logo) ||
-              record.htmlSha256 !== sha256(html)
-            ) {
-              throw new Error(`Stale teaching PDF: ${session.id}/${language}.`);
-            }
-          }
-        } else {
-          const path = resolve(outputRoot, 'session.pptx');
-          const spec = teachingDeckSpec(content);
-          if (args.command === 'build') {
-            const artifact = await renderNativePptx(spec, {
-              repositoryRoot: root,
-              outputPath: path,
-            });
-            const verification = await verifyNativePptx(spec, root, path);
-            if (
-              artifact.pptxSha256 !== verification.pptxSha256 ||
-              artifact.deckSpecSha256 !== verification.deckSpecSha256
-            ) {
-              throw new Error('Teaching PPTX checksum mismatch.');
-            }
-            await atomicWrite(
-              resolve(outputRoot, 'pptx-artifact.json'),
-              serializeNativePptxArtifactRecord(artifact),
-            );
-            await atomicWrite(
-              resolve(outputRoot, 'pptx-verification.json'),
-              serializeNativePptxVerification(verification),
-            );
-          } else {
-            const record = JSON.parse(
-              await readFile(resolve(outputRoot, 'pptx-artifact.json'), 'utf8'),
-            ) as {
-              pptxSha256: string;
-              sourceSha256: string;
-              moduleContentSha256: string;
-              deckSpecSha256: string;
-              visualAssets: Array<{ slideId: string; path: string; sha256: string }>;
-            };
-            const verification = await verifyNativePptx(spec, root, path);
-            if (
-              record.pptxSha256 !== verification.pptxSha256 ||
-              record.sourceSha256 !== content.sourceSha256 ||
-              record.moduleContentSha256 !== content.contentSha256 ||
-              record.deckSpecSha256 !== verification.deckSpecSha256 ||
-              canonicalJson(record.visualAssets) !==
-                canonicalJson(await currentVisualAssets(spec, root))
-            ) {
-              throw new Error(`Stale teaching PPTX: ${session.id}/${language}.`);
-            }
-          }
-        }
-        console.log(
-          `${args.command === 'build' ? 'WROTE' : 'VERIFIED'} ${session.id}/${language}/${format} slides=${content.slides.length} minutes=${content.durationMinutes}`,
-        );
-      }
+    const sources = resolveTeachingSessionSources(manifest, session);
+    const pair = await readPair(session, root, sources);
+    for (const language of languages) {
+      await processLanguage(args, session, language, pair[language], root);
     }
   }
 }

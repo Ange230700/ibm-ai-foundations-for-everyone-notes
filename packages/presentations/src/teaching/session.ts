@@ -123,18 +123,22 @@ function parseSlide(
   sessionId: string,
 ): TeachingSlide {
   const headingText = plainText(heading);
-  const match = headingText.match(/^(?:Slide|Diapositive)\s+(\d{2})\s+—\s+(.+)$/u);
-  if (!match) throw new Error(`Invalid teaching slide heading: ${headingText}.`);
-  const ordinal = match[1]!;
-  const title = match[2]!;
+  const headingSeparator = ' — ';
+  const separatorIndex = headingText.indexOf(headingSeparator);
+  const headingPrefix = separatorIndex < 0 ? '' : headingText.slice(0, separatorIndex);
+  const ordinalMatch = /^(?:Slide|Diapositive)\s+(\d{2})$/u.exec(headingPrefix);
+  const title =
+    separatorIndex < 0 ? undefined : headingText.slice(separatorIndex + headingSeparator.length);
+  if (!ordinalMatch || !title) throw new Error(`Invalid teaching slide heading: ${headingText}.`);
+  const ordinal = ordinalMatch[1]!;
   const label = `${sessionId.toUpperCase()}-${ordinal}`;
   const metadata = nodes
     .filter((node) => node.type !== 'heading')
     .slice(0, 1)
     .map(plainText)
     .join(' ');
-  const id = metadata.match(/(?:Identifier|Identifiant)\s*:\s*(S\d{2}-\d{2})/iu)?.[1];
-  const duration = Number(metadata.match(/(?:Duration|Durée)\s*:\s*(\d+)\s*minute/iu)?.[1]);
+  const id = /(?:Identifier|Identifiant)\s*:\s*(S\d{2}-\d{2})/iu.exec(metadata)?.[1];
+  const duration = Number(/(?:Duration|Durée)\s*:\s*(\d+)\s*minute/iu.exec(metadata)?.[1]);
   if (id !== label || !Number.isInteger(duration) || duration < 1) {
     throw new Error(`${label}: missing or inconsistent identifier/duration.`);
   }
@@ -275,8 +279,8 @@ export function validateTeachingPair(en: TeachingSessionContent, fr: TeachingSes
   }
   en.slides.forEach((slide, index) => {
     const other = fr.slides[index];
+    if (!other) throw new Error(`Teaching sessions diverge at slide ${slide.id}.`);
     if (
-      !other ||
       slide.id !== other.id ||
       slide.durationMinutes !== other.durationMinutes ||
       slide.role !== other.role ||
@@ -290,234 +294,78 @@ export function validateTeachingPair(en: TeachingSessionContent, fr: TeachingSes
   });
 }
 
-export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
-  const visualSlides: Record<
-    string,
-    {
-      kind: 'mermaid' | 'simulation';
-      en: string;
-      fr: string;
-      name: string;
-      enCapture?: { name: string; caption: string };
-      frCapture?: { name: string; caption: string };
-    }
-  > = {
-    'S01-08': {
-      kind: 'mermaid',
-      en: 'Coexisting AI approaches',
-      fr: 'Approches d’IA complémentaires',
-      name: 'evolution',
-    },
-    'S01-10': {
-      kind: 'mermaid',
-      en: 'Learning methods',
-      fr: 'Modes d’apprentissage',
-      name: 'learning',
-    },
-    'S01-19': {
-      kind: 'mermaid',
-      en: 'Offline workflow',
-      fr: 'Travail hors connexion',
-      name: 'offline',
-    },
-    'S01-20': {
-      kind: 'simulation',
-      en: 'Illustrative assistant alert',
-      fr: 'Alerte simulée de l’assistant',
-      name: 'alert',
-    },
-    'S01-22': {
-      kind: 'simulation',
-      en: 'Illustrative prompt and draft',
-      fr: 'Demande et réponse simulées',
-      name: 'prompt',
-      enCapture: {
-        name: 'chat-capture',
-        caption: 'Real ChatGPT exchange · fictional cocoa cooperative scenario',
-      },
-      frCapture: {
-        name: 'chat-capture',
-        caption: 'Échange réel avec ChatGPT · scénario de coopérative fictive',
-      },
-    },
-    'S01-24': {
-      kind: 'mermaid',
-      en: 'Retrieval then generation',
-      fr: 'Recherche puis génération',
-      name: 'rag',
-    },
-    'S02-06': {
-      kind: 'mermaid',
-      en: 'Training, request, and review',
-      fr: 'Entraînement, consigne et contrôle',
-      name: 'model-workflow',
-    },
-    'S02-09': {
-      kind: 'mermaid',
-      en: 'Audience, format, and check',
-      fr: 'Public, format et contrôle',
-      name: 'formats',
-    },
-    'S02-11': {
-      kind: 'simulation',
-      en: 'Fictional prompt for the staff notice',
-      fr: 'Consigne fictive pour l’avis aux agents',
-      name: 'prompt',
-      enCapture: {
-        name: 'chat-capture',
-        caption: 'Real ChatGPT exchange · fictional cooperative instruction',
-      },
-      frCapture: {
-        name: 'chat-capture',
-        caption: 'Échange réel avec ChatGPT · consigne de coopérative fictive',
-      },
-    },
-    'S02-12': {
-      kind: 'simulation',
-      en: 'Deliberately wrong draft',
-      fr: 'Brouillon volontairement erroné',
-      name: 'wrong-output',
-    },
-    'S02-13': {
-      kind: 'mermaid',
-      en: 'Three checks before sharing',
-      fr: 'Trois contrôles avant diffusion',
-      name: 'review',
-    },
-    'S02-14': {
-      kind: 'simulation',
-      en: 'Revised fictional draft',
-      fr: 'Brouillon fictif corrigé',
-      name: 'revised-output',
-    },
-    'S02-17': {
-      kind: 'simulation',
-      en: 'Fictional poster for review',
-      fr: 'Affiche fictive à vérifier',
-      name: 'poster',
-    },
-    'S02-20': {
-      kind: 'simulation',
-      en: 'Local HTML guide simulation',
-      fr: 'Simulation d’un guide HTML local',
-      name: 'guide',
-      enCapture: {
-        name: 'guide-capture',
-        caption: 'Browser capture of a local HTML guide · teaching prototype',
-      },
-      frCapture: {
-        name: 'guide-capture',
-        caption: 'Capture navigateur d’un guide HTML local · prototype pédagogique',
-      },
-    },
-    'S02-21': {
-      kind: 'mermaid',
-      en: 'Drafting and agentic actions',
-      fr: 'Brouillon et actions agentiques',
-      name: 'agents',
-    },
-    'S03-05': {
-      kind: 'mermaid',
-      en: 'Draft and check against the task',
-      fr: 'Brouillon et contrôle de la tâche',
-      name: 'workflow',
-    },
-    'S03-08': {
-      kind: 'simulation',
-      en: 'Fictional source-grounded prompt',
-      fr: 'Demande fictive fondée sur la source',
-      name: 'prompt',
-      enCapture: {
-        name: 'chat-capture',
-        caption: 'Real ChatGPT exchange · fictional cooperative source',
-      },
-      frCapture: {
-        name: 'chat-capture',
-        caption: 'Échange réel avec ChatGPT · source de coopérative fictive',
-      },
-    },
-    'S03-13': {
-      kind: 'simulation',
-      en: 'Fictional input-output examples',
-      fr: 'Exemples fictifs d’entrée et de sortie',
-      name: 'examples',
-    },
-    'S03-14': {
-      kind: 'mermaid',
-      en: 'Choose the prompt method',
-      fr: 'Choisir la méthode de demande',
-      name: 'methods',
-    },
-    'S03-16': {
-      kind: 'simulation',
-      en: 'Fictional interview prompt',
-      fr: 'Demande fictive en mode entretien',
-      name: 'interview',
-      enCapture: {
-        name: 'interview-capture',
-        caption: 'Real ChatGPT opening question · fictional cocoa cooperative',
-      },
-      frCapture: {
-        name: 'interview-capture',
-        caption: 'Première question réelle de ChatGPT · coopérative fictive',
-      },
-    },
-    'S03-17': {
-      kind: 'mermaid',
-      en: 'Observable steps before approval',
-      fr: 'Étapes observables avant validation',
-      name: 'steps',
-    },
-    'S03-19': {
-      kind: 'simulation',
-      en: 'Deliberately unsupported draft',
-      fr: 'Brouillon volontairement sans fondement',
-      name: 'wrong-output',
-    },
-    'S03-20': {
-      kind: 'simulation',
-      en: 'Fictional correction and revised draft',
-      fr: 'Correction et nouveau brouillon fictifs',
-      name: 'revision',
-    },
-    'S03-23': {
-      kind: 'mermaid',
-      en: 'Checks before human approval',
-      fr: 'Contrôles avant validation humaine',
-      name: 'checks',
-    },
+interface TeachingVisualDefinition {
+  kind: 'mermaid' | 'simulation';
+  en: string;
+  fr: string;
+  name: string;
+  enCapture?: { name: string; caption: string };
+  frCapture?: { name: string; caption: string };
+}
 
-    'S05-05': {
-      kind: 'mermaid',
-      en: 'Workflow Canvas',
-      fr: 'Workflow Canvas',
-      name: 'workflow-canvas',
-    },
-    'S05-15': {
-      kind: 'mermaid',
-      en: 'Manual and AI-assisted workflow',
-      fr: 'Workflow manuel et assisté par l’IA',
-      name: 'manual-vs-ai',
-    },
-    'S05-16': {
-      kind: 'mermaid',
-      en: 'Human and AI responsibilities',
-      fr: 'Responsabilités humaines et de l’IA',
-      name: 'responsibility-model',
-    },
-    'S05-18': {
-      kind: 'mermaid',
-      en: 'Exception paths',
-      fr: 'Chemins d’exception',
-      name: 'exception-path',
-    },
-    'S05-22': {
-      kind: 'mermaid',
-      en: 'Workflow improvement loop',
-      fr: 'Boucle d’amélioration du workflow',
-      name: 'improvement-loop',
-    },
-  };
+function teachingVisualDefinitions(): Record<string, TeachingVisualDefinition> {
+  const records = `
+S01-08|mermaid|evolution|Coexisting AI approaches|Approches d’IA complémentaires
+S01-10|mermaid|learning|Learning methods|Modes d’apprentissage
+S01-19|mermaid|offline|Offline workflow|Travail hors connexion
+S01-20|simulation|alert|Illustrative assistant alert|Alerte simulée de l’assistant
+S01-22|simulation|prompt|Illustrative prompt and draft|Demande et réponse simulées|chat-capture|Real ChatGPT exchange · fictional cocoa cooperative scenario|Échange réel avec ChatGPT · scénario de coopérative fictive
+S01-24|mermaid|rag|Retrieval then generation|Recherche puis génération
+S02-06|mermaid|model-workflow|Training, request, and review|Entraînement, consigne et contrôle
+S02-09|mermaid|formats|Audience, format, and check|Public, format et contrôle
+S02-11|simulation|prompt|Fictional prompt for the staff notice|Consigne fictive pour l’avis aux agents|chat-capture|Real ChatGPT exchange · fictional cooperative instruction|Échange réel avec ChatGPT · consigne de coopérative fictive
+S02-12|simulation|wrong-output|Deliberately wrong draft|Brouillon volontairement erroné
+S02-13|mermaid|review|Three checks before sharing|Trois contrôles avant diffusion
+S02-14|simulation|revised-output|Revised fictional draft|Brouillon fictif corrigé
+S02-17|simulation|poster|Fictional poster for review|Affiche fictive à vérifier
+S02-20|simulation|guide|Local HTML guide simulation|Simulation d’un guide HTML local|guide-capture|Browser capture of a local HTML guide · teaching prototype|Capture navigateur d’un guide HTML local · prototype pédagogique
+S02-21|mermaid|agents|Drafting and agentic actions|Brouillon et actions agentiques
+S03-05|mermaid|workflow|Draft and check against the task|Brouillon et contrôle de la tâche
+S03-08|simulation|prompt|Fictional source-grounded prompt|Demande fictive fondée sur la source|chat-capture|Real ChatGPT exchange · fictional cooperative source|Échange réel avec ChatGPT · source de coopérative fictive
+S03-13|simulation|examples|Fictional input-output examples|Exemples fictifs d’entrée et de sortie
+S03-14|mermaid|methods|Choose the prompt method|Choisir la méthode de demande
+S03-16|simulation|interview|Fictional interview prompt|Demande fictive en mode entretien|interview-capture|Real ChatGPT opening question · fictional cocoa cooperative|Première question réelle de ChatGPT · coopérative fictive
+S03-17|mermaid|steps|Observable steps before approval|Étapes observables avant validation
+S03-19|simulation|wrong-output|Deliberately unsupported draft|Brouillon volontairement sans fondement
+S03-20|simulation|revision|Fictional correction and revised draft|Correction et nouveau brouillon fictifs
+S03-23|mermaid|checks|Checks before human approval|Contrôles avant validation humaine
+S05-05|mermaid|workflow-canvas|Workflow Canvas|Workflow Canvas
+S05-15|mermaid|manual-vs-ai|Manual and AI-assisted workflow|Workflow manuel et assisté par l’IA
+S05-16|mermaid|responsibility-model|Human and AI responsibilities|Responsabilités humaines et de l’IA
+S05-18|mermaid|exception-path|Exception paths|Chemins d’exception
+S05-22|mermaid|improvement-loop|Workflow improvement loop|Boucle d’amélioration du workflow
+`
+    .trim()
+    .split('\n');
+  return Object.fromEntries(
+    records.map((record) => {
+      const [id, kind, name, en, fr, captureName, enCaption, frCaption] = record.split('|') as [
+        string,
+        TeachingVisualDefinition['kind'],
+        string,
+        string,
+        string,
+        string?,
+        string?,
+        string?,
+      ];
+      const visual: TeachingVisualDefinition = { kind, name, en, fr };
+      if (captureName) {
+        visual.enCapture = { name: captureName, caption: enCaption! };
+        visual.frCapture = { name: captureName, caption: frCaption! };
+      }
+      return [id, visual];
+    }),
+  );
+}
+
+function itemLabel(kind: TeachingSlide['itemKinds'][number], index: number): string {
+  if (kind === 'ordered') return String(index + 1).padStart(2, '0');
+  return kind === 'bullet' ? '•' : '';
+}
+
+export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
+  const visualSlides = teachingVisualDefinitions();
   const slides: SlideSpec[] = content.slides.map((slide) => {
     const visual = visualSlides[slide.id];
     const capture = content.language === 'fr' ? visual?.frCapture : visual?.enCapture;
@@ -556,9 +404,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
         ...base,
         kind: 'objectives',
         items: slide.items,
-        itemLabels: slide.itemKinds.map((kind, index) =>
-          kind === 'ordered' ? String(index + 1).padStart(2, '0') : kind === 'bullet' ? '•' : '',
-        ),
+        itemLabels: slide.itemKinds.map((kind, index) => itemLabel(kind, index)),
       };
     if (slide.table)
       return {
@@ -573,9 +419,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       ...base,
       kind: 'overview',
       items: slide.items,
-      itemLabels: slide.itemKinds.map((kind, index) =>
-        kind === 'ordered' ? String(index + 1).padStart(2, '0') : kind === 'bullet' ? '•' : '',
-      ),
+      itemLabels: slide.itemKinds.map((kind, index) => itemLabel(kind, index)),
     };
   });
   return {

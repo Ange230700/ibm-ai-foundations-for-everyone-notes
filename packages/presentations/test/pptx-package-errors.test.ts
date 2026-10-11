@@ -242,6 +242,7 @@ test('OOXML verification rejects missing parts, broken relationships, notes and 
     assert.doesNotMatch(conciseNotes, /SAY \/ DO| — /);
     assert.match(conciseNotes, /1-3/);
     assert.throws(() => teachingNoteParts('No bold takeaway'), /bold key takeaway/);
+    assert.throws(() => teachingNoteParts('**Takeaway:**'), /bold key takeaway/);
     assert.deepEqual(teachingNoteParts('**Takeaway:** Main point.'), {
       label: 'Takeaway:',
       takeaway: 'Main point.',

@@ -246,18 +246,27 @@ async function extractPdfText(bytes: Uint8Array): Promise<{
 
   const pdf = await loadingTask.promise;
 
-  const pages: string[] = [];
-
   try {
-    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-      const page = await pdf.getPage(pageNumber);
+    const results = await Promise.allSettled(
+      Array.from({ length: pdf.numPages }, async (_, index) => {
+        const page = await pdf.getPage(index + 1);
 
-      const content = await page.getTextContent();
+        try {
+          const content = await page.getTextContent();
+          return pageTextInReadingOrder(content.items);
+        } finally {
+          page.cleanup();
+        }
+      }),
+    );
 
-      pages.push(pageTextInReadingOrder(content.items));
+    const pages = results.map((result) => {
+      if (result.status === 'rejected') {
+        throw result.reason;
+      }
 
-      page.cleanup();
-    }
+      return result.value;
+    });
 
     return {
       pages: pdf.numPages,

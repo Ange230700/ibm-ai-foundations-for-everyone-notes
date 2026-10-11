@@ -146,19 +146,29 @@ test('semantic PDF verification diagnoses changed sources, diagram drift and abs
   let text =
     'Test Learning Objectives A long objective that continues after its initial matching anchor. Final Summary Remember.';
   let destroys = 0;
+  let extractionFails = false;
+  const extractionError = new Error('PDF text extraction failed');
+  const lifecycle: string[] = [];
   t.mock.module('node:fs/promises', { namedExports: { ...fs, readFile: async () => bytes } });
   const pdfBackend = {
     getDocument: () => ({
       promise: Promise.resolve({
         numPages: 1,
         getPage: async () => ({
-          getTextContent: async () => ({
-            items: [{ str: text, transform: [1, 0, 0, 1, 0, 0], height: 1, width: 10 }],
-          }),
-          cleanup: () => undefined,
+          getTextContent: async () => {
+            if (extractionFails) throw extractionError;
+            return {
+              items: [{ str: text, transform: [1, 0, 0, 1, 0, 0], height: 1, width: 10 }],
+            };
+          },
+          cleanup: () => {
+            lifecycle.push('cleanup');
+            return true;
+          },
         }),
       }),
       destroy: async () => {
+        lifecycle.push('destroy');
         destroys++;
       },
     }),
@@ -192,6 +202,17 @@ test('semantic PDF verification diagnoses changed sources, diagram drift and abs
     await assert.rejects(verifyModulePdf(markdown, content, options), /Semantic PDF mismatch/);
   }
   assert.equal(destroys, 3);
+  lifecycle.length = 0;
+  extractionFails = true;
+
+  await assert.rejects(
+    verifyModulePdf(markdown, content, options),
+    (error: unknown) => error === extractionError,
+  );
+
+  assert.deepEqual(lifecycle, ['cleanup', 'destroy']);
+  assert.equal(destroys, 4);
+  extractionFails = false;
   assert.throws(() => semanticBlocksFromMarkdown('<div>raw</div>'), /Raw HTML/);
   assert.deepEqual(
     semanticBlocksFromMarkdown(

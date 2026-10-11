@@ -87,36 +87,36 @@ export async function resolveNativePptxDiagramAssets(
     .filter((slide) => slide.kind === 'diagram')
     .map((slide) => slide.diagramId);
 
-  const resolved = new Map<string, ResolvedNativePptxDiagramAsset>();
+  const entries = await Promise.all(
+    requiredIds.map(async (diagramId): Promise<[string, ResolvedNativePptxDiagramAsset]> => {
+      const asset = provided.get(diagramId);
 
-  for (const diagramId of requiredIds) {
-    const asset = provided.get(diagramId);
+      if (!asset) {
+        throw new Error(`Missing PPTX diagram asset for ${diagramId}.`);
+      }
 
-    if (!asset) {
-      throw new Error(`Missing PPTX diagram asset for ${diagramId}.`);
-    }
+      const absolutePath = resolve(repositoryRoot, asset.svgPath);
+      const relativePath = repositoryRelativePath(repositoryRoot, absolutePath);
+      const bytes = await readFile(absolutePath);
+      const actualSha256 = sha256(bytes);
 
-    const absolutePath = resolve(repositoryRoot, asset.svgPath);
+      if (actualSha256 !== asset.svgSha256) {
+        throw new Error(
+          `PPTX diagram checksum mismatch for ${diagramId}: expected ${asset.svgSha256}, found ${actualSha256}.`,
+        );
+      }
 
-    const relativePath = repositoryRelativePath(repositoryRoot, absolutePath);
+      return [
+        diagramId,
+        {
+          ...asset,
+          svgPath: relativePath,
+          absolutePath,
+          aspectRatio: svgAspectRatio(bytes, relativePath),
+        },
+      ];
+    }),
+  );
 
-    const bytes = await readFile(absolutePath);
-
-    const actualSha256 = sha256(bytes);
-
-    if (actualSha256 !== asset.svgSha256) {
-      throw new Error(
-        `PPTX diagram checksum mismatch for ${diagramId}: expected ${asset.svgSha256}, found ${actualSha256}.`,
-      );
-    }
-
-    resolved.set(diagramId, {
-      ...asset,
-      svgPath: relativePath,
-      absolutePath,
-      aspectRatio: svgAspectRatio(bytes, relativePath),
-    });
-  }
-
-  return resolved;
+  return new Map(entries);
 }

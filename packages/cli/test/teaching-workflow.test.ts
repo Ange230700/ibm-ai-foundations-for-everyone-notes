@@ -28,6 +28,7 @@ test('teaching CLI builds, independently verifies and animates only current arti
   let animationError = false;
   let animationStdout: string | undefined = 'ANIMATION_OUTPUT_FILE=session-animated.pptx\n';
   const platform = Object.getOwnPropertyDescriptor(process, 'platform')!;
+  const originalSystemRoot = process.env.SystemRoot;
   const originalArgv = process.argv;
 
   const expectedPptx = async (spec: ReturnType<typeof presentationApi.teachingDeckSpec>) => ({
@@ -245,6 +246,9 @@ test('teaching CLI builds, independently verifies and animates only current arti
         Object.defineProperty(process, 'platform', { value: 'linux' });
         await assert.rejects(run(['animate', '--lang=en']), /desktop PowerPoint on Windows/);
         Object.defineProperty(process, 'platform', { value: 'win32' });
+        delete process.env.SystemRoot;
+        await assert.rejects(run(['animate', '--lang=en']), /SystemRoot is required/);
+        process.env.SystemRoot = originalSystemRoot;
         for (const field of [
           'pptxSha256',
           'sourceSha256',
@@ -260,7 +264,16 @@ test('teaching CLI builds, independently verifies and animates only current arti
         for (const session of ['s01', 's02', 's03']) {
           reset();
           await run(['animate', `--session=${session}`, '--lang=en', '--format=pptx']);
-          assert.equal(spawnCalls[0]!.executable, 'powershell.exe');
+          assert.equal(
+            spawnCalls[0]!.executable,
+            resolve(
+              process.env.SystemRoot!,
+              'System32',
+              'WindowsPowerShell',
+              'v1.0',
+              'powershell.exe',
+            ),
+          );
           assert.ok(
             spawnCalls[0]!.args.includes(resolve(root, `scripts/teaching-animate-${session}.ps1`)),
           );
@@ -297,6 +310,7 @@ test('teaching CLI builds, independently verifies and animates only current arti
     );
   } finally {
     process.argv = originalArgv;
+    process.env.SystemRoot = originalSystemRoot;
     Object.defineProperty(process, 'platform', platform);
   }
 });

@@ -1,11 +1,11 @@
 /* global document */
 
 import { readFile, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import process from 'node:process';
+import { pathToFileURL } from 'node:url';
 
-import { run } from '../../packages/presentations/node_modules/@mermaid-js/mermaid-cli/src/index.js';
-import puppeteer from '../../packages/presentations/node_modules/puppeteer/lib/puppeteer/puppeteer.js';
 import {
   createMermaidConfiguration,
   normalizeMermaidSvgForOffice,
@@ -14,6 +14,46 @@ import { teachingMermaidConfiguration } from '../teaching-mermaid-config.mjs';
 
 const LANGUAGES = ['en', 'fr'];
 const SCREEN_CSS_MARKER = '/* SCREEN_CSS */';
+const presentationsRequire = createRequire(
+  resolve(import.meta.dirname, '../../packages/presentations/package.json'),
+);
+const mermaidCli = await import(
+  pathToFileURL(presentationsRequire.resolve('@mermaid-js/mermaid-cli')).href
+);
+const puppeteerModule = await import(pathToFileURL(presentationsRequire.resolve('puppeteer')).href);
+const { run } = mermaidCli;
+const puppeteer = puppeteerModule.default;
+
+async function collectDiagramSource(visualRoot, sessionId, language, name) {
+  const stem = resolve(visualRoot, language, name);
+  const source = await readFile(`${stem}.mmd`, 'utf8');
+  if (!source.startsWith('flowchart ') || source.length < 90) {
+    throw new Error(`Invalid ${sessionId.toUpperCase()} diagram source: ${language}/${name}.`);
+  }
+  return { kind: 'mermaid', language, name, stem };
+}
+
+async function collectScreenSource({
+  visualRoot,
+  sessionId,
+  language,
+  name,
+  screenCss,
+  requireSimulationLabel,
+}) {
+  const stem = resolve(visualRoot, language, name);
+  const html = await readFile(`${stem}.html`, 'utf8');
+  const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
+  if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
+    throw new Error(
+      `Missing screen CSS marker in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`,
+    );
+  }
+  if (requireSimulationLabel && !html.includes(label)) {
+    throw new Error(`Unlabelled ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
+  }
+  return { kind: 'simulation', language, name, stem, html };
+}
 
 async function collectSources({
   visualRoot,
@@ -24,51 +64,21 @@ async function collectSources({
   screenCss,
   requireSimulationLabel,
 }) {
-  const sources = [];
-
-  for (const language of LANGUAGES) {
-    for (const name of diagrams) {
-      const stem = resolve(visualRoot, language, name);
-      const source = await readFile(`${stem}.mmd`, 'utf8');
-
-      if (!source.startsWith('flowchart ') || source.length < 90) {
-        throw new Error(`Invalid ${sessionId.toUpperCase()} diagram source: ${language}/${name}.`);
-      }
-
-      sources.push({
-        kind: 'mermaid',
-        language,
-        name,
-        stem,
-      });
-    }
-
-    for (const name of diagramsOnly ? [] : screens) {
-      const stem = resolve(visualRoot, language, name);
-      const html = await readFile(`${stem}.html`, 'utf8');
-      const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
-
-      if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
-        throw new Error(
-          `Missing screen CSS marker in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`,
-        );
-      }
-
-      if (requireSimulationLabel && !html.includes(label)) {
-        throw new Error(`Unlabelled ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
-      }
-
-      sources.push({
-        kind: 'simulation',
-        language,
-        name,
-        stem,
-        html,
-      });
-    }
-  }
-
-  return sources;
+  return Promise.all(
+    LANGUAGES.flatMap((language) => [
+      ...diagrams.map((name) => collectDiagramSource(visualRoot, sessionId, language, name)),
+      ...(diagramsOnly ? [] : screens).map((name) =>
+        collectScreenSource({
+          visualRoot,
+          sessionId,
+          language,
+          name,
+          screenCss,
+          requireSimulationLabel,
+        }),
+      ),
+    ]),
+  );
 }
 
 async function renderMermaid({ browser, configuration, mermaidIdentityPrefix, source }) {

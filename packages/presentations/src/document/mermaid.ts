@@ -62,37 +62,34 @@ export async function prepareDocumentMermaidAssets(
     assetsById.set(asset.diagramId, asset);
   }
 
-  const rendered: RenderedDocumentMermaidDiagram[] = [];
+  return Promise.all(
+    content.diagrams.map(async (diagram): Promise<RenderedDocumentMermaidDiagram> => {
+      const asset = assetsById.get(diagram.diagramId);
 
-  for (const diagram of content.diagrams) {
-    const asset = assetsById.get(diagram.diagramId);
+      if (!asset) {
+        throw new Error(`Missing rendered Mermaid asset: ${diagram.diagramId}`);
+      }
 
-    if (!asset) {
-      throw new Error(`Missing rendered Mermaid asset: ${diagram.diagramId}`);
-    }
+      if (asset.definitionSha256 !== diagram.definitionSha256) {
+        throw new Error(`Rendered Mermaid asset is stale: ${diagram.diagramId}`);
+      }
 
-    if (asset.definitionSha256 !== diagram.definitionSha256) {
-      throw new Error(`Rendered Mermaid asset is stale: ${diagram.diagramId}`);
-    }
+      const absolutePath = repositoryAssetPath(repositoryRoot, asset.svgPath);
+      const svg = await readFile(absolutePath, 'utf8');
 
-    const absolutePath = repositoryAssetPath(repositoryRoot, asset.svgPath);
+      validateMermaidSvg(svg, diagram.diagramId);
 
-    const svg = await readFile(absolutePath, 'utf8');
+      if (sha256(svg) !== asset.svgSha256) {
+        throw new Error(`Rendered Mermaid SVG checksum mismatch: ${diagram.diagramId}`);
+      }
 
-    validateMermaidSvg(svg, diagram.diagramId);
-
-    if (sha256(svg) !== asset.svgSha256) {
-      throw new Error(`Rendered Mermaid SVG checksum mismatch: ${diagram.diagramId}`);
-    }
-
-    rendered.push({
-      diagram,
-      asset,
-      dataUri: `data:image/svg+xml;base64,${Buffer.from(svg, 'utf8').toString('base64')}`,
-    });
-  }
-
-  return rendered;
+      return {
+        diagram,
+        asset,
+        dataUri: `data:image/svg+xml;base64,${Buffer.from(svg, 'utf8').toString('base64')}`,
+      };
+    }),
+  );
 }
 
 export function replaceMermaidFences(

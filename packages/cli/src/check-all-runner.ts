@@ -63,25 +63,19 @@ export function runCheckAll(
     return 2;
   }
 
-  const commands: string[][] = [];
-
-  if (args.includes('--dry-run')) {
-    commands.push(['exec', 'tsx', 'packages/cli/src/check.ts', '--dry-run']);
-  } else {
-    commands.push(
-      args.includes('--full')
-        ? ['exec', 'tsx', 'packages/cli/src/check.ts', '--full']
-        : ['exec', 'tsx', 'packages/cli/src/check.ts'],
-    );
-
-    commands.push(
-      ['lint'],
-      ['exec', 'markdownlint-cli2'],
-      ['test'],
-      ['typecheck'],
-      ['format:check'],
-    );
-  }
+  const semanticCheck = args.includes('--full')
+    ? ['exec', 'tsx', 'packages/cli/src/check.ts', '--full']
+    : ['exec', 'tsx', 'packages/cli/src/check.ts'];
+  const commands: string[][] = args.includes('--dry-run')
+    ? [['exec', 'tsx', 'packages/cli/src/check.ts', '--dry-run']]
+    : [
+        semanticCheck,
+        ['lint'],
+        ['exec', 'markdownlint-cli2'],
+        ['test'],
+        ['typecheck'],
+        ['format:check'],
+      ];
 
   for (const command of commands) {
     const status = runCheckCommand(command, dependencies);

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import test from 'node:test';
 
@@ -46,6 +46,31 @@ test('Mermaid source extraction is deterministic', async () => {
   const temporaryRoot = await mkdtemp(resolve(repositoryRoot, '.artifacts', 'mermaid-test-'));
 
   try {
+    const original = content.diagrams[0];
+    assert.ok(original);
+
+    await assert.rejects(
+      writeMermaidSources(
+        {
+          ...content,
+          diagrams: [
+            original,
+            {
+              ...original,
+              definition: 'flowchart LR\n    A[Different] --> B[Output]',
+            },
+          ],
+        },
+        {
+          repositoryRoot,
+          outputRoot: temporaryRoot,
+        },
+      ),
+      /Mermaid diagrams must have distinct output filenames\./,
+    );
+
+    assert.deepEqual(await readdir(temporaryRoot), []);
+
     const first = await writeMermaidSources(content, {
       repositoryRoot,
       outputRoot: temporaryRoot,

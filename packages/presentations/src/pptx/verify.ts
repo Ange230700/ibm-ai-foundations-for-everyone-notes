@@ -397,6 +397,69 @@ function verifyResourceStructure(slide: SlideSpec, document: Document): void {
   }
 }
 
+function expectedTeachingNotes(spec: DeckSpec, slide: SlideSpec): string[] {
+  if (!slide.teachingNotes) return [];
+  if (spec.scope.kind !== 'teaching-session') return [slide.teachingNotes];
+  const { label, takeaway, cues } = teachingNoteParts(slide.teachingNotes);
+  return [label, takeaway, ...cues];
+}
+
+async function verifySlide(
+  zip: JSZip,
+  slidePart: string,
+  slideSpec: SlideSpec,
+  index: number,
+  spec: DeckSpec,
+): Promise<PptxSlideVerification> {
+  const document = parseXml(await requiredText(zip, slidePart), slidePart);
+  const textItems = slideText(document);
+  assertExpectedText(slideSpec, textItems);
+  const current = String(index + 1).padStart(2, '0');
+  const total = String(spec.slides.length).padStart(2, '0');
+  const pagination = `${current} / ${total}`;
+  if (!textItems.includes(pagination)) {
+    throw new Error(`PPTX slide ${slideSpec.slideId} is missing pagination ${pagination}.`);
+  }
+  verifyResourceStructure(slideSpec, document);
+  const notesData = await notesForSlide(zip, slidePart);
+  const notes = notesData?.text;
+  const sourceNotesPresent = Boolean(notes?.includes('[Sources]') && notes.includes('[/Sources]'));
+  if (!sourceNotesPresent) {
+    throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
+  }
+  if (spec.scope.kind === 'teaching-session' && slideSpec.teachingNotes && !notesData?.formatted) {
+    throw new Error(`PPTX slide ${slideSpec.slideId} is missing formatted presenter cues.`);
+  }
+  const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
+  const expectedNotes = expectedTeachingNotes(spec, slideSpec);
+  if (
+    slideSpec.teachingNotes &&
+    (!notes?.includes(`[${teachingLabel}]`) ||
+      expectedNotes.some((part) => !notes.includes(normalizedText([part]))) ||
+      !notes.includes(`[/${teachingLabel}]`))
+  ) {
+    throw new Error(`PPTX slide ${slideSpec.slideId} is missing teaching notes.`);
+  }
+  const bounds = objectBounds(document);
+  const outOfBoundsObjects = bounds.filter(isOutOfBounds).length;
+  if (outOfBoundsObjects > 0) {
+    throw new Error(
+      `PPTX slide ${slideSpec.slideId} contains ${outOfBoundsObjects} out-of-bounds object(s).`,
+    );
+  }
+  return {
+    index: index + 1,
+    slideId: slideSpec.slideId,
+    kind: slideSpec.kind,
+    textSha256: sha256(normalizedText(textItems)),
+    textItems: textItems.length,
+    tables: elements(document, 'tbl').length,
+    pictures: elements(document, 'pic').length,
+    sourceNotesPresent,
+    outOfBoundsObjects,
+  };
+}
+
 export async function verifyNativePptx(
   spec: DeckSpec,
   repositoryRootInput: string,
@@ -424,90 +487,17 @@ export async function verifyNativePptx(
     );
   }
 
-  const slides: PptxSlideVerification[] = [];
+  const slides: PptxSlideVerification[] = await Promise.all(
+    slideParts.map(async (slidePart, index) => {
+      const slideSpec = spec.slides[index];
 
-  for (let index = 0; index < slideParts.length; index += 1) {
-    const slidePart = slideParts[index];
+      if (!slidePart || !slideSpec) {
+        throw new Error(`PPTX slide order is incomplete at index ${index}.`);
+      }
 
-    const slideSpec = spec.slides[index];
-
-    if (!slidePart || !slideSpec) {
-      throw new Error(`PPTX slide order is incomplete at index ${index}.`);
-    }
-
-    const document = parseXml(await requiredText(zip, slidePart), slidePart);
-
-    const textItems = slideText(document);
-
-    assertExpectedText(slideSpec, textItems);
-
-    const current = String(index + 1).padStart(2, '0');
-    const total = String(spec.slides.length).padStart(2, '0');
-    const pagination = `${current} / ${total}`;
-
-    if (!textItems.includes(pagination)) {
-      throw new Error(`PPTX slide ${slideSpec.slideId} is missing pagination ${pagination}.`);
-    }
-
-    verifyResourceStructure(slideSpec, document);
-
-    const notesData = await notesForSlide(zip, slidePart);
-    const notes = notesData?.text;
-
-    const sourceNotesPresent = Boolean(
-      notes?.includes('[Sources]') && notes.includes('[/Sources]'),
-    );
-
-    if (!sourceNotesPresent) {
-      throw new Error(`PPTX slide ${slideSpec.slideId} is missing source notes.`);
-    }
-    if (
-      spec.scope.kind === 'teaching-session' &&
-      slideSpec.teachingNotes &&
-      !notesData?.formatted
-    ) {
-      throw new Error(`PPTX slide ${slideSpec.slideId} is missing formatted presenter cues.`);
-    }
-    const teachingLabel = spec.language === 'fr' ? 'Notes pédagogiques' : 'Teaching Notes';
-    const expectedNotes = slideSpec.teachingNotes
-      ? spec.scope.kind === 'teaching-session'
-        ? (() => {
-            const { label, takeaway, cues } = teachingNoteParts(slideSpec.teachingNotes);
-            return [label, takeaway, ...cues];
-          })()
-        : [slideSpec.teachingNotes]
-      : [];
-    if (
-      slideSpec.teachingNotes &&
-      (!notes?.includes(`[${teachingLabel}]`) ||
-        expectedNotes.some((part) => !notes.includes(normalizedText([part]))) ||
-        !notes.includes(`[/${teachingLabel}]`))
-    ) {
-      throw new Error(`PPTX slide ${slideSpec.slideId} is missing teaching notes.`);
-    }
-
-    const bounds = objectBounds(document);
-
-    const outOfBoundsObjects = bounds.filter(isOutOfBounds).length;
-
-    if (outOfBoundsObjects > 0) {
-      throw new Error(
-        `PPTX slide ${slideSpec.slideId} contains ${outOfBoundsObjects} out-of-bounds object(s).`,
-      );
-    }
-
-    slides.push({
-      index: index + 1,
-      slideId: slideSpec.slideId,
-      kind: slideSpec.kind,
-      textSha256: sha256(normalizedText(textItems)),
-      textItems: textItems.length,
-      tables: elements(document, 'tbl').length,
-      pictures: elements(document, 'pic').length,
-      sourceNotesPresent,
-      outOfBoundsObjects,
-    });
-  }
+      return verifySlide(zip, slidePart, slideSpec, index, spec);
+    }),
+  );
 
   return {
     schemaVersion: 2,

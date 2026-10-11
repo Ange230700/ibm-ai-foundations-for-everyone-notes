@@ -54,6 +54,7 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   let pages = 2;
   let missingText = false;
   let destroyed = 0;
+  const cleanedPages: number[] = [];
   const spec = () => ({
     slides: content.slides.map((slide, index) =>
       index === 0 ? { slideId: slide.id, visual } : { slideId: slide.id },
@@ -115,6 +116,10 @@ test('teaching PDF rendering validates current sources and assets and closes fai
                 },
               ],
             };
+          },
+          cleanup: () => {
+            cleanedPages.push(number);
+            return true;
           },
         }),
       }),
@@ -180,21 +185,39 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   assert.match(html, /split-visual/);
   assert.match(html, /brand-logo/);
   assert.doesNotMatch(html, /Presenter only/);
+  const assertCleanedPages = (expected: number[]): void => {
+    assert.deepEqual(
+      cleanedPages.toSorted((a, b) => a - b),
+      expected,
+    );
+    cleanedPages.length = 0;
+  };
+
   assert.equal((await verifyTeachingPdf(content, output)).pages, 2);
+  assertCleanedPages([1, 2]);
+
   pages = 1;
   await assert.rejects(verifyTeachingPdf(content, output), /expected 2/);
+  assertCleanedPages([]);
+
   pages = 2;
   missingText = true;
   await assert.rejects(verifyTeachingPdf(content, output), /missing projected text/);
+  assertCleanedPages([1, 2]);
   missingText = false;
+
   const first = content.slides[0]!;
   delete content.slides[0];
   await assert.rejects(verifyTeachingPdf(content, output), /Missing teaching slide/);
+  assertCleanedPages([2]);
   content.slides[0] = first;
+
   assert.equal(destroyed, 4);
   pdfMock.restore();
   t.mock.module('pdfjs-dist/legacy/build/pdf.mjs', { namedExports: pdfBackend });
+
   const esm = await import('../src/teaching/pdf.js?esm-integrity');
   assert.equal((await esm.verifyTeachingPdf(content, output)).pages, 2);
+  assertCleanedPages([1, 2]);
   assert.equal(destroyed, 5);
 });

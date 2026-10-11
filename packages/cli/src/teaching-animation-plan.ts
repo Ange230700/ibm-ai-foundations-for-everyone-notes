@@ -19,6 +19,19 @@ export interface TeachingAnimationPlan {
   slides: SlidePlan[];
 }
 
+function effectCount(slide: SlidePlan, clicks: number): number {
+  if (slide.kind === 'rows') return clicks * 3;
+  return slide.kind === 'cover' ? 2 : 1;
+}
+
+function itemLabel(
+  kind: TeachingSessionContent['slides'][number]['itemKinds'][number],
+  index: number,
+) {
+  if (kind === 'ordered') return String(index + 1).padStart(2, '0');
+  return kind === 'bullet' ? '•' : '';
+}
+
 export function animationCounts(plan: TeachingAnimationPlan): {
   animatedSlides: number;
   clicks: number;
@@ -30,8 +43,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
       return {
         animatedSlides: counts.animatedSlides + 1,
         clicks: counts.clicks + clicks,
-        effects:
-          counts.effects + (slide.kind === 'rows' ? clicks * 3 : slide.kind === 'cover' ? 2 : 1),
+        effects: counts.effects + effectCount(slide, clicks),
       };
     },
     { animatedSlides: 0, clicks: 0, effects: 0 },
@@ -82,12 +94,7 @@ function createAnimationPlan(
       title: slide.title,
       rows: slide.items.map((text, rowIndex) => ({
         text,
-        label:
-          slide.itemKinds[rowIndex] === 'ordered'
-            ? String(rowIndex + 1).padStart(2, '0')
-            : slide.itemKinds[rowIndex] === 'bullet'
-              ? '•'
-              : '',
+        label: itemLabel(slide.itemKinds[rowIndex]!, rowIndex),
       })),
     };
   });

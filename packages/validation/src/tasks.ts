@@ -83,30 +83,39 @@ async function manifestFormat(): Promise<TaskResult> {
 async function teachingSessions(): Promise<TaskResult> {
   try {
     const manifest = await readManifest();
-    for (const session of manifest.teachingSessions ?? []) {
-      const canonicalSources = resolveTeachingSessionSources(manifest, session);
-      const parse = async (language: 'en' | 'fr') => {
-        const sourcePath = session.source[language];
-        const expectedSource = teachingSessionSourcePath(session, language);
+    const results = await Promise.allSettled(
+      (manifest.teachingSessions ?? []).map(async (session) => {
+        const canonicalSources = resolveTeachingSessionSources(manifest, session);
+        const parse = async (language: 'en' | 'fr') => {
+          const sourcePath = session.source[language];
+          const expectedSource = teachingSessionSourcePath(session, language);
 
-        if (sourcePath !== expectedSource) {
-          throw new Error(
-            `Teaching session ${session.id} ${language} source must be ${expectedSource}; received ${sourcePath}.`,
-          );
-        }
+          if (sourcePath !== expectedSource) {
+            throw new Error(
+              `Teaching session ${session.id} ${language} source must be ${expectedSource}; received ${sourcePath}.`,
+            );
+          }
 
-        const absolutePath = fromRoot(sourcePath);
-        return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
-          id: session.id,
-          canonicalModuleIds: canonicalSources.canonicalModuleIds,
-          language,
-          sourcePath,
-          durationMinutes: session.durationMinutes,
-          slideCount: session.slideCount,
-          canonicalSources: canonicalSources[language],
-        });
-      };
-      validateTeachingPair(await parse('en'), await parse('fr'));
+          const absolutePath = fromRoot(sourcePath);
+          return parseTeachingSession(await readFile(absolutePath, 'utf8'), {
+            id: session.id,
+            canonicalModuleIds: canonicalSources.canonicalModuleIds,
+            language,
+            sourcePath,
+            durationMinutes: session.durationMinutes,
+            slideCount: session.slideCount,
+            canonicalSources: canonicalSources[language],
+          });
+        };
+
+        const en = await parse('en');
+        const fr = await parse('fr');
+        validateTeachingPair(en, fr);
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === 'rejected') throw result.reason;
     }
     return {
       ok: true,
@@ -160,21 +169,25 @@ async function moduleSourceErrors(
 
 async function courseErrors(course: CourseEntry): Promise<string[]> {
   const directory = `${padOrdinal(course.ordinal)}-${course.slug}`;
-  const errors: string[] = [];
 
-  for (const language of ['en', 'fr'] as const) {
-    const readme = fromRoot('courses', directory, language, 'README.md');
+  const results = await Promise.all(
+    (['en', 'fr'] as const).map(async (language) => {
+      const readme = fromRoot('courses', directory, language, 'README.md');
+      const [readmeExists, moduleErrors] = await Promise.all([
+        fileExists(readme),
+        Promise.all(
+          course.modules.map((module) => moduleSourceErrors(module, directory, language)),
+        ),
+      ]);
 
-    if (!(await fileExists(readme))) {
-      errors.push(`Missing canonical README: ${relative(fromRoot(), readme)}`);
-    }
+      return [
+        ...(readmeExists ? [] : [`Missing canonical README: ${relative(fromRoot(), readme)}`]),
+        ...moduleErrors.flat(),
+      ];
+    }),
+  );
 
-    for (const module of course.modules) {
-      errors.push(...(await moduleSourceErrors(module, directory, language)));
-    }
-  }
-
-  return errors;
+  return results.flat();
 }
 
 async function courseStructure(): Promise<TaskResult> {
@@ -200,10 +213,13 @@ async function courseStructure(): Promise<TaskResult> {
 
 async function designSystem(): Promise<TaskResult> {
   const manifest = await readManifest();
-  const errors: string[] = [];
-  for (const [name, path] of Object.entries(manifest.designSystem)) {
-    if (!(await fileExists(fromRoot(path)))) errors.push(`Missing design-system ${name}: ${path}`);
-  }
+  const errors = (
+    await Promise.all(
+      Object.entries(manifest.designSystem).map(async ([name, path]) =>
+        (await fileExists(fromRoot(path))) ? [] : [`Missing design-system ${name}: ${path}`],
+      ),
+    )
+  ).flat();
   return errors.length
     ? { ok: false, messages: errors }
     : { ok: true, messages: ['Design-system paths resolve.'] };
@@ -219,10 +235,13 @@ async function repositoryStructure(): Promise<TaskResult> {
     'package.json',
     'pnpm-workspace.yaml',
   ];
-  const missing: string[] = [];
-  for (const item of required) {
-    if (!(await fileExists(fromRoot(item)))) missing.push(`Missing repository entry: ${item}`);
-  }
+  const missing = (
+    await Promise.all(
+      required.map(async (item) =>
+        (await fileExists(fromRoot(item))) ? [] : [`Missing repository entry: ${item}`],
+      ),
+    )
+  ).flat();
   return missing.length
     ? { ok: false, messages: missing }
     : { ok: true, messages: ['Required repository entries exist.'] };

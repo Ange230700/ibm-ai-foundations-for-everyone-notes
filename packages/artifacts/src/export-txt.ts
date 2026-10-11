@@ -18,28 +18,35 @@ const courses = requestedCourse
 
 if (requestedCourse && courses.length === 0) throw new Error(`Unknown course: ${requestedCourse}`);
 
-for (const course of courses) {
-  const directory = `${padOrdinal(course.ordinal)}-${course.slug}`;
-  for (const language of ['en', 'fr'] as const) {
-    const sources = [
-      fromRoot('courses', directory, language, 'README.md'),
-      ...course.modules
-        .sort((a, b) => a.ordinal - b.ordinal)
-        .map((module) => fromRoot(module.source[language])),
-    ];
-    const markdown = (await Promise.all(sources.map((path) => readFile(path, 'utf8')))).join(
-      '\n\n',
-    );
-    const bytes = Buffer.from(renderMarkdownText(markdown, { language }), 'utf8');
-    const errors = validatePlainText(bytes);
-    if (errors.length) throw new Error(errors.join('\n'));
-    const target = fromRoot(
-      '.artifacts',
-      'exports',
-      `course-${padOrdinal(course.ordinal)}.${language}.txt`,
-    );
-    await mkdir(dirname(target), { recursive: true });
-    await writeFile(target, bytes);
-    console.log(`WROTE ${target}`);
-  }
+const targets = await Promise.all(
+  courses.flatMap((course) => {
+    const directory = `${padOrdinal(course.ordinal)}-${course.slug}`;
+    const modules = [...course.modules].sort((a, b) => a.ordinal - b.ordinal);
+
+    return (['en', 'fr'] as const).map(async (language) => {
+      const sources = [
+        fromRoot('courses', directory, language, 'README.md'),
+        ...modules.map((module) => fromRoot(module.source[language])),
+      ];
+      const markdown = (await Promise.all(sources.map((path) => readFile(path, 'utf8')))).join(
+        '\n\n',
+      );
+      const bytes = Buffer.from(renderMarkdownText(markdown, { language }), 'utf8');
+      const errors = validatePlainText(bytes);
+      if (errors.length) throw new Error(errors.join('\n'));
+
+      const target = fromRoot(
+        '.artifacts',
+        'exports',
+        `course-${padOrdinal(course.ordinal)}.${language}.txt`,
+      );
+      await mkdir(dirname(target), { recursive: true });
+      await writeFile(target, bytes);
+      return target;
+    });
+  }),
+);
+
+for (const target of targets) {
+  console.log(`WROTE ${target}`);
 }

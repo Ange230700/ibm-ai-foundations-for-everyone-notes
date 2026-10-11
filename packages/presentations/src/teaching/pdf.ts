@@ -72,43 +72,87 @@ export async function resolveTeachingPdfVisuals(
 ): Promise<Map<string, TeachingPdfVisual>> {
   const repositoryRoot = resolve(repositoryRootInput);
   const spec = teachingDeckSpec(content);
-  const visuals = new Map<string, TeachingPdfVisual>();
 
-  for (const slide of spec.slides) {
-    if (!slide.visual) continue;
+  const entries = await Promise.all(
+    spec.slides.map(async (slide): Promise<[string, TeachingPdfVisual] | undefined> => {
+      if (!slide.visual) return undefined;
 
-    const { path, kind, caption } = slide.visual;
+      const { path, kind, caption } = slide.visual;
 
-    if (!TEACHING_VISUAL_PATH.test(path)) {
-      throw new Error(`Unsafe teaching PDF visual path: ${path}`);
-    }
-
-    const absolutePath = resolve(repositoryRoot, path);
-    relativePath(repositoryRoot, absolutePath);
-
-    const bytes = await readFile(absolutePath);
-
-    if (kind === 'mermaid') {
-      if (!bytes.toString('utf8').includes('<svg')) {
-        throw new Error(`Invalid teaching PDF SVG: ${path}`);
+      if (!TEACHING_VISUAL_PATH.test(path)) {
+        throw new Error(`Unsafe teaching PDF visual path: ${path}`);
       }
-    } else if (!bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
-      throw new Error(`Invalid teaching PDF PNG: ${path}`);
-    }
 
-    const mime = kind === 'mermaid' ? 'image/svg+xml' : 'image/png';
+      const absolutePath = resolve(repositoryRoot, path);
+      relativePath(repositoryRoot, absolutePath);
 
-    visuals.set(slide.slideId, {
-      slideId: slide.slideId,
-      kind,
-      path,
-      caption,
-      dataUrl: `data:${mime};base64,${bytes.toString('base64')}`,
-      sha256: sha256(bytes),
-    });
+      const bytes = await readFile(absolutePath);
+
+      if (kind === 'mermaid') {
+        if (!bytes.toString('utf8').includes('<svg')) {
+          throw new Error(`Invalid teaching PDF SVG: ${path}`);
+        }
+      } else if (!bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+        throw new Error(`Invalid teaching PDF PNG: ${path}`);
+      }
+
+      const mime = kind === 'mermaid' ? 'image/svg+xml' : 'image/png';
+
+      return [
+        slide.slideId,
+        {
+          slideId: slide.slideId,
+          kind,
+          path,
+          caption,
+          dataUrl: `data:${mime};base64,${bytes.toString('base64')}`,
+          sha256: sha256(bytes),
+        },
+      ];
+    }),
+  );
+
+  const visuals = new Map<string, TeachingPdfVisual>();
+  for (const entry of entries) {
+    if (entry) visuals.set(...entry);
   }
-
   return visuals;
+}
+
+function tableHtml(slide: TeachingSlide & { table: NonNullable<TeachingSlide['table']> }): string {
+  const headers = slide.table.headers.map((cell) => `<th>${escapeHtml(cell)}</th>`).join('');
+  const rows = slide.table.rows
+    .map((row) => {
+      const cells = row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('');
+      return `<tr>${cells}</tr>`;
+    })
+    .join('');
+  return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function itemMarker(kind: TeachingSlide['itemKinds'][number], index: number): string {
+  if (kind === 'ordered') return `${index + 1}.`;
+  return kind === 'bullet' ? '•' : '';
+}
+
+function listHtml(slide: TeachingSlide): string {
+  const items = slide.items
+    .map((item, index) => {
+      const label = itemMarker(slide.itemKinds[index]!, index);
+      return `<li><span class="marker">${label}</span>${escapeHtml(item)}</li>`;
+    })
+    .join('');
+  return `<ul>${items}</ul>`;
+}
+
+function projectedHtml(body: string, visual?: TeachingPdfVisual): string {
+  if (!visual) return body;
+  const caption = escapeHtml(visual.caption);
+  const figure = `<figure class="teaching-visual"><div class="visual-frame"><img src="${visual.dataUrl}" alt="${caption}"></div><figcaption>${caption}</figcaption></figure>`;
+  if (visual.kind === 'simulation') {
+    return `<div class="slide-content split-visual">${body}${figure}</div>`;
+  }
+  return `<div class="slide-content wide-visual">${figure}${body}</div>`;
 }
 
 function slideHtml(
@@ -118,24 +162,8 @@ function slideHtml(
   visual?: TeachingPdfVisual,
 ): string {
   const title = escapeHtml(slide.title);
-  const body = slide.table
-    ? `<table><thead><tr>${slide.table.headers.map((cell) => `<th>${escapeHtml(cell)}</th>`).join('')}</tr></thead><tbody>${slide.table.rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
-    : `<ul>${slide.items
-        .map((item, itemIndex) => {
-          const kind = slide.itemKinds[itemIndex];
-          const label = kind === 'ordered' ? `${itemIndex + 1}.` : kind === 'bullet' ? '•' : '';
-          return `<li><span class="marker">${label}</span>${escapeHtml(item)}</li>`;
-        })
-        .join('')}</ul>`;
-  const figure = visual
-    ? `<figure class="teaching-visual"><div class="visual-frame"><img src="${visual.dataUrl}" alt="${escapeHtml(visual.caption)}"></div><figcaption>${escapeHtml(visual.caption)}</figcaption></figure>`
-    : '';
-
-  const projected = visual
-    ? visual.kind === 'simulation'
-      ? `<div class="slide-content split-visual">${body}${figure}</div>`
-      : `<div class="slide-content wide-visual">${figure}${body}</div>`
-    : body;
+  const body = slide.table ? tableHtml({ ...slide, table: slide.table }) : listHtml(slide);
+  const projected = projectedHtml(body, visual);
 
   return `<section class="slide${slide.role === 'course-title' ? ' cover' : ''}">
     <div class="topline">${escapeHtml(content.id.toUpperCase())} · ${String(index + 1).padStart(2, '0')}/${content.slides.length}</div>
@@ -152,6 +180,10 @@ export function renderTeachingPdfHtml(
   const slides = content.slides
     .map((slide, index) => slideHtml(slide, index, content, visuals.get(slide.id)))
     .join('\n');
+  const logo = logoDataUrl
+    ? `<img class="brand-logo" src="${logoDataUrl}" alt="KRAAK Consulting">`
+    : '';
+  const body = slides.replaceAll('<div class="topline">', `${logo}<div class="topline">`);
   return `<!doctype html><html lang="${content.language}"><head><meta charset="utf-8">
   <title>${escapeHtml(content.title)}</title><style>
     @page { size: 13.333in 7.5in; margin: 0 }
@@ -244,7 +276,7 @@ export function renderTeachingPdfHtml(
     }
     footer { position: absolute; left: .72in; right: .72in; bottom: .3in;
       border-top: 1px solid #4CC3D9; padding-top: .12in; font-size: 10pt; }
-  </style></head><body>${slides.replaceAll('<div class="topline">', `${logoDataUrl ? `<img class="brand-logo" src="${logoDataUrl}" alt="KRAAK Consulting">` : ''}<div class="topline">`)}</body></html>`;
+  </style></head><body>${body}</body></html>`;
 }
 
 export async function renderTeachingPdf(
@@ -319,27 +351,41 @@ export async function verifyTeachingPdf(
         `Teaching PDF has ${document.numPages} pages; expected ${content.slides.length}.`,
       );
     }
-    for (let index = 0; index < content.slides.length; index += 1) {
-      const slide = content.slides[index];
-      if (!slide) throw new Error(`Missing teaching slide ${index + 1}.`);
-      const page = await document.getPage(index + 1);
-      const text = await page.getTextContent();
-      const actual = normalizePdfSemanticText(
-        text.items.map((item) => ('str' in item ? item.str : '')).join(' '),
-      );
-      const visualCaption = spec.slides[index]?.visual?.caption;
-      const expected = [
-        slide.id,
-        slide.title,
-        ...slide.items,
-        ...(slide.table ? [...slide.table.headers, ...slide.table.rows.flat()] : []),
-        ...(visualCaption ? [visualCaption] : []),
-      ];
-      for (const value of expected) {
-        if (!actual.includes(normalizePdfSemanticText(value))) {
-          throw new Error(`Teaching PDF page ${index + 1} is missing projected text: ${value}.`);
+    const results = await Promise.allSettled(
+      Array.from({ length: content.slides.length }, async (_, index) => {
+        const slide = content.slides[index];
+        if (!slide) throw new Error(`Missing teaching slide ${index + 1}.`);
+
+        const page = await document.getPage(index + 1);
+        try {
+          const text = await page.getTextContent();
+          const actual = normalizePdfSemanticText(
+            text.items.map((item) => ('str' in item ? item.str : '')).join(' '),
+          );
+          const visualCaption = spec.slides[index]?.visual?.caption;
+          const expected = [
+            slide.id,
+            slide.title,
+            ...slide.items,
+            ...(slide.table ? [...slide.table.headers, ...slide.table.rows.flat()] : []),
+            ...(visualCaption ? [visualCaption] : []),
+          ];
+
+          for (const value of expected) {
+            if (!actual.includes(normalizePdfSemanticText(value))) {
+              throw new Error(
+                `Teaching PDF page ${index + 1} is missing projected text: ${value}.`,
+              );
+            }
+          }
+        } finally {
+          page.cleanup();
         }
-      }
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === 'rejected') throw result.reason;
     }
   } finally {
     await loadingTask.destroy();

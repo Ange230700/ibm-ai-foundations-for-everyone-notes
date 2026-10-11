@@ -53,24 +53,27 @@ export async function writeMermaidSources(
 
   await mkdir(outputRoot, { recursive: true });
 
-  const diagrams: MermaidSourceRecord[] = [];
-
-  for (const diagram of content.diagrams) {
-    const filename = diagramFilename(diagram);
-    const absolutePath = resolve(outputRoot, filename);
-
-    const source = canonicalMermaidSource(diagram.definition);
-
-    await writeFile(absolutePath, source, 'utf8');
-
-    diagrams.push({
-      diagramId: diagram.diagramId,
-      source: diagram.source,
-      definitionSha256: diagram.definitionSha256,
-      mmdSha256: sha256(source),
-      path: toPosixPath(relative(options.repositoryRoot, absolutePath)),
-    });
+  const filenames = content.diagrams.map(diagramFilename);
+  if (new Set(filenames).size !== filenames.length) {
+    throw new Error('Mermaid diagrams must have distinct output filenames.');
   }
+
+  const diagrams: MermaidSourceRecord[] = await Promise.all(
+    content.diagrams.map(async (diagram, index) => {
+      const absolutePath = resolve(outputRoot, filenames[index]!);
+      const source = canonicalMermaidSource(diagram.definition);
+
+      await writeFile(absolutePath, source, 'utf8');
+
+      return {
+        diagramId: diagram.diagramId,
+        source: diagram.source,
+        definitionSha256: diagram.definitionSha256,
+        mmdSha256: sha256(source),
+        path: toPosixPath(relative(options.repositoryRoot, absolutePath)),
+      };
+    }),
+  );
 
   return {
     schemaVersion: 1,

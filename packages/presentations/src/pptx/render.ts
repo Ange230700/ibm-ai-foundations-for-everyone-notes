@@ -116,7 +116,7 @@ function wrapCodeLine(line: string, maximumLength: number): string[] {
     return [line];
   }
 
-  const indentation = line.match(/^\s*/u)![0]!;
+  const indentation = /^\s*/u.exec(line)![0]!;
   const words = line.trim().split(/\s+/u);
   const wrapped: string[] = [];
   let current = indentation;
@@ -568,24 +568,253 @@ function renderTitle(
   finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
 
+type ListSlideSpec = Extract<SlideSpec, { kind: 'objectives' | 'overview' | 'summary' }>;
+type TeachingVisual = {
+  absolutePath: string;
+  aspectRatio: number;
+  kind: 'mermaid' | 'simulation' | 'capture';
+  caption: string;
+};
+
+function renderCaptureList(
+  slide: PptxSlide,
+  slideSpec: ListSlideSpec,
+  visual: TeachingVisual,
+  theme: NativePptxTheme,
+): void {
+  const frame: Frame = {
+    x: SLIDE.left,
+    y: 1.45,
+    w: SLIDE.width - SLIDE.left - SLIDE.right,
+    h: 3.98,
+  };
+  slide.addShape('roundRect', {
+    ...frame,
+    rectRadius: 0.12,
+    fill: { color: theme.colors.surface },
+    line: { color: theme.colors.border, width: 0.75 },
+  });
+  slide.addImage({ path: visual.absolutePath, ...containFrame(frame, visual.aspectRatio, 0) });
+  slide.addText(visual.caption, {
+    x: frame.x,
+    y: 5.47,
+    w: frame.w,
+    h: 0.19,
+    margin: 0,
+    align: 'center',
+    fontFace: theme.fonts.body,
+    fontSize: 11,
+    color: theme.colors.muted,
+  });
+  const placements = [
+    { x: SLIDE.left, y: 5.7, w: 5.78, h: 0.31 },
+    { x: 6.8, y: 5.7, w: 5.78, h: 0.31 },
+    { x: SLIDE.left, y: 6.05, w: 5.78, h: 0.39 },
+    { x: 6.8, y: 6.05, w: 5.78, h: 0.39 },
+    { x: SLIDE.left, y: 6.48, w: 11.86, h: 0.31 },
+  ];
+  slideSpec.items.forEach((item, index) => {
+    const placement = placements[index];
+    if (!placement) throw new Error(`${slideSpec.slideId} has too many capture teaching points.`);
+    slide.addShape('rect', {
+      x: placement.x,
+      y: placement.y,
+      w: 0.46,
+      h: placement.h,
+      fill: { color: theme.colors.surface },
+      line: { color: theme.colors.border, width: 0.75 },
+    });
+    slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
+      x: placement.x + 0.015,
+      y: placement.y,
+      w: 0.43,
+      h: placement.h,
+      margin: 0,
+      align: 'center',
+      valign: 'middle',
+      fontFace: theme.fonts.body,
+      fontSize: 12,
+      bold: true,
+      color: theme.colors.accent,
+    });
+    slide.addText(item, {
+      x: placement.x + 0.62,
+      y: placement.y,
+      w: placement.w - 0.62,
+      h: placement.h,
+      margin: 0,
+      valign: 'middle',
+      fontFace: theme.fonts.body,
+      fontSize: 13,
+      color: theme.colors.ink,
+      fit: 'shrink',
+    });
+  });
+}
+
+function teachingListFontSize(
+  wideDiagram: boolean,
+  hasVisual: boolean,
+  visualLines: number,
+  itemCount: number,
+): number {
+  if (wideDiagram) return 15;
+  if (!hasVisual) return listFontSize(itemCount, visualLines);
+  return visualLines > 14 ? 14 : 16;
+}
+
+function teachingCharactersPerLine(hasSideVisual: boolean, fontSize: number): number {
+  if (hasSideVisual) return 48;
+  if (fontSize >= 21) return 78;
+  return fontSize >= 18 ? 90 : 102;
+}
+
+function addListLeadIn(slide: PptxSlide, slideSpec: ListSlideSpec, theme: NativePptxTheme): number {
+  if (slideSpec.kind !== 'objectives' || !slideSpec.leadIn) return 1.55;
+  slide.addText(slideSpec.leadIn, {
+    x: SLIDE.left,
+    y: 1.32,
+    w: 11.9,
+    h: 0.38,
+    margin: 0,
+    fontFace: theme.fonts.body,
+    fontSize: 15,
+    color: theme.colors.muted,
+    fit: 'shrink',
+  });
+  return 1.86;
+}
+
+interface TeachingListLayout {
+  fontSize: number;
+  gap: number;
+  rowHeights: number[];
+  rowTop: number;
+  top: number;
+  wideDiagram: boolean;
+}
+
+function teachingListLayout(
+  slideSpec: ListSlideSpec,
+  visual: TeachingVisual | undefined,
+  top: number,
+): TeachingListLayout {
+  const hasLeadIn = slideSpec.kind === 'objectives' && Boolean(slideSpec.leadIn);
+  const wideDiagram = visual?.kind === 'mermaid' && !hasLeadIn;
+  const gap = wideDiagram ? 0.04 : 0.11;
+  const rowTop = wideDiagram ? 4.95 : top;
+  const rowBottom = wideDiagram ? 6.65 : 6.55;
+  const availableHeight = rowBottom - rowTop - gap * (slideSpec.items.length - 1);
+  const initialCharactersPerLine = visual && !wideDiagram ? 46 : 88;
+  const initialWeights = slideSpec.items.map((item) =>
+    estimatedWrappedLines(item, initialCharactersPerLine),
+  );
+  const visualLines = initialWeights.reduce((total, weight) => total + weight, 0);
+  const fontSize = teachingListFontSize(
+    wideDiagram,
+    Boolean(visual),
+    visualLines,
+    slideSpec.items.length,
+  );
+  const charactersPerLine = teachingCharactersPerLine(Boolean(visual && !wideDiagram), fontSize);
+  const rowWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, charactersPerLine));
+  const minimumHeight = wideDiagram ? 0.25 : 0.46;
+  const rowHeights = proportionalHeights(rowWeights, availableHeight, minimumHeight);
+  return { fontSize, gap, rowHeights, rowTop, top, wideDiagram };
+}
+
+function renderTeachingListRows(
+  slide: PptxSlide,
+  slideSpec: ListSlideSpec,
+  visual: TeachingVisual | undefined,
+  theme: NativePptxTheme,
+  layout: TeachingListLayout,
+): void {
+  const verticalInset = layout.wideDiagram ? 0.02 : 0.05;
+  const heightInset = layout.wideDiagram ? 0.04 : 0.1;
+  const textWidth = visual && !layout.wideDiagram ? 6.12 : 10.95;
+  let y = layout.rowTop;
+  slideSpec.items.forEach((item, index) => {
+    const rowHeight = layout.rowHeights[index]!;
+    slide.addShape('rect', {
+      x: SLIDE.left,
+      y,
+      w: 0.68,
+      h: rowHeight,
+      fill: { color: theme.colors.surface },
+      line: { color: theme.colors.border, width: 0.75 },
+    });
+    slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
+      x: SLIDE.left + 0.08,
+      y: y + verticalInset,
+      w: 0.52,
+      h: rowHeight - heightInset,
+      margin: 0,
+      align: 'center',
+      valign: 'middle',
+      fontFace: theme.fonts.body,
+      fontSize: 13,
+      bold: true,
+      color: theme.colors.accent,
+    });
+    slide.addText(item, {
+      x: SLIDE.left + 0.88,
+      y: y + verticalInset,
+      w: textWidth,
+      h: rowHeight - heightInset,
+      margin: 0,
+      valign: 'middle',
+      fontFace: theme.fonts.body,
+      fontSize: layout.fontSize,
+      color: theme.colors.ink,
+      fit: 'shrink',
+    });
+    y += rowHeight + layout.gap;
+  });
+}
+
+function renderTeachingListVisual(
+  slide: PptxSlide,
+  visual: TeachingVisual,
+  theme: NativePptxTheme,
+  layout: TeachingListLayout,
+): void {
+  const frame: Frame = layout.wideDiagram
+    ? { x: SLIDE.left, y: layout.top, w: SLIDE.width - SLIDE.left - SLIDE.right, h: 3.0 }
+    : { x: 7.85, y: layout.top, w: 4.75, h: 4.61 };
+  slide.addShape('roundRect', {
+    ...frame,
+    rectRadius: 0.12,
+    fill: { color: theme.colors.surface },
+    line: { color: theme.colors.border, width: 0.75 },
+  });
+  slide.addImage({
+    path: visual.absolutePath,
+    ...containFrame(frame, visual.aspectRatio, layout.wideDiagram ? 0.08 : 0.14),
+  });
+  slide.addText(visual.caption, {
+    x: frame.x,
+    y: frame.y + frame.h + (layout.wideDiagram ? 0.02 : 0.11),
+    w: frame.w,
+    h: layout.wideDiagram ? 0.25 : 0.47,
+    margin: 0,
+    align: 'center',
+    fontFace: theme.fonts.body,
+    fontSize: 12,
+    italic: visual.kind === 'simulation',
+    color: theme.colors.muted,
+    fit: 'shrink',
+  });
+}
+
 function renderListSlide(
   pptx: PptxGenJSInstance,
   spec: DeckSpec,
-  slideSpec: Extract<
-    SlideSpec,
-    {
-      kind: 'objectives' | 'overview' | 'summary';
-    }
-  >,
+  slideSpec: ListSlideSpec,
   pageNumber: number,
   theme: NativePptxTheme,
   brand: ResolvedNativePptxBrand,
-  visual?: {
-    absolutePath: string;
-    aspectRatio: number;
-    kind: 'mermaid' | 'simulation' | 'capture';
-    caption: string;
-  },
+  visual?: TeachingVisual,
 ): void {
   if (slideSpec.items.length === 0) {
     throw new Error(`${slideSpec.slideId} has no list items.`);
@@ -604,194 +833,14 @@ function renderListSlide(
   addSlideTitle(slide, slideSpec.title, theme);
 
   if (visual?.kind === 'capture') {
-    // A real chat capture needs the slide width to keep its original text legible.
-    // The teaching points remain visible below it and retain their individual animation shapes.
-    const frame: Frame = {
-      x: SLIDE.left,
-      y: 1.45,
-      w: SLIDE.width - SLIDE.left - SLIDE.right,
-      h: 3.98,
-    };
-    slide.addShape('roundRect', {
-      ...frame,
-      rectRadius: 0.12,
-      fill: { color: theme.colors.surface },
-      line: { color: theme.colors.border, width: 0.75 },
-    });
-    slide.addImage({ path: visual.absolutePath, ...containFrame(frame, visual.aspectRatio, 0) });
-    slide.addText(visual.caption, {
-      x: frame.x,
-      y: 5.47,
-      w: frame.w,
-      h: 0.19,
-      margin: 0,
-      align: 'center',
-      fontFace: theme.fonts.body,
-      fontSize: 11,
-      color: theme.colors.muted,
-    });
-    const placements = [
-      { x: SLIDE.left, y: 5.7, w: 5.78, h: 0.31 },
-      { x: 6.8, y: 5.7, w: 5.78, h: 0.31 },
-      { x: SLIDE.left, y: 6.05, w: 5.78, h: 0.39 },
-      { x: 6.8, y: 6.05, w: 5.78, h: 0.39 },
-      { x: SLIDE.left, y: 6.48, w: 11.86, h: 0.31 },
-    ];
-    slideSpec.items.forEach((item, index) => {
-      const placement = placements[index];
-      if (!placement) throw new Error(`${slideSpec.slideId} has too many capture teaching points.`);
-      slide.addShape('rect', {
-        x: placement.x,
-        y: placement.y,
-        w: 0.46,
-        h: placement.h,
-        fill: { color: theme.colors.surface },
-        line: { color: theme.colors.border, width: 0.75 },
-      });
-      slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
-        x: placement.x + 0.015,
-        y: placement.y,
-        w: 0.43,
-        h: placement.h,
-        margin: 0,
-        align: 'center',
-        valign: 'middle',
-        fontFace: theme.fonts.body,
-        fontSize: 12,
-        bold: true,
-        color: theme.colors.accent,
-      });
-      slide.addText(item, {
-        x: placement.x + 0.62,
-        y: placement.y,
-        w: placement.w - 0.62,
-        h: placement.h,
-        margin: 0,
-        valign: 'middle',
-        fontFace: theme.fonts.body,
-        fontSize: 13,
-        color: theme.colors.ink,
-        fit: 'shrink',
-      });
-    });
+    renderCaptureList(slide, slideSpec, visual, theme);
     finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
     return;
   }
 
-  if (slideSpec.kind === 'objectives' && slideSpec.leadIn) {
-    slide.addText(slideSpec.leadIn, {
-      x: SLIDE.left,
-      y: 1.32,
-      w: 11.9,
-      h: 0.38,
-      margin: 0,
-      fontFace: theme.fonts.body,
-      fontSize: 15,
-      color: theme.colors.muted,
-      fit: 'shrink',
-    });
-  }
-
-  const top = slideSpec.kind === 'objectives' && slideSpec.leadIn ? 1.86 : 1.55;
-
-  const wideDiagram =
-    visual?.kind === 'mermaid' && !(slideSpec.kind === 'objectives' && slideSpec.leadIn);
-  const gap = wideDiagram ? 0.04 : 0.11;
-  const rowTop = wideDiagram ? 4.95 : top;
-  const rowBottom = wideDiagram ? 6.65 : 6.55;
-  const availableHeight = rowBottom - rowTop - gap * (slideSpec.items.length - 1);
-  const initialWeights = slideSpec.items.map((item) =>
-    estimatedWrappedLines(item, visual && !wideDiagram ? 46 : 88),
-  );
-  const visualLines = initialWeights.reduce((total, weight) => total + weight, 0);
-  const fontSize = wideDiagram
-    ? 15
-    : visual
-      ? visualLines > 14
-        ? 14
-        : 16
-      : listFontSize(slideSpec.items.length, visualLines);
-  const charactersPerLine =
-    visual && !wideDiagram ? 48 : fontSize >= 21 ? 78 : fontSize >= 18 ? 90 : 102;
-  const rowWeights = slideSpec.items.map((item) => estimatedWrappedLines(item, charactersPerLine));
-  const rowHeights = proportionalHeights(rowWeights, availableHeight, wideDiagram ? 0.25 : 0.46);
-  let y = rowTop;
-
-  slideSpec.items.forEach((item, index) => {
-    const rowHeight = rowHeights[index]!;
-
-    slide.addShape('rect', {
-      x: SLIDE.left,
-      y,
-      w: 0.68,
-      h: rowHeight,
-      fill: {
-        color: theme.colors.surface,
-      },
-      line: {
-        color: theme.colors.border,
-        width: 0.75,
-      },
-    });
-
-    slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
-      x: SLIDE.left + 0.08,
-      y: y + (wideDiagram ? 0.02 : 0.05),
-      w: 0.52,
-      h: rowHeight - (wideDiagram ? 0.04 : 0.1),
-      margin: 0,
-      align: 'center',
-      valign: 'middle',
-      fontFace: theme.fonts.body,
-      fontSize: 13,
-      bold: true,
-      color: theme.colors.accent,
-    });
-
-    slide.addText(item, {
-      x: SLIDE.left + 0.88,
-      y: y + (wideDiagram ? 0.02 : 0.05),
-      w: visual && !wideDiagram ? 6.12 : 10.95,
-      h: rowHeight - (wideDiagram ? 0.04 : 0.1),
-      margin: 0,
-      valign: 'middle',
-      fontFace: theme.fonts.body,
-      fontSize,
-      color: theme.colors.ink,
-      fit: 'shrink',
-    });
-
-    y += rowHeight + gap;
-  });
-
-  if (visual) {
-    const frame: Frame = wideDiagram
-      ? { x: SLIDE.left, y: top, w: SLIDE.width - SLIDE.left - SLIDE.right, h: 3.0 }
-      : { x: 7.85, y: top, w: 4.75, h: 4.61 };
-    slide.addShape('roundRect', {
-      ...frame,
-      rectRadius: 0.12,
-      fill: { color: theme.colors.surface },
-      line: { color: theme.colors.border, width: 0.75 },
-    });
-    slide.addImage({
-      path: visual.absolutePath,
-      ...containFrame(frame, visual.aspectRatio, wideDiagram ? 0.08 : 0.14),
-    });
-    slide.addText(visual.caption, {
-      x: frame.x,
-      y: frame.y + frame.h + (wideDiagram ? 0.02 : 0.11),
-      w: frame.w,
-      h: wideDiagram ? 0.25 : 0.47,
-      margin: 0,
-      align: 'center',
-      fontFace: theme.fonts.body,
-      fontSize: 12,
-      italic: visual.kind === 'simulation',
-      color: theme.colors.muted,
-      fit: 'shrink',
-    });
-  }
+  const layout = teachingListLayout(slideSpec, visual, addListLeadIn(slide, slideSpec, theme));
+  renderTeachingListRows(slide, slideSpec, visual, theme, layout);
+  if (visual) renderTeachingListVisual(slide, visual, theme, layout);
 
   finishSlide(slide, spec, slideSpec, pageNumber, theme, brand);
 }
@@ -1203,6 +1252,131 @@ export function validatePptxBytes(bytes: Uint8Array, label: string): void {
   }
 }
 
+type ResolvedTeachingVisual = TeachingVisual & { sha256: string };
+
+function teachingVisualAspectRatio(kind: ResolvedTeachingVisual['kind'], bytes: Buffer): number {
+  if (kind !== 'mermaid') return bytes.readUInt32BE(16) / bytes.readUInt32BE(20);
+  const viewBox = /viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)"/u.exec(bytes.toString('utf8'));
+  return viewBox ? Number(viewBox[1]) / Number(viewBox[2]) : 1;
+}
+
+function validateTeachingVisualBytes(
+  kind: ResolvedTeachingVisual['kind'],
+  path: string,
+  bytes: Buffer,
+): void {
+  if (kind === 'mermaid') {
+    if (!bytes.toString('utf8').includes('<svg')) {
+      throw new Error(`Invalid teaching SVG: ${path}`);
+    }
+    return;
+  }
+  const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+  if (bytes.length < 24 || !bytes.subarray(0, 8).equals(pngSignature)) {
+    throw new Error(`Invalid teaching PNG: ${path}`);
+  }
+}
+
+async function resolveTeachingVisuals(
+  repositoryRoot: string,
+  spec: DeckSpec,
+): Promise<Map<string, ResolvedTeachingVisual>> {
+  const safePath = /^teaching\/visuals\/s\d{2}\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u;
+
+  const entries = await Promise.all(
+    [...spec.slides.entries()].map(
+      async ([index, slide]): Promise<[string, ResolvedTeachingVisual] | undefined> => {
+        if (!slide) throw new Error(`Missing native slide at index ${index}.`);
+        if (!slide.visual) return undefined;
+
+        const { path, kind, caption } = slide.visual;
+        if (!safePath.test(path)) throw new Error(`Unsafe teaching visual path: ${path}`);
+
+        const absolutePath = resolve(repositoryRoot, path);
+        const bytes = await readFile(absolutePath);
+        validateTeachingVisualBytes(kind, path, bytes);
+
+        const aspectRatio = teachingVisualAspectRatio(kind, bytes);
+        if (!Number.isFinite(aspectRatio) || aspectRatio <= 0) {
+          throw new Error(`Invalid visual dimensions: ${path}`);
+        }
+
+        return [
+          slide.slideId,
+          {
+            absolutePath,
+            sha256: sha256(bytes),
+            aspectRatio,
+            kind,
+            caption,
+          },
+        ];
+      },
+    ),
+  );
+
+  const visuals = new Map<string, ResolvedTeachingVisual>();
+  for (const entry of entries) {
+    if (entry) visuals.set(...entry);
+  }
+  return visuals;
+}
+
+function validateSupportedSlides(spec: DeckSpec): void {
+  const unsupported = spec.slides.filter((slide) => !SUPPORTED_SLIDE_KINDS.has(slide.kind));
+  if (unsupported.length > 0) {
+    throw new Error(
+      [
+        'Phase 3B1 renderer does not yet support:',
+        ...unsupported.map((slide) => `${slide.slideId}:${slide.kind}`),
+      ].join(' '),
+    );
+  }
+}
+
+function renderSlides(
+  pptx: PptxGenJSInstance,
+  spec: DeckSpec,
+  theme: NativePptxTheme,
+  brand: ResolvedNativePptxBrand,
+  diagramAssets: Map<string, ResolvedNativePptxDiagramAsset>,
+  visuals: ReadonlyMap<string, ResolvedTeachingVisual>,
+): void {
+  spec.slides.forEach((slideSpec, index) => {
+    const pageNumber = index + 1;
+    switch (slideSpec.kind) {
+      case 'title':
+        renderTitle(pptx, spec, slideSpec, pageNumber, theme, brand);
+        break;
+      case 'objectives':
+      case 'overview':
+      case 'summary':
+        renderListSlide(
+          pptx,
+          spec,
+          slideSpec,
+          pageNumber,
+          theme,
+          brand,
+          visuals.get(slideSpec.slideId),
+        );
+        break;
+      case 'concepts':
+        renderConcepts(pptx, spec, slideSpec, pageNumber, theme, brand);
+        break;
+      case 'diagram':
+        renderDiagram(pptx, spec, slideSpec, pageNumber, theme, brand, diagramAssets);
+        break;
+      case 'table':
+        renderTable(pptx, spec, slideSpec, pageNumber, theme, brand);
+        break;
+      case 'code':
+        renderCode(pptx, spec, slideSpec, pageNumber, theme, brand);
+        break;
+    }
+  });
+}
+
 export async function renderNativePptx(
   spec: DeckSpec,
   options: RenderNativePptxOptions,
@@ -1226,63 +1400,8 @@ export async function renderNativePptx(
     spec,
     options.diagramAssets ?? [],
   );
-  const visuals = new Map<
-    string,
-    {
-      absolutePath: string;
-      sha256: string;
-      aspectRatio: number;
-      kind: 'mermaid' | 'simulation' | 'capture';
-      caption: string;
-    }
-  >();
-  for (const [index, slide] of spec.slides.entries()) {
-    if (!slide) throw new Error(`Missing native slide at index ${index}.`);
-    if (!slide.visual) continue;
-    const { path, kind, caption } = slide.visual;
-    if (!/^teaching\/visuals\/s\d{2}\/(?:en|fr)\/[a-z-]+\.(?:svg|png)$/u.test(path)) {
-      throw new Error(`Unsafe teaching visual path: ${path}`);
-    }
-    const absolutePath = resolve(repositoryRoot, path);
-    const bytes = await readFile(absolutePath);
-    if (kind === 'mermaid' && !Buffer.from(bytes).toString('utf8').includes('<svg'))
-      throw new Error(`Invalid teaching SVG: ${path}`);
-    if (
-      kind !== 'mermaid' &&
-      (bytes.length < 24 ||
-        !Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])))
-    )
-      throw new Error(`Invalid teaching PNG: ${path}`);
-    const ratio =
-      kind !== 'mermaid'
-        ? bytes.readUInt32BE(16) / bytes.readUInt32BE(20)
-        : (() => {
-            const viewBox = Buffer.from(bytes)
-              .toString('utf8')
-              .match(/viewBox="[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)"/u);
-            return viewBox ? Number(viewBox[1]) / Number(viewBox[2]) : 1;
-          })();
-    if (!Number.isFinite(ratio) || ratio <= 0)
-      throw new Error(`Invalid visual dimensions: ${path}`);
-    visuals.set(slide.slideId, {
-      absolutePath,
-      sha256: sha256(bytes),
-      aspectRatio: ratio,
-      kind,
-      caption,
-    });
-  }
-
-  const unsupported = spec.slides.filter((slide) => !SUPPORTED_SLIDE_KINDS.has(slide.kind));
-
-  if (unsupported.length > 0) {
-    throw new Error(
-      [
-        'Phase 3B1 renderer does not yet support:',
-        ...unsupported.map((slide) => `${slide.slideId}:${slide.kind}`),
-      ].join(' '),
-    );
-  }
+  const visuals = await resolveTeachingVisuals(repositoryRoot, spec);
+  validateSupportedSlides(spec);
 
   const author = options.author ?? theme.brand.name;
 
@@ -1306,47 +1425,7 @@ export async function renderNativePptx(
     bodyFontFace: theme.fonts.body,
   };
 
-  for (let index = 0; index < spec.slides.length; index += 1) {
-    const slideSpec = spec.slides[index]!;
-
-    const pageNumber = index + 1;
-
-    switch (slideSpec.kind) {
-      case 'title':
-        renderTitle(pptx, spec, slideSpec, pageNumber, theme, brand);
-        break;
-
-      case 'objectives':
-      case 'overview':
-      case 'summary':
-        renderListSlide(
-          pptx,
-          spec,
-          slideSpec,
-          pageNumber,
-          theme,
-          brand,
-          visuals.get(slideSpec.slideId),
-        );
-        break;
-
-      case 'concepts':
-        renderConcepts(pptx, spec, slideSpec, pageNumber, theme, brand);
-        break;
-
-      case 'diagram':
-        renderDiagram(pptx, spec, slideSpec, pageNumber, theme, brand, diagramAssets);
-        break;
-
-      case 'table':
-        renderTable(pptx, spec, slideSpec, pageNumber, theme, brand);
-        break;
-
-      case 'code':
-        renderCode(pptx, spec, slideSpec, pageNumber, theme, brand);
-        break;
-    }
-  }
+  renderSlides(pptx, spec, theme, brand, diagramAssets, visuals);
 
   await mkdir(dirname(outputPath), {
     recursive: true,
