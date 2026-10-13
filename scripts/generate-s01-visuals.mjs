@@ -11,6 +11,7 @@ await generateTeachingVisuals({
   screenCss: false,
   screenWidth: 860,
   screenHeight: 820,
+  screenHeights: { prompt: 350 },
   requireSimulationLabel: false,
   mermaidIdentityPrefix: '',
 });

@@ -345,7 +345,7 @@ Explain that a visual may look credible while containing misleading text or symb
 
 - Teaching simulation: fictional intake poster
 - Check: lot ID, date, and weight
-- Spot: missing information or false certification
+- Identify any claim unsupported by the supplied instruction
 
 ### Teaching Notes
 

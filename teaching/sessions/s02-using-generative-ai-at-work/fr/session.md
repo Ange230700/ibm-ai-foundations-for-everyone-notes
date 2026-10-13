@@ -350,7 +350,7 @@ Expliquer qu’un visuel peut sembler crédible tout en contenant un texte ou un
 
 - Simulation pédagogique : affiche de réception fictive
 - Vérifier : identifiant, date et poids
-- Repérer : information absente ou fausse certification
+- Repérer toute affirmation non fondée sur la consigne fournie
 
 ### Notes pédagogiques
 

@@ -149,6 +149,7 @@ export async function generateTeachingVisuals({
   screenCss = true,
   screenWidth = 860,
   screenHeight = 640,
+  screenHeights = {},
   requireSimulationLabel = true,
   mermaidIdentityPrefix = sessionId,
 }) {
@@ -199,7 +200,7 @@ export async function generateTeachingVisuals({
           sessionId,
           screenCss,
           screenWidth,
-          screenHeight,
+          screenHeight: screenHeights[source.name] ?? screenHeight,
           source,
         });
       }

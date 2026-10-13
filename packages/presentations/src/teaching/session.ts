@@ -308,26 +308,22 @@ function teachingVisualDefinitions(): Record<string, TeachingVisualDefinition> {
 S01-08|mermaid|evolution|Coexisting AI approaches|Approches d’IA complémentaires
 S01-10|mermaid|learning|Learning methods|Modes d’apprentissage
 S01-19|mermaid|offline|Offline workflow|Travail hors connexion
-S01-20|simulation|alert|Illustrative assistant alert|Alerte simulée de l’assistant
-S01-22|simulation|prompt|Illustrative prompt and draft|Demande et réponse simulées|chat-capture|Real ChatGPT exchange · fictional cocoa cooperative scenario|Échange réel avec ChatGPT · scénario de coopérative fictive
+S01-22|simulation|prompt|Illustrative prompt|Exemple de consigne|chat-capture|Prompt entered in ChatGPT · fictional cocoa cooperative scenario|Consigne saisie dans ChatGPT · scénario de coopérative fictive
 S01-24|mermaid|rag|Retrieval then generation|Recherche puis génération
 S02-06|mermaid|model-workflow|Training, request, and review|Entraînement, consigne et contrôle
 S02-09|mermaid|formats|Audience, format, and check|Public, format et contrôle
-S02-11|simulation|prompt|Fictional prompt for the staff notice|Consigne fictive pour l’avis aux agents|chat-capture|Real ChatGPT exchange · fictional cooperative instruction|Échange réel avec ChatGPT · consigne de coopérative fictive
-S02-12|simulation|wrong-output|Deliberately wrong draft|Brouillon volontairement erroné
+S02-11|simulation|prompt|Fictional prompt for the staff notice|Consigne fictive pour l’avis aux agents|chat-capture|Prompt entered in ChatGPT · fictional cooperative instruction|Consigne saisie dans ChatGPT · instruction pour une coopérative fictive
 S02-13|mermaid|review|Three checks before sharing|Trois contrôles avant diffusion
 S02-14|simulation|revised-output|Revised fictional draft|Brouillon fictif corrigé
 S02-17|simulation|poster|Fictional poster for review|Affiche fictive à vérifier
 S02-20|simulation|guide|Local HTML guide simulation|Simulation d’un guide HTML local|guide-capture|Browser capture of a local HTML guide · teaching prototype|Capture navigateur d’un guide HTML local · prototype pédagogique
 S02-21|mermaid|agents|Drafting and agentic actions|Brouillon et actions agentiques
 S03-05|mermaid|workflow|Draft and check against the task|Brouillon et contrôle de la tâche
-S03-08|simulation|prompt|Fictional source-grounded prompt|Demande fictive fondée sur la source|chat-capture|Real ChatGPT exchange · fictional cooperative source|Échange réel avec ChatGPT · source de coopérative fictive
-S03-13|simulation|examples|Fictional input-output examples|Exemples fictifs d’entrée et de sortie
+S03-08|simulation|prompt|Fictional source-grounded prompt|Demande fictive fondée sur la source|chat-capture|Prompt entered in ChatGPT · fictional cooperative source|Consigne saisie dans ChatGPT · source de coopérative fictive
 S03-14|mermaid|methods|Choose the prompt method|Choisir la méthode de demande
-S03-16|simulation|interview|Fictional interview prompt|Demande fictive en mode entretien|interview-capture|Real ChatGPT opening question · fictional cocoa cooperative|Première question réelle de ChatGPT · coopérative fictive
+S03-16|simulation|interview|Fictional interview prompt|Demande fictive en mode entretien|interview-capture|Interview prompt entered in ChatGPT · fictional cocoa cooperative|Consigne d’entretien saisie dans ChatGPT · coopérative cacaoyère fictive
 S03-17|mermaid|steps|Observable steps before approval|Étapes observables avant validation
-S03-19|simulation|wrong-output|Deliberately unsupported draft|Brouillon volontairement sans fondement
-S03-20|simulation|revision|Fictional correction and revised draft|Correction et nouveau brouillon fictifs
+S03-20|simulation|revision|Fictional revised draft|Brouillon fictif corrigé
 S03-23|mermaid|checks|Checks before human approval|Contrôles avant validation humaine
 S05-05|mermaid|workflow-canvas|Workflow Canvas|Workflow Canvas
 S05-15|mermaid|manual-vs-ai|Manual and AI-assisted workflow|Workflow manuel et assisté par l’IA

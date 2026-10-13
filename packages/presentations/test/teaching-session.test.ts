@@ -153,7 +153,7 @@ test('S01 teaching sources preserve 30 aligned slides and exactly 60 minutes', a
   }
 });
 
-test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on all slides', async () => {
+test('S01 PPTX embeds five bilingual teaching visuals and legible rich notes on all slides', async () => {
   const { content } = await fixture();
   await mkdir(resolve(repositoryRoot(), '.artifacts'), { recursive: true });
   const output = await mkdtemp(resolve(repositoryRoot(), '.artifacts/s01-visual-test-'));
@@ -162,20 +162,20 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
       const spec = teachingDeckSpec(content[language]);
       assert.deepEqual(
         spec.slides.filter((slide) => slide.visual).map((slide) => slide.slideId),
-        ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'],
+        ['S01-08', 'S01-10', 'S01-19', 'S01-22', 'S01-24'],
       );
       const path = resolve(output, `${language}.pptx`);
       const artifact = await renderNativePptx(spec, {
         repositoryRoot: repositoryRoot(),
         outputPath: path,
       });
-      assert.equal(artifact.visualAssets.length, 6);
+      assert.equal(artifact.visualAssets.length, 5);
       const verification = await verifyNativePptx(spec, repositoryRoot(), path);
       assert.deepEqual(
         verification.slides
           .filter((slide) => slide.pictures >= 2 && slide.slideId !== 'S01-01')
           .map((slide) => slide.slideId),
-        ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'],
+        ['S01-08', 'S01-10', 'S01-19', 'S01-22', 'S01-24'],
       );
       const zip = await JSZip.loadAsync(await readFile(path));
       const capturePath = `teaching/visuals/s01/${language}/chat-capture.png`;
@@ -184,7 +184,7 @@ test('S01 PPTX embeds six bilingual teaching visuals and legible rich notes on a
       assert.equal(capture.path, capturePath);
       assert.match(
         capture.caption,
-        language === 'fr' ? /Échange réel avec ChatGPT/u : /Real ChatGPT exchange/u,
+        language === 'fr' ? /Consigne saisie dans ChatGPT/u : /Prompt entered in ChatGPT/u,
       );
       assert.equal(
         artifact.visualAssets.find((asset) => asset.slideId === 'S01-22')?.sha256,
@@ -240,25 +240,25 @@ test('projected PDF contains the slide content and teaching visuals without faci
   const enVisuals = await resolveTeachingPdfVisuals(content.en, root);
   const frVisuals = await resolveTeachingPdfVisuals(content.fr, root);
 
-  const expectedVisualSlides = ['S01-08', 'S01-10', 'S01-19', 'S01-20', 'S01-22', 'S01-24'];
+  const expectedVisualSlides = ['S01-08', 'S01-10', 'S01-19', 'S01-22', 'S01-24'];
 
   assert.deepEqual([...enVisuals.keys()], expectedVisualSlides);
   assert.deepEqual([...frVisuals.keys()], expectedVisualSlides);
 
   const frHtml = renderTeachingPdfHtml(content.fr, undefined, frVisuals);
   assert.equal((frHtml.match(/<section class="slide/g) ?? []).length, 30);
-  assert.equal((frHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 6);
+  assert.equal((frHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 5);
   assert.match(frHtml, /Cas fictif : une coopérative cacaoyère près de Soubré/);
-  assert.match(frHtml, /Échange réel avec ChatGPT/);
+  assert.match(frHtml, /Consigne saisie dans ChatGPT/);
   assert.doesNotMatch(frHtml, /Nawa/);
   assert.doesNotMatch(frHtml, /\*\*Message à faire retenir/);
   assert.doesNotMatch(frHtml, /Notes pédagogiques/);
 
   const enHtml = renderTeachingPdfHtml(content.en, undefined, enVisuals);
   assert.equal((enHtml.match(/<section class="slide/g) ?? []).length, 30);
-  assert.equal((enHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 6);
+  assert.equal((enHtml.match(/<figure class="teaching-visual"/g) ?? []).length, 5);
   assert.match(enHtml, /Fictional case: a cocoa cooperative near Soubré/);
-  assert.match(enHtml, /Real ChatGPT exchange/);
+  assert.match(enHtml, /Prompt entered in ChatGPT/);
   assert.doesNotMatch(enHtml, /\*\*Key takeaway/);
   assert.doesNotMatch(enHtml, /Teaching Notes/);
 });
@@ -296,7 +296,6 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
         'S02-06',
         'S02-09',
         'S02-11',
-        'S02-12',
         'S02-13',
         'S02-14',
         'S02-17',
@@ -339,7 +338,7 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
       assert.equal(capture.path, capturePath);
       assert.match(
         capture.caption,
-        language === 'fr' ? /Échange réel avec ChatGPT/u : /Real ChatGPT exchange/u,
+        language === 'fr' ? /Consigne saisie dans ChatGPT/u : /Prompt entered in ChatGPT/u,
       );
       assert.equal(
         artifact.visualAssets.find((asset) => asset.slideId === 'S02-11')?.sha256,
@@ -418,17 +417,7 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       assert.equal(current.slides[24]?.id, 'S03-25');
       const spec = teachingDeckSpec(current);
       assert.equal(spec.slides.length, 25);
-      const visualSlideIds = [
-        'S03-05',
-        'S03-08',
-        'S03-13',
-        'S03-14',
-        'S03-16',
-        'S03-17',
-        'S03-19',
-        'S03-20',
-        'S03-23',
-      ];
+      const visualSlideIds = ['S03-05', 'S03-08', 'S03-14', 'S03-16', 'S03-17', 'S03-20', 'S03-23'];
       assert.deepEqual(
         spec.slides.filter((slide) => slide.visual).map((slide) => slide.slideId),
         visualSlideIds,
@@ -465,7 +454,7 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       assert.equal(capture.path, capturePath);
       assert.match(
         capture.caption,
-        language === 'fr' ? /Échange réel avec ChatGPT/u : /Real ChatGPT exchange/u,
+        language === 'fr' ? /Consigne saisie dans ChatGPT/u : /Prompt entered in ChatGPT/u,
       );
       assert.equal(
         artifact.visualAssets.find((asset) => asset.slideId === 'S03-08')?.sha256,
@@ -487,7 +476,9 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       assert.equal(interview.path, interviewPath);
       assert.match(
         interview.caption,
-        language === 'fr' ? /Première question réelle/u : /Real ChatGPT opening question/u,
+        language === 'fr'
+          ? /Consigne d’entretien saisie dans ChatGPT/u
+          : /Interview prompt entered in ChatGPT/u,
       );
       assert.equal(
         artifact.visualAssets.find((asset) => asset.slideId === 'S03-16')?.sha256,
@@ -500,7 +491,7 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       ].map((match) => Number(match[1]));
       assert.ok(
         interviewWidths.some((width) => width >= 11 * 914400),
-        'the opening question uses the full-width capture frame',
+        'the interview prompt uses the full-width capture frame',
       );
       for (let number = 1; number <= 25; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
