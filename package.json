@@ -19,7 +19,7 @@
     "manifest:schema": "tsx packages/manifest/src/generate-schema.ts",
     "manifest:schema:check": "tsx packages/manifest/src/generate-schema.ts --check",
     "artifacts:txt": "tsx packages/artifacts/src/export-txt.ts",
-    "typecheck": "tsc6 -b packages/core packages/manifest packages/validation packages/cli packages/artifacts packages/presentations",
+    "typecheck": "tsc6 -b packages/core packages/manifest packages/validation packages/cli packages/artifacts packages/presentations && tsc6 -p packages/presentations/test/tsconfig.json --noEmit",
     "format": "prettier --write . --ignore-unknown",
     "format:check": "prettier --check . --ignore-unknown",
     "lint": "eslint .",
