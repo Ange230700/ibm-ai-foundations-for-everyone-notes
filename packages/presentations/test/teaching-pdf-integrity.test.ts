@@ -138,7 +138,9 @@ test('teaching PDF rendering validates current sources and assets and closes fai
     verifyTeachingPdf,
     serializeTeachingPdfRecord,
     renderTeachingPdfHtml,
-  } = await import('../src/teaching/pdf.js?integrity');
+  } = (await import(
+    new URL('../src/teaching/pdf.js?integrity', import.meta.url).href
+  )) as typeof import('../src/teaching/pdf.js');
   const output = resolve(root, '.artifacts/test.pdf');
   const visuals = await resolveTeachingPdfVisuals(content, root);
   assert.match(visuals.get('slide-1')!.dataUrl, /^data:image\/svg\+xml/);
@@ -216,7 +218,9 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   pdfMock.restore();
   t.mock.module('pdfjs-dist/legacy/build/pdf.mjs', { namedExports: pdfBackend });
 
-  const esm = await import('../src/teaching/pdf.js?esm-integrity');
+  const esm = (await import(
+    new URL('../src/teaching/pdf.js?esm-integrity', import.meta.url).href
+  )) as typeof import('../src/teaching/pdf.js');
   assert.equal((await esm.verifyTeachingPdf(content, output)).pages, 2);
   assertCleanedPages([1, 2]);
   assert.equal(destroyed, 5);

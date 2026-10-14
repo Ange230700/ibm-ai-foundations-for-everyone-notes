@@ -91,7 +91,9 @@ test('PPTX visual QA probes converter candidates and reports conversion and pagi
     resolveLibreOfficeExecutable,
     renderNativePptxVisualQa,
     serializeNativePptxVisualQaManifest,
-  } = await import('../src/pptx/visual-qa.js?failures');
+  } = (await import(
+    new URL('../src/pptx/visual-qa.js?failures', import.meta.url).href
+  )) as typeof import('../src/pptx/visual-qa.js');
   const options = {
     repositoryRoot: root,
     pptxPath: resolve(root, 'source.pptx'),

@@ -170,7 +170,11 @@ test('bilingual teaching validation checks each structural identity and table di
     { headers: ['Name', 'Extra'], rows: [['Value']] },
     { headers: ['Name'], rows: [] },
   ]) {
-    fr.slides[2]!.table = other;
+    if (other === undefined) {
+      delete fr.slides[2]!.table;
+    } else {
+      fr.slides[2]!.table = other;
+    }
     assert.throws(() => validateTeachingPair(en, fr), /diverge/);
   }
   fr.slides[2]!.table = table;
@@ -185,7 +189,9 @@ test('teaching parser validates upstream source positions and table row consiste
   t.mock.module('mdast-util-from-markdown', {
     namedExports: { ...parser, fromMarkdown: () => tree },
   });
-  const { parseTeachingSession: parse } = await import('../src/teaching/session.js?ast-errors');
+  const { parseTeachingSession: parse } = (await import(
+    new URL('../src/teaching/session.js?ast-errors', import.meta.url).href
+  )) as typeof import('../src/teaching/session.js');
   const note = tree.children.find(
     (node) => node.type === 'paragraph' && node.children[0]?.type === 'strong',
   )!;

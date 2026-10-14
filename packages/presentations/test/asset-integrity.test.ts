@@ -136,13 +136,11 @@ test('diagram assets validate ownership, uniqueness, definitions, checksums and 
       ['<svg viewBox="0 0 NaN 100" width="300" height="0"/>', 1],
       ['<svg viewBox="0 0 100 NaN" width="-1" height="1"/>', 1],
       ['<svg viewBox="0 0 100 0" width="NaN" height="1"/>', 1],
-    ]) {
-      await writeFile(svgPath, value!);
+    ] satisfies Array<[string, number]>) {
+      await writeFile(svgPath, value);
       assert.equal(
         (
-          await resolveNativePptxDiagramAssets(root, spec, [
-            { ...asset, svgSha256: sha256(value!) },
-          ])
+          await resolveNativePptxDiagramAssets(root, spec, [{ ...asset, svgSha256: sha256(value) }])
         ).get(diagram.diagramId)!.aspectRatio,
         ratio,
       );

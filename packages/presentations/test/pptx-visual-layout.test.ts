@@ -46,7 +46,9 @@ test('visual slide layouts fit crowded content and reject excess capture points 
     }
   }
   t.mock.module('pptxgenjs', { defaultExport: Pptx });
-  const { renderNativePptx } = await import('../src/pptx/render.js?visual-layout');
+  const { renderNativePptx } = (await import(
+    new URL('../src/pptx/render.js?visual-layout', import.meta.url).href
+  )) as typeof import('../src/pptx/render.js');
   const sourceRef = {
     ...createSourceRef({ title: 'Test', heading: 'Test', endLine: 3 }),
     headingPath: [],

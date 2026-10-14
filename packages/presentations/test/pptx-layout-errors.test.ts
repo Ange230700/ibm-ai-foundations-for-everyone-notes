@@ -75,33 +75,41 @@ test('native layouts preserve dense lists, concepts, tables and code and reject 
       [{ ...table, rows: Array(11).fill(['value']) }, /at most 11/],
       [{ ...code, code: Array(29).fill('line').join('\n') }, /at most 28/],
       [{ ...code, code: 'x'.repeat(111) }, /unbreakable code segment/],
-    ] as const)
+    ] satisfies Array<[SlideSpec, RegExp]>)
       await assert.rejects(render([slide]), pattern);
-    const slides: SlideSpec[] = [
-      list,
-      { ...list, kind: 'overview', items: Array(7).fill('medium '.repeat(15)) },
-      { ...list, kind: 'summary', items: ['word '.repeat(50), 'second'] },
-      concepts,
-      { ...concepts, concepts: Array(2).fill({ title: 'Title', explanation: 'Explanation' }) },
-      {
-        ...concepts,
-        concepts: Array(3).fill({ title: 'Title', explanation: 'long '.repeat(100) }),
-      },
-      { ...base, kind: 'diagram', diagramId: 'diagram/test/01', explanation: 'Tall diagram' },
-      table,
-      {
-        ...table,
-        headers: Array(5).fill('header'),
-        rows: Array(7).fill(Array(5).fill('long '.repeat(10))),
-      },
-      {
-        ...table,
-        headers: Array(5).fill('header'),
-        rows: Array(9).fill(Array(5).fill('dense '.repeat(20))),
-      },
-      { ...code, code: Array(15).fill('x'.repeat(80)).join('\n') },
-      { ...code, code: Array(22).fill('x'.repeat(95)).join('\n') },
-    ].map((slide, index) => ({ ...slide, slideId: `slide-${index}` }));
+    const slides: SlideSpec[] = (
+      [
+        list,
+        { ...list, kind: 'overview', items: Array(7).fill('medium '.repeat(15)) },
+        { ...list, kind: 'summary', items: ['word '.repeat(50), 'second'] },
+        concepts,
+        {
+          ...concepts,
+          concepts: Array(2).fill({ title: 'Title', explanation: 'Explanation' }),
+        },
+        {
+          ...concepts,
+          concepts: Array(3).fill({ title: 'Title', explanation: 'long '.repeat(100) }),
+        },
+        { ...base, kind: 'diagram', diagramId: 'diagram/test/01', explanation: 'Tall diagram' },
+        table,
+        {
+          ...table,
+          headers: Array(5).fill('header'),
+          rows: Array(7).fill(Array(5).fill('long '.repeat(10))),
+        },
+        {
+          ...table,
+          headers: Array(5).fill('header'),
+          rows: Array(9).fill(Array(5).fill('dense '.repeat(20))),
+        },
+        { ...code, code: Array(15).fill('x'.repeat(80)).join('\n') },
+        { ...code, code: Array(22).fill('x'.repeat(95)).join('\n') },
+      ] satisfies SlideSpec[]
+    ).map((slide, index) => ({
+      ...slide,
+      slideId: `slide-${index}`,
+    }));
     await render(slides);
     const verification = await verifyNativePptx(
       make(slides),
@@ -171,7 +179,9 @@ test('native rendering validates branding files, teaching visuals and the runtim
       },
     },
   });
-  const { renderNativePptx: render } = await import('../src/pptx/render.js?asset-errors');
+  const { renderNativePptx: render } = (await import(
+    new URL('../src/pptx/render.js?asset-errors', import.meta.url).href
+  )) as typeof import('../src/pptx/render.js');
   const options = { repositoryRoot: root, outputPath: resolve(root, '.artifacts/test.pptx') };
   for (const error of [
     null,

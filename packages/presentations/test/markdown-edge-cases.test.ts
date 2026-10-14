@@ -88,8 +88,9 @@ test('semantic renderers fail explicitly when upstream ASTs contain unsupported 
   t.mock.module('mdast-util-from-markdown', {
     namedExports: { ...parser, fromMarkdown: () => tree },
   });
-  const { renderMarkdownDocument: render } =
-    await import('../src/document/render-markdown-document.js?ast-contract');
+  const { renderMarkdownDocument: render } = (await import(
+    new URL('../src/document/render-markdown-document.js?ast-contract', import.meta.url).href
+  )) as typeof import('../src/document/render-markdown-document.js');
   const options = { language: 'en' as const, stylesheet: '' };
   for (const node of [
     { type: 'linkReference', identifier: 'missing', children: [] },
@@ -129,8 +130,9 @@ test('semantic renderers fail explicitly when upstream ASTs contain unsupported 
     ],
   } as Root;
   assert.match(render('', options), /Title imageCode/);
-  const { parseCanonicalModule: parse } =
-    await import('../src/content/extract-markdown.js?ast-contract');
+  const { parseCanonicalModule: parse } = (await import(
+    new URL('../src/content/extract-markdown.js?ast-contract', import.meta.url).href
+  )) as typeof import('../src/content/extract-markdown.js');
   const extractOptions = {
     courseId: 'course_test',
     moduleId: 'module_test',
@@ -216,7 +218,9 @@ test('semantic renderers fail explicitly when upstream ASTs contain unsupported 
   if (heading.type === 'heading')
     heading.children = [{ type: 'image', url: 'image.png', alt: 'Title' }];
   assert.equal(parse(source, extractOptions).title, '');
-  const { semanticBlocksFromMarkdown } = await import('../src/document/verify-pdf.js?ast-contract');
+  const { semanticBlocksFromMarkdown } = (await import(
+    new URL('../src/document/verify-pdf.js?ast-contract', import.meta.url).href
+  )) as typeof import('../src/document/verify-pdf.js');
   tree = { type: 'root', children: [{ type: 'unknown' }] } as unknown as Root;
   assert.deepEqual(semanticBlocksFromMarkdown(''), []);
   tree = {

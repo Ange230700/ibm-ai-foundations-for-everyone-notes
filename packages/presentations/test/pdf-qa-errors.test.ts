@@ -59,10 +59,13 @@ test('PDF page rendering and contact sheets reject invalid settings and corrupte
     namedExports: pdfBackend,
     defaultExport: { ...pdfBackend, __esModule: true },
   });
-  const { renderPdfPages, serializePdfPageRenderManifest } =
-    await import('../src/document/render-pdf-pages.js?qa-errors');
-  const { createPdfContactSheets, serializePdfContactSheetManifest } =
-    await import('../src/document/contact-sheet.js?qa-errors');
+  const { renderPdfPages, serializePdfPageRenderManifest } = (await import(
+    new URL('../src/document/render-pdf-pages.js?qa-errors', import.meta.url).href
+  )) as typeof import('../src/document/render-pdf-pages.js');
+
+  const { createPdfContactSheets, serializePdfContactSheetManifest } = (await import(
+    new URL('../src/document/contact-sheet.js?qa-errors', import.meta.url).href
+  )) as typeof import('../src/document/contact-sheet.js');
   const options = {
     repositoryRoot: root,
     pdfPath: resolve(root, 'test.pdf'),
@@ -178,7 +181,9 @@ test('semantic PDF verification diagnoses changed sources, diagram drift and abs
     defaultExport: { ...pdfBackend, __esModule: true },
   });
   const { verifyModulePdf, semanticBlocksFromMarkdown, serializePdfSemanticVerification } =
-    await import('../src/document/verify-pdf.js?errors');
+    (await import(
+      new URL('../src/document/verify-pdf.js?errors', import.meta.url).href
+    )) as typeof import('../src/document/verify-pdf.js');
   const options = { repositoryRoot: root, pdfPath: resolve(root, 'test.pdf') };
   assert.match(
     serializePdfSemanticVerification(await verifyModulePdf(markdown, content, options)),

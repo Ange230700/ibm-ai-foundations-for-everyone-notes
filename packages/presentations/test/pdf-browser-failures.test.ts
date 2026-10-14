@@ -83,8 +83,9 @@ test('PDF rendering rejects source drift, escaped outputs, broken images and inv
       }),
     },
   });
-  const { renderModulePdf, validatePdfBytes } =
-    await import('../src/document/render-pdf.js?browser-failures');
+  const { renderModulePdf, validatePdfBytes } = (await import(
+    new URL('../src/document/render-pdf.js?browser-failures', import.meta.url).href
+  )) as typeof import('../src/document/render-pdf.js');
   const options = { repositoryRoot: root, outputPath: join(directory, 'output.pdf') };
   try {
     await assert.rejects(renderModulePdf('changed', content, options), /does not match/);

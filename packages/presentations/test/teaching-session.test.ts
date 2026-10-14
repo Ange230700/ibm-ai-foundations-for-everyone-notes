@@ -201,7 +201,8 @@ test('S01 PPTX embeds five bilingual teaching visuals and legible rich notes on 
       );
       for (let index = 1; index <= 30; index++) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${index}.xml`)?.async('string');
-        assert.ok(xml?.includes(' b="1"'), `bold S01 slide ${index}`);
+        assert.ok(xml, `notes XML exists for S01 slide ${index}`);
+        assert.ok(xml.includes(' b="1"'), `bold S01 slide ${index}`);
         assert.ok(xml.includes(' u="sng"'), `underlined cue S01 slide ${index}`);
         assert.ok(xml.includes(' i="1"'), `italic source S01 slide ${index}`);
         assert.doesNotMatch(xml, /\*\*Message|\*\*Key takeaway/u);
@@ -377,7 +378,8 @@ test('S02 generates aligned 26-slide decks with readable presenter notes', async
       );
       for (let number = 1; number <= 26; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
-        assert.ok(xml?.includes(' b="1"'), `bold S02 ${language} slide ${number}`);
+        assert.ok(xml, `notes XML exists for S02 ${language} slide ${number}`);
+        assert.ok(xml.includes(' b="1"'), `bold S02 ${language} slide ${number}`);
         assert.ok(xml.includes(' u="sng"'), `underlined cue S02 ${language} slide ${number}`);
         assert.ok(xml.includes(' i="1"'), `italic source S02 ${language} slide ${number}`);
       }
@@ -495,7 +497,8 @@ test('S03 produces aligned 25-slide draft decks and keeps presenter notes off pr
       );
       for (let number = 1; number <= 25; number += 1) {
         const xml = await zip.file(`ppt/notesSlides/notesSlide${number}.xml`)?.async('string');
-        assert.ok(xml?.includes(' b="1"'), `bold S03 ${language} slide ${number}`);
+        assert.ok(xml, `notes XML exists for S03 ${language} slide ${number}`);
+        assert.ok(xml.includes(' b="1"'), `bold S03 ${language} slide ${number}`);
         assert.ok(xml.includes(' u="sng"'), `underlined cue S03 ${language} slide ${number}`);
       }
     }

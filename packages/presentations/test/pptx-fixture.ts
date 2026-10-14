@@ -60,6 +60,7 @@ export function createDeckSpec(options: DeckFixtureOptions): DeckSpec {
     audience: 'Learners reviewing the module',
     purpose: options.purpose,
     themeId: DEFAULT_NATIVE_PPTX_THEME.id,
+    sourceSha256: options.hashCharacter.repeat(64),
     moduleContentSha256: options.hashCharacter.repeat(64),
     sourcePath: options.sourceRef.path,
     slides: options.slides,

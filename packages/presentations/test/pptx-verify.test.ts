@@ -136,7 +136,8 @@ test('PPTX verification rejects a stale slide total', async () => {
     const archive = await JSZip.loadAsync(await readFile(fixture.outputPath));
     const slide = await archive.file('ppt/slides/slide1.xml')?.async('string');
 
-    assert.ok(slide?.includes('01 / 05'));
+    assert.ok(slide, 'slide1.xml must exist and contain XML');
+    assert.ok(slide.includes('01 / 05'));
 
     archive.file('ppt/slides/slide1.xml', slide.replace('01 / 05', '01 / 06'));
     await writeFile(fixture.outputPath, await archive.generateAsync({ type: 'nodebuffer' }));

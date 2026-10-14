@@ -58,8 +58,9 @@ test('Mermaid rendering refreshes corrupted caches and rejects missing version m
       },
     },
   });
-  const { renderModuleMermaidAssets, loadMermaidRendererContext } =
-    await import('../src/mermaid/render.js?cache-errors');
+  const { renderModuleMermaidAssets, loadMermaidRendererContext } = (await import(
+    new URL('../src/mermaid/render.js?cache-errors', import.meta.url).href
+  )) as typeof import('../src/mermaid/render.js');
   const options = { repositoryRoot: root, outputRoot: directory };
   try {
     for (const path of [resolve(root, '..'), resolve(root, '../outside')])
