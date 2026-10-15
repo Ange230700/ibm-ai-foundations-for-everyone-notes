@@ -1,6 +1,3 @@
 flowchart LR
- A["Evidence problem"] --> B{"What does the source provide?"}
- B -- "No value" --> C["Missing"]
- B -- "Different supplied values" --> D["Conflicting"]
- C --> E["Keep missing"]
- D --> F["Keep both values visible"]
+ A["No value supplied"] --> B["Missing"] --> C["Keep the gap visible"]
+ D["Different values supplied"] --> E["Conflicting"] --> F["Keep both values visible"]

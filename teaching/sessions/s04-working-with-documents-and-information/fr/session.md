@@ -182,10 +182,13 @@ Parcourir rapidement la méthode. Cette séquence n’est pas une conception dé
 
 ### Contenu de la diapositive
 
-- Source A : SB-104 · 3 oct. 2026 · 618 kg
-- Source B : SB-104 · 3 oct. 2026 · 681 kg
-- Source C : SB-105 · 3 oct. 2026 · poids manquant
-- Dossiers fictifs ; aucune autre règle métier n’est fournie
+| Source | Lot    | Date           | Poids    |
+| ------ | ------ | -------------- | -------- |
+| A      | SB-104 | 3 octobre 2026 | 618 kg   |
+| B      | SB-104 | 3 octobre 2026 | 681 kg   |
+| C      | SB-105 | 3 octobre 2026 | Manquant |
+
+Dossiers fictifs ; aucune autre règle métier n’est fournie
 
 ### Notes pédagogiques
 

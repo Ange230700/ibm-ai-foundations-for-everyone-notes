@@ -88,8 +88,8 @@ function slideContent(
   if ((items.length === 0 && !table) || items.some((item) => !item) || items.length > 8) {
     throw new Error(`${label}: projected content must contain 1 to 8 non-empty items or a table.`);
   }
-  if (table && items.length > 0) {
-    throw new Error(`${label}: projected tables cannot contain additional paragraphs or lists.`);
+  if (table && (items.length > 1 || itemKinds.some((kind) => kind !== 'plain'))) {
+    throw new Error(`${label}: projected tables allow only one plain-text caption and no lists.`);
   }
   return { items, itemKinds, ...(table ? { table } : {}) };
 }
@@ -325,6 +325,9 @@ S03-16|simulation|interview|Fictional interview prompt|Demande fictive en mode e
 S03-17|mermaid|steps|Observable steps before approval|Étapes observables avant validation
 S03-20|simulation|revision|Fictional revised draft|Brouillon fictif corrigé
 S03-23|mermaid|checks|Checks before human approval|Contrôles avant validation humaine
+S04-07|mermaid|source-grounded-method|Source-grounded method|Méthode fondée sur les sources
+S04-15|mermaid|gap-vs-conflict|Missing versus conflicting information|Information manquante ou contradictoire
+S04-21|mermaid|verification-loop|Verification process|Processus de vérification
 S05-05|mermaid|workflow-canvas|Workflow Canvas|Workflow Canvas
 S05-15|mermaid|manual-vs-ai|Manual and AI-assisted workflow|Workflow manuel et assisté par l’IA
 S05-16|mermaid|responsibility-model|Human and AI responsibilities|Responsabilités humaines et de l’IA
@@ -409,7 +412,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
         tableId: `${slide.id}-table`,
         headers: slide.table.headers,
         rows: slide.table.rows,
-        explanation: '',
+        explanation: slide.items.join('\n'),
       };
     return {
       ...base,

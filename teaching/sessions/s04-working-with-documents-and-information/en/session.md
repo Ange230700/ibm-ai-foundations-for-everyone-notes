@@ -182,10 +182,13 @@ Walk through the method quickly. The sequence is not an automated workflow desig
 
 ### On-Slide Content
 
-- Source A: SB-104 · 3 Oct 2026 · 618 kg
-- Source B: SB-104 · 3 Oct 2026 · 681 kg
-- Source C: SB-105 · 3 Oct 2026 · weight missing
-- Fictional records; no extra business rule is supplied
+| Source | Lot ID | Date           | Weight  |
+| ------ | ------ | -------------- | ------- |
+| A      | SB-104 | 3 October 2026 | 618 kg  |
+| B      | SB-104 | 3 October 2026 | 681 kg  |
+| C      | SB-105 | 3 October 2026 | Missing |
+
+Fictional records; no extra business rule is supplied
 
 ### Teaching Notes
 

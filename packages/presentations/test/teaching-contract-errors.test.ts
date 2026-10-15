@@ -112,7 +112,11 @@ test('teaching source parser rejects invalid provenance, metadata, roles, notes 
     [Array.from({ length: 9 }, (_, index) => `- Item ${index}`).join('\n'), /1 to 8/],
     ['```ts\ncode\n```', /unsupported projected code/],
     ['| Header |\n| --- |', /invalid projected table/],
-    ['| Header |\n| --- |\n| Value |\n\nAdditional paragraph', /cannot contain additional/],
+    [
+      '| Header |\n| --- |\n| Value |\n\nFirst paragraph\n\nSecond paragraph',
+      /only one plain-text caption/,
+    ],
+    ['| Header |\n| --- |\n| Value |\n\n- List item', /only one plain-text caption/],
     [
       '| Header |\n| --- |\n| Value |\n\n| Second |\n| --- |\n| Value |',
       /unsupported projected table/,
@@ -233,4 +237,28 @@ test('teaching parser validates upstream source positions and table row consiste
   );
   tree.children.splice(headingIndex + 1, 0, { type: 'thematicBreak' });
   assert.throws(() => parse(source, options), /identifier\/duration/);
+});
+
+test('teaching tables preserve one plain-text caption in the deck', () => {
+  const caption = 'Fictional records; no extra business rule is supplied';
+  const body = '| Source | Weight |\n| --- | --- |\n| A | 618 kg |';
+
+  for (const text of [body, `${body}\n\n${caption}`]) {
+    const content = parseTeachingSession(markdown([projected[0]!, projected[1]!, text]), options);
+    const expectedCaption = text === body ? '' : caption;
+    const slide = content.slides[2]!;
+    assert.deepEqual(slide.table, {
+      headers: ['Source', 'Weight'],
+      rows: [['A', '618 kg']],
+    });
+    assert.deepEqual(slide.items, expectedCaption ? [caption] : []);
+    assert.deepEqual(slide.itemKinds, expectedCaption ? ['plain'] : []);
+
+    const deckSlide = teachingDeckSpec(content).slides[2]!;
+    assert.equal(deckSlide.kind, 'table');
+    if (deckSlide.kind !== 'table') throw new Error('Expected a table slide');
+    assert.deepEqual(deckSlide.headers, slide.table.headers);
+    assert.deepEqual(deckSlide.rows, slide.table.rows);
+    assert.equal(deckSlide.explanation, expectedCaption);
+  }
 });

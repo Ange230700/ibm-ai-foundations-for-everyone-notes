@@ -127,7 +127,10 @@ function tableHtml(slide: TeachingSlide & { table: NonNullable<TeachingSlide['ta
       return `<tr>${cells}</tr>`;
     })
     .join('');
-  return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+  const caption = slide.items.length
+    ? `<caption>${escapeHtml(slide.items.join('\n'))}</caption>`
+    : '';
+  return `<table>${caption}<thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function itemMarker(kind: TeachingSlide['itemKinds'][number], index: number): string {
@@ -203,6 +206,7 @@ export function renderTeachingPdfHtml(
     .marker { display: inline-block; width: .34in; color: #1673AE; font-weight: 700 }
     .cover li { background: transparent; border-left: 0; font-size: 22pt; padding: .1in 0 }
     table { width: 100%; border-collapse: collapse; margin-top: .3in; font-size: 17pt; }
+    caption { caption-side: top; text-align: left; font-size: 17pt; line-height: 1.3; padding-bottom: .18in; color: #122B4A }
     th, td { padding: .15in .18in; text-align: left; border: 1px solid #4CC3D9 }
     th { background: #1673AE; color: white }
     tr:nth-child(even) { background: #F4FBFD }
