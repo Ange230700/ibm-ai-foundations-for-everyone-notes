@@ -328,7 +328,6 @@ S03-23|mermaid|checks|Checks before human approval|Contrôles avant validation h
 S04-07|mermaid|source-grounded-method|Source-grounded method|Méthode fondée sur les sources
 S04-15|mermaid|gap-vs-conflict|Missing versus conflicting information|Information manquante ou contradictoire
 S04-21|mermaid|verification-loop|Verification process|Processus de vérification
-S05-05|mermaid|workflow-canvas|Workflow Canvas|Workflow Canvas
 S05-15|mermaid|manual-vs-ai|Manual and AI-assisted workflow|Workflow manuel et assisté par l’IA
 S05-16|mermaid|responsibility-model|Human and AI responsibilities|Responsabilités humaines et de l’IA
 S05-18|mermaid|exception-path|Exception paths|Chemins d’exception
@@ -358,9 +357,13 @@ S05-22|mermaid|improvement-loop|Workflow improvement loop|Boucle d’améliorati
   );
 }
 
-function itemLabel(kind: TeachingSlide['itemKinds'][number], index: number): string {
-  if (kind === 'ordered') return String(index + 1).padStart(2, '0');
-  return kind === 'bullet' ? '•' : '';
+function itemLabel(kinds: TeachingSlide['itemKinds'], index: number): string {
+  const kind = kinds[index];
+  if (kind !== 'ordered') return kind === 'bullet' ? '•' : '';
+  let start = index;
+  while (start > 0 && kinds[start - 1] === 'ordered') start -= 1;
+  const position = index - start + 1;
+  return String(position).padStart(2, '0');
 }
 
 export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
@@ -403,7 +406,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
         ...base,
         kind: 'objectives',
         items: slide.items,
-        itemLabels: slide.itemKinds.map((kind, index) => itemLabel(kind, index)),
+        itemLabels: slide.itemKinds.map((_, index) => itemLabel(slide.itemKinds, index)),
       };
     if (slide.table)
       return {
@@ -418,7 +421,7 @@ export function teachingDeckSpec(content: TeachingSessionContent): DeckSpec {
       ...base,
       kind: 'overview',
       items: slide.items,
-      itemLabels: slide.itemKinds.map((kind, index) => itemLabel(kind, index)),
+      itemLabels: slide.itemKinds.map((_, index) => itemLabel(slide.itemKinds, index)),
     };
   });
   return {

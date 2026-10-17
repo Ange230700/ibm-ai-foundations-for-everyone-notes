@@ -142,7 +142,16 @@ verification, exception handling, human action, and what happens to the result.
 
 ### On-Slide Content
 
-RESULT · INPUTS · SAFETY · AI TASK · VERIFY · HUMAN ACTION · REUSE · MEASURE
+| Field        | Design question                             |
+| ------------ | ------------------------------------------- |
+| Result       | What professional result do we need?        |
+| Inputs       | What information is required?               |
+| Safety       | Are we allowed to use these inputs here?    |
+| AI task      | What bounded task will AI perform?          |
+| Verify       | What must be checked against the sources?   |
+| Human action | Who reviews, decides, or acts?              |
+| Reuse        | What can we use again next time?            |
+| Measure      | How will we know whether the process helps? |
 
 ### Teaching Notes
 
@@ -356,11 +365,7 @@ the process is slow.
 
 ### On-Slide Content
 
-APPROVED INPUTS → CHECK COMPLETENESS → AI DRAFT → VERIFY → HUMAN ACTION → USE
-
-AI task:
-
-Structure the supplied information into a short operations brief.
+AI task: structure the supplied information into a short operations brief.
 
 ### Teaching Notes
 
@@ -369,18 +374,14 @@ Structure the supplied information into a short operations brief.
 State the source constraint: use only supplied information, preserve missing information as missing,
 and do not infer causes, approvals, quality results, payments, or other unsupported facts.
 
+APPROVED INPUTS → CHECK COMPLETENESS → AI DRAFT → VERIFY → HUMAN ACTION → USE
+
 ## Slide 16 — Put the human checkpoint in the workflow
 
 - **Identifier:** S05-16
 - **Duration:** 3 minutes
 
 ### On-Slide Content
-
-A checkpoint answers:
-
-WHAT? · AGAINST WHAT? · WHO? · WHAT IF IT FAILS?
-
-For this case:
 
 - Check: draft facts
 - Against: Sources A–D
@@ -393,6 +394,8 @@ For this case:
 
 Formal approval is not automatically required. The appropriate human action depends on the task.
 Here, the reviewer checks whether the draft preserves the fictional source facts.
+
+Ask four questions: What is checked? Against what? Who checks? What happens if it fails?
 
 ## Slide 17 — Test the AI-assisted step
 
@@ -427,11 +430,8 @@ recorded destination, but the source does not establish what the label means.
 
 ### On-Slide Content
 
-CHECK PASSES? · ├── YES → CONTINUE · └── NO → CORRECT / ESCALATE
-
-Also:
-
-INPUT COMPLETE? · ├── YES → CONTINUE · └── NO → MARK GAP / REVIEW
+- Missing input: mark the gap and request review.
+- Unsupported output: correct from evidence or escalate.
 
 ### Teaching Notes
 
@@ -439,6 +439,14 @@ INPUT COMPLETE? · ├── YES → CONTINUE · └── NO → MARK GAP / REV
 
 Do not treat correction and escalation as interchangeable. A supported correction may be possible;
 an unresolved fact may require a responsible person or another approved source.
+
+Original workflow detail:
+
+CHECK PASSES? · ├── YES → CONTINUE · └── NO → CORRECT / ESCALATE
+
+Also:
+
+INPUT COMPLETE? · ├── YES → CONTINUE · └── NO → MARK GAP / REVIEW
 
 ## Slide 19 — Make the process reusable
 
@@ -519,11 +527,8 @@ requiring more corrections or introducing unacceptable factual risk.
 
 ### On-Slide Content
 
-DESIGN → TRY → CHECK → MEASURE → ADJUST
-
-Example:
-
-Observed: · unsupported cause invented · Adjustment: · strengthen source constraint · + · check unsupported causes
+- Observed problem: the draft invented a cause.
+- Adjustment: strengthen the source constraint and check for unsupported causes.
 
 ### Teaching Notes
 
@@ -531,6 +536,14 @@ Observed: · unsupported cause invented · Adjustment: · strengthen source cons
 
 Avoid vague requests to “make the AI better.” Identify the failure, modify the relevant process
 control, and test again.
+
+Original workflow detail:
+
+DESIGN → TRY → CHECK → MEASURE → ADJUST
+
+Example:
+
+Observed: · unsupported cause invented · Adjustment: · strengthen source constraint · + · check unsupported causes
 
 ## Slide 23 — Professional transfer
 

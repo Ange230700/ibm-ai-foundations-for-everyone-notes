@@ -130,18 +130,23 @@ function tableHtml(slide: TeachingSlide & { table: NonNullable<TeachingSlide['ta
   const caption = slide.items.length
     ? `<caption>${escapeHtml(slide.items.join('\n'))}</caption>`
     : '';
-  return `<table>${caption}<thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+  const tableClass = slide.table.rows.length >= 8 ? 'dense-table' : '';
+  return `<table class="${tableClass}">${caption}<thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function itemMarker(kind: TeachingSlide['itemKinds'][number], index: number): string {
-  if (kind === 'ordered') return `${index + 1}.`;
-  return kind === 'bullet' ? '•' : '';
+function itemMarker(kinds: TeachingSlide['itemKinds'], index: number): string {
+  const kind = kinds[index];
+  if (kind !== 'ordered') return kind === 'bullet' ? '•' : '';
+  let start = index;
+  while (start > 0 && kinds[start - 1] === 'ordered') start -= 1;
+  const position = index - start + 1;
+  return `${position}.`;
 }
 
 function listHtml(slide: TeachingSlide): string {
   const items = slide.items
     .map((item, index) => {
-      const label = itemMarker(slide.itemKinds[index]!, index);
+      const label = itemMarker(slide.itemKinds, index);
       return `<li><span class="marker">${label}</span>${escapeHtml(item)}</li>`;
     })
     .join('');
@@ -208,6 +213,7 @@ export function renderTeachingPdfHtml(
     table { width: 100%; border-collapse: collapse; margin-top: .3in; font-size: 17pt; }
     caption { caption-side: top; text-align: left; font-size: 17pt; line-height: 1.3; padding-bottom: .18in; color: #122B4A }
     th, td { padding: .15in .18in; text-align: left; border: 1px solid #4CC3D9 }
+    table.dense-table th, table.dense-table td { padding: .09in .18in; }
     th { background: #1673AE; color: white }
     tr:nth-child(even) { background: #F4FBFD }
     .slide-content { min-width: 0 }

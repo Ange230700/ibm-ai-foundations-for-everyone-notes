@@ -147,7 +147,16 @@ préparation, la vérification, les exceptions, l’action humaine et l’usage 
 
 ### Contenu de la diapositive
 
-RÉSULTAT · ENTRÉES · SÉCURITÉ · TÂCHE IA · VÉRIFIER · ACTION HUMAINE · RÉUTILISER · MESURER
+| Champ          | Question de conception                         |
+| -------------- | ---------------------------------------------- |
+| Résultat       | Quel résultat professionnel faut-il obtenir ?  |
+| Entrées        | Quelles informations sont nécessaires ?        |
+| Sécurité       | Peut-on utiliser ces informations ici ?        |
+| Tâche IA       | Quelle tâche délimitée confier à l’IA ?        |
+| Vérifier       | Que faut-il vérifier dans les sources ?        |
+| Action humaine | Qui vérifie, décide ou agit ?                  |
+| Réutiliser     | Que pourra-t-on réutiliser la prochaine fois ? |
+| Mesurer        | Comment savoir si le processus aide ?          |
 
 ### Notes pédagogiques
 
@@ -367,11 +376,7 @@ lent.
 
 ### Contenu de la diapositive
 
-ENTRÉES APPROUVÉES → VÉRIFIER LA COMPLÉTUDE → BROUILLON IA → VÉRIFIER → ACTION HUMAINE → UTILISER
-
-Tâche IA :
-
-Structurer les informations fournies dans un court briefing opérationnel.
+Tâche IA : structurer les informations fournies dans un court briefing opérationnel.
 
 ### Notes pédagogiques
 
@@ -381,18 +386,14 @@ Structurer les informations fournies dans un court briefing opérationnel.
 manquantes comme manquantes et ne pas inférer de causes, approbations, résultats de qualité,
 paiements ou autres faits non étayés.
 
+ENTRÉES APPROUVÉES → VÉRIFIER LA COMPLÉTUDE → BROUILLON IA → VÉRIFIER → ACTION HUMAINE → UTILISER
+
 ## Diapositive 16 — Placer le point de contrôle humain
 
 - **Identifiant:** S05-16
 - **Durée:** 3 minutes
 
 ### Contenu de la diapositive
-
-Un point de contrôle répond à :
-
-QUOI ? · PAR RAPPORT À QUOI ? · QUI ? · QUE FAIRE EN CAS D’ÉCHEC ?
-
-Pour ce cas :
 
 - Contrôle : faits du brouillon
 - Référence : Sources A–D
@@ -406,6 +407,8 @@ opérationnellement clair.
 
 Une approbation formelle n’est pas automatiquement nécessaire. L’action humaine appropriée dépend
 de la tâche. Ici, le relecteur vérifie que le brouillon respecte les faits fictifs.
+
+Poser quatre questions : Que vérifie-t-on ? Par rapport à quoi ? Qui vérifie ? Que faire en cas d’échec ?
 
 ## Diapositive 17 — Tester l’étape assistée par l’IA
 
@@ -441,11 +444,8 @@ Les apprenants doivent repérer `coupure de courant` et `approuvé pour stockage
 
 ### Contenu de la diapositive
 
-CONTRÔLE RÉUSSI ? · ├── OUI → CONTINUER · └── NON → CORRIGER / ESCALADER
-
-Également :
-
-ENTRÉE COMPLÈTE ? · ├── OUI → CONTINUER · └── NON → MARQUER LE MANQUE / REVUE
+- Entrée manquante : signaler le manque et demander une vérification.
+- Résultat non étayé : corriger à partir des sources ou solliciter un responsable.
 
 ### Notes pédagogiques
 
@@ -454,6 +454,14 @@ prévu échoue.
 
 Ne pas traiter correction et escalade comme identiques. Une correction étayée peut être possible ;
 un fait non résolu peut exiger une personne responsable ou une autre source approuvée.
+
+Détail initial du workflow :
+
+CONTRÔLE RÉUSSI ? · ├── OUI → CONTINUER · └── NON → CORRIGER / ESCALADER
+
+Également :
+
+ENTRÉE COMPLÈTE ? · ├── OUI → CONTINUER · └── NON → MARQUER LE MANQUE / REVUE
 
 ## Diapositive 19 — Rendre le processus réutilisable
 
@@ -538,11 +546,8 @@ inacceptable.
 
 ### Contenu de la diapositive
 
-CONCEVOIR → ESSAYER → CONTRÔLER → MESURER → AJUSTER
-
-Exemple :
-
-Observé : · cause non étayée inventée · Ajustement : · renforcer la contrainte de source · + · contrôler les causes non étayées
+- Problème observé : le brouillon a inventé une cause.
+- Ajustement : renforcer la contrainte de source et vérifier les causes non étayées.
 
 ### Notes pédagogiques
 
@@ -550,6 +555,14 @@ Observé : · cause non étayée inventée · Ajustement : · renforcer la contr
 
 Éviter les demandes vagues du type « améliorer l’IA ». Identifier le problème, modifier le contrôle
 concerné puis tester à nouveau.
+
+Détail initial du workflow :
+
+CONCEVOIR → ESSAYER → CONTRÔLER → MESURER → AJUSTER
+
+Exemple :
+
+Observé : · cause non étayée inventée · Ajustement : · renforcer la contrainte de source · + · contrôler les causes non étayées
 
 ## Diapositive 23 — Transfert professionnel
 

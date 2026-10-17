@@ -736,31 +736,35 @@ function renderTeachingListRows(
   let y = layout.rowTop;
   slideSpec.items.forEach((item, index) => {
     const rowHeight = layout.rowHeights[index]!;
-    slide.addShape('rect', {
-      x: SLIDE.left,
-      y,
-      w: 0.68,
-      h: rowHeight,
-      fill: { color: theme.colors.surface },
-      line: { color: theme.colors.border, width: 0.75 },
-    });
-    slide.addText(slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0'), {
-      x: SLIDE.left + 0.08,
-      y: y + verticalInset,
-      w: 0.52,
-      h: rowHeight - heightInset,
-      margin: 0,
-      align: 'center',
-      valign: 'middle',
-      fontFace: theme.fonts.body,
-      fontSize: 13,
-      bold: true,
-      color: theme.colors.accent,
-    });
+    const label = slideSpec.itemLabels?.[index] ?? String(index + 1).padStart(2, '0');
+    const hasMarker = label.trim().length > 0;
+    if (hasMarker) {
+      slide.addShape('rect', {
+        x: SLIDE.left,
+        y,
+        w: 0.68,
+        h: rowHeight,
+        fill: { color: theme.colors.surface },
+        line: { color: theme.colors.border, width: 0.75 },
+      });
+      slide.addText(label, {
+        x: SLIDE.left + 0.08,
+        y: y + verticalInset,
+        w: 0.52,
+        h: rowHeight - heightInset,
+        margin: 0,
+        align: 'center',
+        valign: 'middle',
+        fontFace: theme.fonts.body,
+        fontSize: 13,
+        bold: true,
+        color: theme.colors.accent,
+      });
+    }
     slide.addText(item, {
-      x: SLIDE.left + 0.88,
+      x: SLIDE.left + (hasMarker ? 0.88 : 0),
       y: y + verticalInset,
-      w: textWidth,
+      w: textWidth + (hasMarker ? 0 : 0.88),
       h: rowHeight - heightInset,
       margin: 0,
       valign: 'middle',
@@ -1093,7 +1097,14 @@ function renderTable(
     return index === 0 ? Math.max(1.25, visualLines) : visualLines;
   });
   const maximumVisualLines = Math.max(...rowWeights);
-  const bodyFontSize = tableBodyFontSize(rowCount, columnCount, maximumVisualLines);
+  const isWorkflowCanvas =
+    spec.scope.kind === 'teaching-session' &&
+    spec.scope.sessionId === 's05' &&
+    slideSpec.slideId === 'S05-05' &&
+    columnCount === 2;
+  const bodyFontSize = isWorkflowCanvas
+    ? 18
+    : tableBodyFontSize(rowCount, columnCount, maximumVisualLines);
 
   const tableRows: PptxTableRows = values.map((row, rowIndex) =>
     row.map((cell) => ({
@@ -1120,12 +1131,9 @@ function renderTable(
     x: SLIDE.left,
     y: 2.02,
     w: usableWidth,
-    colW: Array.from(
-      {
-        length: columnCount,
-      },
-      () => usableWidth / columnCount,
-    ),
+    colW: isWorkflowCanvas
+      ? [usableWidth * 0.25, usableWidth * 0.75]
+      : Array.from({ length: columnCount }, () => usableWidth / columnCount),
     rowH: rowHeights,
     border: {
       type: 'solid',

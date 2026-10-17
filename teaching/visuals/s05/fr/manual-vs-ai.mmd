@@ -1,9 +1,9 @@
-flowchart TB
- subgraph M["Référence manuelle"]
-  direction LR
-  A["Sources"] --> B["Lire"] --> C["Rédiger"] --> D["Vérifier"] --> E["Utiliser"]
- end
- subgraph I["Workflow assisté par l’IA"]
-  direction LR
-  F["Sources"] --> G["Contrôler"] --> H["Brouillon IA"] --> J["Vérifier"] --> K["Action humaine"] --> L["Utiliser"]
- end
+flowchart LR
+ A["Préparation manuelle<br/>Lire les sources approuvées<br/>Repérer faits et manques"]
+ B["L’humain rédige<br/>le briefing opérationnel"]
+ C["L’humain vérifie<br/>Décide ou agit<br/>Utilise le briefing vérifié"]
+ A --> B --> C
+ D["Préparer les entrées IA<br/>Sources approuvées<br/>Vérifier la complétude"]
+ E["L’IA structure<br/>le brouillon du briefing"]
+ F["L’humain vérifie<br/>Décide ou agit<br/>Utilise le briefing vérifié"]
+ D --> E --> F
