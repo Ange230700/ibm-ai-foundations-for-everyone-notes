@@ -172,8 +172,9 @@ function slideHtml(
   const title = escapeHtml(slide.title);
   const body = slide.table ? tableHtml({ ...slide, table: slide.table }) : listHtml(slide);
   const projected = projectedHtml(body, visual);
+  const denseList = !visual && !slide.table && slide.items.length >= 7;
 
-  return `<section class="slide${slide.role === 'course-title' ? ' cover' : ''}">
+  return `<section class="slide${slide.role === 'course-title' ? ' cover' : ''}${denseList ? ' dense-list' : ''}">
     <div class="topline">${escapeHtml(content.id.toUpperCase())} · ${String(index + 1).padStart(2, '0')}/${content.slides.length}</div>
     <h1>${title}</h1>${projected}
     <footer>${escapeHtml(slide.id)} · ${slide.durationMinutes} min · KRAAK CONSULTING</footer>
@@ -286,6 +287,16 @@ export function renderTeachingPdfHtml(
     }
     footer { position: absolute; left: .72in; right: .72in; bottom: .3in;
       border-top: 1px solid #4CC3D9; padding-top: .12in; font-size: 10pt; }
+
+    /* Keep dense text slides and covers clear of the footer. */
+    .slide.dense-list > ul { gap: .07in; margin: .1in 0; }
+    .slide.dense-list > ul > li { padding: .07in .21in; }
+    .slide.cover h1 {
+      margin: .65in 0 .3in;
+      max-height: none;
+    }
+    .slide.cover > ul { gap: .07in; margin: .1in 0; }
+    .slide.cover > ul > li { padding: .06in 0; }
   </style></head><body>${body}</body></html>`;
 }
 
@@ -313,7 +324,54 @@ export async function renderTeachingPdf(
   const browser = await puppeteer.launch({ headless: 'shell' });
   try {
     const page = await browser.newPage();
+    await page.emulateMediaType('print');
     await page.setContent(html, { waitUntil: 'load' });
+    const layoutErrors = (await page.evaluate(`
+      (async () => {
+        await document.fonts.ready;
+        await Promise.all(Array.from(document.images, image => image.decode()));
+        const errors = [];
+        for (const [index, slide] of Array.from(document.querySelectorAll('.slide')).entries()) {
+          const footer = slide.querySelector('footer');
+          if (!footer) {
+            errors.push('Page ' + (index + 1) + ': missing footer');
+            continue;
+          }
+          const bounds = slide.getBoundingClientRect();
+          const bottom = footer.getBoundingClientRect().top - 8;
+          const outside = rect =>
+            rect.width > 0 && rect.height > 0 && (
+              rect.bottom > bottom + 1 ||
+              rect.top < bounds.top - 1 ||
+              rect.left < bounds.left - 1 ||
+              rect.right > bounds.right + 1
+            );
+          const elements = slide.querySelectorAll(
+            'h1, li, table, figcaption, .visual-frame img'
+          );
+          for (const element of elements) {
+            let overflow = outside(element.getBoundingClientRect());
+            const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+            let node;
+            while ((node = walker.nextNode())) {
+              if (!node.textContent.trim()) continue;
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              if (Array.from(range.getClientRects()).some(outside)) overflow = true;
+            }
+            if (overflow) {
+              const label = (element.textContent || element.getAttribute('alt') || element.tagName)
+                .replace(/\\s+/g, ' ').trim().slice(0, 100);
+              errors.push('Page ' + (index + 1) + ': ' + label);
+            }
+          }
+        }
+        return errors;
+      })()
+    `)) as string[];
+    if (layoutErrors.length > 0) {
+      throw new Error('Teaching PDF layout overflow: ' + layoutErrors.join('; '));
+    }
     await page.pdf({
       path: outputPath,
       printBackground: true,

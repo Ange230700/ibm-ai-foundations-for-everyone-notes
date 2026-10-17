@@ -51,6 +51,8 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   const pdf = Buffer.from(`%PDF-${' '.repeat(1100)}%%EOF`);
   let rendered = pdf;
   let closeCount = 0;
+  let pdfCalls = 0;
+  let layoutErrors: string[] = [];
   let pages = 2;
   let missingText = false;
   let destroyed = 0;
@@ -84,7 +86,14 @@ test('teaching PDF rendering validates current sources and assets and closes fai
     defaultExport: {
       ...puppeteer,
       launch: async () => ({
-        newPage: async () => ({ setContent: async () => undefined, pdf: async () => undefined }),
+        newPage: async () => ({
+          emulateMediaType: async () => undefined,
+          setContent: async () => undefined,
+          evaluate: async () => layoutErrors,
+          pdf: async () => {
+            pdfCalls++;
+          },
+        }),
         version: async () => 'test-browser',
         close: async () => {
           closeCount++;
@@ -156,6 +165,16 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   await assert.rejects(renderTeachingPdf(content, root, output), /unexpectedly small/);
   assert.equal(closeCount, 2);
   rendered = pdf;
+
+  layoutErrors = ['Page 1: content enters the footer area'];
+  const exportsBeforeOverflow = pdfCalls;
+  await assert.rejects(
+    renderTeachingPdf(content, root, output),
+    /Teaching PDF layout overflow: Page 1/,
+  );
+  assert.equal(pdfCalls, exportsBeforeOverflow, 'overflow must prevent PDF export');
+  assert.equal(closeCount, 3, 'overflow must still close the browser');
+  layoutErrors = [];
   visual = { ...visual, path: '../outside.svg' };
   await assert.rejects(resolveTeachingPdfVisuals(content, root), /Unsafe/);
   visual = { ...visual, path: 'teaching/visuals/s99/en/example.svg' };
