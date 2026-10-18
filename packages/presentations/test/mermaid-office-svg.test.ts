@@ -23,3 +23,15 @@ test('Mermaid SVG normalization produces Office-safe deterministic output', () =
 
   assert.doesNotMatch(first, /<foreignObject\b/i);
 });
+
+test('edge-label backgrounds override Mermaid transparency without changing label text', () => {
+  const input = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
+    <style>.edgeLabel rect { opacity: 0.5; }</style>
+    <g class="edgeLabel" transform="translate(50, 25)"><text>Verified</text></g>
+  </svg>`;
+  const output = normalizeMermaidSvgForOffice(input, 'opaque-label');
+
+  assert.match(output, /<rect[^>]*style="opacity: 1; fill-opacity: 1;"/);
+  assert.match(output, />Verified<\/text>/);
+  assert.match(output, /transform="translate\(50, 25\)"/);
+});

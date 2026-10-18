@@ -189,6 +189,9 @@ function flattenFlowchartLabels(document: Document, theme: MermaidThemeTokens): 
     background.setAttribute('height', height.toFixed(3));
     background.setAttribute('fill', theme.background);
     background.setAttribute('stroke', 'none');
+    // Mermaid's stylesheet makes edge-label rectangles translucent. Override
+    // that rule inline so connectors cannot show through the text in Office.
+    background.setAttribute('style', 'opacity: 1; fill-opacity: 1;');
 
     edgeLabel.appendChild(background);
 
