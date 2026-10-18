@@ -12,6 +12,7 @@ import {
   createS01AnimationPlan,
   createS02AnimationPlan,
   createS03AnimationPlan,
+  createS06AnimationPlan,
 } from '../src/teaching-animation-plan.js';
 
 test('S01 animation plan follows both teaching sources without adding slides or changing timing', async () => {
@@ -182,5 +183,49 @@ test('S03 animation plan covers 25 bilingual slides without changing content or 
       }
     }
     assert.throws(() => createS03AnimationPlan({ ...current, durationMinutes: 59 }), /60-minute/u);
+  }
+});
+
+test('S06 animation preserves bilingual tables, plain paragraphs and diagram rows', async () => {
+  const manifest = await readManifest();
+  const session = manifest.teachingSessions!.find((entry) => entry.id === 's06')!;
+  const canonicalSources = resolveTeachingSessionSources(manifest, session);
+  for (const language of ['en', 'fr'] as const) {
+    const current = parseTeachingSession(
+      await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8'),
+      {
+        id: session.id,
+        language,
+        sourcePath: session.source[language],
+        slideCount: session.slideCount,
+        durationMinutes: session.durationMinutes,
+        canonicalModuleIds: canonicalSources.canonicalModuleIds,
+        canonicalSources: canonicalSources[language],
+      },
+    );
+    const plan = createS06AnimationPlan(current);
+    assert.equal(plan.sessionId, 's06');
+    assert.equal(plan.sourceSha256, current.sourceSha256);
+    assert.equal(plan.slides.length, 25);
+    for (const slide of plan.slides) {
+      const original = current.slides[slide.number - 1]!;
+      assert.equal(slide.title, original.title);
+      if (slide.kind === 'table') {
+        assert.deepEqual(slide.headers, original.table!.headers);
+        assert.deepEqual(slide.rows, original.table!.rows);
+      } else if (slide.kind === 'rows') {
+        assert.deepEqual(
+          slide.rows.map((row) => row.text),
+          original.items,
+        );
+      }
+    }
+    assert.equal(plan.slides[19]!.kind, 'table');
+    const draft = plan.slides[11]!;
+    assert.equal(draft.kind, 'rows');
+    if (draft.kind === 'rows') assert.ok(draft.rows.every((row) => row.label === ''));
+    for (const number of [16, 18]) assert.equal(plan.slides[number - 1]!.kind, 'rows');
+    assert.equal(animationCounts(plan).animatedSlides, 25);
+    assert.throws(() => createS06AnimationPlan({ ...current, durationMinutes: 59 }), /60-minute/u);
   }
 });

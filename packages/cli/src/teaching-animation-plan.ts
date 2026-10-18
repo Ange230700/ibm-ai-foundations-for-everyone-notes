@@ -12,15 +12,17 @@ type SlidePlan =
 
 export interface TeachingAnimationPlan {
   schemaVersion: 2;
-  sessionId: 's01' | 's02' | 's03';
+  sessionId: 's01' | 's02' | 's03' | 's06';
   language: 'en' | 'fr';
   sourceSha256: string;
   slideCount: 30 | 26 | 25;
   slides: SlidePlan[];
 }
 
-function effectCount(slide: SlidePlan, clicks: number): number {
-  if (slide.kind === 'rows') return clicks * 3;
+function effectCount(slide: SlidePlan): number {
+  if (slide.kind === 'rows') {
+    return slide.rows.slice(1).reduce((total, row) => total + (row.label ? 3 : 1), 0);
+  }
   return slide.kind === 'cover' ? 2 : 1;
 }
 
@@ -43,7 +45,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
       return {
         animatedSlides: counts.animatedSlides + 1,
         clicks: counts.clicks + clicks,
-        effects: counts.effects + effectCount(slide, clicks),
+        effects: counts.effects + effectCount(slide),
       };
     },
     { animatedSlides: 0, clicks: 0, effects: 0 },
@@ -52,7 +54,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
 
 function createAnimationPlan(
   content: TeachingSessionContent,
-  sessionId: 's01' | 's02' | 's03',
+  sessionId: 's01' | 's02' | 's03' | 's06',
   slideCount: 30 | 26 | 25,
 ): TeachingAnimationPlan {
   const label = sessionId.toUpperCase();
@@ -79,6 +81,9 @@ function createAnimationPlan(
         subtitle: slide.items[0]!,
         context: slide.items.slice(1).join(' '),
       };
+    }
+    if (sessionId === 's06' && slide.table) {
+      return { kind: 'table', number, title: slide.title, ...slide.table };
     }
     if (sessionId === 's01' && number === 18) {
       if (!slide.table || slide.items.length)
@@ -119,4 +124,8 @@ export function createS02AnimationPlan(content: TeachingSessionContent): Teachin
 
 export function createS03AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
   return createAnimationPlan(content, 's03', 25);
+}
+
+export function createS06AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's06', 25);
 }

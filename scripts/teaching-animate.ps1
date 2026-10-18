@@ -2,7 +2,7 @@ param(
   [Parameter(Mandatory = $true)] [string] $RepoRoot,
   [Parameter(Mandatory = $true)] [string] $PlanPath,
   [Parameter(Mandatory = $true)] [ValidateSet('en', 'fr')] [string] $Language,
-  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03')] [string] $SessionId,
+  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03', 's06')] [string] $SessionId,
   [Parameter(Mandatory = $true)] [ValidateRange(1, 100)] [int] $SlideCount,
   [Parameter(Mandatory = $true)] [double] $BadgeMinWidth
 )
@@ -112,10 +112,15 @@ function Get-AnimationDefinition($Shapes, $Entry, [string] $Context) {
       for ($rowIndex = 0; $rowIndex -lt $Entry.rows.Count; $rowIndex++) {
         $row = $Entry.rows[$rowIndex]
         $body = Unique-Text-Shape $Shapes $row.text "$Context contenu"
-        $badge = Badge-Shapes $Shapes $body $row.label $Context
+        $badge = @(if ($row.label -ne '') { Badge-Shapes $Shapes $body $row.label $Context })
         if ($rowIndex -gt 0) {
-          $shapeIds += @([int]$badge[0].Id, [int]$badge[1].Id, [int]$body.Id)
-          $triggers += @($triggerClick, $triggerWithPrevious, $triggerWithPrevious)
+          if ($badge.Count -gt 0) {
+            $shapeIds += @([int]$badge[0].Id, [int]$badge[1].Id, [int]$body.Id)
+            $triggers += @($triggerClick, $triggerWithPrevious, $triggerWithPrevious)
+          } else {
+            $shapeIds += @([int]$body.Id)
+            $triggers += @($triggerClick)
+          }
         }
       }
       return @{ ShapeIds = $shapeIds; Triggers = $triggers }
@@ -213,7 +218,13 @@ function Get-AnimationStatistics($Plan) {
   foreach ($entry in $Plan.slides) {
     $count = if ($entry.kind -eq 'rows') { $entry.rows.Count - 1 } else { 1 }
     $clicks += $count
-    $effects += if ($entry.kind -eq 'rows') { 3 * $count } elseif ($entry.kind -eq 'cover') { 2 } else { 1 }
+    if ($entry.kind -eq 'rows') {
+      for ($i = 1; $i -lt $entry.rows.Count; $i++) {
+        $effects += if ($entry.rows[$i].label -ne '') { 3 } else { 1 }
+      }
+    } else {
+      $effects += if ($entry.kind -eq 'cover') { 2 } else { 1 }
+    }
   }
   return @{ Clicks = $clicks; Effects = $effects }
 }

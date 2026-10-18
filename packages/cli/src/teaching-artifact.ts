@@ -36,6 +36,7 @@ import {
   createS01AnimationPlan,
   createS02AnimationPlan,
   createS03AnimationPlan,
+  createS06AnimationPlan,
 } from './teaching-animation-plan.js';
 import { animatedOutputFile } from './teaching-animation-output.js';
 import {
@@ -106,7 +107,7 @@ async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, ro
 
 async function animateWithPowerPoint(
   root: string,
-  sessionId: 's01' | 's02' | 's03',
+  sessionId: 's01' | 's02' | 's03' | 's06',
   language: Language,
   planPath: string,
 ): Promise<string> {
@@ -143,7 +144,7 @@ async function animateWithPowerPoint(
     child.once('close', (code) => {
       if (code === 0) {
         try {
-          resolvePromise(animatedOutputFile(stdout, sessionId === 's03'));
+          resolvePromise(animatedOutputFile(stdout, sessionId === 's03' || sessionId === 's06'));
         } catch (error) {
           rejectPromise(error);
         }
@@ -157,7 +158,7 @@ async function animateWithPowerPoint(
 }
 
 type TeachingArgs = ReturnType<typeof parseTeachingArtifactArguments>;
-type AnimationSessionId = 's01' | 's02' | 's03';
+type AnimationSessionId = 's01' | 's02' | 's03' | 's06';
 type PptxRecord = {
   pptxSha256: string;
   sourceSha256: string;
@@ -169,7 +170,8 @@ type PptxRecord = {
 function animationPlan(sessionId: AnimationSessionId, content: TeachingSessionContent) {
   if (sessionId === 's01') return createS01AnimationPlan(content);
   if (sessionId === 's02') return createS02AnimationPlan(content);
-  return createS03AnimationPlan(content);
+  if (sessionId === 's03') return createS03AnimationPlan(content);
+  return createS06AnimationPlan(content);
 }
 
 async function assertCurrentPptx(
@@ -207,10 +209,13 @@ async function animateSession(
   format: Format | undefined,
 ): Promise<void> {
   if (
-    (session.id !== 's01' && session.id !== 's02' && session.id !== 's03') ||
+    (session.id !== 's01' &&
+      session.id !== 's02' &&
+      session.id !== 's03' &&
+      session.id !== 's06') ||
     (format && format !== 'pptx')
   ) {
-    throw new Error('Native animations currently support S01/S02/S03 PPTX only.');
+    throw new Error('Native animations currently support S01/S02/S03/S06 PPTX only.');
   }
   const { spec, verification: source } = await assertCurrentPptx(
     session,

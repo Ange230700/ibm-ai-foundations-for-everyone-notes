@@ -108,7 +108,7 @@ test('teaching artifact rejects unsupported animation sessions and formats', asy
   assert.notEqual(unsupportedSession.exitCode, 0);
   assert.match(
     unsupportedSession.stderr,
-    /Native animations currently support S01\/S02\/S03 PPTX only/,
+    /Native animations currently support S01\/S02\/S03\/S06 PPTX only/,
   );
 
   const unsupportedFormat = await runTeachingArtifact(['animate', '--session=s01', '--format=pdf']);
@@ -116,6 +116,6 @@ test('teaching artifact rejects unsupported animation sessions and formats', asy
   assert.notEqual(unsupportedFormat.exitCode, 0);
   assert.match(
     unsupportedFormat.stderr,
-    /Native animations currently support S01\/S02\/S03 PPTX only/,
+    /Native animations currently support S01\/S02\/S03\/S06 PPTX only/,
   );
 });
