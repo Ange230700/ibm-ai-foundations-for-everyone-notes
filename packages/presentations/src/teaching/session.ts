@@ -332,6 +332,8 @@ S05-15|mermaid|manual-vs-ai|Manual and AI-assisted workflow|Workflow manuel et a
 S05-16|mermaid|responsibility-model|Human and AI responsibilities|Responsabilités humaines et de l’IA
 S05-18|mermaid|exception-path|Exception paths|Chemins d’exception
 S05-22|mermaid|improvement-loop|Workflow improvement loop|Boucle d’amélioration du workflow
+S06-16|mermaid|review-authority|Review and circulation authority|Vérification et autorité de diffusion
+S06-18|mermaid|decision-boundaries|Conditions for the proposed action|Conditions de l’action proposée
 `
     .trim()
     .split('\n');

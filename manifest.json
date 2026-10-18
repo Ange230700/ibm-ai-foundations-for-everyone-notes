@@ -387,6 +387,23 @@
         "en": "Building an AI-Assisted Workflow",
         "fr": "Construire un workflow assisté par l’IA"
       }
+    },
+    {
+      "canonicalModuleIds": [
+        "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+      ],
+      "durationMinutes": 60,
+      "id": "s06",
+      "slideCount": 25,
+      "slug": "security-privacy-and-responsibility",
+      "source": {
+        "en": "teaching/sessions/s06-security-privacy-and-responsibility/en/session.md",
+        "fr": "teaching/sessions/s06-security-privacy-and-responsibility/fr/session.md"
+      },
+      "title": {
+        "en": "Security, Privacy, and Responsibility",
+        "fr": "Sécurité, confidentialité et responsabilité"
+      }
     }
   ],
   "templateVersion": "0.1.0",

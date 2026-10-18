@@ -1,0 +1,7 @@
+flowchart LR
+ A["Action proposée"] --> B{"Autorisée ?"}
+ B -->|Non| C["Signaler"]
+ B -->|Oui| D{"Vérifiée ?"}
+ D -->|Non| E["Corriger"]
+ D -->|Oui| F["Poursuivre"]
+ E --> D

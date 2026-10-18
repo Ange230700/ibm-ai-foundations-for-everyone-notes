@@ -1,0 +1,7 @@
+flowchart LR
+ A["Proposed action"] --> B{"Authorized?"}
+ B -->|No| C["Escalate"]
+ B -->|Yes| D{"Checked?"}
+ D -->|No| E["Revise"]
+ D -->|Yes| F["Proceed"]
+ E --> D

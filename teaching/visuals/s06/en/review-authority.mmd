@@ -1,0 +1,6 @@
+flowchart LR
+ A["Draft A–C"] --> B["Staff review"]
+ B -->|Verified| C["Operations lead"]
+ B -->|Defect| E["Hold or return"]
+ C -->|Internal approval| D["Internal team only"]
+ C -->|No approval| E

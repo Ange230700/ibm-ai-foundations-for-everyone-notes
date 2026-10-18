@@ -197,7 +197,7 @@ export function renderTeachingPdfHtml(
   <title>${escapeHtml(content.title)}</title><style>
     @page { size: 13.333in 7.5in; margin: 0 }
     * { box-sizing: border-box }
-    html, body { margin: 0; color: #122B4A; font-family: "Segoe UI", Arial, sans-serif }
+    html, body { margin: 0; color: #122B4A; font-family: "Segoe UI", Arial, sans-serif; font-variant-ligatures: none }
     .slide { position: relative; width: 13.333in; height: 7.5in; overflow: hidden;
       page-break-after: always; break-after: page; background: #F3F3F3;
       padding: .49in .72in .7in }

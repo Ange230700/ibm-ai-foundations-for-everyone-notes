@@ -1,0 +1,6 @@
+flowchart LR
+ A["Brouillon A–C"] --> B["Agent vérificateur"]
+ B -->|Vérifié| C["Responsable des opérations"]
+ B -->|Défaut| E["Bloquer ou renvoyer"]
+ C -->|Accord interne| D["Équipe interne seulement"]
+ C -->|Pas d’accord| E

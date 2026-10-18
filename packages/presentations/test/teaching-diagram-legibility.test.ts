@@ -10,11 +10,11 @@ const frame = { widthInches: 11.89 - 0.16, heightInches: 3.0 - 0.16 };
 test('bilingual teaching diagrams remain readable in their slide frame', async () => {
   let checked = 0;
 
-  for (const session of ['s01', 's02', 's03']) {
+  for (const session of ['s01', 's02', 's03', 's06']) {
     for (const language of ['en', 'fr']) {
       const directory = resolve(repositoryRoot(), 'teaching', 'visuals', session, language);
       const names = (await readdir(directory)).filter((name) => name.endsWith('.mmd'));
-      assert.equal(names.length, 4, `${session}/${language} diagram count`);
+      assert.equal(names.length, session === 's06' ? 2 : 4, `${session}/${language} diagram count`);
 
       for (const name of names) {
         const source = await readFile(resolve(directory, name), 'utf8');
@@ -46,5 +46,5 @@ test('bilingual teaching diagrams remain readable in their slide frame', async (
     }
   }
 
-  assert.equal(checked, 24);
+  assert.equal(checked, 28);
 });
