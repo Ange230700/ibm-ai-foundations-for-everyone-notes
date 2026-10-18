@@ -221,12 +221,13 @@ export function pageTextInReadingOrder(items: unknown[]): string {
   let previous: PositionedText | undefined;
   for (const item of positioned) {
     // PDF.js may emit a ligature or a styled word as several adjacent glyph runs.
-    // Join only runs that touch on the same baseline; preserve gaps and line breaks.
+    // Join touching or kerned runs on the same baseline; preserve gaps and line breaks.
     const touchesPrevious =
       previous !== undefined &&
       Number.isFinite(previous.width) &&
       Math.abs(item.y - previous.y) <= 0.1 &&
-      Math.abs(item.x - previous.x - previous.width) <= 0.1;
+      item.x >= previous.x &&
+      item.x - previous.x - previous.width <= 0.1;
     text += `${text && !touchesPrevious ? '\n' : ''}${item.str}`;
     previous = item;
   }

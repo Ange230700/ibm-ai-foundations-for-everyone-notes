@@ -112,6 +112,7 @@ test('teaching PDF rendering validates current sources and assets and closes fai
               items: [
                 { type: 'markedContent' },
                 {
+                  transform: [1, 0, 0, 12, 0, 0],
                   str: missingText
                     ? 'missing'
                     : [

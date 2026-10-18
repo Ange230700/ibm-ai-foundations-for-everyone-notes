@@ -4,7 +4,7 @@ import { dirname, relative, resolve } from 'node:path';
 import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';
 import puppeteer from 'puppeteer';
 
-import { normalizePdfSemanticText } from '../document/verify-pdf.js';
+import { normalizePdfSemanticText, pageTextInReadingOrder } from '../document/verify-pdf.js';
 import { validatePdfBytes } from '../document/render-pdf.js';
 import { teachingDeckSpec, type TeachingSessionContent, type TeachingSlide } from './session.js';
 
@@ -427,9 +427,7 @@ export async function verifyTeachingPdf(
         const page = await document.getPage(index + 1);
         try {
           const text = await page.getTextContent();
-          const actual = normalizePdfSemanticText(
-            text.items.map((item) => ('str' in item ? item.str : '')).join(' '),
-          );
+          const actual = normalizePdfSemanticText(pageTextInReadingOrder(text.items));
           const visualCaption = spec.slides[index]?.visual?.caption;
           const expected = [
             slide.id,

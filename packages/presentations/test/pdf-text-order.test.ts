@@ -27,6 +27,17 @@ test('PDF reading order rejoins touching glyphs while preserving word and line g
   assert.equal(pageTextInReadingOrder([]), '');
 });
 
+test('PDF reading order preserves kerned apostrophes without joining separate words', () => {
+  assert.equal(
+    pageTextInReadingOrder([
+      run('L', 51.832, 441, 18.476),
+      run('’habitude', 63.638, 441, 100),
+      run('professionnelle', 170, 441, 150),
+    ]),
+    'L’habitude\nprofessionnelle',
+  );
+});
+
 test('PDF reading order discards malformed text items without manufacturing content', () => {
   const invalid = [
     null,
