@@ -5,7 +5,11 @@ import test from 'node:test';
 
 import { repositoryRoot } from '@coursera-notes/core';
 import { readManifest, resolveTeachingSessionSources } from '@coursera-notes/manifest';
-import { parseTeachingSession, validateTeachingPair } from '@coursera-notes/presentations';
+import {
+  parseTeachingSession,
+  teachingDeckSpec,
+  validateTeachingPair,
+} from '@coursera-notes/presentations';
 
 import {
   animationCounts,
@@ -204,6 +208,7 @@ test('S06 animation preserves bilingual tables, plain paragraphs and diagram row
       },
     );
     const plan = createS06AnimationPlan(current);
+    const deck = teachingDeckSpec(current);
     assert.equal(plan.sessionId, 's06');
     assert.equal(plan.sourceSha256, current.sourceSha256);
     assert.equal(plan.slides.length, 25);
@@ -218,9 +223,23 @@ test('S06 animation preserves bilingual tables, plain paragraphs and diagram row
           slide.rows.map((row) => row.text),
           original.items,
         );
+        const rendered = deck.slides[slide.number - 1]!;
+        assert.ok(rendered.kind === 'overview' || rendered.kind === 'objectives');
+        assert.deepEqual(
+          slide.rows.map((row) => row.label),
+          rendered.itemLabels,
+        );
       }
     }
     assert.equal(plan.slides[19]!.kind, 'table');
+    const mission = plan.slides[18]!;
+    assert.equal(mission.kind, 'rows');
+    if (mission.kind === 'rows') {
+      assert.deepEqual(
+        mission.rows.map((row) => row.label),
+        ['', '01', '02', '03', '04', '05', '06'],
+      );
+    }
     const draft = plan.slides[11]!;
     assert.equal(draft.kind, 'rows');
     if (draft.kind === 'rows') assert.ok(draft.rows.every((row) => row.label === ''));

@@ -26,12 +26,12 @@ function effectCount(slide: SlidePlan): number {
   return slide.kind === 'cover' ? 2 : 1;
 }
 
-function itemLabel(
-  kind: TeachingSessionContent['slides'][number]['itemKinds'][number],
-  index: number,
-) {
-  if (kind === 'ordered') return String(index + 1).padStart(2, '0');
-  return kind === 'bullet' ? '•' : '';
+function itemLabel(kinds: TeachingSessionContent['slides'][number]['itemKinds'], index: number) {
+  const kind = kinds[index];
+  if (kind !== 'ordered') return kind === 'bullet' ? '•' : '';
+  let start = index;
+  while (start > 0 && kinds[start - 1] === 'ordered') start -= 1;
+  return String(index - start + 1).padStart(2, '0');
 }
 
 export function animationCounts(plan: TeachingAnimationPlan): {
@@ -99,7 +99,7 @@ function createAnimationPlan(
       title: slide.title,
       rows: slide.items.map((text, rowIndex) => ({
         text,
-        label: itemLabel(slide.itemKinds[rowIndex]!, rowIndex),
+        label: itemLabel(slide.itemKinds, rowIndex),
       })),
     };
   });
