@@ -5,7 +5,7 @@
 - **Purpose:** define the shared curriculum architecture for the instructor-led AI sessions.
 - **Audience:** professionals and learners with no technical prerequisite.
 - **Delivery model:** instructor-led, practical, progressive, source-grounded.
-- **Current implemented sessions:** S01–S03.
+- **Current teaching sources:** S01–S07; implementation does not establish delivery readiness.
 - **Planned curriculum:** S01–S07.
 - **Teaching languages:** English and French.
 - **Repository role:** this document governs curriculum-level fusion before individual session contracts are revised.
@@ -143,11 +143,9 @@ concepts introduced earlier.
 | S06     | Sécurité, confidentialité et responsabilité / Security, Privacy, and Responsibility        | What information and decisions require stronger boundaries?       | Confidentiality, authorization, verification, and consequential decisions      |
 | S07     | Atelier professionnel de bout en bout / End-to-End Professional Workshop                   | Can I apply the complete method to a bounded professional task?   | Integrated capstone and reusable professional process                          |
 
-S01–S03 already exist and remain valid teaching assets until their individual refactors are
-approved.
-
-S04–S07 are curriculum targets only until dedicated content contracts and teaching sources are
-created.
+S01–S07 now have dedicated teaching sources. S07 is an implementation draft with explicit
+workshop-format proposals in its content contract. Session-specific instructor review, native
+playback and rehearsal remain separate from source implementation.
 
 ## 5. The five-question operating framework
 
@@ -685,12 +683,12 @@ Each refactor should remain independently reviewable and revertible.
 The following decisions remain intentionally unresolved until implementation review:
 
 - final public program title;
-- final duration of S04–S07;
-- whether S07 uses individual work, group work, or both;
+- final delivery timing after session-specific rehearsal;
+- final S07 participation format (the implementation draft supports individual or paired work);
 - which non-cooperative professional examples become recurring examples;
 - whether learners receive a separate workbook or job-aid;
 - whether the five-question framework receives a dedicated visual identity;
-- whether the final capstone is assessed formally or used only as guided practice.
+- whether a future formal capstone assessment is needed (the S07 draft uses formative feedback).
 
 These decisions must not be silently fixed by generated teaching material.
 

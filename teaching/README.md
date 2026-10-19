@@ -77,6 +77,21 @@ and explicit human responsibility for consequential decisions.
   - Timed rehearsal: passed
   - The Course 03 French canonical adaptations still await personal review.
 
+## Integrated capstone draft
+
+S07 — End-to-End Professional Workshop / Atelier professionnel de bout en bout — has 25 slides
+and 60 minutes in each language. Its teaching sources and localized reference extracts live under
+`teaching/sessions/s07-end-to-end-professional-workshop/`.
+
+The draft supports individual or paired work, with an offline simulation and formative feedback.
+Learners retain a twelve-field process record covering the task, permitted information, prompt,
+output, iteration, verification, human responsibility, reuse, value and limitations. The format
+choices and answer key are explicit in the S07 content contract under `docs/teaching/`.
+
+Generate with `pnpm teaching:artifact build --session=s07` and independently verify with
+`pnpm teaching:artifact verify --session=s07`. S07 native animation support is not yet implemented.
+Instructor review, native PowerPoint review and timed rehearsal remain pending.
+
 ## Session artifacts
 
 The Mermaid visuals for S01–S03 use a wide diagram area above the slide's teaching points.
