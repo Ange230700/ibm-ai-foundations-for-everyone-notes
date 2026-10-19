@@ -89,7 +89,8 @@ output, iteration, verification, human responsibility, reuse, value and limitati
 choices and answer key are explicit in the S07 content contract under `docs/teaching/`.
 
 Generate with `pnpm teaching:artifact build --session=s07` and independently verify with
-`pnpm teaching:artifact verify --session=s07`. S07 native animation support is not yet implemented.
+`pnpm teaching:artifact verify --session=s07`. On Windows with desktop PowerPoint, run `pnpm teaching:artifact animate --session=s07 --format=pptx`
+after building. Tables reveal together; list items reveal on click with matching badges.
 Instructor review, native PowerPoint review and timed rehearsal remain pending.
 
 ## Session artifacts

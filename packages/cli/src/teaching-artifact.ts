@@ -39,6 +39,7 @@ import {
   createS04AnimationPlan,
   createS05AnimationPlan,
   createS06AnimationPlan,
+  createS07AnimationPlan,
 } from './teaching-animation-plan.js';
 import { animatedOutputFile } from './teaching-animation-output.js';
 import {
@@ -109,7 +110,7 @@ async function currentVisualAssets(spec: ReturnType<typeof teachingDeckSpec>, ro
 
 async function animateWithPowerPoint(
   root: string,
-  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06',
+  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06' | 's07',
   language: Language,
   planPath: string,
 ): Promise<string> {
@@ -160,7 +161,7 @@ async function animateWithPowerPoint(
 }
 
 type TeachingArgs = ReturnType<typeof parseTeachingArtifactArguments>;
-type AnimationSessionId = 's01' | 's02' | 's03' | 's04' | 's05' | 's06';
+type AnimationSessionId = 's01' | 's02' | 's03' | 's04' | 's05' | 's06' | 's07';
 type PptxRecord = {
   pptxSha256: string;
   sourceSha256: string;
@@ -175,7 +176,8 @@ function animationPlan(sessionId: AnimationSessionId, content: TeachingSessionCo
   if (sessionId === 's03') return createS03AnimationPlan(content);
   if (sessionId === 's04') return createS04AnimationPlan(content);
   if (sessionId === 's05') return createS05AnimationPlan(content);
-  return createS06AnimationPlan(content);
+  if (sessionId === 's06') return createS06AnimationPlan(content);
+  return createS07AnimationPlan(content);
 }
 
 async function assertCurrentPptx(
@@ -218,10 +220,11 @@ async function animateSession(
       session.id !== 's03' &&
       session.id !== 's04' &&
       session.id !== 's05' &&
-      session.id !== 's06') ||
+      session.id !== 's06' &&
+      session.id !== 's07') ||
     (format && format !== 'pptx')
   ) {
-    throw new Error('Native animations currently support S01/S02/S03/S04/S05/S06 PPTX only.');
+    throw new Error('Native animations currently support S01/S02/S03/S04/S05/S06/S07 PPTX only.');
   }
   const { spec, verification: source } = await assertCurrentPptx(
     session,

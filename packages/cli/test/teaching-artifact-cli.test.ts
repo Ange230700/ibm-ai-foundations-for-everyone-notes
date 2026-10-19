@@ -108,6 +108,6 @@ test('teaching artifact rejects unsupported animation formats', async () => {
   assert.notEqual(unsupportedFormat.exitCode, 0);
   assert.match(
     unsupportedFormat.stderr,
-    /Native animations currently support S01\/S02\/S03\/S04\/S05\/S06 PPTX only/,
+    /Native animations currently support S01\/S02\/S03\/S04\/S05\/S06\/S07 PPTX only/,
   );
 });

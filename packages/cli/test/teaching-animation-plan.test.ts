@@ -19,6 +19,7 @@ import {
   createS04AnimationPlan,
   createS05AnimationPlan,
   createS06AnimationPlan,
+  createS07AnimationPlan,
 } from '../src/teaching-animation-plan.js';
 
 test('S01 animation plan follows both teaching sources without adding slides or changing timing', async () => {
@@ -254,6 +255,7 @@ test('S06 animation preserves bilingual tables, plain paragraphs and diagram row
 for (const [id, createPlan] of [
   ['s04', createS04AnimationPlan],
   ['s05', createS05AnimationPlan],
+  ['s07', createS07AnimationPlan],
 ] as const) {
   test(`${id} animation matches every bilingual rendered label and table`, async () => {
     const manifest = await readManifest();

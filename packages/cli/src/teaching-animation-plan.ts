@@ -12,7 +12,7 @@ type SlidePlan =
 
 export interface TeachingAnimationPlan {
   schemaVersion: 2;
-  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06';
+  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06' | 's07';
   language: 'en' | 'fr';
   sourceSha256: string;
   slideCount: 30 | 26 | 25;
@@ -56,7 +56,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
 
 function createAnimationPlan(
   content: TeachingSessionContent,
-  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06',
+  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06' | 's07',
   slideCount: 30 | 26 | 25,
 ): TeachingAnimationPlan {
   const label = sessionId.toUpperCase();
@@ -84,7 +84,7 @@ function createAnimationPlan(
         context: slide.items.slice(1).join(' '),
       };
     }
-    if (['s04', 's05', 's06'].includes(sessionId) && slide.table) {
+    if (['s04', 's05', 's06', 's07'].includes(sessionId) && slide.table) {
       return { kind: 'table', number, title: slide.title, ...slide.table };
     }
     if (sessionId === 's01' && number === 18) {
@@ -142,4 +142,8 @@ export function createS04AnimationPlan(content: TeachingSessionContent): Teachin
 
 export function createS05AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
   return createAnimationPlan(content, 's05', 25);
+}
+
+export function createS07AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's07', 25);
 }

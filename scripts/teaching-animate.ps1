@@ -2,7 +2,7 @@ param(
   [Parameter(Mandatory = $true)] [string] $RepoRoot,
   [Parameter(Mandatory = $true)] [string] $PlanPath,
   [Parameter(Mandatory = $true)] [ValidateSet('en', 'fr')] [string] $Language,
-  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03', 's04', 's05', 's06')] [string] $SessionId,
+  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03', 's04', 's05', 's06', 's07')] [string] $SessionId,
   [Parameter(Mandatory = $true)] [ValidateRange(1, 100)] [int] $SlideCount,
   [Parameter(Mandatory = $true)] [double] $BadgeMinWidth
 )
