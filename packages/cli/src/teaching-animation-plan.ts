@@ -12,7 +12,7 @@ type SlidePlan =
 
 export interface TeachingAnimationPlan {
   schemaVersion: 2;
-  sessionId: 's01' | 's02' | 's03' | 's06';
+  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06';
   language: 'en' | 'fr';
   sourceSha256: string;
   slideCount: 30 | 26 | 25;
@@ -21,7 +21,9 @@ export interface TeachingAnimationPlan {
 
 function effectCount(slide: SlidePlan): number {
   if (slide.kind === 'rows') {
-    return slide.rows.slice(1).reduce((total, row) => total + (row.label ? 3 : 1), 0);
+    return slide.rows
+      .slice(slide.rows.length === 1 ? 0 : 1)
+      .reduce((total, row) => total + (row.label ? 3 : 1), 0);
   }
   return slide.kind === 'cover' ? 2 : 1;
 }
@@ -41,7 +43,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
 } {
   return plan.slides.reduce(
     (counts, slide) => {
-      const clicks = slide.kind === 'rows' ? slide.rows.length - 1 : 1;
+      const clicks = slide.kind === 'rows' ? Math.max(1, slide.rows.length - 1) : 1;
       return {
         animatedSlides: counts.animatedSlides + 1,
         clicks: counts.clicks + clicks,
@@ -54,7 +56,7 @@ export function animationCounts(plan: TeachingAnimationPlan): {
 
 function createAnimationPlan(
   content: TeachingSessionContent,
-  sessionId: 's01' | 's02' | 's03' | 's06',
+  sessionId: 's01' | 's02' | 's03' | 's04' | 's05' | 's06',
   slideCount: 30 | 26 | 25,
 ): TeachingAnimationPlan {
   const label = sessionId.toUpperCase();
@@ -82,7 +84,7 @@ function createAnimationPlan(
         context: slide.items.slice(1).join(' '),
       };
     }
-    if (sessionId === 's06' && slide.table) {
+    if (['s04', 's05', 's06'].includes(sessionId) && slide.table) {
       return { kind: 'table', number, title: slide.title, ...slide.table };
     }
     if (sessionId === 's01' && number === 18) {
@@ -90,7 +92,11 @@ function createAnimationPlan(
         throw new Error('S01 table slide has an unexpected layout.');
       return { kind: 'table', number, title: slide.title, ...slide.table };
     }
-    if (slide.table || slide.items.length < 2 || slide.itemKinds.length !== slide.items.length) {
+    if (
+      slide.table ||
+      slide.items.length < (sessionId === 's05' ? 1 : 2) ||
+      slide.itemKinds.length !== slide.items.length
+    ) {
       throw new Error(`${label} animation slide ${number} has an unexpected list layout.`);
     }
     return {
@@ -128,4 +134,12 @@ export function createS03AnimationPlan(content: TeachingSessionContent): Teachin
 
 export function createS06AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
   return createAnimationPlan(content, 's06', 25);
+}
+
+export function createS04AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's04', 25);
+}
+
+export function createS05AnimationPlan(content: TeachingSessionContent): TeachingAnimationPlan {
+  return createAnimationPlan(content, 's05', 25);
 }

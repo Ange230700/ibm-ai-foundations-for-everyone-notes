@@ -16,6 +16,8 @@ import {
   createS01AnimationPlan,
   createS02AnimationPlan,
   createS03AnimationPlan,
+  createS04AnimationPlan,
+  createS05AnimationPlan,
   createS06AnimationPlan,
 } from '../src/teaching-animation-plan.js';
 
@@ -248,3 +250,63 @@ test('S06 animation preserves bilingual tables, plain paragraphs and diagram row
     assert.throws(() => createS06AnimationPlan({ ...current, durationMinutes: 59 }), /60-minute/u);
   }
 });
+
+for (const [id, createPlan] of [
+  ['s04', createS04AnimationPlan],
+  ['s05', createS05AnimationPlan],
+] as const) {
+  test(`${id} animation matches every bilingual rendered label and table`, async () => {
+    const manifest = await readManifest();
+    const session = manifest.teachingSessions!.find((entry) => entry.id === id)!;
+    const canonicalSources = resolveTeachingSessionSources(manifest, session);
+    for (const language of ['en', 'fr'] as const) {
+      const current = parseTeachingSession(
+        await readFile(resolve(repositoryRoot(), session.source[language]), 'utf8'),
+        {
+          id: session.id,
+          language,
+          sourcePath: session.source[language],
+          slideCount: session.slideCount,
+          durationMinutes: session.durationMinutes,
+          canonicalModuleIds: canonicalSources.canonicalModuleIds,
+          canonicalSources: canonicalSources[language],
+        },
+      );
+      const plan = createPlan(current);
+      const deck = teachingDeckSpec(current);
+      assert.equal(plan.sessionId, id);
+      assert.equal(plan.sourceSha256, current.sourceSha256);
+      assert.equal(plan.slides.length, 25);
+      for (const slide of plan.slides) {
+        const original = current.slides[slide.number - 1]!;
+        assert.equal(slide.title, original.title);
+        if (slide.kind === 'table') {
+          assert.deepEqual(slide.headers, original.table!.headers);
+          assert.deepEqual(slide.rows, original.table!.rows);
+        } else if (slide.kind === 'rows') {
+          assert.deepEqual(
+            slide.rows.map((row) => row.text),
+            original.items,
+          );
+          const rendered = deck.slides[slide.number - 1]!;
+          assert.ok(rendered.kind === 'overview' || rendered.kind === 'objectives');
+          assert.deepEqual(
+            slide.rows.map((row) => row.label),
+            rendered.itemLabels,
+          );
+        }
+      }
+      assert.equal(animationCounts(plan).animatedSlides, 25);
+      if (id === 's05') {
+        const single = plan.slides[14]!;
+        assert.equal(single.kind, 'rows');
+        if (single.kind === 'rows') assert.equal(single.rows.length, 1);
+        assert.deepEqual(animationCounts({ ...plan, slides: [single] }), {
+          animatedSlides: 1,
+          clicks: 1,
+          effects: 1,
+        });
+      }
+    }
+  });
+}

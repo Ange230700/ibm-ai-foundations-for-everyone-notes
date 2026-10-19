@@ -2,7 +2,7 @@ param(
   [Parameter(Mandatory = $true)] [string] $RepoRoot,
   [Parameter(Mandatory = $true)] [string] $PlanPath,
   [Parameter(Mandatory = $true)] [ValidateSet('en', 'fr')] [string] $Language,
-  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03', 's06')] [string] $SessionId,
+  [Parameter(Mandatory = $true)] [ValidateSet('s01', 's02', 's03', 's04', 's05', 's06')] [string] $SessionId,
   [Parameter(Mandatory = $true)] [ValidateRange(1, 100)] [int] $SlideCount,
   [Parameter(Mandatory = $true)] [double] $BadgeMinWidth
 )
@@ -113,7 +113,7 @@ function Get-AnimationDefinition($Shapes, $Entry, [string] $Context) {
         $row = $Entry.rows[$rowIndex]
         $body = Unique-Text-Shape $Shapes $row.text "$Context contenu"
         $badge = @(if ($row.label -ne '') { Badge-Shapes $Shapes $body $row.label $Context })
-        if ($rowIndex -gt 0) {
+        if ($rowIndex -gt 0 -or $Entry.rows.Count -eq 1) {
           if ($badge.Count -gt 0) {
             $shapeIds += @([int]$badge[0].Id, [int]$badge[1].Id, [int]$body.Id)
             $triggers += @($triggerClick, $triggerWithPrevious, $triggerWithPrevious)
@@ -216,10 +216,11 @@ function Get-AnimationStatistics($Plan) {
   $clicks = 0
   $effects = 0
   foreach ($entry in $Plan.slides) {
-    $count = if ($entry.kind -eq 'rows') { $entry.rows.Count - 1 } else { 1 }
+    $count = if ($entry.kind -eq 'rows') { [Math]::Max(1, $entry.rows.Count - 1) } else { 1 }
     $clicks += $count
     if ($entry.kind -eq 'rows') {
-      for ($i = 1; $i -lt $entry.rows.Count; $i++) {
+      $start = if ($entry.rows.Count -eq 1) { 0 } else { 1 }
+      for ($i = $start; $i -lt $entry.rows.Count; $i++) {
         $effects += if ($entry.rows[$i].label -ne '') { 3 } else { 1 }
       }
     } else {
