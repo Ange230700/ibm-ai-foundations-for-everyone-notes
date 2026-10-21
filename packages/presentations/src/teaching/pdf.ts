@@ -326,7 +326,7 @@ export async function renderTeachingPdf(
     const page = await browser.newPage();
     await page.emulateMediaType('print');
     await page.setContent(html, { waitUntil: 'load' });
-    const layoutErrors = (await page.evaluate(`
+    const layoutErrors = (await page.evaluate(String.raw`
       (async () => {
         await document.fonts.ready;
         await Promise.all(Array.from(document.images, image => image.decode()));
@@ -361,7 +361,7 @@ export async function renderTeachingPdf(
             }
             if (overflow) {
               const label = (element.textContent || element.getAttribute('alt') || element.tagName)
-                .replace(/\\s+/g, ' ').trim().slice(0, 100);
+                .replace(/\s+/g, ' ').trim().slice(0, 100);
               errors.push('Page ' + (index + 1) + ': ' + label);
             }
           }

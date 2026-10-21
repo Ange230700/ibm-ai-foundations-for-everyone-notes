@@ -1,0 +1,36 @@
+body {
+  padding: 28px;
+  background: #ffffff;
+}
+
+header {
+  padding: 0;
+  background: transparent;
+  color: #122b4a;
+  border-radius: 0;
+  font-size: 36px;
+}
+
+.stamp {
+  display: block;
+  margin: 12px 0 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #445977;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+section p {
+  font-size: 40px;
+  line-height: 1.3;
+}

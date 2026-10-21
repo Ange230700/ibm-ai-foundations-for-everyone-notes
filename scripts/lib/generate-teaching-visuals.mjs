@@ -2,7 +2,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
@@ -42,7 +42,20 @@ async function collectScreenSource({
   requireSimulationLabel,
 }) {
   const stem = resolve(visualRoot, language, name);
-  const html = await readFile(`${stem}.html`, 'utf8');
+  let html = await readFile(`${stem}.html`, 'utf8');
+  if (!/<title>\s*[^<]+<\/title>/u.test(html)) {
+    throw new Error(`Missing title in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
+  }
+  const stylesheets = [
+    ...html.matchAll(/<link rel="stylesheet" href="(\.\.\/[^"/]+\.css)"\s*\/>/gu),
+  ];
+  const styles = await Promise.all(
+    stylesheets.map(async ([tag, href]) => [
+      tag,
+      await readFile(resolve(dirname(stem), href), 'utf8'),
+    ]),
+  );
+  for (const [tag, css] of styles) html = html.replace(tag, () => `<style>${css}</style>`);
   const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
   if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
     throw new Error(
