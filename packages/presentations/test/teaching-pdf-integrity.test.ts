@@ -207,6 +207,27 @@ test('teaching PDF rendering validates current sources and assets and closes fai
   assert.match(html, /split-visual/);
   assert.match(html, /brand-logo/);
   assert.doesNotMatch(html, /Presenter only/);
+  const dense = structuredClone(content);
+  dense.slides[0]!.items = ['One', 'Two', 'Break', 'Restart', 'Five', 'Six', 'Seven'];
+  dense.slides[0]!.itemKinds = [
+    'ordered',
+    'ordered',
+    'plain',
+    'ordered',
+    'bullet',
+    'plain',
+    'plain',
+  ];
+  dense.slides[1]!.items = ['Compare <8 & 9>'];
+  dense.slides[1]!.itemKinds = ['plain'];
+  dense.slides[1]!.table!.rows = Array.from({ length: 8 }, (_, index) => [String(index), 'Value']);
+  const denseHtml = renderTeachingPdfHtml(dense);
+  assert.match(denseHtml, /class="slide cover dense-list"/);
+  assert.match(denseHtml, /class="dense-table"/);
+  assert.match(denseHtml, /<caption>Compare &lt;8 &amp; 9&gt;<\/caption>/);
+  assert.match(denseHtml, /class="marker">1\.<\/span>One/);
+  assert.match(denseHtml, /class="marker">2\.<\/span>Two/);
+  assert.match(denseHtml, /class="marker">1\.<\/span>Restart/);
   const assertCleanedPages = (expected: number[]): void => {
     assert.deepEqual(
       cleanedPages.toSorted((a, b) => a - b),

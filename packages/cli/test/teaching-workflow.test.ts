@@ -261,7 +261,7 @@ test('teaching CLI builds, independently verifies and animates only current arti
           await assert.rejects(run(['animate', '--session=s01', '--lang=en']), /Stale S01 PPTX/);
           assert.equal(spawnCalls.length, 0);
         }
-        for (const session of ['s01', 's02', 's03']) {
+        for (const session of ['s01', 's02', 's03', 's04', 's05', 's06', 's07']) {
           reset();
           await run(['animate', `--session=${session}`, '--lang=en', '--format=pptx']);
           assert.equal(
