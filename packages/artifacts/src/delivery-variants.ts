@@ -184,7 +184,13 @@ export function buildNarrationChunks(
   const paragraphs = spokenText
     .trim()
     .split(/\n{2,}/u)
-    .map((paragraph) => paragraph.replace(/\s*\n\s*/gu, ' ').trim())
+    .map((paragraph) =>
+      paragraph
+        .split('\n')
+        .map((line) => line.trim())
+        .join(' ')
+        .trim(),
+    )
     .filter(Boolean);
   const segments = paragraphs.flatMap((paragraph) =>
     characterCount(paragraph) > maximumCharacters

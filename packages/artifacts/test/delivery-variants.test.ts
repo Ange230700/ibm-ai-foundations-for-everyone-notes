@@ -129,3 +129,12 @@ test('invalid raw HTML is reported as an authoring diagnostic', () => {
     /Unsupported|HTML/,
   );
 });
+
+test('narration line folding handles long whitespace runs without regex backtracking', () => {
+  const spaces = ' '.repeat(100000);
+  assert.equal(
+    buildNarrationChunks('s06', 'en', `First.${spaces}\n${spaces}Next.`, 20)[0]!.text,
+    'First. Next.',
+  );
+  assert.equal(buildNarrationChunks('s06', 'en', 'First.  \n  Next.', 20)[0]!.text, 'First. Next.');
+});
