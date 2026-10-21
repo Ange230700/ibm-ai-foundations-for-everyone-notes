@@ -43,19 +43,21 @@ async function collectScreenSource({
 }) {
   const stem = resolve(visualRoot, language, name);
   let html = await readFile(`${stem}.html`, 'utf8');
-  if (!/<title>\s*[^<]+<\/title>/u.test(html)) {
+  const titleStart = html.indexOf('<title>');
+  const titleEnd = html.indexOf('</title>', titleStart + 7);
+  if (titleStart < 0 || titleEnd < 0 || !html.slice(titleStart + 7, titleEnd).trim()) {
     throw new Error(`Missing title in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
   }
   const stylesheets = [
     ...html.matchAll(/<link rel="stylesheet" href="(\.\.\/[^"/]+\.css)"\s*\/>/gu),
   ];
   const styles = await Promise.all(
-    stylesheets.map(async ([tag, href]) => [
-      tag,
-      await readFile(resolve(dirname(stem), href), 'utf8'),
-    ]),
+    stylesheets.map(async (match) => ({
+      tag: match[0],
+      css: await readFile(resolve(dirname(stem), match[1]), 'utf8'),
+    })),
   );
-  for (const [tag, css] of styles) html = html.replace(tag, () => `<style>${css}</style>`);
+  for (const { tag, css } of styles) html = html.replace(tag, () => `<style>${css}</style>`);
   const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
   if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
     throw new Error(
