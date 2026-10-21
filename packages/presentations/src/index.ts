@@ -10,6 +10,7 @@ export * from './document/render-markdown-document.js';
 export * from './document/mermaid.js';
 export * from './document/stylesheet.js';
 export * from './document/render-pdf.js';
+export * from './document/render-authored-document.js';
 export * from './document/verify-pdf.js';
 export * from './document/contact-sheet.js';
 export * from './document/pdf-canvas.js';

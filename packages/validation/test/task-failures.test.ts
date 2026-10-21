@@ -151,7 +151,10 @@ test('artifact impact handles course-wide dependencies, absent targets and every
     [[], true],
     [['manifest.json'], false],
   ] as const)
-    assert.equal(analyzeArtifactImpact({ ...manifest, courses: [] }, files, full).scope, 'none');
+    assert.equal(
+      analyzeArtifactImpact({ ...manifest, courses: [], teachingSessions: [] }, files, full).scope,
+      'none',
+    );
 });
 
 test('planner reads sorted Git paths on both platforms and rejects unknown dependencies', async (t) => {

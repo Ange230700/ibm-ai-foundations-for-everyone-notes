@@ -32,6 +32,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
   const originalArgv = process.argv;
 
   const expectedPptx = async (spec: ReturnType<typeof presentationApi.teachingDeckSpec>) => ({
+    editorialProfile: 'presentation',
+    outputFormat: 'pptx',
     pptxSha256: 'pptx-hash',
     sourceSha256: spec.sourceSha256,
     moduleContentSha256: spec.moduleContentSha256,
@@ -49,6 +51,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
     slideCount: spec.slides.length,
   });
   const expectedPdf = async (content: TeachingSessionContent) => ({
+    editorialProfile: 'presentation',
+    outputFormat: 'pdf',
     pdfSha256: 'pdf-hash',
     sourceSha256: content.sourceSha256,
     contentSha256: content.contentSha256,
@@ -180,10 +184,29 @@ test('teaching CLI builds, independently verifies and animates only current arti
       'each stale provenance field is rejected before accepting an artifact',
       async () => {
         for (const [format, fields] of [
-          ['pdf', ['pdfSha256', 'sourceSha256', 'contentSha256', 'brandLogoSha256', 'htmlSha256']],
+          [
+            'pdf',
+            [
+              'editorialProfile',
+              'outputFormat',
+              'pdfSha256',
+              'sourceSha256',
+              'contentSha256',
+              'brandLogoSha256',
+              'htmlSha256',
+            ],
+          ],
           [
             'pptx',
-            ['pptxSha256', 'sourceSha256', 'moduleContentSha256', 'deckSpecSha256', 'visualAssets'],
+            [
+              'editorialProfile',
+              'outputFormat',
+              'pptxSha256',
+              'sourceSha256',
+              'moduleContentSha256',
+              'deckSpecSha256',
+              'visualAssets',
+            ],
           ],
         ] as const) {
           for (const field of fields) {

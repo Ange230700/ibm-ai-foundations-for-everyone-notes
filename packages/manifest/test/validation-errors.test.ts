@@ -3,7 +3,11 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import { ManifestSchema } from '../src/schema.js';
-import { resolveTeachingSessionModules, resolveTeachingSessionSources } from '../src/teaching.js';
+import {
+  resolveDeliveryVariant,
+  resolveTeachingSessionModules,
+  resolveTeachingSessionSources,
+} from '../src/teaching.js';
 
 const source = JSON.parse(
   await readFile(new URL('../../../manifest.json', import.meta.url), 'utf8'),
@@ -78,5 +82,38 @@ test('teaching source resolution requires one canonical module per referenced id
         session,
       ),
     /resolved 2 times/,
+  );
+});
+
+test('delivery variants require registered language sources and valid canonical provenance', () => {
+  invalid(
+    (m) => (m.teachingSessions[5].deliveryVariants.document.en.source = 'outside/document.md'),
+    /document en source must be/,
+  );
+  invalid(
+    (m) =>
+      (m.teachingSessions[5].deliveryVariants.reference.fr.canonicalModuleIds[0] =
+        'module_00000000-0000-4000-8000-000000000000'),
+    /Unknown canonical module/,
+  );
+  invalid(
+    (m) => delete m.teachingSessions[5].deliveryVariants.narration.en.production,
+    /requires production metadata/,
+  );
+
+  const manifest = ManifestSchema.parse(source);
+  const session = manifest.teachingSessions![5]!;
+  const resolved = resolveDeliveryVariant(manifest, session, 'document', 'en');
+  assert.equal(
+    resolved.sourcePath,
+    'teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/en.md',
+  );
+  assert.deepEqual(
+    resolved.canonicalModules.map((module) => module.moduleId),
+    ['module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c'],
+  );
+  assert.throws(
+    () => resolveDeliveryVariant(manifest, manifest.teachingSessions![0]!, 'document', 'en'),
+    /has no document variant for en/,
   );
 });

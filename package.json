@@ -28,6 +28,7 @@
     "test": "pnpm --filter @coursera-notes/core test && pnpm --filter @coursera-notes/artifacts test && pnpm --filter @coursera-notes/manifest test && pnpm --filter @coursera-notes/presentations test && pnpm --filter @coursera-notes/validation test && pnpm --filter @coursera-notes/cli test",
     "artifact": "tsx packages/cli/src/artifact.ts",
     "teaching:artifact": "tsx packages/cli/src/teaching-artifact.ts",
+    "delivery:artifact": "tsx packages/cli/src/delivery-artifact.ts",
     "coverage": "node scripts/coverage.mjs",
     "sonar:scan": "node --env-file-if-exists=.env scripts/sonar-scan.mjs"
   },

@@ -77,7 +77,7 @@ test('teaching artifact plans one selected language and format', async () => {
 
   assert.equal(result.exitCode, 0);
   assert.equal(result.stderr, '');
-  assert.match(result.stdout, /PLAN s01\/en .*formats=pdf/);
+  assert.match(result.stdout, /PLAN s01\/presentation\/en .*formats=pdf/);
 });
 
 test('teaching artifact plans both languages and formats by default', async () => {
@@ -86,8 +86,8 @@ test('teaching artifact plans both languages and formats by default', async () =
   assert.equal(result.exitCode, 0);
   assert.equal(result.stderr, '');
 
-  assert.match(result.stdout, /PLAN s01\/en .*formats=pdf,pptx/);
-  assert.match(result.stdout, /PLAN s01\/fr .*formats=pdf,pptx/);
+  assert.match(result.stdout, /PLAN s01\/presentation\/en .*formats=pdf,pptx/);
+  assert.match(result.stdout, /PLAN s01\/presentation\/fr .*formats=pdf,pptx/);
 });
 
 test('teaching artifact can plan all registered sessions', async () => {
@@ -97,8 +97,8 @@ test('teaching artifact can plan all registered sessions', async () => {
   assert.equal(result.stderr, '');
 
   for (const session of ['s01', 's02', 's03', 's04', 's05']) {
-    assert.match(result.stdout, new RegExp(`PLAN ${session}/en `));
-    assert.match(result.stdout, new RegExp(`PLAN ${session}/fr `));
+    assert.match(result.stdout, new RegExp(`PLAN ${session}/presentation/en `));
+    assert.match(result.stdout, new RegExp(`PLAN ${session}/presentation/fr `));
   }
 });
 

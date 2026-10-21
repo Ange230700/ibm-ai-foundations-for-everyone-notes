@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 import { atomicWrite, canonicalJson, repositoryRoot, sha256 } from '@coursera-notes/core';
+import { renderMarkdownText, validatePlainText } from '@coursera-notes/artifacts';
 import {
   readManifest,
   resolveTeachingSessionSources,
@@ -163,6 +164,8 @@ async function animateWithPowerPoint(
 type TeachingArgs = ReturnType<typeof parseTeachingArtifactArguments>;
 type AnimationSessionId = 's01' | 's02' | 's03' | 's04' | 's05' | 's06' | 's07';
 type PptxRecord = {
+  editorialProfile: string;
+  outputFormat: string;
   pptxSha256: string;
   sourceSha256: string;
   moduleContentSha256: string;
@@ -195,6 +198,8 @@ async function assertCurrentPptx(
   const verification = await verifyNativePptx(spec, root, resolve(outputRoot, 'session.pptx'));
   const expectedVisuals = await currentVisualAssets(spec, root);
   if (
+    record.editorialProfile !== 'presentation' ||
+    record.outputFormat !== 'pptx' ||
     record.pptxSha256 !== verification.pptxSha256 ||
     record.sourceSha256 !== content.sourceSha256 ||
     record.moduleContentSha256 !== content.contentSha256 ||
@@ -244,6 +249,8 @@ async function animateSession(
     resolve(outputRoot, 'pptx-animation.json'),
     canonicalJson({
       schemaVersion: 2,
+      editorialProfile: 'presentation',
+      outputFormat: 'pptx',
       sessionId: session.id,
       language,
       sourceSha256: content.sourceSha256,
@@ -361,6 +368,8 @@ async function verifyPdf(
   outputRoot: string,
 ) {
   const record = JSON.parse(await readFile(resolve(outputRoot, 'pdf-artifact.json'), 'utf8')) as {
+    editorialProfile: string;
+    outputFormat: string;
     pdfSha256: string;
     sourceSha256: string;
     contentSha256: string;
@@ -375,6 +384,8 @@ async function verifyPdf(
   const logoUrl = `data:image/png;base64,${logo.toString('base64')}`;
   const html = renderTeachingPdfHtml(content, logoUrl, visuals);
   if (
+    record.editorialProfile !== 'presentation' ||
+    record.outputFormat !== 'pdf' ||
     record.pdfSha256 !== verification.pdfSha256 ||
     record.sourceSha256 !== content.sourceSha256 ||
     record.contentSha256 !== content.contentSha256 ||
@@ -398,11 +409,19 @@ async function buildPptx(content: TeachingSessionContent, root: string, outputRo
   }
   await atomicWrite(
     resolve(outputRoot, 'pptx-artifact.json'),
-    serializeNativePptxArtifactRecord(artifact),
+    canonicalJson({
+      ...JSON.parse(serializeNativePptxArtifactRecord(artifact)),
+      editorialProfile: 'presentation',
+      outputFormat: 'pptx',
+    }),
   );
   await atomicWrite(
     resolve(outputRoot, 'pptx-verification.json'),
-    serializeNativePptxVerification(verification),
+    canonicalJson({
+      ...JSON.parse(serializeNativePptxVerification(verification)),
+      editorialProfile: 'presentation',
+      outputFormat: 'pptx',
+    }),
   );
 }
 
@@ -416,7 +435,59 @@ async function processFormat(
   outputRoot: string,
 ) {
   if (args.command === 'visual-qa') {
+    if (format === 'txt') throw new Error('Visual QA supports PDF or PPTX, not TXT.');
     await createVisualQa(format, session, language, content, root, outputRoot);
+    return;
+  }
+  if (format === 'txt') {
+    const source = await readFile(teachingSourcePath(root, session, language), 'utf8');
+    const text = renderMarkdownText(source, {
+      language,
+      includeLinkDestinations: false,
+      documentCodeLabels: true,
+      documentTableText: true,
+    });
+    const errors = validatePlainText(Buffer.from(text, 'utf8'));
+    if (errors.length) throw new Error(errors.join('\n'));
+    const outputPath = resolve(outputRoot, 'session.txt');
+    const recordPath = resolve(outputRoot, 'txt-artifact.json');
+    if (args.command === 'build') {
+      await atomicWrite(outputPath, text);
+      await atomicWrite(
+        recordPath,
+        canonicalJson({
+          schemaVersion: 1,
+          targetId: session.id,
+          language,
+          editorialProfile: 'presentation',
+          outputFormat: 'txt',
+          sourcePath: content.sourcePath,
+          sourceSha256: content.sourceSha256,
+          outputPath: `.artifacts/teaching-sessions/${session.id}/${language}/session.txt`,
+          outputSha256: sha256(text),
+        }),
+      );
+    } else {
+      const record = JSON.parse(await readFile(recordPath, 'utf8')) as {
+        editorialProfile: string;
+        outputFormat: string;
+        sourceSha256: string;
+        outputSha256: string;
+      };
+      const actual = await readFile(outputPath);
+      if (
+        record.editorialProfile !== 'presentation' ||
+        record.outputFormat !== 'txt' ||
+        record.sourceSha256 !== content.sourceSha256 ||
+        record.outputSha256 !== sha256(actual) ||
+        actual.toString('utf8') !== text
+      ) {
+        throw new Error(`Stale teaching TXT: ${session.id}/${language}.`);
+      }
+    }
+    console.log(
+      `${args.command === 'build' ? 'WROTE' : 'VERIFIED'} ${session.id}/${language}/presentation/txt`,
+    );
     return;
   }
   if (format === 'pdf') {
@@ -429,7 +500,7 @@ async function processFormat(
   }
   const action = args.command === 'build' ? 'WROTE' : 'VERIFIED';
   console.log(
-    `${action} ${session.id}/${language}/${format} slides=${content.slides.length} minutes=${content.durationMinutes}`,
+    `${action} ${session.id}/presentation/${language}/${format} slides=${content.slides.length} minutes=${content.durationMinutes}`,
   );
 }
 
@@ -448,7 +519,7 @@ async function processLanguage(
   const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];
   if (args.command === 'plan') {
     console.log(
-      `PLAN ${session.id}/${language} slides=${content.slides.length} minutes=${content.durationMinutes} formats=${formats.join(',')} source=${content.sourcePath}`,
+      `PLAN ${session.id}/presentation/${language} slides=${content.slides.length} minutes=${content.durationMinutes} formats=${formats.join(',')} source=${content.sourcePath}`,
     );
     return;
   }
