@@ -14,7 +14,10 @@
   and patch updates. Major updates remain separate. Updates are never auto-merged.
 
 Actions are pinned to commit SHAs, use limited permissions and do not persist
-checkout credentials. Coverage reports are retained for 14 days.
+checkout credentials. Coverage reports are retained for 14 days. CI uses Ubuntu
+24.04 and a scoped AppArmor profile for Puppeteer's cached browser executables,
+allowing Chromium to create its sandbox user namespaces. The browser sandbox
+remains enabled. See [Chromium's AppArmor guidance](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md).
 
 ## Sonar activation
 
