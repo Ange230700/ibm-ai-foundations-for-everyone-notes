@@ -86,6 +86,21 @@ test('visual slide layouts fit crowded content and reject excess capture points 
   assert.ok(crowdedRows.every((shape) => shape.h! > 0 && shape.y! + shape.h! <= 6.65 + 1e-8));
   assert.ok(notes[0]!.includes('1-3\n[/Sources]'));
   textCalls.length = 0;
+  shapeCalls.length = 0;
+  await render([
+    {
+      ...base,
+      items: ['Plain paragraph', 'Numbered point'],
+      itemLabels: ['', '1.'],
+      visual: { kind: 'mermaid', path: 'teaching/visuals/s99/en/diagram.svg', caption: 'Diagram' },
+    },
+  ]);
+  const plain = textCalls.find((call) => call.text === 'Plain paragraph')!.options;
+  const numbered = textCalls.find((call) => call.text === 'Numbered point')!.options;
+  assert.ok(Math.abs(numbered.x! - plain.x! - 0.88) < 1e-8);
+  assert.ok(Math.abs(plain.w! - numbered.w! - 0.88) < 1e-8);
+  assert.equal(shapeCalls.filter((shape) => shape.w === 0.68).length, 1);
+  textCalls.length = 0;
   const dense = Array(4).fill('Dense explanation '.repeat(12));
   await render([
     {
