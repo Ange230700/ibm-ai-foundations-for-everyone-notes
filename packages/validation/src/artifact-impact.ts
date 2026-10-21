@@ -19,7 +19,16 @@ export interface ArtifactImpactTarget {
 export interface ArtifactImpactReport {
   scope: 'none' | 'targeted' | 'all';
   targets: ArtifactImpactTarget[];
+  deliveryTargets: DeliveryArtifactImpactTarget[];
   reasons: string[];
+}
+
+export interface DeliveryArtifactImpactTarget {
+  sessionId: string;
+  profile: 'document' | 'reference' | 'narration';
+  language: ArtifactImpactLanguage;
+  sourcePath: string;
+  canonicalModuleIds: string[];
 }
 
 function activeTargets(manifest: Manifest): ArtifactImpactTarget[] {
@@ -45,6 +54,34 @@ function activeTargets(manifest: Manifest): ArtifactImpactTarget[] {
     );
 }
 
+function activeDeliveryTargets(manifest: Manifest): DeliveryArtifactImpactTarget[] {
+  return (manifest.teachingSessions ?? [])
+    .flatMap((session) =>
+      (['document', 'reference', 'narration'] as const).flatMap((profile) =>
+        LANGUAGES.flatMap((language) => {
+          const variant = session.deliveryVariants?.[profile]?.[language];
+          return variant
+            ? [
+                {
+                  sessionId: session.id,
+                  profile,
+                  language,
+                  sourcePath: toPosixPath(variant.source),
+                  canonicalModuleIds: variant.canonicalModuleIds,
+                },
+              ]
+            : [];
+        }),
+      ),
+    )
+    .sort(
+      (left, right) =>
+        left.sessionId.localeCompare(right.sessionId) ||
+        left.profile.localeCompare(right.profile) ||
+        left.language.localeCompare(right.language),
+    );
+}
+
 function isGlobalArtifactInput(path: string): boolean {
   return (
     path === 'manifest.json' ||
@@ -61,7 +98,11 @@ function isGlobalArtifactInput(path: string): boolean {
     path === 'packages/cli/src/artifact-pdf.ts' ||
     path === 'packages/cli/src/artifact-pptx.ts' ||
     path === 'packages/cli/src/artifact-verify.ts' ||
-    path === 'packages/cli/src/artifact-visual-qa.ts'
+    path === 'packages/cli/src/artifact-visual-qa.ts' ||
+    path === 'packages/cli/src/delivery-artifact.ts' ||
+    path === 'packages/cli/src/delivery-artifact-arguments.ts' ||
+    path.startsWith('packages/artifacts/src/') ||
+    path === 'packages/artifacts/package.json'
   );
 }
 
@@ -134,11 +175,13 @@ export function analyzeArtifactImpact(
   full = false,
 ): ArtifactImpactReport {
   const targets = activeTargets(manifest);
+  const delivery = activeDeliveryTargets(manifest);
 
   if (full) {
     return {
-      scope: targets.length > 0 ? 'all' : 'none',
+      scope: targets.length > 0 || delivery.length > 0 ? 'all' : 'none',
       targets,
+      deliveryTargets: delivery,
       reasons: ['full validation requested'],
     };
   }
@@ -147,6 +190,7 @@ export function analyzeArtifactImpact(
     return {
       scope: 'none',
       targets: [],
+      deliveryTargets: [],
       reasons: [],
     };
   }
@@ -156,8 +200,9 @@ export function analyzeArtifactImpact(
 
   if (globalInputs.length > 0) {
     return {
-      scope: targets.length > 0 ? 'all' : 'none',
+      scope: targets.length > 0 || delivery.length > 0 ? 'all' : 'none',
       targets,
+      deliveryTargets: delivery,
       reasons: globalInputs
         .map((path) => `artifact engine input changed: ${path}`)
         .sort((left, right) => left.localeCompare(right)),
@@ -165,6 +210,7 @@ export function analyzeArtifactImpact(
   }
 
   const affected = new Map<string, ArtifactImpactTarget>();
+  const affectedDelivery = new Map<string, DeliveryArtifactImpactTarget>();
   const reasons = new Set<string>();
 
   for (const file of files) {
@@ -174,13 +220,42 @@ export function analyzeArtifactImpact(
       addTargets(affected, impact.targets);
       reasons.add(impact.reason);
     }
+
+    const deliveryMatches = delivery.filter((target) => {
+      if (target.sourcePath === file) return true;
+      const sessionRoot = target.sourcePath.split('/deliveries/')[0]!;
+      if (file.startsWith(`${sessionRoot}/`)) {
+        const sourceLanguage = file.match(/\/(?:deliveries\/[^/]+\/)?(en|fr)(?:\/|\.md$)/u)?.[1];
+        return sourceLanguage ? sourceLanguage === target.language : true;
+      }
+      return target.canonicalModuleIds.some((moduleId) =>
+        manifest.courses.some((course) =>
+          course.modules.some((module) => {
+            if (module.id !== moduleId || module.source[target.language] !== file) return false;
+            return true;
+          }),
+        ),
+      );
+    });
+    for (const target of deliveryMatches) {
+      affectedDelivery.set([target.sessionId, target.profile, target.language].join('/'), target);
+      reasons.add(
+        target.sourcePath === file
+          ? `authored delivery source changed: ${file}`
+          : `teaching or canonical source changed for delivery variant: ${file}`,
+      );
+    }
   }
 
   const affectedTargets = targets.filter((target) => affected.has(targetKey(target)));
+  const affectedDeliveryTargets = delivery.filter((target) =>
+    affectedDelivery.has([target.sessionId, target.profile, target.language].join('/')),
+  );
 
   return {
-    scope: affectedTargets.length > 0 ? 'targeted' : 'none',
+    scope: affectedTargets.length > 0 || affectedDeliveryTargets.length > 0 ? 'targeted' : 'none',
     targets: affectedTargets,
+    deliveryTargets: affectedDeliveryTargets,
     reasons: [...reasons].sort((left, right) => left.localeCompare(right)),
   };
 }

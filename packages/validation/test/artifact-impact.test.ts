@@ -74,7 +74,59 @@ test('unrelated and archived-course changes have no active artifact impact', () 
     'README.md',
     'courses/02-archived/en/01-archived.md',
   ]);
-  assert.deepEqual(report, { scope: 'none', targets: [], reasons: [] });
+  assert.deepEqual(report, { scope: 'none', targets: [], deliveryTargets: [], reasons: [] });
+});
+
+test('artifact impact selects registered delivery variants for source and canonical changes', () => {
+  const withDelivery = {
+    ...manifest,
+    teachingSessions: [
+      {
+        id: 's06',
+        slug: 'security-privacy-and-responsibility',
+        canonicalModuleIds: ['module_one'],
+        source: {
+          en: 'teaching/sessions/s06-security-privacy-and-responsibility/en/session.md',
+          fr: 'teaching/sessions/s06-security-privacy-and-responsibility/fr/session.md',
+        },
+        deliveryVariants: {
+          document: {
+            en: {
+              source:
+                'teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/en.md',
+              canonicalModuleIds: ['module_one'],
+            },
+            fr: {
+              source:
+                'teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/fr.md',
+              canonicalModuleIds: ['module_one'],
+            },
+          },
+        },
+      },
+    ],
+  } as unknown as Manifest;
+  const direct = analyzeArtifactImpact(withDelivery, [
+    'teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/en.md',
+  ]);
+  assert.deepEqual(
+    direct.deliveryTargets.map((target) => [target.sessionId, target.profile, target.language]),
+    [['s06', 'document', 'en']],
+  );
+
+  const canonical = analyzeArtifactImpact(withDelivery, ['courses/01-active/en/01-one.md']);
+  assert.deepEqual(
+    canonical.deliveryTargets.map((target) => [target.sessionId, target.profile, target.language]),
+    [['s06', 'document', 'en']],
+  );
+
+  const englishSessionSource = analyzeArtifactImpact(withDelivery, [
+    'teaching/sessions/s06-security-privacy-and-responsibility/en/session.md',
+  ]);
+  assert.deepEqual(
+    englishSessionSource.deliveryTargets.map((target) => target.language),
+    ['en'],
+  );
 });
 
 test('artifact impact selects only the changed canonical module language', () => {
@@ -182,4 +234,33 @@ test('planner selects every task for an unchanged working tree', () => {
     full.map((entry) => entry.task.id),
   );
   assert.ok(automatic.every((entry) => entry.reasons.includes('no working-tree changes detected')));
+});
+
+test('session-wide assets invalidate both languages of registered deliveries', () => {
+  const target = structuredClone(manifest);
+  const session: NonNullable<Manifest['teachingSessions']>[number] = {
+    id: 's01',
+    slug: 'test',
+    title: { en: 'Test', fr: 'Test' },
+    canonicalModuleIds: ['module_one'],
+    durationMinutes: 1,
+    slideCount: 1,
+    source: {
+      en: 'teaching/sessions/s01-test/en/session.md',
+      fr: 'teaching/sessions/s01-test/fr/session.md',
+    },
+  };
+  target.teachingSessions = [session];
+  session.deliveryVariants = {
+    reference: {
+      en: {
+        source: 'teaching/sessions/s01-test/deliveries/reference/en.md',
+        canonicalModuleIds: session.canonicalModuleIds,
+        editorialStatus: 'draft',
+        contentRelationship: 'adaptation',
+      },
+    },
+  };
+  const report = analyzeArtifactImpact(target, ['teaching/sessions/s01-test/shared.css']);
+  assert.equal(report.deliveryTargets.length, 1);
 });

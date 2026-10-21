@@ -1,4 +1,4 @@
-export type TeachingArtifactFormat = 'pdf' | 'pptx';
+export type TeachingArtifactFormat = 'pdf' | 'pptx' | 'txt';
 export type TeachingArtifactLanguage = 'en' | 'fr';
 
 export interface TeachingArtifactArguments {
@@ -19,7 +19,7 @@ export function parseTeachingArtifactArguments(args: readonly string[]): Teachin
     command !== 'animate'
   ) {
     throw new Error(
-      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=sNN] [--lang=en|fr] [--format=pdf|pptx]',
+      'Usage: pnpm teaching:artifact plan|build|verify|visual-qa|animate [--session=sNN] [--lang=en|fr] [--format=pdf|pptx|txt]',
     );
   }
 
@@ -38,11 +38,22 @@ export function parseTeachingArtifactArguments(args: readonly string[]): Teachin
       result.session = value;
     } else if (key === '--lang' && !result.language && (value === 'en' || value === 'fr')) {
       result.language = value;
-    } else if (key === '--format' && !result.format && (value === 'pdf' || value === 'pptx')) {
+    } else if (
+      key === '--format' &&
+      !result.format &&
+      (value === 'pdf' || value === 'pptx' || value === 'txt')
+    ) {
       result.format = value;
     } else {
       throw new Error(`Unknown or duplicate teaching option: ${option}.`);
     }
+  }
+
+  if (command === 'visual-qa' && result.format === 'txt') {
+    throw new Error('Visual QA supports PDF or PPTX, not TXT.');
+  }
+  if (command === 'animate' && result.format && result.format !== 'pptx') {
+    throw new Error('Native animations currently support S01/S02/S03/S04/S05/S06/S07 PPTX only.');
   }
 
   return result;
