@@ -117,3 +117,28 @@ test('delivery variants require registered language sources and valid canonical 
     /has no document variant for en/,
   );
 });
+
+test('delivery provenance rejects duplicate or ambiguous canonical modules', () => {
+  invalid((m) => {
+    const ids = m.teachingSessions[5].deliveryVariants.document.en.canonicalModuleIds;
+    ids.push(ids[0]);
+  }, /Duplicate canonical module/);
+  const manifest = ManifestSchema.parse(source);
+  const session = manifest.teachingSessions![5]!;
+  assert.throws(
+    () => resolveDeliveryVariant({ ...manifest, courses: [] }, session, 'document', 'en'),
+    /resolved 0 times/,
+  );
+  assert.throws(
+    () =>
+      resolveDeliveryVariant(
+        { ...manifest, courses: [...manifest.courses, ...manifest.courses] },
+        session,
+        'document',
+        'en',
+      ),
+    /resolved 2 times/,
+  );
+  delete session.deliveryVariants!.reference!.fr;
+  assert.equal(ManifestSchema.safeParse(manifest).success, true);
+});

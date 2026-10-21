@@ -73,3 +73,14 @@ test('rejects duplicate selectors', () => {
     /Unknown or duplicate teaching option/,
   );
 });
+
+test('text output cannot be animated or visually inspected as slides', () => {
+  assert.throws(
+    () => parseTeachingArtifactArguments(['visual-qa', '--format=txt']),
+    /Visual QA supports/,
+  );
+  assert.throws(
+    () => parseTeachingArtifactArguments(['animate', '--format=txt']),
+    /Native animations/,
+  );
+});

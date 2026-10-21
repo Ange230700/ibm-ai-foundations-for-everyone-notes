@@ -136,7 +136,9 @@ Each generated artifact record identifies the teaching target, language, editori
 format, maintained source path and SHA-256, canonical module IDs and source hashes, renderer
 identity, and generated output path and SHA-256. PDF rendering also records its stylesheet, HTML,
 browser, renderer, page count, and semantic identity. The narration production manifest is separate
-from spoken text.
+from spoken text. Verification also reconstructs the expected ordered narration chunks, checks
+their paths, hashes, counts, pronunciation notes and duration settings, and reads each chunk file
+to reject missing or modified speech text.
 
 `verify` compares the maintained source and canonical source hashes with the recorded artifact. A
 changed canonical source marks the variant as needing editorial review. Rebuilding is blocked until
@@ -154,3 +156,21 @@ quality. The registered pilot sources are marked `draft` pending that review.
 
 All generated files are written below ignored `.artifacts/` paths. Authored Markdown, source
 registration, and documentation remain in Git.
+
+## S06 editorial review — 21 October 2026
+
+The EN/FR document, reference and narration sources were reviewed against the maintained S06
+presentation and canonical Course 01, Module 04. The review checked the CP-A date and times,
+SB-601 weight, SB-602 missing field, movement-only status of Area A, exclusion of Source D,
+reviewer and operations-lead responsibilities, unknowns, and separation of fictional rules from
+IBM concepts. No restricted example details were copied into these six variants.
+
+The French narration now spells the lot-number zero as « zéro ». Both spoken scripts preserve
+the same facts and qualifications while using natural language-specific phrasing. Narration is a
+short standalone recap, not a verbatim transcript or a sixty-minute recording of the session.
+
+This is a source-text review by the coding assistant. Registrations remain `draft` for the author's
+final editorial decision. No ElevenLabs audio was generated or listened to; pronunciation and
+voice delivery still need a short listening check with the chosen voice and model. The PDF visual
+review recorded for the initial pilot applies to the unchanged document sources; this follow-up
+does not claim a new browser render in an environment without Chromium.

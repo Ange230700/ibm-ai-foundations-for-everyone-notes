@@ -217,17 +217,15 @@ async function animateSession(
   content: TeachingSessionContent,
   root: string,
   outputRoot: string,
-  format: Format | undefined,
 ): Promise<void> {
   if (
-    (session.id !== 's01' &&
-      session.id !== 's02' &&
-      session.id !== 's03' &&
-      session.id !== 's04' &&
-      session.id !== 's05' &&
-      session.id !== 's06' &&
-      session.id !== 's07') ||
-    (format && format !== 'pptx')
+    session.id !== 's01' &&
+    session.id !== 's02' &&
+    session.id !== 's03' &&
+    session.id !== 's04' &&
+    session.id !== 's05' &&
+    session.id !== 's06' &&
+    session.id !== 's07'
   ) {
     throw new Error('Native animations currently support S01/S02/S03/S04/S05/S06/S07 PPTX only.');
   }
@@ -435,8 +433,7 @@ async function processFormat(
   outputRoot: string,
 ) {
   if (args.command === 'visual-qa') {
-    if (format === 'txt') throw new Error('Visual QA supports PDF or PPTX, not TXT.');
-    await createVisualQa(format, session, language, content, root, outputRoot);
+    await createVisualQa(format as 'pdf' | 'pptx', session, language, content, root, outputRoot);
     return;
   }
   if (format === 'txt') {
@@ -513,7 +510,7 @@ async function processLanguage(
 ): Promise<void> {
   const outputRoot = resolve(root, '.artifacts', 'teaching-sessions', session.id, language);
   if (args.command === 'animate') {
-    await animateSession(session, language, content, root, outputRoot, args.format);
+    await animateSession(session, language, content, root, outputRoot);
     return;
   }
   const formats = (args.format ? [args.format] : ['pdf', 'pptx']) as Format[];

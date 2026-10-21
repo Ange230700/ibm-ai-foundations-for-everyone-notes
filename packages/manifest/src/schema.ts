@@ -302,16 +302,34 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
           message: `Unknown canonical module ${moduleId}.`,
         });
       }
+    });
 
-      for (const profile of ['document', 'reference', 'narration'] as const) {
-        const variants = session.deliveryVariants?.[profile];
-        if (!variants) continue;
+    for (const profile of ['document', 'reference', 'narration'] as const) {
+      const variants = session.deliveryVariants?.[profile];
+      if (!variants) continue;
 
-        for (const language of ['en', 'fr'] as const) {
-          const variant = variants[language];
-          if (!variant) continue;
+      for (const language of ['en', 'fr'] as const) {
+        const variant = variants[language];
+        if (!variant) continue;
 
-          if (profile === 'narration' && !variant.production) {
+        if (profile === 'narration' && !variant.production) {
+          issues.push({
+            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'production'],
+            message: `Teaching session ${session.id}/${profile}/${language} requires production metadata.`,
+          });
+        }
+
+        const expectedSource = deliveryVariantSourcePath(session, profile, language);
+        if (variant.source !== expectedSource) {
+          issues.push({
+            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'source'],
+            message: `Teaching session ${session.id} ${profile} ${language} source must be ${expectedSource}.`,
+          });
+        }
+
+        const variantModuleIds = new Set<string>();
+        variant.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
+          if (variantModuleIds.has(moduleId)) {
             issues.push({
               path: [
                 'teachingSessions',
@@ -319,56 +337,31 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
                 'deliveryVariants',
                 profile,
                 language,
-                'production',
+                'canonicalModuleIds',
+                moduleIndex,
               ],
-              message: `Teaching session ${session.id}/${profile}/${language} requires production metadata.`,
+              message: `Duplicate canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
             });
           }
+          variantModuleIds.add(moduleId);
 
-          const expectedSource = deliveryVariantSourcePath(session, profile, language);
-          if (variant.source !== expectedSource) {
+          if (!canonicalModuleIds.has(moduleId)) {
             issues.push({
-              path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'source'],
-              message: `Teaching session ${session.id} ${profile} ${language} source must be ${expectedSource}.`,
+              path: [
+                'teachingSessions',
+                index,
+                'deliveryVariants',
+                profile,
+                language,
+                'canonicalModuleIds',
+                moduleIndex,
+              ],
+              message: `Unknown canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
             });
           }
-
-          const variantModuleIds = new Set<string>();
-          variant.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
-            if (variantModuleIds.has(moduleId)) {
-              issues.push({
-                path: [
-                  'teachingSessions',
-                  index,
-                  'deliveryVariants',
-                  profile,
-                  language,
-                  'canonicalModuleIds',
-                  moduleIndex,
-                ],
-                message: `Duplicate canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
-              });
-            }
-            variantModuleIds.add(moduleId);
-
-            if (!canonicalModuleIds.has(moduleId)) {
-              issues.push({
-                path: [
-                  'teachingSessions',
-                  index,
-                  'deliveryVariants',
-                  profile,
-                  language,
-                  'canonicalModuleIds',
-                  moduleIndex,
-                ],
-                message: `Unknown canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
-              });
-            }
-          });
-        }
+        });
       }
-    });
+    }
   });
 
   for (const issue of issues) {

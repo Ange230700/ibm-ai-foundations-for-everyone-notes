@@ -4,9 +4,9 @@ Gardons ces questions séparées. Vérifier une source n’autorise pas à en pa
 
 L’exemple suivant est une activité pédagogique fictive, pas un dossier réel de coopérative. La source A indique que la réception au point C P A a été interrompue à neuf heures dix le dix-huit octobre deux mille vingt-six, puis a repris à neuf heures quarante. Elle ne précise pas la raison. Il faut conserver cette inconnue et ne pas inventer une cause.
 
-La source B indique cinq cent quarante kilogrammes pour le lot S B six oh un. Elle signale que le poids de S B six oh deux manque et doit être vérifié par un agent. Elle ne dit pas qui est à l’origine du champ manquant. Une valeur absente justifie une vérification, pas une accusation.
+La source B indique cinq cent quarante kilogrammes pour le lot S B six zéro un. Elle signale que le poids de S B six zéro deux manque et doit être vérifié par un agent. Elle ne dit pas qui est à l’origine du champ manquant. Une valeur absente justifie une vérification, pas une accusation.
 
-La source C consigne un mouvement de S B six oh un à douze heures quinze, vers la Zone A. La source n’approuve pas le lot, ne certifie pas sa qualité, n’autorise pas son stockage et ne prend aucune décision de paiement. Une destination n’est pas une approbation.
+La source C consigne un mouvement de S B six zéro un à douze heures quinze, vers la Zone A. La source n’approuve pas le lot, ne certifie pas sa qualité, n’autorise pas son stockage et ne prend aucune décision de paiement. Une destination n’est pas une approbation.
 
 Examinons maintenant les trois contrôles. D’abord, comparer chaque affirmation importante aux sources autorisées et en conserver les limites. Ensuite, n’utiliser que les informations permises pour la tâche et l’outil concernés. Dans cet exercice, la pièce jointe restreinte est entièrement exclue. Remplacer un nom ne rend pas les autres détails sûrs ou autorisés.
 

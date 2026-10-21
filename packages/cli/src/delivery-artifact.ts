@@ -143,9 +143,6 @@ async function resolveTargets(
   args: DeliveryArtifactArguments,
   root: string,
 ): Promise<DeliveryTarget[]> {
-  if (!args.profile) {
-    throw new Error('Select an editorial profile explicitly with --profile.');
-  }
   const manifest = await readManifest();
   const sessions = manifest.teachingSessions ?? [];
   const selectedSessions = args.session
@@ -161,7 +158,7 @@ async function resolveTargets(
     for (const language of languages) {
       let resolved;
       try {
-        resolved = resolveDeliveryVariant(manifest, session, args.profile, language);
+        resolved = resolveDeliveryVariant(manifest, session, args.profile!, language);
       } catch (error) {
         if (args.session) throw error;
         continue;
@@ -169,15 +166,13 @@ async function resolveTargets(
       const canonicalSources = await canonicalSourceRecords(root, resolved.canonicalModules);
       const formats = args.format
         ? [args.format]
-        : args.command === 'plan'
-          ? supportedDeliveryFormats(PROFILE_LABELS[args.profile])
-          : [];
+        : supportedDeliveryFormats(PROFILE_LABELS[args.profile!]);
       for (const format of formats) {
-        assertDeliveryCombination(PROFILE_LABELS[args.profile], format);
+        assertDeliveryCombination(PROFILE_LABELS[args.profile!], format);
         targets.push({
           session,
           language,
-          profile: args.profile,
+          profile: args.profile!,
           format,
           sourcePath: resolved.sourcePath,
           canonicalSources,
@@ -189,11 +184,6 @@ async function resolveTargets(
     }
   }
 
-  if (args.session && targets.length === 0) {
-    throw new Error(
-      `Teaching session ${args.session} has no ${args.profile} variant${args.language ? ` for ${args.language}` : ''}.`,
-    );
-  }
   if (!args.session && targets.length === 0) {
     console.log(`No registered ${args.profile} variants are available.`);
   }
@@ -477,7 +467,21 @@ async function verifyTarget(target: DeliveryTarget, root: string): Promise<void>
     if (target.profile === 'narration') {
       const production = JSON.parse(
         await readFile(productionManifestPath(target, root), 'utf8'),
-      ) as { sourceSha256: string; canonicalSources: CanonicalSourceRecord[] };
+      ) as {
+        sourceSha256: string;
+        canonicalSources: CanonicalSourceRecord[];
+        workflow: { maximumCharactersPerChunk: number };
+        chunks: Array<{
+          id: string;
+          sequence: number;
+          path: string;
+          sha256: string;
+          characters: number;
+          words: number;
+        }>;
+        pronunciationNotes: string[];
+        durationEstimate: ReturnType<typeof estimateNarrationDuration>;
+      };
       if (
         production.sourceSha256 !== sourceDigest ||
         canonicalJson(production.canonicalSources) !== canonicalJson(target.canonicalSources)
@@ -485,6 +489,49 @@ async function verifyTarget(target: DeliveryTarget, root: string): Promise<void>
         throw new Error(
           `Stale narration production manifest for ${target.session.id}/${target.language}.`,
         );
+      }
+      const limit = production.workflow.maximumCharactersPerChunk;
+      if (!Number.isSafeInteger(limit) || limit < 1 || limit > 2400 || !target.production) {
+        throw new Error(
+          `Invalid narration production configuration for ${target.session.id}/${target.language}.`,
+        );
+      }
+      const expectedChunks = buildNarrationChunks(
+        target.session.id,
+        target.language,
+        expectedText,
+        limit,
+      );
+      const chunkDirectory = resolve(outputRoot(root, target), 'chunks', sourceDigest.slice(0, 12));
+      const expectedRecords = expectedChunks.map((chunk) => ({
+        id: chunk.id,
+        sequence: chunk.sequence,
+        sha256: chunk.sha256,
+        characters: chunk.characters,
+        words: chunk.words,
+        path: repositoryRelativePath(
+          root,
+          resolve(chunkDirectory, `${String(chunk.sequence).padStart(3, '0')}-${chunk.id}.txt`),
+        ),
+      }));
+      if (
+        canonicalJson(production.chunks) !== canonicalJson(expectedRecords) ||
+        canonicalJson(production.pronunciationNotes) !==
+          canonicalJson(target.production.pronunciationNotes) ||
+        canonicalJson(production.durationEstimate) !==
+          canonicalJson(
+            estimateNarrationDuration(expectedChunks, target.production.speakingRateWpm),
+          )
+      ) {
+        throw new Error(
+          `Stale narration chunk metadata for ${target.session.id}/${target.language}.`,
+        );
+      }
+      for (const chunk of expectedChunks) {
+        const path = expectedRecords[chunk.sequence - 1]!.path;
+        if ((await readFile(absolute(root, path), 'utf8')) !== chunk.text) {
+          throw new Error(`Narration chunk changed: ${path}.`);
+        }
       }
     }
   }
@@ -575,9 +622,6 @@ async function main(): Promise<void> {
     throw new Error('Select an editorial profile explicitly with --profile.');
   }
   if (args.format) assertDeliveryCombination(args.profile, args.format);
-  if (args.profile !== 'narration' && args.chunkLimit !== undefined) {
-    throw new Error('--chunk-limit is only valid for the narration profile.');
-  }
   const root = repositoryRoot();
   const targets = await resolveTargets(args, root);
   for (const target of targets) {

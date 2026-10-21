@@ -72,3 +72,21 @@ test('rejects unsupported variants, formats, and workflow options', () => {
     /no greater than 2400/,
   );
 });
+
+test('delivery argument diagnostics cover malformed selectors without coercion', () => {
+  for (const [args, message] of [
+    [[], /Usage/],
+    [['other'], /Usage/],
+    [['plan', '--profile=document', '--profile=narration'], /Duplicate/],
+    [['plan', '--unknown=x'], /Unknown or malformed/],
+    [['plan', '--lang'], /Unknown or malformed/],
+    [['plan', '--session=6'], /Invalid session/],
+    [['plan', '--lang=de'], /Unsupported language/],
+    [['plan', '--profile=slides'], /Unsupported editorial/],
+    [['plan', '--format=html'], /Unsupported output/],
+    [['plan', '--profile=narration', '--chunk-limit=0'], /positive whole/],
+    [['plan', '--profile=narration', '--chunk-limit=abc'], /positive whole/],
+  ] as const)
+    assert.throws(() => parseDeliveryArtifactArguments(args), message);
+  assert.deepEqual(parseDeliveryArtifactArguments(['plan']), { command: 'plan' });
+});

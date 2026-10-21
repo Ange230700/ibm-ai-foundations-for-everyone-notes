@@ -67,7 +67,7 @@ export function validateDeliveryMarkdown(profile: EditorialProfile, markdown: st
     });
     errors.push(...validatePlainText(Buffer.from(text, 'utf8')));
   } catch (error) {
-    return [error instanceof Error ? error.message : String(error)];
+    return [String(error)];
   }
 
   const headings = root.children.filter((node) => node.type === 'heading');
@@ -130,8 +130,6 @@ export function renderDeliveryText(
     documentTableText: true,
     language,
   });
-  const validationErrors = validatePlainText(Buffer.from(text, 'utf8'));
-  if (validationErrors.length) throw new Error(validationErrors.join('\n'));
   return text;
 }
 

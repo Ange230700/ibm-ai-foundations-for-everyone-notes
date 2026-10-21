@@ -235,3 +235,32 @@ test('planner selects every task for an unchanged working tree', () => {
   );
   assert.ok(automatic.every((entry) => entry.reasons.includes('no working-tree changes detected')));
 });
+
+test('session-wide assets invalidate both languages of registered deliveries', () => {
+  const target = structuredClone(manifest);
+  const session: NonNullable<Manifest['teachingSessions']>[number] = {
+    id: 's01',
+    slug: 'test',
+    title: { en: 'Test', fr: 'Test' },
+    canonicalModuleIds: ['module_one'],
+    durationMinutes: 1,
+    slideCount: 1,
+    source: {
+      en: 'teaching/sessions/s01-test/en/session.md',
+      fr: 'teaching/sessions/s01-test/fr/session.md',
+    },
+  };
+  target.teachingSessions = [session];
+  session.deliveryVariants = {
+    reference: {
+      en: {
+        source: 'teaching/sessions/s01-test/deliveries/reference/en.md',
+        canonicalModuleIds: session.canonicalModuleIds,
+        editorialStatus: 'draft',
+        contentRelationship: 'adaptation',
+      },
+    },
+  };
+  const report = analyzeArtifactImpact(target, ['teaching/sessions/s01-test/shared.css']);
+  assert.equal(report.deliveryTargets.length, 1);
+});
