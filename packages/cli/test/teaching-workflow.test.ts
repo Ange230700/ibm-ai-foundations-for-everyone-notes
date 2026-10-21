@@ -7,6 +7,7 @@ import { PassThrough } from 'node:stream';
 import test from 'node:test';
 
 import * as core from '@coursera-notes/core';
+import * as artifactsApi from '@coursera-notes/artifacts';
 import * as manifestApi from '@coursera-notes/manifest';
 import * as presentationApi from '@coursera-notes/presentations';
 import type { TeachingSessionContent } from '@coursera-notes/presentations';
@@ -24,6 +25,7 @@ test('teaching CLI builds, independently verifies and animates only current arti
   let corruptedField = '';
   let checksumMismatch = '';
   let sourceRace = false;
+  let invalidText = false;
   let animationExit: number | null = 0;
   let animationError = false;
   let animationStdout: string | undefined = 'ANIMATION_OUTPUT_FILE=session-animated.pptx\n';
@@ -32,6 +34,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
   const originalArgv = process.argv;
 
   const expectedPptx = async (spec: ReturnType<typeof presentationApi.teachingDeckSpec>) => ({
+    editorialProfile: 'presentation',
+    outputFormat: 'pptx',
     pptxSha256: 'pptx-hash',
     sourceSha256: spec.sourceSha256,
     moduleContentSha256: spec.moduleContentSha256,
@@ -49,6 +53,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
     slideCount: spec.slides.length,
   });
   const expectedPdf = async (content: TeachingSessionContent) => ({
+    editorialProfile: 'presentation',
+    outputFormat: 'pdf',
     pdfSha256: 'pdf-hash',
     sourceSha256: content.sourceSha256,
     contentSha256: content.contentSha256,
@@ -56,6 +62,13 @@ test('teaching CLI builds, independently verifies and animates only current arti
       await fs.readFile(resolve(root, 'packages/presentations/assets/brand/kraak/kraak-logo.png')),
     ),
     htmlSha256: core.sha256('projected html'),
+  });
+  t.mock.module('@coursera-notes/artifacts', {
+    namedExports: {
+      ...artifactsApi,
+      validatePlainText: (bytes: Buffer) =>
+        invalidText ? ['Invalid text export'] : artifactsApi.validatePlainText(bytes),
+    },
   });
   t.mock.module('@coursera-notes/core', {
     namedExports: {
@@ -72,6 +85,16 @@ test('teaching CLI builds, independently verifies and animates only current arti
     namedExports: {
       ...fs,
       readFile: async (path: string, encoding?: BufferEncoding) => {
+        if (
+          writes.has(path) &&
+          (path.endsWith('session.txt') || path.endsWith('txt-artifact.json'))
+        ) {
+          const value = writes.get(path)!;
+          return encoding ? value : Buffer.from(value);
+        }
+        const unsupportedSession = path.includes('/s08-');
+        if (unsupportedSession) path = path.replace('/s08-', '/s07-');
+
         if (path.endsWith('pdf-artifact.json') || path.endsWith('pptx-artifact.json')) {
           const match = path.replaceAll('\\', '/').match(/teaching-sessions\/(s\d{2})\/(en|fr)/)!;
           const content = contents.get(`${match[1]}/${match[2]}`)!;
@@ -86,7 +109,10 @@ test('teaching CLI builds, independently verifies and animates only current arti
         sourceReads.set(path, reads);
         if (sourceRace && path.replaceAll('\\', '/').endsWith('/en/session.md') && reads > 1)
           return 'changed source';
-        return fs.readFile(path, encoding);
+        const value = await fs.readFile(path, encoding);
+        return unsupportedSession && typeof value === 'string'
+          ? value.replaceAll('S07', 'S08')
+          : value;
       },
     },
   });
@@ -152,6 +178,7 @@ test('teaching CLI builds, independently verifies and animates only current arti
     corruptedField = '';
     checksumMismatch = '';
     sourceRace = false;
+    invalidText = false;
     animationExit = 0;
     animationError = false;
     animationStdout = 'ANIMATION_OUTPUT_FILE=session-animated.pptx\n';
@@ -165,6 +192,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
     await import(`../src/teaching-artifact.js?workflow=${sequence++}`);
   };
   try {
+    await run(['plan', '--session=s06', '--lang=en', '--format=txt']);
+    assert.match(output.at(-1)!, /presentation\/en.*formats=txt/);
     await t.test(
       'build and verify support both projected formats and bilingual defaults',
       async () => {
@@ -180,10 +209,29 @@ test('teaching CLI builds, independently verifies and animates only current arti
       'each stale provenance field is rejected before accepting an artifact',
       async () => {
         for (const [format, fields] of [
-          ['pdf', ['pdfSha256', 'sourceSha256', 'contentSha256', 'brandLogoSha256', 'htmlSha256']],
+          [
+            'pdf',
+            [
+              'editorialProfile',
+              'outputFormat',
+              'pdfSha256',
+              'sourceSha256',
+              'contentSha256',
+              'brandLogoSha256',
+              'htmlSha256',
+            ],
+          ],
           [
             'pptx',
-            ['pptxSha256', 'sourceSha256', 'moduleContentSha256', 'deckSpecSha256', 'visualAssets'],
+            [
+              'editorialProfile',
+              'outputFormat',
+              'pptxSha256',
+              'sourceSha256',
+              'moduleContentSha256',
+              'deckSpecSha256',
+              'visualAssets',
+            ],
           ],
         ] as const) {
           for (const field of fields) {
@@ -228,6 +276,50 @@ test('teaching CLI builds, independently verifies and animates only current arti
         await assert.rejects(
           run(['visual-qa', '--session=s01', '--lang=en', '--format=pdf']),
           /visual-QA checksum mismatch/,
+        );
+      },
+    );
+    await t.test(
+      'presentation text exports preserve wording and reject every stale identity',
+      async () => {
+        reset();
+        await run(['build', '--session=s06', '--lang=en', '--format=txt']);
+        await run(['verify', '--session=s06', '--lang=en', '--format=txt']);
+        const recordPath = [...writes.keys()].find((path) => path.endsWith('txt-artifact.json'))!;
+        const textPath = [...writes.keys()].find((path) => path.endsWith('session.txt'))!;
+        const record = writes.get(recordPath)!;
+        for (const field of ['editorialProfile', 'outputFormat', 'sourceSha256', 'outputSha256']) {
+          writes.set(recordPath, JSON.stringify({ ...JSON.parse(record), [field]: 'stale' }));
+          await assert.rejects(
+            run(['verify', '--session=s06', '--lang=en', '--format=txt']),
+            /Stale teaching TXT/,
+          );
+        }
+        writes.set(recordPath, record);
+        const different = 'Changed output';
+        writes.set(textPath, different);
+        writes.set(
+          recordPath,
+          JSON.stringify({ ...JSON.parse(record), outputSha256: core.sha256(different) }),
+        );
+        await assert.rejects(
+          run(['verify', '--session=s06', '--lang=en', '--format=txt']),
+          /Stale teaching TXT/,
+        );
+        invalidText = true;
+        await assert.rejects(
+          run(['build', '--session=s06', '--lang=en', '--format=txt']),
+          /Invalid text export/,
+        );
+        reset();
+        const next = structuredClone(manifest.teachingSessions![6]!);
+        next.id = 's08';
+        next.source.en = next.source.en.replace('/s07-', '/s08-');
+        next.source.fr = next.source.fr.replace('/s07-', '/s08-');
+        manifest.teachingSessions!.push(next);
+        await assert.rejects(
+          run(['animate', '--session=s08', '--lang=en']),
+          /Native animations currently/,
         );
       },
     );

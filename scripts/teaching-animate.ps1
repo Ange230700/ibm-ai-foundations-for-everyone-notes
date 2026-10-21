@@ -212,20 +212,23 @@ function Publish-Presentation([string] $TemporaryPath, [string] $OutputPath, [st
   return $reviewPath
 }
 
+function Get-SlideEffectCount($Entry) {
+  if ($Entry.kind -eq 'cover') { return 2 }
+  if ($Entry.kind -ne 'rows') { return 1 }
+  $effects = 0
+  $start = if ($Entry.rows.Count -eq 1) { 0 } else { 1 }
+  for ($i = $start; $i -lt $Entry.rows.Count; $i++) {
+    $effects += if ($Entry.rows[$i].label -ne '') { 3 } else { 1 }
+  }
+  return $effects
+}
+
 function Get-AnimationStatistics($Plan) {
   $clicks = 0
   $effects = 0
   foreach ($entry in $Plan.slides) {
-    $count = if ($entry.kind -eq 'rows') { [Math]::Max(1, $entry.rows.Count - 1) } else { 1 }
-    $clicks += $count
-    if ($entry.kind -eq 'rows') {
-      $start = if ($entry.rows.Count -eq 1) { 0 } else { 1 }
-      for ($i = $start; $i -lt $entry.rows.Count; $i++) {
-        $effects += if ($entry.rows[$i].label -ne '') { 3 } else { 1 }
-      }
-    } else {
-      $effects += if ($entry.kind -eq 'cover') { 2 } else { 1 }
-    }
+    $clicks += if ($entry.kind -eq 'rows') { [Math]::Max(1, $entry.rows.Count - 1) } else { 1 }
+    $effects += Get-SlideEffectCount $entry
   }
   return @{ Clicks = $clicks; Effects = $effects }
 }

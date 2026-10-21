@@ -314,6 +314,390 @@
             "minItems": 1,
             "type": "array"
           },
+          "deliveryVariants": {
+            "additionalProperties": false,
+            "properties": {
+              "document": {
+                "additionalProperties": false,
+                "properties": {
+                  "en": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  },
+                  "fr": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "narration": {
+                "additionalProperties": false,
+                "properties": {
+                  "en": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  },
+                  "fr": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "en": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  },
+                  "fr": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "canonicalModuleIds": {
+                        "items": {
+                          "pattern": "^module_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "type": "array"
+                      },
+                      "contentRelationship": {
+                        "enum": [
+                          "adaptation",
+                          "translation"
+                        ],
+                        "type": "string"
+                      },
+                      "editorialStatus": {
+                        "enum": [
+                          "draft",
+                          "reviewed"
+                        ],
+                        "type": "string"
+                      },
+                      "production": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "pronunciationNotes": {
+                            "items": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "speakingRateWpm": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "speakingRateWpm",
+                          "pronunciationNotes"
+                        ],
+                        "type": "object"
+                      },
+                      "source": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "contentRelationship",
+                      "editorialStatus",
+                      "canonicalModuleIds"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
           "durationMinutes": {
             "exclusiveMinimum": 0,
             "maximum": 9007199254740991,
