@@ -6,7 +6,7 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "@coursera-notes/core": "workspace:*",
-    "zod": "4.6.5"
+    "zod": "4.6.7"
   },
   "scripts": {
     "test": "node --import tsx --experimental-test-module-mocks --test test/*.test.ts"

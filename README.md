@@ -48,6 +48,12 @@ V1 provides the complete local authoring and derivative-artifact pipeline:
 
 The remaining V1 hardening work is tracked in `docs/roadmap.md`. Repository lifecycle automation, GitHub Release publication, TTS, AI-assisted translation QA, and template upgrades are post-V1 capabilities.
 
+## Contribution workflow
+
+Changes use feature branches and pull requests. See [Contributing](CONTRIBUTING.md)
+and [repository quality setup](docs/repository-quality.md) for checks, Sonar and
+main-branch protection.
+
 ## Bootstrap
 
 Create a repository from this template, then run:
