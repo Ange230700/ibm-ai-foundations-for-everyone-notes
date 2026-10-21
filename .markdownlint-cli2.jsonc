@@ -5,4 +5,11 @@
     "MD024": { "siblings_only": true },
   },
   "globs": ["**/*.md", "!**/node_modules/**", "!**/.artifacts/**"],
+  "overrides": [
+    {
+      "filter": ["teaching/sessions/*/deliveries/narration/*.md"],
+      "config": { "MD041": false },
+      "combine": "merge",
+    },
+  ],
 }

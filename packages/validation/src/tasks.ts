@@ -2,9 +2,11 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { basename, dirname, relative, resolve } from 'node:path';
 
 import { canonicalJson, fromRoot, padOrdinal } from '@coursera-notes/core';
+import { renderDeliveryText, validateDeliveryMarkdown } from '@coursera-notes/artifacts';
 import {
   manifestJsonSchema,
   readManifest,
+  resolveDeliveryVariant,
   resolveTeachingSessionSources,
   teachingSessionSourcePath,
 } from '@coursera-notes/manifest';
@@ -15,6 +17,37 @@ import { analyzeArtifactImpact } from './artifact-impact.js';
 export interface TaskResult {
   ok: boolean;
   messages: string[];
+}
+
+async function teachingDeliveryVariants(): Promise<TaskResult> {
+  try {
+    const manifest = await readManifest();
+    let checked = 0;
+    for (const session of manifest.teachingSessions ?? []) {
+      for (const profile of ['document', 'reference', 'narration'] as const) {
+        for (const language of ['en', 'fr'] as const) {
+          if (!session.deliveryVariants?.[profile]?.[language]) continue;
+          const variant = resolveDeliveryVariant(manifest, session, profile, language);
+          const path = fromRoot(variant.sourcePath);
+          const markdown = await readFile(path, 'utf8');
+          const errors = validateDeliveryMarkdown(profile, markdown);
+          if (errors.length) {
+            throw new Error(`${variant.sourcePath}:\n${errors.join('\n')}`);
+          }
+          renderDeliveryText(markdown, profile, language);
+          checked += 1;
+        }
+      }
+    }
+    return {
+      ok: true,
+      messages: [
+        `Authored delivery variants valid: ${checked} registered profile-language source(s).`,
+      ],
+    };
+  } catch (error) {
+    return { ok: false, messages: [error instanceof Error ? error.message : String(error)] };
+  }
 }
 
 export interface ValidationContext {
@@ -253,7 +286,7 @@ async function artifactImpact(context: ValidationContext): Promise<TaskResult> {
 
     const report = analyzeArtifactImpact(manifest, context.changedFiles, context.full);
 
-    if (report.targets.length === 0) {
+    if (report.targets.length === 0 && report.deliveryTargets.length === 0) {
       return {
         ok: true,
         messages: [
@@ -264,9 +297,14 @@ async function artifactImpact(context: ValidationContext): Promise<TaskResult> {
       };
     }
 
-    const labels = report.targets.map((target) =>
-      [target.courseId, target.moduleId, target.language].join('/'),
-    );
+    const labels = [
+      ...report.targets.map((target) =>
+        [target.courseId, target.moduleId, target.language].join('/'),
+      ),
+      ...report.deliveryTargets.map((target) =>
+        [target.sessionId, target.profile, target.language].join('/'),
+      ),
+    ];
 
     const previewLimit = 12;
 
@@ -281,8 +319,8 @@ async function artifactImpact(context: ValidationContext): Promise<TaskResult> {
       messages: [
         [
           'Artifact impact:',
-          `${report.targets.length} active module-language target(s)`,
-          'across PDF/PPTX derivatives;',
+          `${report.targets.length} active module-language target(s) and ${report.deliveryTargets.length} authored delivery target(s)`,
+          'across registered derivatives;',
           'verification and visual-QA evidence may also need refresh.',
         ].join(' '),
         `Targets: ${targetMessage}`,
@@ -337,6 +375,18 @@ export const TASKS: ValidationTask[] = [
     execute: teachingSessions,
   },
   {
+    id: 'teaching.delivery-variants',
+    description: 'Validate registered authored delivery profiles and language-specific sources.',
+    inputs: [
+      'manifest.json',
+      'teaching/**',
+      'packages/artifacts/src/**',
+      'packages/cli/src/delivery-artifact.ts',
+    ],
+    dependencies: ['manifest.validate'],
+    execute: teachingDeliveryVariants,
+  },
+  {
     id: 'artifacts.impact',
     description:
       'Report derivative artifact targets affected by canonical or artifact-engine changes.',
@@ -359,6 +409,10 @@ export const TASKS: ValidationTask[] = [
       'packages/cli/src/artifact-pptx.ts',
       'packages/cli/src/artifact-verify.ts',
       'packages/cli/src/artifact-visual-qa.ts',
+      'packages/cli/src/delivery-artifact.ts',
+      'packages/cli/src/delivery-artifact-arguments.ts',
+      'packages/artifacts/src/**',
+      'packages/artifacts/package.json',
       'packages/cli/package.json',
 
       'pnpm-lock.yaml',

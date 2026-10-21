@@ -392,6 +392,76 @@
       "canonicalModuleIds": [
         "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
       ],
+      "deliveryVariants": {
+        "document": {
+          "en": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/en.md"
+          },
+          "fr": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/document/fr.md"
+          }
+        },
+        "narration": {
+          "en": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "production": {
+              "pronunciationNotes": [
+                "Speak C P A as the letters C, P, A.",
+                "Read S B lot identifiers with the letters and digits spoken separately."
+              ],
+              "speakingRateWpm": 145
+            },
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/narration/en.md"
+          },
+          "fr": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "production": {
+              "pronunciationNotes": [
+                "Prononcer C P A comme les lettres C, P, A.",
+                "Lire les identifiants de lot S B en prononçant séparément les lettres et les chiffres."
+              ],
+              "speakingRateWpm": 130
+            },
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/narration/fr.md"
+          }
+        },
+        "reference": {
+          "en": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/reference/en.md"
+          },
+          "fr": {
+            "canonicalModuleIds": [
+              "module_f7aacfe3-c4f7-43f8-a08b-3aa7b461151c"
+            ],
+            "contentRelationship": "adaptation",
+            "editorialStatus": "draft",
+            "source": "teaching/sessions/s06-security-privacy-and-responsibility/deliveries/reference/fr.md"
+          }
+        }
+      },
       "durationMinutes": 60,
       "id": "s06",
       "slideCount": 25,

@@ -14,6 +14,7 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
   let failure: unknown;
   let missing = false;
   let drift = false;
+  let badDelivery = false;
   let directories: string[] = [];
   t.mock.module('@coursera-notes/manifest', {
     namedExports: {
@@ -36,6 +37,7 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
       ],
       readFile: async (path: string, encoding?: BufferEncoding) => {
         if (missing) throw new Error('file missing');
+        if (badDelivery && path.includes('/deliveries/')) return '# Incomplete';
         if (path.endsWith('manifest.schema.json'))
           return drift ? '{}' : canonicalJson(manifestApi.manifestJsonSchema());
         if (path.endsWith('manifest.json')) return drift ? '{}' : canonicalJson(manifest);
@@ -62,11 +64,15 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
     'manifest.validate',
     'manifest.format',
     'teaching.sessions',
+    'teaching.delivery-variants',
     'courses.structure',
     'design-system.validate',
     'repository.structure',
   ])
     assert.equal((await run(id)).ok, true, id);
+  badDelivery = true;
+  assert.equal((await run('teaching.delivery-variants')).ok, false);
+  badDelivery = false;
   drift = true;
   for (const id of ['manifest.schema.sync', 'manifest.format'])
     assert.equal((await run(id)).ok, false, id);
@@ -78,6 +84,10 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
     'repository.structure',
   ])
     assert.equal((await run(id)).ok, false, id);
+  reset();
+  manifest.courses = [];
+  manifest.teachingSessions = [];
+  assert.equal((await run('artifacts.impact', [], true)).ok, true);
   reset();
   directories = ['unexpected'];
   manifest.courses[0]!.modules[0]!.source.en = 'elsewhere/bad.md';
@@ -92,6 +102,7 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
   reset();
   delete manifest.teachingSessions;
   assert.match((await run('teaching.sessions')).messages[0]!, /0 bilingual/);
+  assert.match((await run('teaching.delivery-variants')).messages[0]!, /0 registered/);
   reset();
   manifest.teachingSessions![0]!.source.en = 'invalid.md';
   assert.equal((await run('teaching.sessions')).ok, false);
@@ -101,6 +112,7 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
       'manifest.validate',
       'manifest.format',
       'teaching.sessions',
+      'teaching.delivery-variants',
       'artifacts.impact',
     ]) {
       const result = await run(id);
@@ -151,7 +163,10 @@ test('artifact impact handles course-wide dependencies, absent targets and every
     [[], true],
     [['manifest.json'], false],
   ] as const)
-    assert.equal(analyzeArtifactImpact({ ...manifest, courses: [] }, files, full).scope, 'none');
+    assert.equal(
+      analyzeArtifactImpact({ ...manifest, courses: [], teachingSessions: [] }, files, full).scope,
+      'none',
+    );
 });
 
 test('planner reads sorted Git paths on both platforms and rejects unknown dependencies', async (t) => {

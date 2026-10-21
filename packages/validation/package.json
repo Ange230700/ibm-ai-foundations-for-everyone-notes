@@ -8,6 +8,7 @@
     "test": "node --import tsx --experimental-test-module-mocks --test test/*.test.ts"
   },
   "dependencies": {
+    "@coursera-notes/artifacts": "workspace:*",
     "@coursera-notes/core": "workspace:*",
     "@coursera-notes/manifest": "workspace:*",
     "@coursera-notes/presentations": "workspace:*"

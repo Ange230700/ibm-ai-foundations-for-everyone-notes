@@ -2,7 +2,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
@@ -42,7 +42,22 @@ async function collectScreenSource({
   requireSimulationLabel,
 }) {
   const stem = resolve(visualRoot, language, name);
-  const html = await readFile(`${stem}.html`, 'utf8');
+  let html = await readFile(`${stem}.html`, 'utf8');
+  const titleStart = html.indexOf('<title>');
+  const titleEnd = html.indexOf('</title>', titleStart + 7);
+  if (titleStart < 0 || titleEnd < 0 || !html.slice(titleStart + 7, titleEnd).trim()) {
+    throw new Error(`Missing title in ${sessionId.toUpperCase()} simulation: ${language}/${name}.`);
+  }
+  const stylesheets = [
+    ...html.matchAll(/<link rel="stylesheet" href="(\.\.\/[^"/]+\.css)"\s*\/>/gu),
+  ];
+  const styles = await Promise.all(
+    stylesheets.map(async (match) => ({
+      tag: match[0],
+      css: await readFile(resolve(dirname(stem), match[1]), 'utf8'),
+    })),
+  );
+  for (const { tag, css } of styles) html = html.replace(tag, () => `<style>${css}</style>`);
   const label = language === 'en' ? 'Teaching simulation' : 'Simulation pédagogique';
   if (screenCss && !html.includes(SCREEN_CSS_MARKER)) {
     throw new Error(

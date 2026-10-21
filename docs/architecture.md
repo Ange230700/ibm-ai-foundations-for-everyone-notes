@@ -29,6 +29,25 @@
 
 Renderers reject stale source identities and stale diagram assets rather than silently producing derivatives from mismatched inputs.
 
+## Authored delivery variants
+
+Professional teaching sessions may register independently authored `document`, `reference`, and
+`narration` variants under `teachingSessions[].deliveryVariants`. Each language entry names its
+maintained Markdown source, states whether it is an adaptation or translation, records editorial
+review status, and lists the canonical module IDs that informed it. Variant sources live below
+`teaching/sessions/<id>-<slug>/deliveries/<profile>/<language>.md`; they are not generated from
+slides or speaker notes.
+
+These profiles describe editorial intent, not file extensions. `presentation` remains the existing
+session-source workflow. `document`, `reference`, and `narration` have separate content contracts
+and profile-aware artifact paths. The combinations and authoring workflow are documented in
+[`docs/teaching/authored-delivery-variants.md`](teaching/authored-delivery-variants.md).
+
+Authored Markdown and manifest configuration are source files. TXT, PDF, chunk files, production
+manifests, verification, and visual-QA evidence are generated derivatives under ignored
+`.artifacts/` directories. Provenance hashes establish identity and detect later changes; they do
+not establish semantic agreement or replace editorial review.
+
 ## Identity
 
 Program, course, and module identities use prefixed UUIDv4 values. Ordinals and slugs are human-facing location metadata and may later be migrated without changing immutable IDs.

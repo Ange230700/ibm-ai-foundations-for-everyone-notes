@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-import { teachingSessionSourcePath } from './teaching-path.js';
+import { deliveryVariantSourcePath, teachingSessionSourcePath } from './teaching-path.js';
 
 const prefixedUuid = (prefix: string) =>
   z
@@ -64,6 +64,41 @@ export const TeachingSessionSchema = z.strictObject({
     en: z.string().min(1),
     fr: z.string().min(1),
   }),
+  deliveryVariants: z
+    .strictObject({
+      document: z
+        .strictObject({
+          en: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+          fr: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+        })
+        .optional(),
+      reference: z
+        .strictObject({
+          en: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+          fr: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+        })
+        .optional(),
+      narration: z
+        .strictObject({
+          en: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+          fr: z.lazy(() => DeliveryVariantSourceSchema).optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+});
+
+const DeliveryVariantSourceSchema = z.strictObject({
+  source: z.string().min(1),
+  contentRelationship: z.enum(['adaptation', 'translation']),
+  editorialStatus: z.enum(['draft', 'reviewed']),
+  canonicalModuleIds: z.array(prefixedUuid('module')).min(1),
+  production: z
+    .strictObject({
+      speakingRateWpm: z.int().positive(),
+      pronunciationNotes: z.array(z.string().min(1)),
+    })
+    .optional(),
 });
 
 const ManifestObjectSchema = z.strictObject({
@@ -268,6 +303,65 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
         });
       }
     });
+
+    for (const profile of ['document', 'reference', 'narration'] as const) {
+      const variants = session.deliveryVariants?.[profile];
+      if (!variants) continue;
+
+      for (const language of ['en', 'fr'] as const) {
+        const variant = variants[language];
+        if (!variant) continue;
+
+        if (profile === 'narration' && !variant.production) {
+          issues.push({
+            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'production'],
+            message: `Teaching session ${session.id}/${profile}/${language} requires production metadata.`,
+          });
+        }
+
+        const expectedSource = deliveryVariantSourcePath(session, profile, language);
+        if (variant.source !== expectedSource) {
+          issues.push({
+            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'source'],
+            message: `Teaching session ${session.id} ${profile} ${language} source must be ${expectedSource}.`,
+          });
+        }
+
+        const variantModuleIds = new Set<string>();
+        variant.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
+          if (variantModuleIds.has(moduleId)) {
+            issues.push({
+              path: [
+                'teachingSessions',
+                index,
+                'deliveryVariants',
+                profile,
+                language,
+                'canonicalModuleIds',
+                moduleIndex,
+              ],
+              message: `Duplicate canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
+            });
+          }
+          variantModuleIds.add(moduleId);
+
+          if (!canonicalModuleIds.has(moduleId)) {
+            issues.push({
+              path: [
+                'teachingSessions',
+                index,
+                'deliveryVariants',
+                profile,
+                language,
+                'canonicalModuleIds',
+                moduleIndex,
+              ],
+              message: `Unknown canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
+            });
+          }
+        });
+      }
+    }
   });
 
   for (const issue of issues) {
@@ -283,6 +377,8 @@ export type Manifest = z.infer<typeof ManifestSchema>;
 export type Course = z.infer<typeof CourseSchema>;
 export type Module = z.infer<typeof ModuleSchema>;
 export type TeachingSession = z.infer<typeof TeachingSessionSchema>;
+export type DeliveryVariantSource = z.infer<typeof DeliveryVariantSourceSchema>;
+export type DeliveryVariants = NonNullable<TeachingSession['deliveryVariants']>;
 
 export function manifestJsonSchema(): Record<string, unknown> {
   return {
