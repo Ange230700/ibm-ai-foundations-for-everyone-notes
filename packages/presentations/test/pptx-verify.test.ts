@@ -3,8 +3,10 @@ import { readFile, writeFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import JSZip from 'jszip';
+import { canonicalJson } from '@coursera-notes/core';
 
 import { renderNativePptx, verifyNativePptx } from '../src/index.js';
+import { serializeNativePptxVerification } from '../src/pptx/verify.js';
 import {
   createDeckSpec,
   createPptxFixture,
@@ -83,6 +85,8 @@ test(
       });
 
       const verification = await verifyNativePptx(spec, repositoryRoot, outputPath);
+
+      assert.equal(serializeNativePptxVerification(verification), canonicalJson(verification));
 
       assert.equal(verification.slideCount, spec.slides.length);
 

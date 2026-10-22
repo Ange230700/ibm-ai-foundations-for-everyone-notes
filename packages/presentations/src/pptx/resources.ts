@@ -37,7 +37,7 @@ function svgAspectRatio(bytes: Uint8Array, label: string): number {
 
   const document = new DOMParser().parseFromString(xml, 'image/svg+xml');
 
-  const root = document.documentElement;
+  const root = document.documentElement!;
 
   const viewBox = (root.getAttribute('viewBox') || '').trim().split(/\s+/u).map(Number);
 

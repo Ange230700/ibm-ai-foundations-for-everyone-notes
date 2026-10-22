@@ -1,4 +1,4 @@
-import { DOMParser, XMLSerializer } from '@xmldom/xmldom';
+import { DOMParser, XMLSerializer, type Document, type Element } from '@xmldom/xmldom';
 import JSZip from 'jszip';
 
 import type { DeckSpec } from '../deck/model.js';

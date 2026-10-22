@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { relative, resolve } from 'node:path';
 
-import { DOMParser } from '@xmldom/xmldom';
+import { DOMParser, type Document, type Element, type Node } from '@xmldom/xmldom';
 import JSZip from 'jszip';
 
 import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';
@@ -85,18 +85,7 @@ function elements(root: Node, name: string): Element[] {
       result.push(node as Element);
     }
 
-    const childNodes = (
-      node as Node & {
-        childNodes: {
-          length: number;
-          item(index: number): Node | null;
-        } | null;
-      }
-    ).childNodes;
-
-    if (!childNodes) {
-      return;
-    }
+    const childNodes = node.childNodes;
 
     for (let index = 0; index < childNodes.length; index += 1) {
       const child = childNodes.item(index);
