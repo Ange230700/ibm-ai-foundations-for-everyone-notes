@@ -253,7 +253,22 @@ test('native rendering validates branding files, teaching visuals and the runtim
     visualBytes = Buffer.from(svg);
     await assert.rejects(render(visualSpec, options), /Invalid visual dimensions/);
   }
-  t.mock.module('pptxgenjs', { defaultExport: { default: { default: {} } } });
   visualBytes = Buffer.from('<svg/>');
+  const runtimeExport: { default?: unknown; __esModule?: boolean } = {
+    default: { default: {} },
+  };
+  t.mock.module('pptxgenjs', { defaultExport: runtimeExport });
+  for (const nested of [
+    { default: {} },
+    { default: { default: { default: {} } } },
+    undefined,
+    null,
+  ]) {
+    if (nested === undefined) delete runtimeExport.default;
+    else runtimeExport.default = nested;
+    await assert.rejects(render(visualSpec, options), /constructible runtime export/);
+  }
+  // Exercise tsx's dynamic-import interop for transpiled CommonJS exports.
+  runtimeExport.__esModule = true;
   await assert.rejects(render(visualSpec, options), /constructible runtime export/);
 });
