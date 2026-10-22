@@ -256,7 +256,12 @@ test('native rendering validates branding files, teaching visuals and the runtim
   visualBytes = Buffer.from('<svg/>');
   const runtimeExport: { default?: unknown } = { default: { default: {} } };
   t.mock.module('pptxgenjs', { defaultExport: runtimeExport });
-  for (const nested of [{ default: {} }, undefined, null]) {
+  for (const nested of [
+    { default: {} },
+    { default: { default: { default: {} } } },
+    undefined,
+    null,
+  ]) {
     if (nested === undefined) delete runtimeExport.default;
     else runtimeExport.default = nested;
     await assert.rejects(render(visualSpec, options), /constructible runtime export/);
