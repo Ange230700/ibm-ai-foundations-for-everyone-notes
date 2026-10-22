@@ -85,18 +85,7 @@ function elements(root: Node, name: string): Element[] {
       result.push(node as Element);
     }
 
-    const childNodes = (
-      node as Node & {
-        childNodes: {
-          length: number;
-          item(index: number): Node | null;
-        } | null;
-      }
-    ).childNodes;
-
-    if (!childNodes) {
-      return;
-    }
+    const childNodes = node.childNodes;
 
     for (let index = 0; index < childNodes.length; index += 1) {
       const child = childNodes.item(index);
