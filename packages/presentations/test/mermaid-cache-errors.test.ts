@@ -28,7 +28,9 @@ test('Mermaid rendering refreshes corrupted caches and rejects missing version m
       readFile: (path: string, encoding?: BufferEncoding) =>
         badVersion && path.endsWith('package.json')
           ? Promise.resolve('{}')
-          : fs.readFile(path, encoding),
+          : encoding === undefined
+            ? fs.readFile(path)
+            : fs.readFile(path, encoding),
     },
   });
   t.mock.module('puppeteer', {
