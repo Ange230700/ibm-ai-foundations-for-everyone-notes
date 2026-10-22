@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { relative, resolve } from 'node:path';
 
-import { DOMParser } from '@xmldom/xmldom';
+import { DOMParser, type Document, type Element, type Node } from '@xmldom/xmldom';
 import JSZip from 'jszip';
 
 import { canonicalJson, sha256, toPosixPath } from '@coursera-notes/core';

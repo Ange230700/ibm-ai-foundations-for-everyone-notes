@@ -4,7 +4,7 @@
     "composite": false,
     "declaration": false,
     "noEmit": true,
-    "lib": ["ES2023"]
+    "lib": ["ES2023", "DOM"]
   },
   "include": ["./**/*.ts"]
 }
