@@ -74,16 +74,18 @@ test('delivery workflows preserve authored sources and reject stale or corrupted
     namedExports: {
       ...fs,
       readFile: async (path: string, encoding?: BufferEncoding) => {
+        const normalizedPath = core.toPosixPath(path);
         if (ioError && path.includes('.artifact.json')) throw new Error(ioError);
         if (files.has(path)) {
           const value = files.get(path)!;
           return encoding ? String(value) : Buffer.from(value);
         }
-        if (path.includes('/.artifacts/'))
+        if (normalizedPath.includes('/.artifacts/'))
           throw Object.assign(new Error('missing'), { code: 'ENOENT' });
         const bytes = await fs.readFile(path);
-        if (canonicalChanged && path.includes('/courses/')) return Buffer.from('canonical changed');
-        if (sourceChanged && path.includes('/deliveries/'))
+        if (canonicalChanged && normalizedPath.includes('/courses/'))
+          return Buffer.from('canonical changed');
+        if (sourceChanged && normalizedPath.includes('/deliveries/'))
           return encoding
             ? String(bytes) + '\nChanged.'
             : Buffer.concat([bytes, Buffer.from('\nChanged.')]);
