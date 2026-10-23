@@ -215,11 +215,7 @@ function flattenFlowchartLabels(document: Document, theme: MermaidThemeTokens): 
 function parseSvgDocument(svg: string, diagramId: string): Document {
   const errors: string[] = [];
   const document = new DOMParser({
-    errorHandler: {
-      warning: (message) => errors.push(String(message)),
-      error: (message) => errors.push(String(message)),
-      fatalError: (message) => errors.push(String(message)),
-    },
+    onError: (_level, message) => errors.push(String(message)),
   }).parseFromString(svg, 'image/svg+xml');
 
   if (errors.length > 0) {

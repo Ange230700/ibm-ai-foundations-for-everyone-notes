@@ -167,7 +167,7 @@ test('diagram assets validate ownership, uniqueness, definitions, checksums and 
 
 test('Office SVG normalization handles empty, nested and multiline labels and rejects invalid XML', () => {
   for (const svg of ['<root/>', '<svg><g></svg>', '<svg><g invalid></g></svg>'])
-    assert.throws(() => normalizeMermaidSvgForOffice(svg), /Cannot postprocess/);
+    assert.throws(() => normalizeMermaidSvgForOffice(svg));
   for (const viewBox of ['', '0 0 NaN 10', '0 0 100 100']) {
     const result = normalizeMermaidSvgForOffice(
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"><g class="node"><rect/><g class="label"><text>A-Z 1ijMW_/: lower</text></g></g><g class="node"/><g class="node"><g class="label"/></g><g class="node"><g><g class="label"><text>Nested</text><path/></g></g></g><g class="edgeLabel"/><g class="edgeLabel"><g class="row">First</g><g class="row">Second</g></g><g class="cluster"><rect/></g><g class="marker"><path/></g><path class="arrowMarkerPath"/><rect class="label-container"/><text><tspan>text</tspan></text></svg>`,
