@@ -19,6 +19,20 @@ checkout credentials. Coverage reports are retained for 14 days. CI uses Ubuntu
 allowing Chromium to create its sandbox user namespaces. The browser sandbox
 remains enabled. See [Chromium's AppArmor guidance](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md).
 
+### Coverage contract
+
+Run `pnpm coverage` to execute all six packages' tests and enforce 100% statements,
+branches, functions, and lines **for every source file**, not just the aggregate.
+The `.c8rc.json` scope includes `packages/*/src/**/*.ts`, including files that no
+test imports. Tests are excluded; production files must not be excluded to hide
+gaps. The command fails on either a test failure or a coverage shortfall.
+
+CI runs the same command and uploads `coverage/lcov.info` and
+`coverage/coverage-summary.json`. When debugging a failure, fix failing tests
+before interpreting coverage: an earlier package failure stops later packages
+from running. File-system mocks must normalize native paths before matching
+repository-relative segments so failure scenarios also execute on Windows.
+
 ## Sonar activation
 
 1. In SonarQube Cloud, verify the GitHub binding for project

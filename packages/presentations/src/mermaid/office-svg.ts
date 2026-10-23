@@ -1,9 +1,9 @@
-import { DOMParser, XMLSerializer } from '@xmldom/xmldom';
+import { DOMParser, ParseError, XMLSerializer, type Document, type Element } from '@xmldom/xmldom';
 
 import { DEFAULT_MERMAID_THEME, type MermaidThemeTokens } from './config.js';
 
 function localName(element: Element): string {
-  return element.localName;
+  return element.localName!;
 }
 
 function classNames(element: Element): Set<string> {
@@ -214,15 +214,21 @@ function flattenFlowchartLabels(document: Document, theme: MermaidThemeTokens): 
 
 function parseSvgDocument(svg: string, diagramId: string): Document {
   const errors: string[] = [];
-  const document = new DOMParser({
-    onError: (_level, message) => errors.push(String(message)),
-  }).parseFromString(svg, 'image/svg+xml');
+  let document: Document;
+  try {
+    document = new DOMParser({
+      onError: (_level, message) => errors.push(message),
+    }).parseFromString(svg, 'image/svg+xml');
+  } catch (error) {
+    if (!(error instanceof ParseError)) throw error;
+    throw new Error(`Cannot postprocess ${diagramId}: ${error.message}`, { cause: error });
+  }
 
   if (errors.length > 0) {
     throw new Error(`Cannot postprocess ${diagramId}: ${errors.join(' ')}`);
   }
 
-  if (localName(document.documentElement) !== 'svg') {
+  if (localName(document.documentElement!) !== 'svg') {
     throw new Error(`Cannot postprocess ${diagramId}: document root is not SVG.`);
   }
 
@@ -293,7 +299,7 @@ export function normalizeMermaidSvgForOffice(
   theme: MermaidThemeTokens = DEFAULT_MERMAID_THEME,
 ): string {
   const document = parseSvgDocument(svg, diagramId);
-  const root = document.documentElement;
+  const root = document.documentElement!;
 
   expandViewBox(root);
   root.setAttribute('font-family', theme.fontFamily);

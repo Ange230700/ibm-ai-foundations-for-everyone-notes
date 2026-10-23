@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { DOMParser, ParseError } from '@xmldom/xmldom';
 
 import { normalizeMermaidSvgForOffice } from '../src/index.js';
 
@@ -34,4 +35,27 @@ test('edge-label backgrounds override Mermaid transparency without changing labe
   assert.match(output, /<rect[^>]*style="opacity: 1; fill-opacity: 1;"/);
   assert.match(output, />Verified<\/text>/);
   assert.match(output, /transform="translate\(50, 25\)"/);
+});
+
+test('malformed SVG keeps diagram context and the fatal parser error as its cause', () => {
+  assert.throws(
+    () => normalizeMermaidSvgForOffice('<svg><g></svg>', 'broken-diagram'),
+    (error: unknown) => {
+      assert.ok(error instanceof Error);
+      assert.match(error.message, /Cannot postprocess broken-diagram:/);
+      assert.ok(error.cause instanceof ParseError);
+      return true;
+    },
+  );
+});
+
+test('unexpected parser failures propagate unchanged', (t) => {
+  const failure = new Error('Unexpected parser failure');
+  t.mock.method(DOMParser.prototype, 'parseFromString', () => {
+    throw failure;
+  });
+  assert.throws(
+    () => normalizeMermaidSvgForOffice('<svg/>'),
+    (error) => error === failure,
+  );
 });
