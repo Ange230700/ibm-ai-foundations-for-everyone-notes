@@ -7,10 +7,15 @@ import {
   estimateNarrationDuration,
   renderDeliveryText,
   renderSpokenParagraphs,
+  supportedDeliveryFormats,
   validateDeliveryMarkdown,
 } from '../src/delivery-variants.js';
 
 test('supported editorial profile and output combinations are explicit', () => {
+  assert.deepEqual(supportedDeliveryFormats('presentation'), ['pptx', 'pdf', 'txt']);
+  assert.deepEqual(supportedDeliveryFormats('document'), ['pdf', 'txt']);
+  assert.deepEqual(supportedDeliveryFormats('reference'), ['txt', 'pdf']);
+  assert.deepEqual(supportedDeliveryFormats('narration'), ['txt']);
   assertDeliveryCombination('document', 'pdf');
   assertDeliveryCombination('document', 'txt');
   assertDeliveryCombination('reference', 'txt');

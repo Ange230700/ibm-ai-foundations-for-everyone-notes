@@ -92,8 +92,8 @@ test('teaching CLI builds, independently verifies and animates only current arti
           const value = writes.get(path)!;
           return encoding ? value : Buffer.from(value);
         }
-        const unsupportedSession = path.includes('/s08-');
-        if (unsupportedSession) path = path.replace('/s08-', '/s07-');
+        const unsupportedSession = core.toPosixPath(path).includes('/s08-');
+        if (unsupportedSession) path = path.replace('s08-', 's07-');
 
         if (path.endsWith('pdf-artifact.json') || path.endsWith('pptx-artifact.json')) {
           const match = path.replaceAll('\\', '/').match(/teaching-sessions\/(s\d{2})\/(en|fr)/)!;

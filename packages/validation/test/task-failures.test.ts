@@ -3,7 +3,7 @@ import * as childProcess from 'node:child_process';
 import * as fs from 'node:fs/promises';
 import test from 'node:test';
 
-import { canonicalJson, padOrdinal } from '@coursera-notes/core';
+import { canonicalJson, padOrdinal, toPosixPath } from '@coursera-notes/core';
 import * as manifestApi from '@coursera-notes/manifest';
 
 import { analyzeArtifactImpact } from '../src/artifact-impact.js';
@@ -37,7 +37,7 @@ test('validation tasks report stale, missing and unreadable inputs without hidin
       ],
       readFile: async (path: string, encoding?: BufferEncoding) => {
         if (missing) throw new Error('file missing');
-        if (badDelivery && path.includes('/deliveries/')) return '# Incomplete';
+        if (badDelivery && toPosixPath(path).includes('/deliveries/')) return '# Incomplete';
         if (path.endsWith('manifest.schema.json'))
           return drift ? '{}' : canonicalJson(manifestApi.manifestJsonSchema());
         if (path.endsWith('manifest.json')) return drift ? '{}' : canonicalJson(manifest);
