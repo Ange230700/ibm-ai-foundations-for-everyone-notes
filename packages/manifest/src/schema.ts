@@ -237,13 +237,16 @@ function configuredRepositoryIssues(manifest: ManifestInput): ManifestValidation
   return issues;
 }
 
-export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, context) => {
-  const issues = [...uniquenessIssues(manifest), ...configuredRepositoryIssues(manifest)];
+type TeachingSessionInput = NonNullable<ManifestInput['teachingSessions']>[number];
+type DeliveryVariantInput = NonNullable<
+  NonNullable<TeachingSessionInput['deliveryVariants']>['document']
+>['en'];
 
-  const sessionIds = new Set<string>();
-  const sessionSlugs = new Set<string>();
+function addCanonicalModuleIds(
+  manifest: ManifestInput,
+  issues: ManifestValidationIssue[],
+): Set<string> {
   const canonicalModuleIds = new Set<string>();
-
   manifest.courses.forEach((course, courseIndex) => {
     course.modules.forEach((module, moduleIndex) => {
       if (canonicalModuleIds.has(module.id)) {
@@ -252,116 +255,155 @@ export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, contex
           message: `Duplicate module id across manifest: ${module.id}.`,
         });
       }
-
       canonicalModuleIds.add(module.id);
     });
   });
+  return canonicalModuleIds;
+}
+
+function addSessionIdentityIssues(
+  session: TeachingSessionInput,
+  index: number,
+  sessionIds: Set<string>,
+  sessionSlugs: Set<string>,
+  issues: ManifestValidationIssue[],
+): void {
+  if (sessionIds.has(session.id)) {
+    issues.push({
+      path: ['teachingSessions', index, 'id'],
+      message: `Duplicate session ${session.id}.`,
+    });
+  }
+  sessionIds.add(session.id);
+
+  if (sessionSlugs.has(session.slug)) {
+    issues.push({
+      path: ['teachingSessions', index, 'slug'],
+      message: `Duplicate session slug ${session.slug}.`,
+    });
+  }
+  sessionSlugs.add(session.slug);
+
+  for (const language of ['en', 'fr'] as const) {
+    const expectedSource = teachingSessionSourcePath(session, language);
+    if (session.source[language] !== expectedSource) {
+      issues.push({
+        path: ['teachingSessions', index, 'source', language],
+        message: `Teaching session ${session.id} ${language} source must be ${expectedSource}.`,
+      });
+    }
+  }
+}
+
+function addSessionModuleIssues(
+  session: TeachingSessionInput,
+  index: number,
+  canonicalModuleIds: Set<string>,
+  issues: ManifestValidationIssue[],
+): void {
+  const sessionModuleIds = new Set<string>();
+  session.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
+    if (sessionModuleIds.has(moduleId)) {
+      issues.push({
+        path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
+        message: `Duplicate canonical module ${moduleId} in session ${session.id}.`,
+      });
+    }
+    sessionModuleIds.add(moduleId);
+
+    if (!canonicalModuleIds.has(moduleId)) {
+      issues.push({
+        path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
+        message: `Unknown canonical module ${moduleId}.`,
+      });
+    }
+  });
+}
+
+function addDeliveryVariantIssues(
+  variant: NonNullable<DeliveryVariantInput>,
+  session: TeachingSessionInput,
+  index: number,
+  profile: 'document' | 'reference' | 'narration',
+  language: 'en' | 'fr',
+  canonicalModuleIds: Set<string>,
+  issues: ManifestValidationIssue[],
+): void {
+  const variantPath = ['teachingSessions', index, 'deliveryVariants', profile, language];
+  if (profile === 'narration' && !variant.production) {
+    issues.push({
+      path: [...variantPath, 'production'],
+      message: `Teaching session ${session.id}/${profile}/${language} requires production metadata.`,
+    });
+  }
+
+  const expectedSource = deliveryVariantSourcePath(session, profile, language);
+  if (variant.source !== expectedSource) {
+    issues.push({
+      path: [...variantPath, 'source'],
+      message: `Teaching session ${session.id} ${profile} ${language} source must be ${expectedSource}.`,
+    });
+  }
+
+  const variantModuleIds = new Set<string>();
+  variant.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
+    const path = [...variantPath, 'canonicalModuleIds', moduleIndex];
+    if (variantModuleIds.has(moduleId)) {
+      issues.push({
+        path,
+        message: `Duplicate canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
+      });
+    }
+    variantModuleIds.add(moduleId);
+
+    if (!canonicalModuleIds.has(moduleId)) {
+      issues.push({
+        path,
+        message: `Unknown canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
+      });
+    }
+  });
+}
+
+function addTeachingSessionIssues(
+  session: TeachingSessionInput,
+  index: number,
+  sessionIds: Set<string>,
+  sessionSlugs: Set<string>,
+  canonicalModuleIds: Set<string>,
+  issues: ManifestValidationIssue[],
+): void {
+  addSessionIdentityIssues(session, index, sessionIds, sessionSlugs, issues);
+  addSessionModuleIssues(session, index, canonicalModuleIds, issues);
+
+  for (const profile of ['document', 'reference', 'narration'] as const) {
+    const variants = session.deliveryVariants?.[profile];
+    if (!variants) continue;
+    for (const language of ['en', 'fr'] as const) {
+      const variant = variants[language];
+      if (variant) {
+        addDeliveryVariantIssues(
+          variant,
+          session,
+          index,
+          profile,
+          language,
+          canonicalModuleIds,
+          issues,
+        );
+      }
+    }
+  }
+}
+
+export const ManifestSchema = ManifestObjectSchema.superRefine((manifest, context) => {
+  const issues = [...uniquenessIssues(manifest), ...configuredRepositoryIssues(manifest)];
+  const sessionIds = new Set<string>();
+  const sessionSlugs = new Set<string>();
+  const canonicalModuleIds = addCanonicalModuleIds(manifest, issues);
 
   manifest.teachingSessions?.forEach((session, index) => {
-    if (sessionIds.has(session.id)) {
-      issues.push({
-        path: ['teachingSessions', index, 'id'],
-        message: `Duplicate session ${session.id}.`,
-      });
-    }
-    sessionIds.add(session.id);
-
-    if (sessionSlugs.has(session.slug)) {
-      issues.push({
-        path: ['teachingSessions', index, 'slug'],
-        message: `Duplicate session slug ${session.slug}.`,
-      });
-    }
-    sessionSlugs.add(session.slug);
-
-    for (const language of ['en', 'fr'] as const) {
-      const expectedSource = teachingSessionSourcePath(session, language);
-
-      if (session.source[language] !== expectedSource) {
-        issues.push({
-          path: ['teachingSessions', index, 'source', language],
-          message: `Teaching session ${session.id} ${language} source must be ${expectedSource}.`,
-        });
-      }
-    }
-
-    const sessionModuleIds = new Set<string>();
-
-    session.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
-      if (sessionModuleIds.has(moduleId)) {
-        issues.push({
-          path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
-          message: `Duplicate canonical module ${moduleId} in session ${session.id}.`,
-        });
-      }
-      sessionModuleIds.add(moduleId);
-
-      if (!canonicalModuleIds.has(moduleId)) {
-        issues.push({
-          path: ['teachingSessions', index, 'canonicalModuleIds', moduleIndex],
-          message: `Unknown canonical module ${moduleId}.`,
-        });
-      }
-    });
-
-    for (const profile of ['document', 'reference', 'narration'] as const) {
-      const variants = session.deliveryVariants?.[profile];
-      if (!variants) continue;
-
-      for (const language of ['en', 'fr'] as const) {
-        const variant = variants[language];
-        if (!variant) continue;
-
-        if (profile === 'narration' && !variant.production) {
-          issues.push({
-            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'production'],
-            message: `Teaching session ${session.id}/${profile}/${language} requires production metadata.`,
-          });
-        }
-
-        const expectedSource = deliveryVariantSourcePath(session, profile, language);
-        if (variant.source !== expectedSource) {
-          issues.push({
-            path: ['teachingSessions', index, 'deliveryVariants', profile, language, 'source'],
-            message: `Teaching session ${session.id} ${profile} ${language} source must be ${expectedSource}.`,
-          });
-        }
-
-        const variantModuleIds = new Set<string>();
-        variant.canonicalModuleIds.forEach((moduleId, moduleIndex) => {
-          if (variantModuleIds.has(moduleId)) {
-            issues.push({
-              path: [
-                'teachingSessions',
-                index,
-                'deliveryVariants',
-                profile,
-                language,
-                'canonicalModuleIds',
-                moduleIndex,
-              ],
-              message: `Duplicate canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
-            });
-          }
-          variantModuleIds.add(moduleId);
-
-          if (!canonicalModuleIds.has(moduleId)) {
-            issues.push({
-              path: [
-                'teachingSessions',
-                index,
-                'deliveryVariants',
-                profile,
-                language,
-                'canonicalModuleIds',
-                moduleIndex,
-              ],
-              message: `Unknown canonical module ${moduleId} in ${session.id}/${profile}/${language}.`,
-            });
-          }
-        });
-      }
-    }
+    addTeachingSessionIssues(session, index, sessionIds, sessionSlugs, canonicalModuleIds, issues);
   });
 
   for (const issue of issues) {

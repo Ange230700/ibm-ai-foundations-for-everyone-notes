@@ -142,6 +142,7 @@ async function canonicalSourceRecords(
 async function resolveTargets(
   args: DeliveryArtifactArguments,
   root: string,
+  profile: DeliveryProfile,
 ): Promise<DeliveryTarget[]> {
   const manifest = await readManifest();
   const sessions = manifest.teachingSessions ?? [];
@@ -156,38 +157,50 @@ async function resolveTargets(
   for (const session of selectedSessions) {
     const languages: DeliveryLanguage[] = args.language ? [args.language] : ['en', 'fr'];
     for (const language of languages) {
-      let resolved;
-      try {
-        resolved = resolveDeliveryVariant(manifest, session, args.profile!, language);
-      } catch (error) {
-        if (args.session) throw error;
-        continue;
-      }
-      const canonicalSources = await canonicalSourceRecords(root, resolved.canonicalModules);
-      const formats = args.format
-        ? [args.format]
-        : supportedDeliveryFormats(PROFILE_LABELS[args.profile!]);
-      for (const format of formats) {
-        assertDeliveryCombination(PROFILE_LABELS[args.profile!], format);
-        targets.push({
-          session,
-          language,
-          profile: args.profile!,
-          format,
-          sourcePath: resolved.sourcePath,
-          canonicalSources,
-          contentRelationship: resolved.contentRelationship,
-          editorialStatus: resolved.editorialStatus,
-          ...(resolved.production === undefined ? {} : { production: resolved.production }),
-        });
-      }
+      targets.push(
+        ...(await resolveSessionTargets(args, root, manifest, session, language, profile)),
+      );
     }
   }
 
   if (!args.session && targets.length === 0) {
-    console.log(`No registered ${args.profile} variants are available.`);
+    console.log(`No registered ${profile} variants are available.`);
   }
   return targets;
+}
+
+async function resolveSessionTargets(
+  args: DeliveryArtifactArguments,
+  root: string,
+  manifest: Awaited<ReturnType<typeof readManifest>>,
+  session: TeachingSession,
+  language: DeliveryLanguage,
+  profile: DeliveryProfile,
+): Promise<DeliveryTarget[]> {
+  let resolved;
+  try {
+    resolved = resolveDeliveryVariant(manifest, session, profile, language);
+  } catch (error) {
+    if (args.session) throw error;
+    return [];
+  }
+
+  const canonicalSources = await canonicalSourceRecords(root, resolved.canonicalModules);
+  const formats = args.format ? [args.format] : supportedDeliveryFormats(PROFILE_LABELS[profile]);
+  return formats.map((format) => {
+    assertDeliveryCombination(PROFILE_LABELS[profile], format);
+    return {
+      session,
+      language,
+      profile,
+      format,
+      sourcePath: resolved.sourcePath,
+      canonicalSources,
+      contentRelationship: resolved.contentRelationship,
+      editorialStatus: resolved.editorialStatus,
+      ...(resolved.production === undefined ? {} : { production: resolved.production }),
+    };
+  });
 }
 
 async function readSource(target: DeliveryTarget, root: string): Promise<string> {
@@ -337,21 +350,19 @@ async function buildTarget(
       name: rendered.renderer.name,
       version: rendered.renderer.rendererVersion,
     };
+  } else if (target.profile === 'narration') {
+    output = await buildNarration(target, root, source, text, args.chunkLimit ?? 2400);
+    renderer = { name: 'plain-markdown-speech-export', version: 1 };
   } else {
-    if (target.profile === 'narration') {
-      output = await buildNarration(target, root, source, text, args.chunkLimit ?? 2400);
-      renderer = { name: 'plain-markdown-speech-export', version: 1 };
-    } else {
-      const path = outputFilePath(target, root);
-      await atomicWrite(path, text);
-      const bytes = await readFile(path);
-      output = {
-        path: repositoryRelativePath(root, path),
-        sha256: sha256(bytes),
-        bytes: bytes.byteLength,
-      };
-      renderer = { name: 'semantic-markdown-to-text', version: 1 };
-    }
+    const path = outputFilePath(target, root);
+    await atomicWrite(path, text);
+    const bytes = await readFile(path);
+    output = {
+      path: repositoryRelativePath(root, path),
+      sha256: sha256(bytes),
+      bytes: bytes.byteLength,
+    };
+    renderer = { name: 'semantic-markdown-to-text', version: 1 };
   }
 
   const record = createProvenance(target, sourceDigest, renderer, output);
@@ -380,21 +391,40 @@ async function loadProvenance(
   }
 }
 
-async function verifyTarget(target: DeliveryTarget, root: string): Promise<void> {
-  const record = await loadProvenance(target, root);
-  const source = await readSource(target, root);
-  const sourceDigest = sha256(source);
+interface NarrationProductionRecord {
+  sourceSha256: string;
+  canonicalSources: CanonicalSourceRecord[];
+  workflow: { maximumCharactersPerChunk: number };
+  chunks: Array<{
+    id: string;
+    sequence: number;
+    path: string;
+    sha256: string;
+    characters: number;
+    words: number;
+  }>;
+  pronunciationNotes: string[];
+  durationEstimate: ReturnType<typeof estimateNarrationDuration>;
+}
+
+function assertMaintainedSource(
+  record: DeliveryArtifactRecord,
+  target: DeliveryTarget,
+  digest: string,
+) {
   if (
     record.maintainedSource.path !== target.sourcePath ||
-    record.maintainedSource.sha256 !== sourceDigest
+    record.maintainedSource.sha256 !== digest
   ) {
     throw new Error(`${target.sourcePath} changed since artifact generation.`);
   }
-  if (canonicalJson(record.canonicalSources) !== canonicalJson(target.canonicalSources)) {
-    throw new Error(
-      `${target.session.id}/${target.profile}/${target.language} needs editorial review because a canonical source changed.`,
-    );
-  }
+}
+
+function assertTargetIdentity(
+  record: DeliveryArtifactRecord,
+  target: DeliveryTarget,
+  root: string,
+): void {
   if (
     record.target.sessionId !== target.session.id ||
     record.target.language !== target.language ||
@@ -415,138 +445,152 @@ async function verifyTarget(target: DeliveryTarget, root: string): Promise<void>
       `Artifact provenance identity mismatch for ${target.session.id}/${target.language}.`,
     );
   }
-  const expectedText = renderDeliveryText(source, target.profile, target.language);
-  let actualSha256: string;
+}
 
-  if (target.format === 'pdf') {
-    const verification = await verifyAuthoredDocumentPdf(source, {
-      repositoryRoot: root,
-      sourcePath: target.sourcePath,
-      outputPath: outputFilePath(target, root),
-      profile: target.profile as 'document' | 'reference',
-      language: target.language,
-    });
-    actualSha256 = verification.pdfSha256;
-    const renderer = JSON.parse(
-      await readFile(
-        resolve(outputRoot(root, target), `${target.profile}.pdf.render.json`),
-        'utf8',
-      ),
-    ) as {
-      sourceSha256: string;
-      stylesheetSha256: string;
-      htmlSha256: string;
-      renderer: { rendererVersion: number };
-    };
-    const pdfOptions = {
-      repositoryRoot: root,
-      sourcePath: target.sourcePath,
-      outputPath: outputFilePath(target, root),
-      profile: target.profile as 'document' | 'reference',
-      language: target.language,
-    };
-    const renderIdentity = authoredDocumentRenderIdentity(source, pdfOptions);
-    if (
-      renderer.sourceSha256 !== sourceDigest ||
-      renderer.renderer.rendererVersion !== AUTHORED_DOCUMENT_RENDERER_VERSION ||
-      renderer.stylesheetSha256 !== renderIdentity.stylesheetSha256 ||
-      renderer.htmlSha256 !== renderIdentity.htmlSha256
-    ) {
-      throw new Error(`Stale PDF renderer provenance for ${target.session.id}/${target.language}.`);
-    }
-    await atomicWrite(
-      resolve(outputRoot(root, target), `${target.profile}.pdf.verification.json`),
-      serializeAuthoredDocumentPdfVerification(verification),
+async function verifyPdfTarget(
+  target: DeliveryTarget,
+  root: string,
+  source: string,
+  sourceDigest: string,
+): Promise<string> {
+  const pdfOptions = {
+    repositoryRoot: root,
+    sourcePath: target.sourcePath,
+    outputPath: outputFilePath(target, root),
+    profile: target.profile as 'document' | 'reference',
+    language: target.language,
+  };
+  const verification = await verifyAuthoredDocumentPdf(source, pdfOptions);
+  const renderer = JSON.parse(
+    await readFile(resolve(outputRoot(root, target), `${target.profile}.pdf.render.json`), 'utf8'),
+  ) as {
+    sourceSha256: string;
+    stylesheetSha256: string;
+    htmlSha256: string;
+    renderer: { rendererVersion: number };
+  };
+  const renderIdentity = authoredDocumentRenderIdentity(source, pdfOptions);
+  if (
+    renderer.sourceSha256 !== sourceDigest ||
+    renderer.renderer.rendererVersion !== AUTHORED_DOCUMENT_RENDERER_VERSION ||
+    renderer.stylesheetSha256 !== renderIdentity.stylesheetSha256 ||
+    renderer.htmlSha256 !== renderIdentity.htmlSha256
+  ) {
+    throw new Error(`Stale PDF renderer provenance for ${target.session.id}/${target.language}.`);
+  }
+  await atomicWrite(
+    resolve(outputRoot(root, target), `${target.profile}.pdf.verification.json`),
+    serializeAuthoredDocumentPdfVerification(verification),
+  );
+  return verification.pdfSha256;
+}
+
+async function verifyNarrationTarget(
+  target: DeliveryTarget,
+  root: string,
+  expectedText: string,
+  sourceDigest: string,
+): Promise<void> {
+  const production = JSON.parse(
+    await readFile(productionManifestPath(target, root), 'utf8'),
+  ) as NarrationProductionRecord;
+  if (
+    production.sourceSha256 !== sourceDigest ||
+    canonicalJson(production.canonicalSources) !== canonicalJson(target.canonicalSources)
+  ) {
+    throw new Error(
+      `Stale narration production manifest for ${target.session.id}/${target.language}.`,
     );
-  } else {
-    const bytes = await readFile(outputFilePath(target, root));
-    actualSha256 = sha256(bytes);
-    if (bytes.toString('utf8') !== expectedText) {
-      throw new Error(`Stale TXT output for ${target.session.id}/${target.language}.`);
-    }
-    if (target.profile === 'narration') {
-      const production = JSON.parse(
-        await readFile(productionManifestPath(target, root), 'utf8'),
-      ) as {
-        sourceSha256: string;
-        canonicalSources: CanonicalSourceRecord[];
-        workflow: { maximumCharactersPerChunk: number };
-        chunks: Array<{
-          id: string;
-          sequence: number;
-          path: string;
-          sha256: string;
-          characters: number;
-          words: number;
-        }>;
-        pronunciationNotes: string[];
-        durationEstimate: ReturnType<typeof estimateNarrationDuration>;
-      };
-      if (
-        production.sourceSha256 !== sourceDigest ||
-        canonicalJson(production.canonicalSources) !== canonicalJson(target.canonicalSources)
-      ) {
-        throw new Error(
-          `Stale narration production manifest for ${target.session.id}/${target.language}.`,
-        );
-      }
-      const limit = production.workflow.maximumCharactersPerChunk;
-      if (!Number.isSafeInteger(limit) || limit < 1 || limit > 2400 || !target.production) {
-        throw new Error(
-          `Invalid narration production configuration for ${target.session.id}/${target.language}.`,
-        );
-      }
-      const expectedChunks = buildNarrationChunks(
-        target.session.id,
-        target.language,
-        expectedText,
-        limit,
-      );
-      const chunkDirectory = resolve(outputRoot(root, target), 'chunks', sourceDigest.slice(0, 12));
-      const expectedRecords = expectedChunks.map((chunk) => ({
-        id: chunk.id,
-        sequence: chunk.sequence,
-        sha256: chunk.sha256,
-        characters: chunk.characters,
-        words: chunk.words,
-        path: repositoryRelativePath(
-          root,
-          resolve(chunkDirectory, `${String(chunk.sequence).padStart(3, '0')}-${chunk.id}.txt`),
-        ),
-      }));
-      if (
-        canonicalJson(production.chunks) !== canonicalJson(expectedRecords) ||
-        canonicalJson(production.pronunciationNotes) !==
-          canonicalJson(target.production.pronunciationNotes) ||
-        canonicalJson(production.durationEstimate) !==
-          canonicalJson(
-            estimateNarrationDuration(expectedChunks, target.production.speakingRateWpm),
-          )
-      ) {
-        throw new Error(
-          `Stale narration chunk metadata for ${target.session.id}/${target.language}.`,
-        );
-      }
-      for (const chunk of expectedChunks) {
-        const path = expectedRecords[chunk.sequence - 1]!.path;
-        if ((await readFile(absolute(root, path), 'utf8')) !== chunk.text) {
-          throw new Error(`Narration chunk changed: ${path}.`);
-        }
-      }
+  }
+  const limit = production.workflow.maximumCharactersPerChunk;
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 2400 || !target.production) {
+    throw new Error(
+      `Invalid narration production configuration for ${target.session.id}/${target.language}.`,
+    );
+  }
+  const expectedChunks = buildNarrationChunks(
+    target.session.id,
+    target.language,
+    expectedText,
+    limit,
+  );
+  const chunkDirectory = resolve(outputRoot(root, target), 'chunks', sourceDigest.slice(0, 12));
+  const expectedRecords = expectedChunks.map((chunk) => ({
+    id: chunk.id,
+    sequence: chunk.sequence,
+    sha256: chunk.sha256,
+    characters: chunk.characters,
+    words: chunk.words,
+    path: repositoryRelativePath(
+      root,
+      resolve(chunkDirectory, `${String(chunk.sequence).padStart(3, '0')}-${chunk.id}.txt`),
+    ),
+  }));
+  if (
+    canonicalJson(production.chunks) !== canonicalJson(expectedRecords) ||
+    canonicalJson(production.pronunciationNotes) !==
+      canonicalJson(target.production.pronunciationNotes) ||
+    canonicalJson(production.durationEstimate) !==
+      canonicalJson(estimateNarrationDuration(expectedChunks, target.production.speakingRateWpm))
+  ) {
+    throw new Error(`Stale narration chunk metadata for ${target.session.id}/${target.language}.`);
+  }
+  for (const chunk of expectedChunks) {
+    const path = expectedRecords[chunk.sequence - 1]!.path;
+    if ((await readFile(absolute(root, path), 'utf8')) !== chunk.text) {
+      throw new Error(`Narration chunk changed: ${path}.`);
     }
   }
+}
+
+async function verifyTextTarget(
+  target: DeliveryTarget,
+  root: string,
+  expectedText: string,
+  sourceDigest: string,
+): Promise<string> {
+  const bytes = await readFile(outputFilePath(target, root));
+  if (bytes.toString('utf8') !== expectedText) {
+    throw new Error(`Stale TXT output for ${target.session.id}/${target.language}.`);
+  }
+  if (target.profile === 'narration') {
+    await verifyNarrationTarget(target, root, expectedText, sourceDigest);
+  }
+  return sha256(bytes);
+}
+
+function expectedRenderer(target: DeliveryTarget): DeliveryArtifactRecord['renderer'] {
+  if (target.format === 'pdf') {
+    return { name: 'chromium-via-puppeteer', version: AUTHORED_DOCUMENT_RENDERER_VERSION };
+  }
+  if (target.profile === 'narration') {
+    return { name: 'plain-markdown-speech-export', version: 1 };
+  }
+  return { name: 'semantic-markdown-to-text', version: 1 };
+}
+
+async function verifyTarget(target: DeliveryTarget, root: string): Promise<void> {
+  const record = await loadProvenance(target, root);
+  const source = await readSource(target, root);
+  const sourceDigest = sha256(source);
+  assertMaintainedSource(record, target, sourceDigest);
+  if (canonicalJson(record.canonicalSources) !== canonicalJson(target.canonicalSources)) {
+    throw new Error(
+      `${target.session.id}/${target.profile}/${target.language} needs editorial review because a canonical source changed.`,
+    );
+  }
+  assertTargetIdentity(record, target, root);
+  const expectedText = renderDeliveryText(source, target.profile, target.language);
+  const actualSha256 =
+    target.format === 'pdf'
+      ? await verifyPdfTarget(target, root, source, sourceDigest)
+      : await verifyTextTarget(target, root, expectedText, sourceDigest);
   if (record.generatedOutput.sha256 !== actualSha256) {
     throw new Error(
       `Generated ${target.format.toUpperCase()} changed for ${target.session.id}/${target.language}.`,
     );
   }
-  const expectedRenderer =
-    target.format === 'pdf'
-      ? { name: 'chromium-via-puppeteer', version: AUTHORED_DOCUMENT_RENDERER_VERSION }
-      : target.profile === 'narration'
-        ? { name: 'plain-markdown-speech-export', version: 1 }
-        : { name: 'semantic-markdown-to-text', version: 1 };
-  if (canonicalJson(record.renderer) !== canonicalJson(expectedRenderer)) {
+  if (canonicalJson(record.renderer) !== canonicalJson(expectedRenderer(target))) {
     throw new Error(
       `Artifact renderer identity mismatch for ${target.session.id}/${target.language}.`,
     );
@@ -623,7 +667,7 @@ async function main(): Promise<void> {
   }
   if (args.format) assertDeliveryCombination(args.profile, args.format);
   const root = repositoryRoot();
-  const targets = await resolveTargets(args, root);
+  const targets = await resolveTargets(args, root, args.profile);
   for (const target of targets) {
     if (args.command === 'plan') {
       await planTarget(target, root);

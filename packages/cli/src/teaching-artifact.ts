@@ -423,6 +423,64 @@ async function buildPptx(content: TeachingSessionContent, root: string, outputRo
   );
 }
 
+async function processTextFormat(
+  args: TeachingArgs,
+  session: TeachingSession,
+  language: Language,
+  content: TeachingSessionContent,
+  root: string,
+  outputRoot: string,
+): Promise<void> {
+  const source = await readFile(teachingSourcePath(root, session, language), 'utf8');
+  const text = renderMarkdownText(source, {
+    language,
+    includeLinkDestinations: false,
+    documentCodeLabels: true,
+    documentTableText: true,
+  });
+  const errors = validatePlainText(Buffer.from(text, 'utf8'));
+  if (errors.length) throw new Error(errors.join('\n'));
+  const outputPath = resolve(outputRoot, 'session.txt');
+  const recordPath = resolve(outputRoot, 'txt-artifact.json');
+  if (args.command === 'build') {
+    await atomicWrite(outputPath, text);
+    await atomicWrite(
+      recordPath,
+      canonicalJson({
+        schemaVersion: 1,
+        targetId: session.id,
+        language,
+        editorialProfile: 'presentation',
+        outputFormat: 'txt',
+        sourcePath: content.sourcePath,
+        sourceSha256: content.sourceSha256,
+        outputPath: `.artifacts/teaching-sessions/${session.id}/${language}/session.txt`,
+        outputSha256: sha256(text),
+      }),
+    );
+  } else {
+    const record = JSON.parse(await readFile(recordPath, 'utf8')) as {
+      editorialProfile: string;
+      outputFormat: string;
+      sourceSha256: string;
+      outputSha256: string;
+    };
+    const actual = await readFile(outputPath);
+    if (
+      record.editorialProfile !== 'presentation' ||
+      record.outputFormat !== 'txt' ||
+      record.sourceSha256 !== content.sourceSha256 ||
+      record.outputSha256 !== sha256(actual) ||
+      actual.toString('utf8') !== text
+    ) {
+      throw new Error(`Stale teaching TXT: ${session.id}/${language}.`);
+    }
+  }
+  console.log(
+    `${args.command === 'build' ? 'WROTE' : 'VERIFIED'} ${session.id}/${language}/presentation/txt`,
+  );
+}
+
 async function processFormat(
   args: TeachingArgs,
   format: Format,
@@ -431,60 +489,13 @@ async function processFormat(
   content: TeachingSessionContent,
   root: string,
   outputRoot: string,
-) {
+): Promise<void> {
   if (args.command === 'visual-qa') {
     await createVisualQa(format as 'pdf' | 'pptx', session, language, content, root, outputRoot);
     return;
   }
   if (format === 'txt') {
-    const source = await readFile(teachingSourcePath(root, session, language), 'utf8');
-    const text = renderMarkdownText(source, {
-      language,
-      includeLinkDestinations: false,
-      documentCodeLabels: true,
-      documentTableText: true,
-    });
-    const errors = validatePlainText(Buffer.from(text, 'utf8'));
-    if (errors.length) throw new Error(errors.join('\n'));
-    const outputPath = resolve(outputRoot, 'session.txt');
-    const recordPath = resolve(outputRoot, 'txt-artifact.json');
-    if (args.command === 'build') {
-      await atomicWrite(outputPath, text);
-      await atomicWrite(
-        recordPath,
-        canonicalJson({
-          schemaVersion: 1,
-          targetId: session.id,
-          language,
-          editorialProfile: 'presentation',
-          outputFormat: 'txt',
-          sourcePath: content.sourcePath,
-          sourceSha256: content.sourceSha256,
-          outputPath: `.artifacts/teaching-sessions/${session.id}/${language}/session.txt`,
-          outputSha256: sha256(text),
-        }),
-      );
-    } else {
-      const record = JSON.parse(await readFile(recordPath, 'utf8')) as {
-        editorialProfile: string;
-        outputFormat: string;
-        sourceSha256: string;
-        outputSha256: string;
-      };
-      const actual = await readFile(outputPath);
-      if (
-        record.editorialProfile !== 'presentation' ||
-        record.outputFormat !== 'txt' ||
-        record.sourceSha256 !== content.sourceSha256 ||
-        record.outputSha256 !== sha256(actual) ||
-        actual.toString('utf8') !== text
-      ) {
-        throw new Error(`Stale teaching TXT: ${session.id}/${language}.`);
-      }
-    }
-    console.log(
-      `${args.command === 'build' ? 'WROTE' : 'VERIFIED'} ${session.id}/${language}/presentation/txt`,
-    );
+    await processTextFormat(args, session, language, content, root, outputRoot);
     return;
   }
   if (format === 'pdf') {
