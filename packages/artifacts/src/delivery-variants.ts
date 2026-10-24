@@ -53,6 +53,33 @@ function hasLink(node: Nodes): boolean {
   return 'children' in node && node.children.some(hasLink);
 }
 
+function validateNarration(root: Root, errors: string[]): void {
+  const paragraphs = root.children.filter((node) => node.type === 'paragraph');
+  const hasNonSpokenBlocks = root.children.some((node) => node.type !== 'paragraph');
+
+  if (hasNonSpokenBlocks) {
+    errors.push(
+      'Narration source must contain spoken paragraphs only; keep production metadata in the manifest.',
+    );
+  }
+  if (paragraphs.length < 2) {
+    errors.push('Narration source must contain at least two spoken paragraphs.');
+  }
+  if (root.children.some(hasLink)) {
+    errors.push('Narration source must not contain links or raw URLs.');
+  }
+
+  const spokenText = root.children.map(textContent).join(' ');
+  if (/https?:\/\/|www\./iu.test(spokenText)) {
+    errors.push('Narration source must not speak raw URLs.');
+  }
+  if (/\bas you can see\b|\bsee the slide\b|\bshown on this slide\b/iu.test(spokenText)) {
+    errors.push(
+      'Narration must explain essential visual information without referring to a slide.',
+    );
+  }
+}
+
 export function validateDeliveryMarkdown(profile: EditorialProfile, markdown: string): string[] {
   const errors: string[] = [];
   let root: Root;
@@ -87,30 +114,7 @@ export function validateDeliveryMarkdown(profile: EditorialProfile, markdown: st
   }
 
   if (profile === 'narration') {
-    const paragraphs = root.children.filter((node) => node.type === 'paragraph');
-    const hasNonSpokenBlocks = root.children.some((node) => node.type !== 'paragraph');
-
-    if (hasNonSpokenBlocks) {
-      errors.push(
-        'Narration source must contain spoken paragraphs only; keep production metadata in the manifest.',
-      );
-    }
-    if (paragraphs.length < 2) {
-      errors.push('Narration source must contain at least two spoken paragraphs.');
-    }
-    if (root.children.some(hasLink)) {
-      errors.push('Narration source must not contain links or raw URLs.');
-    }
-
-    const spokenText = root.children.map(textContent).join(' ');
-    if (/https?:\/\/|www\./iu.test(spokenText)) {
-      errors.push('Narration source must not speak raw URLs.');
-    }
-    if (/\bas you can see\b|\bsee the slide\b|\bshown on this slide\b/iu.test(spokenText)) {
-      errors.push(
-        'Narration must explain essential visual information without referring to a slide.',
-      );
-    }
+    validateNarration(root, errors);
   }
 
   return [...new Set(errors)];

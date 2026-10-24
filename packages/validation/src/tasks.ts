@@ -19,30 +19,48 @@ export interface TaskResult {
   messages: string[];
 }
 
+function registeredDeliveryVariants(manifest: RepositoryManifest): RegisteredDeliveryVariant[] {
+  const variants: RegisteredDeliveryVariant[] = [];
+  for (const session of manifest.teachingSessions ?? []) {
+    for (const profile of ['document', 'reference', 'narration'] as const) {
+      const profileVariants = session.deliveryVariants?.[profile];
+      if (!profileVariants) continue;
+      for (const language of ['en', 'fr'] as const) {
+        if (profileVariants[language]) variants.push({ session, profile, language });
+      }
+    }
+  }
+  return variants;
+}
+
+async function validateDeliveryVariant(
+  manifest: RepositoryManifest,
+  entry: RegisteredDeliveryVariant,
+): Promise<void> {
+  const { session, profile, language } = entry;
+  const variant = resolveDeliveryVariant(manifest, session, profile, language);
+  const markdown = await readFile(fromRoot(variant.sourcePath), 'utf8');
+  const errors = validateDeliveryMarkdown(profile, markdown);
+  if (errors.length) {
+    throw new Error(`${variant.sourcePath}:\n${errors.join('\n')}`);
+  }
+  renderDeliveryText(markdown, profile, language);
+}
+
 async function teachingDeliveryVariants(): Promise<TaskResult> {
   try {
     const manifest = await readManifest();
-    let checked = 0;
-    for (const session of manifest.teachingSessions ?? []) {
-      for (const profile of ['document', 'reference', 'narration'] as const) {
-        for (const language of ['en', 'fr'] as const) {
-          if (!session.deliveryVariants?.[profile]?.[language]) continue;
-          const variant = resolveDeliveryVariant(manifest, session, profile, language);
-          const path = fromRoot(variant.sourcePath);
-          const markdown = await readFile(path, 'utf8');
-          const errors = validateDeliveryMarkdown(profile, markdown);
-          if (errors.length) {
-            throw new Error(`${variant.sourcePath}:\n${errors.join('\n')}`);
-          }
-          renderDeliveryText(markdown, profile, language);
-          checked += 1;
-        }
-      }
+    const variants = registeredDeliveryVariants(manifest);
+    const results = await Promise.allSettled(
+      variants.map((entry) => validateDeliveryVariant(manifest, entry)),
+    );
+    for (const result of results) {
+      if (result.status === 'rejected') throw result.reason;
     }
     return {
       ok: true,
       messages: [
-        `Authored delivery variants valid: ${checked} registered profile-language source(s).`,
+        `Authored delivery variants valid: ${variants.length} registered profile-language source(s).`,
       ],
     };
   } catch (error) {
@@ -66,6 +84,15 @@ export interface ValidationTask {
 type RepositoryManifest = Awaited<ReturnType<typeof readManifest>>;
 type CourseEntry = RepositoryManifest['courses'][number];
 type ModuleEntry = CourseEntry['modules'][number];
+type TeachingSessionEntry = NonNullable<RepositoryManifest['teachingSessions']>[number];
+type DeliveryProfileName = 'document' | 'reference' | 'narration';
+type DeliveryLanguageName = 'en' | 'fr';
+
+interface RegisteredDeliveryVariant {
+  session: TeachingSessionEntry;
+  profile: DeliveryProfileName;
+  language: DeliveryLanguageName;
+}
 
 async function fileExists(path: string): Promise<boolean> {
   return access(path)

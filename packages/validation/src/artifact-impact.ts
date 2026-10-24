@@ -169,6 +169,63 @@ function courseFileImpact(
   };
 }
 
+function deliveryTargetMatchesFile(
+  target: DeliveryArtifactImpactTarget,
+  file: string,
+  manifest: Manifest,
+): boolean {
+  if (target.sourcePath === file) return true;
+  const sessionRoot = target.sourcePath.split('/deliveries/')[0]!;
+  if (file.startsWith(`${sessionRoot}/`)) {
+    const sourceLanguage = /\/(?:deliveries\/[^/]+\/)?(en|fr)(?:\/|\.md$)/u.exec(file)?.[1];
+    return sourceLanguage ? sourceLanguage === target.language : true;
+  }
+  return target.canonicalModuleIds.some((moduleId) =>
+    manifest.courses.some((course) =>
+      course.modules.some(
+        (module) => module.id === moduleId && module.source[target.language] === file,
+      ),
+    ),
+  );
+}
+
+function recordDeliveryImpact(
+  file: string,
+  delivery: readonly DeliveryArtifactImpactTarget[],
+  manifest: Manifest,
+  affectedDelivery: Map<string, DeliveryArtifactImpactTarget>,
+  reasons: Set<string>,
+): void {
+  const deliveryMatches = delivery.filter((target) =>
+    deliveryTargetMatchesFile(target, file, manifest),
+  );
+  for (const target of deliveryMatches) {
+    affectedDelivery.set([target.sessionId, target.profile, target.language].join('/'), target);
+    reasons.add(
+      target.sourcePath === file
+        ? `authored delivery source changed: ${file}`
+        : `teaching or canonical source changed for delivery variant: ${file}`,
+    );
+  }
+}
+
+function globalImpactReport(
+  targets: ArtifactImpactTarget[],
+  deliveryTargets: DeliveryArtifactImpactTarget[],
+  files: readonly string[],
+): ArtifactImpactReport | undefined {
+  const globalInputs = files.filter(isGlobalArtifactInput);
+  if (globalInputs.length === 0) return undefined;
+  return {
+    scope: targets.length > 0 || deliveryTargets.length > 0 ? 'all' : 'none',
+    targets,
+    deliveryTargets,
+    reasons: globalInputs
+      .map((path) => `artifact engine input changed: ${path}`)
+      .sort((left, right) => left.localeCompare(right)),
+  };
+}
+
 export function analyzeArtifactImpact(
   manifest: Manifest,
   changedFiles: readonly string[],
@@ -196,18 +253,8 @@ export function analyzeArtifactImpact(
   }
 
   const files = changedFiles.map((path) => toPosixPath(path));
-  const globalInputs = files.filter(isGlobalArtifactInput);
-
-  if (globalInputs.length > 0) {
-    return {
-      scope: targets.length > 0 || delivery.length > 0 ? 'all' : 'none',
-      targets,
-      deliveryTargets: delivery,
-      reasons: globalInputs
-        .map((path) => `artifact engine input changed: ${path}`)
-        .sort((left, right) => left.localeCompare(right)),
-    };
-  }
+  const globalImpact = globalImpactReport(targets, delivery, files);
+  if (globalImpact) return globalImpact;
 
   const affected = new Map<string, ArtifactImpactTarget>();
   const affectedDelivery = new Map<string, DeliveryArtifactImpactTarget>();
@@ -221,30 +268,7 @@ export function analyzeArtifactImpact(
       reasons.add(impact.reason);
     }
 
-    const deliveryMatches = delivery.filter((target) => {
-      if (target.sourcePath === file) return true;
-      const sessionRoot = target.sourcePath.split('/deliveries/')[0]!;
-      if (file.startsWith(`${sessionRoot}/`)) {
-        const sourceLanguage = file.match(/\/(?:deliveries\/[^/]+\/)?(en|fr)(?:\/|\.md$)/u)?.[1];
-        return sourceLanguage ? sourceLanguage === target.language : true;
-      }
-      return target.canonicalModuleIds.some((moduleId) =>
-        manifest.courses.some((course) =>
-          course.modules.some((module) => {
-            if (module.id !== moduleId || module.source[target.language] !== file) return false;
-            return true;
-          }),
-        ),
-      );
-    });
-    for (const target of deliveryMatches) {
-      affectedDelivery.set([target.sessionId, target.profile, target.language].join('/'), target);
-      reasons.add(
-        target.sourcePath === file
-          ? `authored delivery source changed: ${file}`
-          : `teaching or canonical source changed for delivery variant: ${file}`,
-      );
-    }
+    recordDeliveryImpact(file, delivery, manifest, affectedDelivery, reasons);
   }
 
   const affectedTargets = targets.filter((target) => affected.has(targetKey(target)));
